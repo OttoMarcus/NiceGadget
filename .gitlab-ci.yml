@@ -30,7 +30,7 @@ sonarcloud-check:
       - .sonar/cache
   script:
     - sonar-scanner
-#  only:
-#    - merge_requests
-#    - master
-#    - develop
+  only:
+    - merge_requests
+    - main
+    - develop
