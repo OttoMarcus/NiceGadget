@@ -1,7 +1,26 @@
 variables:
   SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
   GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+stages:
+  - test
+  - sonar
+unit-test:
+  image: node:latest
+  stage: test
+  before_script:
+    - npm install
+  script:
+    - npm run test:ci
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  artifacts:
+    paths:
+      - coverage/
+    when: always
+    reports:
+      junit:
+        - junit.xml
 sonarcloud-check:
+  stage: sonar
   image:
     name: sonarsource/sonar-scanner-cli:latest
     entrypoint: [""]
