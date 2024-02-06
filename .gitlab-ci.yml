@@ -19,6 +19,10 @@ unit-test:
     reports:
       junit:
         - junit.xml
+  only:
+    - merge_requests
+    - main
+    - develop
 sonarcloud-check:
   stage: sonar
   image:
@@ -34,4 +38,3 @@ sonarcloud-check:
     - merge_requests
     - main
     - develop
-    - test
