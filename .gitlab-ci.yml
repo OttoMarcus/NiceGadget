@@ -35,5 +35,4 @@ sonarcloud-check:
     - sonar-scanner
   only:
     - merge_requests
-    - main
-    - develop
+    - branches
