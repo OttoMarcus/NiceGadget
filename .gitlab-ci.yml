@@ -66,6 +66,7 @@ frontend-test:
     - npm install
   script:
     - npm run test:ci
+    - ls
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   artifacts:
     paths:
