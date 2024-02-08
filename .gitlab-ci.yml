@@ -65,7 +65,6 @@ frontend-test:
     - cd frontend/
     - npm install
   script:
-    - cd frontend/
     - ls
     - npm run test:ci
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
