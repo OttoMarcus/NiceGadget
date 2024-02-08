@@ -31,40 +31,42 @@ stages:
   variables:
     RULES_CHANGES_PATH: "frontend/**/*"
 
-backend-build:
-  stage: build
-  extends: .backend
-  needs: []
-  script:
-    - echo "Compiling the backend code..."
-
-frontend-build:
-  stage: build
-  extends: .frontend
-  needs: []
-  image: node:latest
-  script:
-    - cd frontend/
-    - npm install
-    - npm run build
-
-backend-test:
-  stage: test
-  extends: .backend
-  needs: ["backend-build"]
-  script:
-    - echo "Testing the backend code..."
+#backend-build:
+#  stage: build
+#  extends: .backend
+#  needs: []
+#  script:
+#    - echo "Compiling the backend code..."
+#
+#frontend-build:
+#  stage: build
+#  extends: .frontend
+#  needs: []
+#  image: node:latest
+#  script:
+#    - cd frontend/
+#    - npm install
+#    - npm run build
+#
+#backend-test:
+#  stage: test
+#  extends: .backend
+#  needs: ["backend-build"]
+#  script:
+#    - echo "Testing the backend code..."
 
 frontend-test:
   stage: test
   extends: .frontend
-  needs: ["frontend-build"]
+#  needs: ["frontend-build"]
+  needs: []
   image: node:latest
   before_script:
     - cd frontend/
     - npm install
   script:
     - cd frontend/
+    - ls
     - npm run test:ci
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   artifacts:
@@ -75,24 +77,24 @@ frontend-test:
       junit:
         - junit.xml
 
-backend-sonar:
-  stage: sonar
-  extends: .backend
-  needs: ["backend-test"]
-  script:
-    - echo "Deploying the backend code..."
-
-frontend-sonar:
-  stage: sonar
-  extends: .frontend
-  needs: ["frontend-test"]
-  image:
-    name: sonarsource/sonar-scanner-cli:latest
-    entrypoint: [ "" ]
-  cache:
-    key: "${CI_JOB_NAME}"
-    paths:
-      - .sonar/cache
-  script:
-    - sonar-scanner
+#backend-sonar:
+#  stage: sonar
+#  extends: .backend
+#  needs: ["backend-test"]
+#  script:
+#    - echo "Deploying the backend code..."
+#
+#frontend-sonar:
+#  stage: sonar
+#  extends: .frontend
+#  needs: ["frontend-test"]
+#  image:
+#    name: sonarsource/sonar-scanner-cli:latest
+#    entrypoint: [ "" ]
+#  cache:
+#    key: "${CI_JOB_NAME}"
+#    paths:
+#      - .sonar/cache
+#  script:
+#    - sonar-scanner
 

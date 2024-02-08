@@ -2,7 +2,8 @@
 
 .idea
 dist
-frontend/build
+frontend/build/
+frontend/coverage/
 
 # dependencies
 frontend/node_modules
