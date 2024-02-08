@@ -73,7 +73,7 @@ frontend-test:
     when: always
     reports:
       junit:
-        - junit.xml
+        - fronted/junit.xml
 
 #backend-sonar:
 #  stage: sonar
