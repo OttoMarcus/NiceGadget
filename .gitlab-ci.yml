@@ -65,12 +65,11 @@ frontend-test:
     - cd frontend/
     - npm install
   script:
-    - ls
     - npm run test:ci
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   artifacts:
     paths:
-      - coverage/
+      - frontend/coverage/
     when: always
     reports:
       junit:
