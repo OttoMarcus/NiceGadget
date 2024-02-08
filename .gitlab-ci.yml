@@ -71,10 +71,11 @@ frontend-test:
   artifacts:
     paths:
       - frontend/coverage/
+      - frontend/junit.xml
     when: always
     reports:
       junit:
-        - junit.xml
+        - frontend/junit.xml
 
 #backend-sonar:
 #  stage: sonar
