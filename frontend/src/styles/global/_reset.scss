@@ -1,0 +1,100 @@
+//EXAMPLE!!!
+
+//reset
+//...
+
+* {
+  box-sizing: border-box;
+  &::before {
+    box-sizing: border-box;
+  }
+  &::after {
+    box-sizing: border-box;
+  }
+}
+.div {
+  margin: 0;
+}
+body {
+  margin: 0;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+button {
+  background-color: transparent;
+  color: inherit;
+  border-width: 0;
+  padding: 0;
+  cursor: pointer;
+  outline: 0;
+}
+figure {
+  margin: 0;
+}
+input {
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+dd {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+h1 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+h2 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+h3 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+h4 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+h5 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+h6 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+p {
+  margin: 0;
+}
+cite {
+  font-style: normal;
+}
+fieldset {
+  border-width: 0;
+  padding: 0;
+  margin: 0;
+}
+

@@ -1,0 +1,82 @@
+//EXAMPLE!!!
+
+// ------------ Main colors ---------------
+$ui-color-primary: #008337;
+$ui-color-primary-hover: #00642A;
+$ui-color-text-white: #FFFFFF;
+$ui-color-text-black: #000000;
+
+// ------------ Breakpoints ---------------
+$ui-breakpoint-sm: 576px;
+$ui-breakpoint-md: 768px;
+$ui-breakpoint-lg: 992px;
+$ui-breakpoint-xl: 1200px;
+$ui-breakpoint-xxl: 1400px;
+
+
+//-----------Containers max-width----------
+
+
+// ---------- Background colors -----------
+$ui-color-background-main: #196539;
+$ui-color-background-header: #000000;
+$ui-color-background-modal: rgba(0,0,0,0.4);
+$ui-color-background-modal-body: #FFFFFF;
+$ui-color-background-filters: rgb(232, 239, 235);
+$ui-color-background-card: rgb(232, 239, 235);
+$ui-color-background-card-done: rgba(191,211,199,255);
+$ui-color-background-button-logout: rgb(246, 169, 200);
+$ui-color-background-button-logout-hover: rgb(190, 85, 127);
+
+// ------------ Shadow colors -------------
+$ui-color-shadow: #000000;
+
+// ------------ Border colors -------------
+$ui-color-border: #003A18;
+
+// -------- Disabled button colors --------
+$ui-color-disabled-background: #CCCCCC;
+$ui-color-disabled-text: #666666;
+
+// ------------ Border radius -------------
+$ui-border-radius: 5px;
+
+// ------------ Font families -------------
+$ui-font-family: 'Roboto', sans-serif;
+
+// ------- Font sizes: filters form -------
+$ui-font-size-filters-form-item: 18px;
+
+// ---------- Font sizes: modal -----------
+$ui-font-size-modal-label: 16px;
+$ui-font-size-modal-item: 16px;
+$ui-font-size-modal-title: 28px;
+
+// -------- Font sizes: visit form --------
+$ui-font-size-form-label: 16px;
+$ui-font-size-form-item: 16px;
+
+// ---------- Font sizes: buttons ---------
+$ui-font-size-save-button: 20px;
+$ui-font-sizes-header-buttons: 24px;
+
+// ----------- Font sizes: cards ----------
+$ui-font-sizes-card-data: 20px;
+$ui-font-sizes-card-doctor: 18px;
+$ui-font-sizes-card-more: 14px;
+
+// ----------- Fields paddings ------------
+$ui-fields-padding: 8px;
+
+// --------------  Other ------------------
+$ui-transition-duration: 0.3s;
+
+
+$ui-display-none: none;
+$ui-display-block: block;
+$ui-display-flex: flex;
+$ui-display-grid: grid;
+$ui-display-inline-block: inline-block;
+
+$ui-position-ab: absolute;
+$ui-position-rv: relative;
