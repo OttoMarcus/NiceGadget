@@ -6,13 +6,12 @@ stages:
   - build
   - test
   - sonar
-  - deploy
 
 .base-rules:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: always
-    - if: '$CI_PIPELINE_SOURCE != "push"'
+    - if: '$CI_PIPELINE_SOURCE == "push"'
       when: always
     - if: $CI_COMMIT_TAG
       when: never
@@ -98,19 +97,3 @@ frontend-sonar:
   script:
     - sonar-scanner
 
-deploy-to-cloud-run:
-  stage: deploy
-  needs: ["backend-test"]
-  image: registry.gitlab.com/gitlab-org/incubation-engineering/five-minute-production/library/google-cloud-sdk-for-gitlab:main
-  script:
-    - cp -r ./utils/* .
-    - chmod +x cloud-run.sh
-    - ./cloud-run.sh
-  environment:
-    name: $CI_COMMIT_REF_NAME
-    url: $DYNAMIC_URL
-  artifacts:
-    reports:
-      dotenv: deploy.env
-  only:
-    - main

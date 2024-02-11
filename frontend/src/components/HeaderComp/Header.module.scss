@@ -1,0 +1,27 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0F1121;
+  height: 64px;
+  .headerLogo{
+    display: flex;
+    gap: 20px
+  }
+  ul {
+    min-width: 500px;
+    display: flex;
+    justify-content: flex-start;
+    text-transform: uppercase;
+    align-items: center;
+    gap: 64px;
+  }
+  a{
+    color: #75767F;
+    font-weight: 700;
+  }
+
+}
+
+
+

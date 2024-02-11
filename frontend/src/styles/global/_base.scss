@@ -1,6 +1,7 @@
 //EXAMPLE!!!
 .container {
-  max-width: $ui-breakpoint-xxl;
+  max-width: 1200px; /* $ui-breakpoint-xxl */
+ margin: 0 auto;
   padding: 0 10px;
   margin: 0 auto;
   @media screen and (max-width: $ui-breakpoint-xl) {
