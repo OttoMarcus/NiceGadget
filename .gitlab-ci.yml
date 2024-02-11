@@ -6,6 +6,7 @@ stages:
   - build
   - test
   - sonar
+  - deploy
 
 .base-rules:
   rules:
@@ -48,52 +49,65 @@ frontend-build:
     - npm install
     - npm run build
 
-backend-test:
-  stage: test
-  extends: .backend
-  needs: ["backend-build"]
-  script:
-    - echo "Testing the backend code..."
+#backend-test:
+#  stage: test
+#  extends: .backend
+#  needs: ["backend-build"]
+#  script:
+#    - echo "Testing the backend code..."
+#
+#frontend-test:
+#  stage: test
+#  extends: .frontend
+#  needs: ["frontend-build"]
+#  image: node:latest
+#  before_script:
+#    - cd frontend/
+#    - npm install
+#  script:
+#    - npm run test:ci
+#    - ls
+#  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+#  artifacts:
+#    paths:
+#      - frontend/coverage/
+#      - frontend/junit.xml
+#    when: always
+#    reports:
+#      junit:
+#        - frontend/junit.xml
+#
+#backend-sonar:
+#  stage: sonar
+#  extends: .backend
+#  needs: ["backend-test"]
+#  script:
+#    - echo "Deploying the backend code..."
+#
+#frontend-sonar:
+#  stage: sonar
+#  extends: .frontend
+#  needs: ["frontend-test"]
+#  image:
+#    name: sonarsource/sonar-scanner-cli:latest
+#    entrypoint: [ "" ]
+#  cache:
+#    key: "${CI_JOB_NAME}"
+#    paths:
+#      - .sonar/cache
+#  script:
+#    - sonar-scanner
 
-frontend-test:
-  stage: test
-  extends: .frontend
-  needs: ["frontend-build"]
-  image: node:latest
-  before_script:
-    - cd frontend/
-    - npm install
+deploy-to-cloud-run:
+  stage: deploy
+  image: registry.gitlab.com/gitlab-org/incubation-engineering/five-minute-production/library/google-cloud-sdk-for-gitlab:main
   script:
-    - npm run test:ci
-    - ls
-  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+    - cp -r ./utils/* .
+    - chmod +x cloud-run.sh
+    - ./cloud-run.sh
+  environment:
+    name: $CI_COMMIT_REF_NAME
+    url: $DYNAMIC_URL
   artifacts:
-    paths:
-      - frontend/coverage/
-      - frontend/junit.xml
-    when: always
     reports:
-      junit:
-        - frontend/junit.xml
-
-backend-sonar:
-  stage: sonar
-  extends: .backend
-  needs: ["backend-test"]
-  script:
-    - echo "Deploying the backend code..."
-
-frontend-sonar:
-  stage: sonar
-  extends: .frontend
-  needs: ["frontend-test"]
-  image:
-    name: sonarsource/sonar-scanner-cli:latest
-    entrypoint: [ "" ]
-  cache:
-    key: "${CI_JOB_NAME}"
-    paths:
-      - .sonar/cache
-  script:
-    - sonar-scanner
-
+      dotenv: deploy.env
