@@ -1,0 +1,41 @@
+footer{
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0F1121;
+  height: 96px;
+  padding: 36px 152px;
+  ul{
+    display: flex;
+    justify-content: center;
+    gap: 132px;
+  }
+  a{
+
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 11px;
+    letter-spacing: 0.48px;
+    text-transform: uppercase;
+    color: white;
+  }
+  p{
+    display: block;
+    color: grey;
+    text-align: right;
+
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+  .footerUpArrow{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+
+  }
+}

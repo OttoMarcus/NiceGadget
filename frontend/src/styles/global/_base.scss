@@ -1,19 +1,9 @@
-//EXAMPLE!!!
+
 .container {
-  max-width: 1200px; /* $ui-breakpoint-xxl */
- margin: 0 auto;
-  padding: 0 10px;
+  max-width: 1200px;
   margin: 0 auto;
-  @media screen and (max-width: $ui-breakpoint-xl) {
-    max-width: $ui-breakpoint-lg;
-  }
-  @media screen and (max-width: $ui-breakpoint-lg) {
-    max-width: $ui-breakpoint-md;
-  }
-  @media screen and (max-width: $ui-breakpoint-md) {
-    max-width: $ui-breakpoint-sm;
-  }
-  @media screen and (max-width: $ui-breakpoint-sm) {
-    max-width: 380px;
-  }
+  padding: 0 10px;
+}
+body{
+  font-family: Montserrat,sans-serif;
 }
