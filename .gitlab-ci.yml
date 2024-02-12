@@ -12,8 +12,8 @@ stages:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: always
-    - if: '$CI_PIPELINE_SOURCE != "push"'
-      when: always
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      when: never
     - if: $CI_COMMIT_TAG
       when: never
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
@@ -48,6 +48,23 @@ frontend-build:
     - cd frontend/
     - npm install
     - npm run build
+  artifacts:
+    when: on_success
+    paths:
+      - frontend/build/
+
+frontend-sentry:
+  stage: build
+  needs: ["frontend-build"]
+  image: node:latest
+  script:
+    - cd frontend/
+    - npm install
+    - npm run sentry:sourcemaps
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      changes:
+        - "frontend/**/*"
 
 backend-test:
   stage: test
@@ -66,7 +83,6 @@ frontend-test:
     - npm install
   script:
     - npm run test:ci
-    - ls
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   artifacts:
     paths:
@@ -112,5 +128,7 @@ deploy-to-cloud-run:
   artifacts:
     reports:
       dotenv: deploy.env
-  only:
-    - main
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      changes:
+        - "backend/**/*"
