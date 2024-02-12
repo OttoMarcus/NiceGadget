@@ -135,7 +135,6 @@ deploy-to-cloud-run:
 
 deploy-to-firebase:
   stage: deploy
-  extends: .frontend
   needs: ["frontend-test"]
   image: node:latest
   script:
@@ -145,9 +144,6 @@ deploy-to-firebase:
     - cat "$FIREBASE_JSON" > ./firebase.json
     - cat "$FIREBASE_RC" > ./.firebaserc
     - firebase deploy --only hosting --token $FIREBASE_TOKEN
-  environment:
-    name: $CI_COMMIT_REF_NAME
-    url: $DYNAMIC_URL
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       changes:
