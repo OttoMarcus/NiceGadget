@@ -1,8 +1,18 @@
-# Getting Started with Create React App
+# E-commerce Shop
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Git
 
-## Available Scripts
+Use [Semantic Commit Messages](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716).
+
+You can find this article useful as well: [Understanding Semantic Commit Messages Using Git and Angular](https://nitayneeman.com/posts/understanding-semantic-commit-messages-using-git-and-angular/).
+
+## Frontend
+
+Click the link to see the app online: [E-commerce Shop](https://mern-b6d37.web.app/)
+
+The frontend was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+### Available Scripts
 
 In the project directory, you can run:
 
@@ -19,60 +29,37 @@ You may also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
+### `npm run test:ci`
+
+Runs tests with coverage.
+
 ### `npm run build`
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-To learn SolarCloud, check out the https://www.sonarsource.com/products/sonarcloud/
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+The build is minified and the filenames include the hashes.
 
 ### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+The frontend is deployed to [Firebase Hosting](https://firebase.google.com/docs/hosting?authuser=0).
 
-### `npm run build` fails to minify
+## Backend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Click the link to see the backend online: [E-commerce Shop API Endpoint](https://gitlab-54814498-main-mw6dog77dq-ew.a.run.app/)
 
-### npm run test:ci run test with coverage
+The backend is a vanilla Node.js server.
 
-### git commit messages convention 
+### Running locally
 
-https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716
+To run the backend locally together with mongoDB, you need to have Docker installed. Then, from the project root, you can run the following command:
+
+```bash
+
+docker-compose up
+
+```
+
+### Deployment
+
+The code is packaged into a Docker container and deployed to [Google Cloud Run](https://cloud.google.com/run).
