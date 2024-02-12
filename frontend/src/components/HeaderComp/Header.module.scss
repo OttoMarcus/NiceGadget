@@ -7,7 +7,8 @@ header {
   padding-left: 24px;
   .headerLogo{
     display: flex;
-    gap: 20px
+    gap: 20px;
+
   }
   ul {
     min-width: 500px;
@@ -21,8 +22,41 @@ header {
     color: #75767F;
     font-weight: 700;
   }
+  .mainLinks{
+    display: block;
+    justify-content: center;
+    align-items: center;
+    padding: 21px;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+  }
+  .btnGroup{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+.linksHeader::after {
+  content: "";
+  display: block;
+  position: relative;
+}
+
+.linksHeader:hover::after {
+  color: #F1F2F9;
+  border-bottom: 2px solid white;
+
+  left: 0px;
+  bottom: -20px;
 
 }
+.linksHeader:hover{
+  color: #F1F2F9;
+}
+
+
+
 
 
 
