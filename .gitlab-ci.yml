@@ -132,3 +132,23 @@ deploy-to-cloud-run:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       changes:
         - "backend/**/*"
+
+deploy-to-firebase:
+  stage: deploy
+  extends: .frontend
+  needs: ["frontend-test"]
+  image: node:latest
+  script:
+    - cd frontend/
+    - npm install
+    - npm i -g firebase-tools
+    - cat "$FIREBASE_JSON" > ./firebase.json
+    - cat "$FIREBASE_RC" > ./.firebaserc
+    - firebase deploy --only hosting --token $FIREBASE_TOKEN
+  environment:
+    name: $CI_COMMIT_REF_NAME
+    url: $DYNAMIC_URL
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      changes:
+        - "frontend/**/*"
