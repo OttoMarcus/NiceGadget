@@ -4,6 +4,15 @@
   justify-content: center;
   gap: 20px;
   background: #0F1121;
+  width: 100%;
+  height: 1000px;
+}
 
-
+.mainWrapper {
+  background: #0F1121;
+  //width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
