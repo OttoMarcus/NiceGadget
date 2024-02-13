@@ -8,11 +8,22 @@
   height: 1000px;
 }
 
+
+
 .mainWrapper {
+  padding: 20px;
   background: #0F1121;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.mainTittle {
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 56px;
+  letter-spacing: -0.01em;
+  color: white;
 }

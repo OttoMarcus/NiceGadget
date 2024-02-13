@@ -5,6 +5,7 @@ header {
   background: #0F1121;
   height: 64px;
   padding-left: 24px;
+  border-bottom: 1px solid #808080FF;
 
   .headerLogo {
     display: flex;
@@ -31,8 +32,8 @@ header {
     justify-content: center;
     align-items: center;
     padding: 21px;
-    border-left: 1px solid white;
-    border-right: 1px solid white;
+    border-left: 1px solid #808080FF;
+    border-right: 1px solid #808080FF;
   }
 
   .btnGroup {
@@ -52,8 +53,8 @@ header {
     color: #F1F2F9;
     border-bottom: 2px solid white;
 
-    left: 0px;
-    bottom: -20px;
+    left: 0;
+    bottom: -23px;
 
   }
 
