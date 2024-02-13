@@ -40,6 +40,12 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.
 
+### ESLint configuration 
+
+Instructions at:
+* [Activate and configure ESLint in WebStorm](https://www.jetbrains.com/help/webstorm/eslint.html#ws_js_eslint_activate).
+* For VSCode:
+
 ### Deployment
 
 The frontend is deployed to [Firebase Hosting](https://firebase.google.com/docs/hosting?authuser=0).
@@ -63,3 +69,4 @@ docker-compose up
 ### Deployment
 
 The code is packaged into a Docker container and deployed to [Google Cloud Run](https://cloud.google.com/run).
+

@@ -73,6 +73,16 @@ backend-test:
   script:
     - echo "Testing the backend code..."
 
+frontend-lint:
+  stage: test
+  extends: .frontend
+  needs: ["frontend-build"]
+  image: node:latest
+  script:
+    - cd frontend/
+    - npm install
+    - npm run lint
+
 frontend-test:
   stage: test
   extends: .frontend
@@ -103,7 +113,7 @@ backend-sonar:
 frontend-sonar:
   stage: sonar
   extends: .frontend
-  needs: ["frontend-test"]
+  needs: ["frontend-test", "frontend-lint"]
   image:
     name: sonarsource/sonar-scanner-cli:latest
     entrypoint: [ "" ]
@@ -135,7 +145,7 @@ deploy-to-cloud-run:
 
 deploy-to-firebase:
   stage: deploy
-  needs: ["frontend-test"]
+  needs: ["frontend-test", "frontend-lint"]
   image: node:latest
   script:
     - cd frontend/
