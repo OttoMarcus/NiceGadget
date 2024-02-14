@@ -155,6 +155,8 @@ deploy-to-firebase:
     - npm i -g firebase-tools
     - cat "$FIREBASE_JSON" > ./firebase.json
     - cat "$FIREBASE_RC" > ./.firebaserc
+    - cat "$GCP_APPLICATION_CREDENTIALS" > ./gcp-application-credentials.json
+    - export GOOGLE_APPLICATION_CREDENTIALS=./gcp-application-credentials.json
     - firebase deploy --only hosting
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
