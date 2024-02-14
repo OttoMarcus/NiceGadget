@@ -147,7 +147,7 @@ deploy-to-cloud-run:
 
 deploy-to-firebase:
   stage: deploy
-  needs: ["frontend-test", "frontend-lint"]
+  needs: ["frontend-build", "frontend-test", "frontend-lint"]
   image: node:latest
   script:
     - cd frontend/
