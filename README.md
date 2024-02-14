@@ -52,7 +52,7 @@ The frontend is deployed to [Firebase Hosting](https://firebase.google.com/docs/
 
 ## Backend
 
-Click the link to see the backend online: [E-commerce Shop API Endpoint](https://gitlab-54814498-main-mw6dog77dq-ew.a.run.app/)
+Click the link to see the backend online: [E-commerce Shop API Endpoint](https://gitlab-54605479-main-mw6dog77dq-uc.a.run.app/api/configs)
 
 The backend is a vanilla Node.js server.
 
