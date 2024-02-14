@@ -1,6 +1,7 @@
 const globals = require('globals');
 const react = require('eslint-plugin-react');
 const reactHooks = require('eslint-plugin-react-hooks');
+const eslintConfigPrettier = require("eslint-config-prettier");
 
 module.exports = [
     {
@@ -31,4 +32,5 @@ module.exports = [
             }
         }
     },
+    eslintConfigPrettier,
 ];
