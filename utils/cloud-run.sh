@@ -42,6 +42,7 @@ gcloud run deploy "$SERVICE_NAME" --quiet --source=. --region="$GCP_REGION" \
   --concurrency="$GCP_CLOUD_RUN_CONCURRENCY" \
   --memory="$GCP_CLOUD_RUN_MEMORY" \
   --cpu="$GCP_CLOUD_RUN_CPU" \
+  --env-vars-file="$GCP_CLOUD_RUN_ENV" \
   --allow-unauthenticated --format 'value(status.url)' >>local-output.log || error_and_exit "Failed to deploy service"
 
 ## generate deploy.env

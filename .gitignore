@@ -4,6 +4,10 @@
 dist
 frontend/build/
 frontend/coverage/
+backend/build/
+backend/coverage/
+
+.env
 
 # dependencies
 frontend/node_modules
