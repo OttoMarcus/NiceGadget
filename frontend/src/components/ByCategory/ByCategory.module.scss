@@ -1,0 +1,64 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.cardCat {
+  width: 100%;
+  padding: 20px;
+
+}
+
+.tittle {
+  padding: 30px 0 20px 0 ;
+  font-family: Mont;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  color: #F1F2F9;
+}
+
+.item  {
+  position: relative;
+  margin: 10px;
+  max-width: 368px;
+  max-height: 368px;
+
+  img {
+    width: 368px;
+    height: 368px;
+  }
+}
+
+.pic1 {
+  background: #6D6474;
+}
+
+.pic2 {
+  background: #686869;
+}
+
+.pic3 {
+  background: #D53C51;
+}
+
+.text1 {
+  font-family: Mont;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  color:white;
+}
+
+.text2 {
+  font-family: Mont;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 21px;
+  color: #75767F;
+}

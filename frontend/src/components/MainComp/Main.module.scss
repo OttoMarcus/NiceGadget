@@ -1,3 +1,5 @@
+
+
 .main {
   padding: 20px;
   display: flex;
@@ -11,13 +13,15 @@
 
 
 .mainWrapper {
+  margin: 0 auto;
   padding: 20px;
   background: #0F1121;
-  width: 100%;
+  //width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 }
 
 .mainTittle {
@@ -27,3 +31,4 @@
   letter-spacing: -0.01em;
   color: white;
 }
+
