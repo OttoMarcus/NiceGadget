@@ -6,24 +6,25 @@ import Logo from "../Icons/Logo";
 import Order from "../Icons/Order";
 import LogOut from "../Icons/LogOut";
 import LogIn from "../Icons/LogIn";
+import {Link} from "react-router-dom";
 
 const Header = () => {
     return (
         <header >
          <div className={Style.headerLogo}>  <a href={`#`}><Logo /></a>
             <ul>
-                <li className={Style.headerList}><a  className={Style.linksHeader} href={`#`}>Home</a></li>
-                <li className={Style.headerList}><a  className={Style.linksHeader} href={`#`}>Phones</a></li>
-                <li className={Style.headerList}><a  className={Style.linksHeader} href={`#`}>Tablets</a></li>
-                <li className={Style.headerList}><a  className={Style.linksHeader} href={`#`}>Accessories</a></li>
+                <Link className={Style.linksHeader} to="/">Home</Link>
+                <Link className={Style.linksHeader} to="/phones">Phones</Link>
+                <Link className={Style.linksHeader} to="/tablets">Tablets</Link>
+                <Link className={Style.linksHeader} to="/accessories">Accessories</Link>
             </ul>
          </div>
             <div className={Style.btnGroup}>
-                <a className={Style.mainLinks} href={`#`}> <LogIn/></a>
-                <a className={Style.mainLinks} href={`#`}> <LogOut/></a>
-                <a className={Style.mainLinks} href={`#`}> <Order/></a>
-                <a className={Style.mainLinks} href={`#`}><Favorite/></a>
-                <a className={Style.mainLinks} href={`#`}> <Cart/></a>
+                <Link className={Style.mainLinks} to="/login"><LogIn/></Link>
+                <Link className={Style.mainLinks} to="/logout"><LogOut/></Link>
+                <Link className={Style.mainLinks} to="/order"><Order/></Link>
+                <Link className={Style.mainLinks} to="/favorites"><Favorite/></Link>
+                <Link className={Style.mainLinks} to="/shopingcart"><Cart/></Link>
             </div>
 
 
