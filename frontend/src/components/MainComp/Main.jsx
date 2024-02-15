@@ -12,6 +12,7 @@ import ByCategories from "../ByCategory/ByCategory";
 
 
 
+
 const Main = () => {
     return (
         <main className={Style.mainWrapper} >

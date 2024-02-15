@@ -6,6 +6,7 @@ import Logo from "../Icons/Logo";
 import Order from "../Icons/Order";
 import LogOut from "../Icons/LogOut";
 import LogIn from "../Icons/LogIn";
+import Registration from "../Icons/Registration";
 import {Link} from "react-router-dom";
 
 const Header = () => {
@@ -20,6 +21,7 @@ const Header = () => {
             </ul>
          </div>
             <div className={Style.btnGroup}>
+                <Link className={Style.mainLinks} to="/registration"><Registration/></Link>
                 <Link className={Style.mainLinks} to="/login"><LogIn/></Link>
                 <Link className={Style.mainLinks} to="/logout"><LogOut/></Link>
                 <Link className={Style.mainLinks} to="/order"><Order/></Link>

@@ -11,6 +11,7 @@ import Phones from "./components/RouteComp/Phones/Phones";
 import Favorites from "./components/RouteComp/Favorites/Favorites";
 import Login from "./components/RouteComp/LogIn/Login";
 import Logout from "./components/RouteComp/LogOut/Logout";
+import Registration from "./components/RouteComp/Registration/Registration";
 
 const App = () => {
 
@@ -27,6 +28,7 @@ const App = () => {
                     <Route path="/favorites" element={<Favorites/>}/>
                     <Route path="/shopingcart" element={<ShoppingCart/>}/>
                     <Route path="/tablets" element={<Tablets/>}/>
+                    <Route path="/registration" element={<Registration/>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/logout" element={<Logout/>}/>
                 </Routes>
