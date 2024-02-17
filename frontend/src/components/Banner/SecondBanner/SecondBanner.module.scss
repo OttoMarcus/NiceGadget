@@ -1,0 +1,82 @@
+.banner {
+  width: 1040px;
+  height: 400px;
+  background-image: url("./iphone11.png");
+  background-size: 1000px 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.mainText {
+  font-family: Mont;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  color: #F1F2F9;
+  position: absolute;
+  top: 300px;
+  right: 160px;
+}
+
+.bannerTittleWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 30px;
+  justify-content: flex-start;
+}
+
+.bannerBox {
+  width: 300px;
+  height: 380px;
+  background-image: linear-gradient(52deg, rgba(86, 86, 86, 0.8) 0%, rgb(10, 10, 10) 97%);;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.bannerTittle {
+  background-image: linear-gradient(52deg, rgb(170, 0, 255) 0%, rgb(61, 26, 215) 77%);;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-family: Mont;
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.bannerSlogan {
+  font-family: Mont;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  color: #75767F;
+}
+
+.bannerBtn {
+  text-transform: uppercase;
+  display: flex;
+  height: 40px;
+  width: 200px;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #75767F;
+  border-radius: 20px;
+  background: #565656;
+  color: #F1F2F9;
+}
+
+.bannerBtn:hover {
+  background: #F1F2F9;
+  color: #565656;
+}
