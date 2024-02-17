@@ -15,7 +15,6 @@ import Registration from "./components/RouteComp/Registration/Registration";
 
 const App = () => {
 
-
     return (
         <>
             <div className="container">
