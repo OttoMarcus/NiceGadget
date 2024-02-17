@@ -10,8 +10,6 @@ const Card = ({imageSrc , model , price , screen, capacity , ram}) => {
                 <img className={Style.cardImg} src={imageSrc} alt="pic"/>
             </div>
             <div>
-
-
                 <h4 className={Style.h4}>{model}</h4>
                 <h3 className={Style.h3}>${price}</h3>
             </div>
