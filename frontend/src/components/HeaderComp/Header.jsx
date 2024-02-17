@@ -15,7 +15,7 @@ const Header = () => {
          <div className={Style.headerLogo}>  <a href={`#`}><Logo /></a>
             <ul>
                 <Link className={Style.linksHeader} to="/">Home</Link>
-                <Link className={Style.linksHeader} to="/phones">Phones</Link>
+                <Link className={Style.linksHeader} to="/products/color=blue">Phones</Link>
                 <Link className={Style.linksHeader} to="/tablets">Tablets</Link>
                 <Link className={Style.linksHeader} to="/accessories">Accessories</Link>
             </ul>
