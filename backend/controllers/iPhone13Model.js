@@ -1,4 +1,4 @@
-const Product = require("../models/Product");
+const IPhone13Model = require("../models/IPhone13Model");
 const isValidMongoId = require("../validation/isValidMongoId");
 
 const uniqueRandom = require("unique-random");
@@ -21,22 +21,22 @@ exports.addImages = (req, res, next) => {
   }
 };
 
-exports.addProduct = (req, res, next) => {
+exports.addIPhone13Model = (req, res, next) => {
   const productFields = _.cloneDeep(req.body);
 
   productFields.itemNo = rand();
 
-  try {
-    productFields.name = productFields.name
-      .toLowerCase()
-      .trim()
-      .replace(/\s\s+/g, " ");
-
-  } catch (err) {
-    res.status(400).json({
-      message: `Error happened on server: "${err}" `
-    });
-  }
+  // try {
+  //   productFields.name = productFields.name
+  //     .toLowerCase()
+  //     .trim()
+  //     .replace(/\s\s+/g, " ");
+  //
+  // } catch (err) {
+  //   res.status(400).json({
+  //     message: `Error happened on server: "${err}" `
+  //   });
+  // }
 
   const updatedProduct = queryCreator(productFields);
 
@@ -69,16 +69,16 @@ exports.updateProduct = (req, res, next) => {
       } else {
         const productFields = _.cloneDeep(req.body);
 
-        try {
-          productFields.name = productFields.name
-            .toLowerCase()
-            .trim()
-            .replace(/\s\s+/g, " ");
-        } catch (err) {
-          res.status(400).json({
-            message: `Error happened on server: "${err}" `
-          });
-        }
+        // try {
+        //   productFields.name = productFields.name
+        //     .toLowerCase()
+        //     .trim()
+        //     .replace(/\s\s+/g, " ");
+        // } catch (err) {
+        //   res.status(400).json({
+        //     message: `Error happened on server: "${err}" `
+        //   });
+        // }
 
         const updatedProduct = queryCreator(productFields);
 
@@ -154,5 +154,3 @@ exports.getProductById = (req, res, next) => {
       })
     );
 };
-
-
