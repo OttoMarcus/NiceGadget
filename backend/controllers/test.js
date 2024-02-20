@@ -17,16 +17,37 @@
 //   "picture": "url",
 //   "refCategory": "Iphone11Model?color=silver&capacity=128"
 // }
-// {
-//   "id": "12314",
-//   "variant": "11",
-//   "capacity": "512",
-//   "color": "blue",
-//   "price": "123123",
-//   discount:
-//   "picture": "url",
-//   "refCategory": "Iphone11Model?color=silver&capacity=128"
-// }
+{
+  "id": "12315",
+  "category": "phones"
+  "name": "Apple iPhone 11 64GB Silver",
+  "capacity": "512",
+  "color": "Silver",
+  "price": "123123",
+  "discount": "0.05",
+  "ram": "4",
+  "screen": "5.8” OLED",
+  "brandNew": true,
+  "picture": "url"
+  "refmodel": "Iphone11Model",
+  "avaiable": true
+}
+{
+  "id": "12314",
+  "category": "phones"
+  "name": "Apple iPhone 11 64GB Silver",
+  "capacity": "512",
+  "color": "Silver",
+  "price": "123123",
+  "ram": "4",
+  "screen": "5.8” OLED",
+  "brandNew": true,
+  "picture": "url",
+  "refModel": "Iphone11Model",
+  "avaiable": true
+}
+
+
 //
 // HotPrice
 // id, discount

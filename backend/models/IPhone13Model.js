@@ -1,13 +1,15 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-IPhone13Model
+category mobilePhones
+IPhone13ModelAmount
 const IPhone13ModelSchema = new Schema(
   {
     id: {
       type: String,
       required: true
     },
+    refCategoru: iphone13
     variations: {
       blue: {
         pictures: {
