@@ -1,80 +1,88 @@
 // const mongoose = require("mongoose");
 // const Schema = mongoose.Schema;
 //
-// // category mobilePhones
 //
-//
-// // IPhone13ModelAmount
-// // IPhone14ModelAmount
-// // IPhone15ModelAmount
-//
-// const IPhone13ModelSchema = new Schema(
+// const Model = new Schema(
 //   {
 //     id: {
 //       type: String,
 //       required: true
 //     },
-//     refCategoru: iphone13
-//     variations: {
+//     name: {
+//       type: String,
+//       required: true
+//     },
+//     colors: {
 //       blue: {
-//         pictures: {
-//           "1": {
-//             type: String,
-//             required: true
-//           },
-//           "2": {
-//             type: String,
-//             required: true
-//           },
-//           "3": {
-//             type: String,
-//             required: true
-//           },
-//           "4": {
-//             type: String,
-//             required: true
-//           },
-//           "5": {
-//             type: String,
-//             required: true
+//         pictures: [
+//           {
+//             alt: {
+//               type: String,
+//               required: true
+//             },
+//             link: {
+//               type: String,
+//               required: true
+//             }
 //           }
-//         },
+//         ],
 //         capacity: {
 //           "128": {
 //             price: {
 //               type: Number,
 //               required: true,
-//               default: 700,
 //             },
-//             amount: {
-//               available: true
+//             available: {
+//               type: Boolean,
+//               require: true,
+//               default: true,
+//             },
+//             id: {
 //               type: Number,
-//               default: 20
+//               required: true,
 //             },
-//             id: 12312
+//             discount: {
+//               type: Number,
+//               required: false,
+//             },
 //           },
 //           "256": {
 //             price: {
 //               type: Number,
 //               required: true,
-//               default: 750
 //             },
-//             amount: {
+//             available: {
+//               type: Boolean,
+//               require: true,
+//               default: true,
+//             },
+//             id: {
 //               type: Number,
-//               default: 20
-//             }
-//             id
+//               required: true,
+//             },
+//             discount: {
+//               type: Number,
+//               required: false,
+//             },
 //           },
 //           "512": {
 //             price: {
 //               type: Number,
 //               required: true,
-//               default: 790
 //             },
-//             amount: {
+//             available: {
+//               type: Boolean,
+//               require: true,
+//               default: true,
+//             },
+//             id: {
 //               type: Number,
-//               default: 20
-//             }
+//               required: true,
+//             },
+//             discount: {
+//               type: Number,
+//               required: false,
+//             },
 //           }
 //         },
 //         hexColor: {
@@ -279,10 +287,6 @@
 //         required: true
 //       },
 //       ram: {
-//         type: String,
-//         required: true
-//       },
-//       builtInMemory: {
 //         type: String,
 //         required: true
 //       },
