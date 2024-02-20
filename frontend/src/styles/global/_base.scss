@@ -1,5 +1,18 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
-
-body {
-  font-family: Montserrat, sans-serif;
+//EXAMPLE!!!
+.container {
+  max-width: $ui-breakpoint-xxl;
+  padding: 0 10px;
+  margin: 0 auto;
+  @media screen and (max-width: $ui-breakpoint-xl) {
+    max-width: $ui-breakpoint-lg;
+  }
+  @media screen and (max-width: $ui-breakpoint-lg) {
+    max-width: $ui-breakpoint-md;
+  }
+  @media screen and (max-width: $ui-breakpoint-md) {
+    max-width: $ui-breakpoint-sm;
+  }
+  @media screen and (max-width: $ui-breakpoint-sm) {
+    max-width: 380px;
+  }
 }
