@@ -83,4 +83,4 @@ const mobileModelAmountSchema = new Schema({
 
 mobileModelAmountSchema.index({ "$**": "text" });
 
-module.exports = mobileModelAmount = mongoose.model("products", mobileModelAmountSchema);
+module.exports = MobileModelAmount = mongoose.model("mobileModelAmount", mobileModelAmountSchema);

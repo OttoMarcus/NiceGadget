@@ -1,4 +1,4 @@
-const mobileProduct = require("../models/mobileProduct");
+const mobileProducts = require("../models/mobileProduct");
 const isValidMongoId = require("../validation/isValidMongoId");
 
 const uniqueRandom = require("unique-random");
@@ -40,7 +40,7 @@ exports.addMobileProduct = (req, res, next) => {
 
   const updatedMobileProduct = queryCreator(mobileProductFields);
 
-  const newMobileProduct = new mobileProduct(updatedMobileProduct);
+  const newMobileProduct = new mobileProducts(updatedMobileProduct);
 
   newMobileProduct
     .save()
@@ -60,7 +60,7 @@ exports.updateMobileProduct = (req, res, next) => {
     });
   }
 
-  mobileProduct.findById( id)
+  mobileProducts.findById( id)
     .then(mobileProduct => {
       if (!mobileProduct) {
         return res.status(400).json({
@@ -116,12 +116,12 @@ exports.getMobileProducts = async (req, res, next) => {
   }
 
   try {
-    const mobileProducts = await mobileProduct.find(mongooseQuery)
+    const mobileProducts = await mobileProducts.find(mongooseQuery)
       .skip(startPage * perPage - perPage)
       .limit(perPage)
       .sort(sort)
 
-    const total = await mobileProduct.countDocuments(mongooseQuery);
+    const total = await mobileProducts.countDocuments(mongooseQuery);
 
     res.json({ data: mobileProducts, total });
   } catch (err) {
@@ -138,7 +138,7 @@ exports.getMobileProductById = (req, res, next) => {
       message: `mobileProduct with id "${id}" is not valid`
     });
   }
-  mobileProduct.findById(id)
+  mobileProducts.findById(id)
     .then(mobileProduct => {
       if (!mobileProduct) {
         res.status(400).json({

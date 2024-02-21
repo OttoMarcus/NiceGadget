@@ -154,4 +154,4 @@ const mobileModelSchema = new Schema({
 
 mobileModelSchema.index({ "$**": "text" });
 
-module.exports = mobileModel = mongoose.model("products", mobileModelSchema);
+module.exports = MobileModel = mongoose.model("mobileModel", mobileModelSchema);

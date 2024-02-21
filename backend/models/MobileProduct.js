@@ -61,4 +61,4 @@ const mobileProductSchema = new Schema({
 
 mobileProductSchema.index({ "$**": "text" });
 
-module.exports = item = mongoose.model("products", mobileProductSchema);
+module.exports = MobileProducts = mongoose.model("mobileProducts", mobileProductSchema);

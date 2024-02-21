@@ -1,4 +1,4 @@
-const mobileModel = require("../models/MobileModel");
+const mobileModelsAmount = require("../models/MobileModelAmount");
 const isValidMongoId = require("../validation/isValidMongoId");
 
 const uniqueRandom = require("unique-random");
@@ -21,13 +21,13 @@ const _ = require("lodash");
 //   }
 // };
 
-exports.addMobileModel = (req, res, next) => {
-  const mobileModelFields = _.cloneDeep(req.body);
+exports.addMobileModelAmount = (req, res, next) => {
+  const mobileModelAmountFields = _.cloneDeep(req.body);
 
-  mobileModelFields.itemNo = rand();
+  mobileModelAmountFields.itemNo = rand();
 
   // try {
-  //   mobileModelFields.name = mobileModelFields.name
+  //   mobileModelAmountFields.name = mobileModelAmountFields.name
   //     .toLowerCase()
   //     .trim()
   //     .replace(/\s\s+/g, " ");
@@ -38,13 +38,13 @@ exports.addMobileModel = (req, res, next) => {
   //   });
   // }
 
-  const updatedMobileModel = queryCreator(mobileModelFields);
+  const updatedMobileModelAmount = queryCreator(mobileModelAmountFields);
 
-  const newMobileModel = new mobileModel(updatedMobileModel);
+  const newMobileModelAmount = new mobileModelsAmount(updatedMobileModelAmount);
 
-  newMobileModel
+  newMobileModelAmount
     .save()
-    .then(mobileModel => res.json(mobileModel))
+    .then(mobileModelAmount => res.json(mobileModelAmount))
     .catch(err =>
       res.status(400).json({
         message: `Error happened on server: "${err}" `
@@ -52,25 +52,25 @@ exports.addMobileModel = (req, res, next) => {
     );
 };
 
-exports.updateMobileModel = (req, res, next) => {
+exports.updateMobileModelAmount = (req, res, next) => {
   const { id } = req.params;
   if (!isValidMongoId(id)) {
     return res.status(400).json({
-      message: `mobileModel with id "${id}" is not valid`
+      message: `mobileModelAmount with id "${id}" is not valid`
     });
   }
 
-  mobileModel.findById(id)
-    .then(mobileModel => {
-      if (!mobileModel) {
+  mobileModelsAmount.findById( id)
+    .then(mobileModelAmount => {
+      if (!mobileModelAmount) {
         return res.status(400).json({
-          message: `mobileModel with id "${req.params.id}" is not found.`
+          message: `mobileModelAmount with id "${req.params.id}" is not found.`
         });
       } else {
-        const mobileModelFields = _.cloneDeep(req.body);
+        const mobileModelAmountFields = _.cloneDeep(req.body);
 
         // try {
-        //   mobileModelFields.name = mobileModelFields.name
+        //   mobileModelAmountFields.name = mobileModelAmountFields.name
         //     .toLowerCase()
         //     .trim()
         //     .replace(/\s\s+/g, " ");
@@ -80,14 +80,14 @@ exports.updateMobileModel = (req, res, next) => {
         //   });
         // }
 
-        const updatedMobileModel = queryCreator(mobileModelFields);
+        const updatedMobileModelAmount = queryCreator(mobileModelAmountFields);
 
-        mobileModel.findOneAndUpdate(
+        mobileModelAmount.findOneAndUpdate(
           { _id: req.params.id },
-          { $set: updatedMobileModel },
+          { $set: updatedMobileModelAmount },
           { new: true }
         )
-          .then(mobileModel => res.json(mobileModel))
+          .then(mobileModelAmount => res.json(mobileModelAmount))
           .catch(err =>
             res.status(400).json({
               message: `Error happened on server: "${err}" `
@@ -102,28 +102,28 @@ exports.updateMobileModel = (req, res, next) => {
     );
 };
 
-exports.getMobileModels = async (req, res, next) => {
+exports.getMobileModelAmounts = async (req, res, next) => {
   const mongooseQuery = filterParser(req.query);
   const perPage = Number(req.query.perPage);
   const startPage = Number(req.query.startPage);
   const sort = req.query.sort;
-  const q = typeof req.query.q === "string" ? req.query.q.trim() : null;
+  const q = typeof req.query.q === 'string' ? req.query.q.trim() : null
 
   if (q) {
     mongooseQuery.name = {
-      $regex: new RegExp(q, "i")
+      $regex: new RegExp(q, "i"),
     };
   }
 
   try {
-    const mobileModels = await mobileModel.find(mongooseQuery)
+    const mobileModelAmounts = await mobileModelsAmount.find(mongooseQuery)
       .skip(startPage * perPage - perPage)
       .limit(perPage)
-      .sort(sort);
+      .sort(sort)
 
-    const total = await mobileModel.countDocuments(mongooseQuery);
+    const total = await mobileModelsAmount.countDocuments(mongooseQuery);
 
-    res.json({ data: mobileModels, total });
+    res.json({ data: mobileModelAmounts, total });
   } catch (err) {
     res.status(400).json({
       message: `Error happened on server: "${err}" `
@@ -131,21 +131,21 @@ exports.getMobileModels = async (req, res, next) => {
   }
 };
 
-exports.getMobileModelById = (req, res, next) => {
+exports.getMobileModelAmountById = (req, res, next) => {
   const { id } = req.params;
   if (!isValidMongoId(id)) {
     return res.status(400).json({
-      message: `mobileModel with id "${id}" is not valid`
+      message: `mobileModelAmount with id "${id}" is not valid`
     });
   }
-  mobileModel.findById(id)
-    .then(mobileModel => {
-      if (!mobileModel) {
+  mobileModelsAmount.findById(id)
+    .then(mobileModelAmount => {
+      if (!mobileModelAmount) {
         res.status(400).json({
-          message: `mobileModel with itemNo ${req.params.itemNo} is not found`
+          message: `mobileModelAmount with itemNo ${req.params.itemNo} is not found`
         });
       } else {
-        res.json(mobileModel);
+        res.json(mobileModelAmount);
       }
     })
     .catch(err =>

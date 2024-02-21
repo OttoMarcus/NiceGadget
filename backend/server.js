@@ -23,6 +23,9 @@ const comments = require('./routes/comments');
 const shippingMethods = require('./routes/shippingMethods');
 const paymentMethods = require('./routes/paymentMethods');
 const partners = require('./routes/partners');
+const mobileModels = require('./routes/mobileModels');
+const mobileModelsAmount = require('./routes/mobileModelsAmount');
+const mobileProducts = require('./routes/mobileProducts');
 
 const app = express();
 
@@ -61,6 +64,9 @@ app.use('/api/comments', comments);
 app.use('/api/shipping-methods', shippingMethods);
 app.use('/api/payment-methods', paymentMethods);
 app.use('/api/partners', partners);
+app.use('/api/mobile-products', mobileProducts);
+app.use('/api/mobile-models', mobileModels);
+app.use('/api/mobile-models-amount', mobileModelsAmount);
 
 // Server static assets if in production
 if (process.env.NODE_ENV === 'production') {
