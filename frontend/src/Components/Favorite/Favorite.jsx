@@ -1,11 +1,11 @@
 import React from "react";
-import Heard from "../Icons/Heard";
-import "./Favorite.scss";
+import Heart from "../Icons/Heart";
+import Style from "./Favorite.module.scss";
 
 const Favorite = () => {
   return (
-    <div className="favorite">
-      <Heard />
+    <div className={Style.favorite}>
+      <Heart />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 @import "../../styles/abstracts/variables";
 @import "../../styles/abstracts/mixins";
 
-button {
+.button {
   @include flex-center;
   @include button;
   height: 40px;
