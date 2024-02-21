@@ -5,7 +5,7 @@ import LogOut from "../../Components/Icons/LogOut";
 import LogIn from "../../Components/Icons/LogIn";
 import Registration from "../../Components/Icons/Registration";
 import Order from "../../Components/Icons/Order";
-import Favorite from "../../Components/Icons/Favorite";
+import Favorite from "../../Components/Icons/Heart";
 import Cart from "../../Components/Icons/Cart";
 
 const Header = () => {

@@ -1,0 +1,24 @@
+@import "../../styles/abstracts/variables";
+
+.rectangleCarousel {
+  width: 100%;
+  padding-top: 100%;
+  background-image: url("./img/carousel.png");
+  background-size: contain;
+
+  @media only screen and (min-device-width: $ui-breakpoint-lg) {
+    width: 100%;
+    max-width: $ui-max-container-width;
+    height: 0;
+    padding-top: 40%;
+    background-size: 100%;
+    background-image: url("./img/carousel-tab.png");
+    background-repeat: no-repeat;
+    margin: 0 auto;
+  }
+
+  @media only screen and (min-device-width: $ui-breakpoint-xxl) {
+    height: 463px;
+    padding-top: 0;
+  }
+}

@@ -17,7 +17,7 @@ const CardList = (props) => {
             <LeftArrow />
           </div>
           <div>
-            <RightArrow fill={"#F1F2F9"} />
+            <RightArrow />
           </div>
         </div>
       </div>
@@ -33,8 +33,8 @@ const CardList = (props) => {
 };
 
 CardList.propTypes = {
-  cardParams: PropTypes.object.isRequired,
-  title: PropTypes.string.isRequired,
+  cardParams: PropTypes.object,
+  title: PropTypes.string,
 };
 
 export default CardList;
