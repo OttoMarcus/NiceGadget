@@ -1,17 +1,18 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const itemSchema = new mongoose.Schema({
+const mobileProductSchema = new Schema({
   id: {
     type: String,
     required: true,
     unique: true,
   },
-  category: {
-    parentId: {
+  refCategory: {
+    id: {
       type: String,
       required: true,
     },
-    name: {
+    refName: {
       type: String,
       required: true,
     }
@@ -52,16 +53,12 @@ const itemSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  refModel: {
-    type: String,
-    required: true
-  },
   available: {
     type: Boolean,
     required: true
   }
 });
 
-itemSchema.index({ "$**": "text" });
+mobileProductSchema.index({ "$**": "text" });
 
-module.exports = item = mongoose.model("products", itemSchema);
+module.exports = item = mongoose.model("products", mobileProductSchema);

@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
-//schema for creating mobile models
-const testMobileSchema = new mongoose.Schema({
+const Schema = mongoose.Schema;
+
+const mobileModelSchema = new Schema({
+  id: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   name: {
     type: String,
     required: true,
@@ -8,7 +14,7 @@ const testMobileSchema = new mongoose.Schema({
   },
   colors: [
     {
-      name: {
+      colorName: {
         type: String,
         required: true
       },
@@ -146,6 +152,6 @@ const testMobileSchema = new mongoose.Schema({
   },
 });
 
-testMobileSchema.index({ "$**": "text" });
+mobileModelSchema.index({ "$**": "text" });
 
-module.exports = testMobile = mongoose.model("products", testMobileSchema);
+module.exports = mobileModel = mongoose.model("products", mobileModelSchema);
