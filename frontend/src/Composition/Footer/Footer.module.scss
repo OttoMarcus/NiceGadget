@@ -1,0 +1,12 @@
+@import "../../styles/abstracts/mixins";
+@import "../../styles/abstracts/variables";
+
+.rectangleFooter {
+  @include flex-center;
+  width: 100%;
+  padding: 32px 0;
+  flex-direction: column;
+  gap: 32px;
+
+  background: rgb(255, 255, 255, 0.7);
+}
