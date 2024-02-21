@@ -1,5 +1,27 @@
+@import "../abstracts/variables";
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 
+.App {
+  text-align: center;
+}
+
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  box-sizing: border-box;
+  font-family: $ui-font-family;
+
+  .content-wrapper {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 body {
-  font-family: Montserrat, sans-serif;
+  background-color: $ui-color-background;
+  height: 100%;
+  margin: 0;
 }
