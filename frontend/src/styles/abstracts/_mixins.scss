@@ -1,3 +1,5 @@
+@import "variables";
+
 @mixin h1 {
   font-weight: 700;
   font-size: 48px;
@@ -35,11 +37,11 @@
 }
 
 @mixin button {
-  font-weight: 600;
+  text-align: center;
   font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
   line-height: 21px;
-  letter-spacing: 0;
-  padding: 8px 16px;
 }
 
 @mixin body-text {
@@ -49,6 +51,15 @@
   letter-spacing: 0;
 }
 
+@mixin body-text-14 {
+  color: $ui-color-gray-white;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 21px;
+  text-align: justify;
+}
+
 @mixin small-text {
   font-weight: 600;
   font-size: 12px;
@@ -56,18 +67,49 @@
   letter-spacing: 0;
 }
 
-@mixin mobile-h1 {
+@mixin small-text-12 {
+  color: $ui-color-gray-secondary;
+  font-size: 12px;
   font-weight: 700;
-  font-size: 32px;
+  line-height: normal;
+}
+
+@mixin mobile-h1 {
+  color: $ui-color-gray-white;
+  font-family: $ui-font-family;
+  font-size: $ui-font-size-mobile-h1;
+  font-style: normal;
+  font-weight: 800;
   line-height: 41px;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.32px;
 }
 
 @mixin mobile-h2 {
-  font-weight: 700;
-  font-size: 22px;
-  line-height: 31px;
-  letter-spacing: 0;
+  @include mobile-h1;
+  font-size: $ui-font-size-mobile-h2;
+  line-height: 140%; /* 30.8px */
+}
+
+@mixin tablet-h1 {
+  @include mobile-h1;
+  font-size: $ui-font-size-desk-h1;
+  line-height: 56px;
+  letter-spacing: -0.48px;
+}
+
+@mixin tablet-h2 {
+  @include mobile-h1;
+  font-size: $ui-font-size-mobile-h1;
+  line-height: 41px;
+  letter-spacing: -0.32px;
+}
+
+@mixin tablet-h3 {
+  font-size: $ui-font-size-desk-h3;
+  color: $ui-color-gray-white;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 140%; /* 30.8px */
 }
 
 @mixin mobile-h3 {
@@ -78,10 +120,11 @@
 }
 
 @mixin mobile-h4 {
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 20px;
-  letter-spacing: 0;
+  color: $ui-color-gray-white;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
 
 @mixin flex-between {
