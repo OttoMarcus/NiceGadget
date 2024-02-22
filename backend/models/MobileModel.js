@@ -41,7 +41,7 @@ const mobileModelSchema = new Schema({
             required: true,
             default: true,
           },
-          id: {
+          productId: {
             type: String,
             required: true,
           },
@@ -60,7 +60,7 @@ const mobileModelSchema = new Schema({
             required: true,
             default: true,
           },
-          id: {
+          productId: {
             type: String,
             required: true,
           },
@@ -79,7 +79,7 @@ const mobileModelSchema = new Schema({
             required: true,
             default: true,
           },
-          id: {
+          productId: {
             type: String,
             required: true,
           },
@@ -142,7 +142,7 @@ const mobileModelSchema = new Schema({
   },
   recommendations: {
     type: [{
-      id: {
+      productId: {
         type: String,
         required: true
       }
@@ -154,4 +154,4 @@ const mobileModelSchema = new Schema({
 
 mobileModelSchema.index({ "$**": "text" });
 
-module.exports = MobileModel = mongoose.model("mobileModel", mobileModelSchema);
+module.exports = MobileModel = mongoose.model("mobile-model", mobileModelSchema);

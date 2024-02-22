@@ -7,12 +7,12 @@ const mobileProductSchema = new Schema({
     required: true,
     unique: true,
   },
-  refCategory: {
-    id: {
+  refModel: {
+    modelId: {
       type: String,
       required: true,
     },
-    refName: {
+    modelName: {
       type: String,
       required: true,
     }
@@ -61,4 +61,4 @@ const mobileProductSchema = new Schema({
 
 mobileProductSchema.index({ "$**": "text" });
 
-module.exports = MobileProducts = mongoose.model("mobileProducts", mobileProductSchema);
+module.exports = MobileProducts = mongoose.model("mobile-products", mobileProductSchema);

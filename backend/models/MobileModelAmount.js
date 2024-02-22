@@ -1,16 +1,16 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const mobileModelAmountSchema = new Schema({
+const mobileModelQuantitySchema = new Schema({
   id: {
     type: String,
     required: true,
-    unique: true,
+    unique: true
   },
   name: {
     type: String,
     required: true,
-    unique: true,
+    unique: true
   },
   colors: [
     {
@@ -20,67 +20,43 @@ const mobileModelAmountSchema = new Schema({
       },
       capacity: {
         "128": {
-          price: {
+          quantity: {
             type: Number,
             required: true,
+            default: 20
           },
-          available: {
-            type: Boolean,
-            required: true,
-            default: true,
-          },
-          id: {
+          productId: {
             type: String,
-            required: true,
-          },
-          discount: {
-            type: Number,
-            required: false,
-          },
+            required: true
+          }
         },
         "256": {
-          price: {
-            type: Number,
-            required: true,
-          },
-          available: {
+          quantity: {
             type: Boolean,
             required: true,
-            default: true,
+            default: true
           },
-          id: {
+          productId: {
             type: String,
-            required: true,
-          },
-          discount: {
-            type: Number,
-            required: false,
-          },
+            required: true
+          }
         },
         "512": {
-          price: {
-            type: Number,
-            required: true,
-          },
-          available: {
+          quantity: {
             type: Boolean,
             required: true,
-            default: true,
+            default: true
           },
-          id: {
+          productId: {
             type: String,
-            required: true,
-          },
-          discount: {
-            type: Number,
-            required: false,
-          },
+            required: true
+          }
         }
-      },
+      }
     }
-  ],
+  ]
 });
 
-mobileModelAmountSchema.index({ "$**": "text" });
+mobileModelQuantitySchema.index({ "$**": "text" });
 
-module.exports = MobileModelAmount = mongoose.model("mobileModelAmount", mobileModelAmountSchema);
+module.exports = MobileModelQuantity = mongoose.model("mobile-model-quantity", mobileModelQuantitySchema);
