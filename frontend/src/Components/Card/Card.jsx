@@ -17,8 +17,11 @@ const Card = (props) => {
     refModel,
     color,
   } = props;
+  console.log(`refModel`, refModel);
   return (
-    <Link to={`/phone/${refModel}?&color=${color}&capacity=${capacity}`}>
+    <Link
+      to={`/phones/${refModel.modelId}?&color=${color}&capacity=${capacity}`}
+    >
       <div className={Style.card}>
         <div className={Style.cardImg}>
           <img src={picture} alt="Card" />
