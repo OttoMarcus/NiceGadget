@@ -11,6 +11,7 @@ import Logout from "../Components/RouteComp/LogOut/Logout";
 import Registration from "../Components/RouteComp/Registration/Registration";
 
 import HomePage from "../pages/HomePage/HomePage";
+import WrongRoute from "../pages/WrongRoutePage/WrongRoute";
 
 const RootRouters = () => {
   return (
@@ -25,6 +26,7 @@ const RootRouters = () => {
       <Route path="/registration" element={<Registration />} />
       <Route path="/login" element={<Login />} />
       <Route path="/logout" element={<Logout />} />
+      <Route path="*" element={<WrongRoute />} />
     </Routes>
   );
 };
