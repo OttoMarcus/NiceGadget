@@ -116,14 +116,14 @@ exports.getMobileModelAmounts = async (req, res, next) => {
   }
 
   try {
-    const mobileModelAmounts = await mobileModelsAmount.find(mongooseQuery)
+    const FoundMobileModelAmounts = await mobileModelsAmount.find(mongooseQuery)
       .skip(startPage * perPage - perPage)
       .limit(perPage)
       .sort(sort)
 
     const total = await mobileModelsAmount.countDocuments(mongooseQuery);
 
-    res.json({ data: mobileModelAmounts, total });
+    res.json({ data: FoundMobileModelAmounts, total });
   } catch (err) {
     res.status(400).json({
       message: `Error happened on server: "${err}" `
