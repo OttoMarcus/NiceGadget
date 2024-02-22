@@ -22,8 +22,7 @@ const mobileModelQuantitySchema = new Schema({
         "128": {
           quantity: {
             type: Number,
-            required: true,
-            default: 20
+            required: true
           },
           productId: {
             type: String,
@@ -32,9 +31,8 @@ const mobileModelQuantitySchema = new Schema({
         },
         "256": {
           quantity: {
-            type: Boolean,
-            required: true,
-            default: true
+            type: Number,
+            required: true
           },
           productId: {
             type: String,
@@ -43,9 +41,8 @@ const mobileModelQuantitySchema = new Schema({
         },
         "512": {
           quantity: {
-            type: Boolean,
-            required: true,
-            default: true
+            type: Number,
+            required: true
           },
           productId: {
             type: String,

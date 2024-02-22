@@ -1,0 +1,74 @@
+{
+  "id": "iphone-15-pro-max-quantity",
+  "name": "iPhone15ProMax",
+  "colors": [
+    {
+      "colorName": "titanium grey",
+      "capacity": {
+        "128": {
+          "quantity": "20",
+          "productId": "4"
+        },
+        "256": {
+          "quantity": "20",
+          "productId": "5"
+        },
+        "512": {
+          "quantity": "20",
+          "productId": "6"
+        }
+      }
+    },
+    {
+      "colorName": "blue",
+      "capacity": {
+        "128": {
+          "quantity": "20",
+          "productId": "7"
+        },
+        "256": {
+          "quantity": "20",
+          "productId": "8"
+        },
+        "512": {
+          "quantity": "20",
+          "productId": "9"
+        }
+      }
+    },
+    {
+      "colorName": "black",
+      "capacity": {
+        "128": {
+          "quantity": "20",
+          "productId": "10"
+        },
+        "256": {
+          "quantity": "20",
+          "productId": "11"
+        },
+        "512": {
+          "quantity": "20",
+          "productId": "12"
+        }
+      }
+    },
+    {
+      "colorName": "white",
+      "capacity": {
+        "128": {
+          "quantity": "20",
+          "productId": "1"
+        },
+        "256": {
+          "quantity": "20",
+          "productId": "2"
+        },
+        "512": {
+          "quantity": "20",
+          "productId": "3"
+        }
+      }
+    }
+  ]
+}
