@@ -132,19 +132,27 @@ exports.getMobileModels = async (req, res, next) => {
 };
 
 exports.getMobileModelById = (req, res, next) => {
+  console.log(req.params);
+  console.log('I am here');
   const { id } = req.params;
-  if (!isValidMongoId(id)) {
-    return res.status(400).json({
-      message: `mobileModel with id "${id}" is not valid`
-    });
-  }
-  mobileModels.findById(id)
+  console.log(id);
+  // if (!isValidMongoId(id)) {
+  //   console.log('I am still here?');
+  //   return res.status(400).json({
+  //     message: `mobileModel with id "${id}" is not valid`
+  //   });
+  // }
+  // mobileModels.findById(id)
+  mobileModels.findOne({id: id})
     .then(mobileModel => {
+      console.log('mobileModel', mobileModel);
       if (!mobileModel) {
+        console.log('Surprise, surprise, motherfuckers');
         res.status(400).json({
-          message: `mobileModel with itemNo ${req.params.itemNo} is not found`
+          message: `mobileModel with itemNo ${req.params.id} is not found`
         });
       } else {
+        console.log('else', mobileModel);
         res.json(mobileModel);
       }
     })

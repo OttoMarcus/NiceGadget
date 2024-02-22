@@ -7,7 +7,7 @@ const Phones = () => {
   const [phonesArr, setPhonesArr] = useState();
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/mobile-products")
+    fetch("http://localhost:4000/api/phones")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -15,7 +15,6 @@ const Phones = () => {
         return response.json();
       })
       .then(({ data }) => {
-        console.log(data);
         setPhonesArr(data);
       })
       .catch((error) => {

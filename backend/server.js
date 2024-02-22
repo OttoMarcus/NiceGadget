@@ -67,7 +67,7 @@ app.use('/api/comments', comments);
 app.use('/api/shipping-methods', shippingMethods);
 app.use('/api/payment-methods', paymentMethods);
 app.use('/api/partners', partners);
-app.use('/api/mobile-products', mobileProducts);
+app.use('/api/phones', mobileProducts);
 app.use('/api/mobile-models', mobileModels);
 app.use('/api/mobile-models-amount', mobileModelsAmount);
 

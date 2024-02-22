@@ -17,7 +17,7 @@ const Card = (props) => {
     refModel,
     color,
   } = props;
-  console.log(`refModel`, refModel);
+
   return (
     <Link
       to={`/phones/${refModel.modelId}?&color=${color}&capacity=${capacity}`}
