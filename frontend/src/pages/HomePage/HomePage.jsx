@@ -1,6 +1,6 @@
 import React from "react";
 import Carousel from "../../Components/Carousel/Carousel";
-import CardList from "../../Components/CardList/CardList";
+// import CardList from "../../Components/CardList/CardList";
 import ShopByCategory from "../../Components/ShopByCategory/ShopByCategory";
 import Style from "./HomePage.module.scss";
 
@@ -40,7 +40,8 @@ const HomePage = () => {
       </section>
 
       <section className={Style.container}>
-        <CardList {...brandNewModels} />
+        Card List
+        {/*<CardList {...brandNewModels} />*/}
       </section>
 
       <section className={Style.container}>
@@ -48,7 +49,8 @@ const HomePage = () => {
       </section>
 
       <section className={Style.container}>
-        <CardList {...hotPrices} />
+        HotPrices
+        {/*<CardList {...hotPrices} />*/}
       </section>
     </>
   );

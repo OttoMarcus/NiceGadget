@@ -17,7 +17,7 @@ const Header = () => {
           <Link className={Style.linksHeader} to="/">
             Home
           </Link>
-          <Link className={Style.linksHeader} to="/products/color=blue">
+          <Link className={Style.linksHeader} to="/phones">
             Phones
           </Link>
           <Link className={Style.linksHeader} to="/tablets">
