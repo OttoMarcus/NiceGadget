@@ -12,9 +12,7 @@ const SingleProduct = () => {
   const queryParams = new URLSearchParams(location.search);
   const [color, setColor] = useState(queryParams.get("color"));
   const [capacity, setCapacity] = useState(queryParams.get("capacity"));
-
   console.log(color);
-  console.log(capacity);
 
   const [model, setModel] = useState();
   console.log(model);
@@ -38,12 +36,48 @@ const SingleProduct = () => {
   }, [pathname]);
 
   return (
-    <div className={Style.testBox}>
-      <h1 className={Style.tittle}>This is SingleProduct Page </h1>
-      <Link className={Style.linksBtn} to="/">
-        Home
-      </Link>
-    </div>
+    <>
+      <div className={Style.testBox}>
+        <h1 className={Style.tittle}>This is SingleProduct Page </h1>
+        <Link className={Style.linksBtn} to="/">
+          Home
+        </Link>
+      </div>
+      {model && (
+        <div className={Style.container}>
+          <h2>{model?.name}</h2>
+          <div className={Style.content}>
+            <div className={`${Style.contentProduct} ${Style.imagesWrapper}`}>
+              <div className={Style.fiveImagesWrapper}>
+                {model?.colors
+                  .find((byColor) => byColor.colorName === color)
+                  .pictures.map((pic, index) => {
+                    return (
+                      <div key={index}>
+                        <img
+                          src={`${pic.link}`}
+                          alt={`${pic.alt}`}
+                          width={80}
+                          height={80}
+                        />
+                      </div>
+                    );
+                  })}
+              </div>
+              <div className={Style.bigPicture}>
+                <img
+                  src={`${model?.colors.find((byColor) => byColor.colorName === color).pictures[0].link}`}
+                  alt={`${model?.colors.find((byColor) => byColor.colorName === color).pictures[0].link}`}
+                />
+              </div>
+            </div>
+            <div className={Style.contentProduct}>2</div>
+            <div className={Style.contentProduct}>3</div>
+            <div className={Style.contentProduct}>4</div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

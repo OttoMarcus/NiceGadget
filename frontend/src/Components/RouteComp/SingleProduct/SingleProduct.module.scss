@@ -1,3 +1,15 @@
+* {
+  box-sizing: border-box;
+
+  &::before {
+    box-sizing: border-box;
+  }
+
+  &::after {
+    box-sizing: border-box;
+  }
+}
+
 .linksBtn {
   display: inline-block;
   padding: 10px 20px;
@@ -28,4 +40,43 @@
   line-height: 56px;
   letter-spacing: -0.01em;
   color: black;
+}
+
+.container {
+  width: 1136px;
+  text-align: center;
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.contentProduct {
+  color: white;
+  width: calc(50% - 37.5px);
+  margin-bottom: 75px;
+}
+
+.container:nth-child(1) {
+  color: greenyellow;
+}
+
+.container:nth-child(odd) {
+  margin-right: 75px;
+}
+
+.imagesWrapper {
+  display: flex;
+}
+
+.fiveImagesWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-right: 35px;
+}
+
+.bigPicture {
+  width: 442px;
+  height: 442px;
 }
