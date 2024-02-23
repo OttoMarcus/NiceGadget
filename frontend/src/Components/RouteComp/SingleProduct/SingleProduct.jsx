@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import Style from "./SingleProduct.module.scss";
+import ColorCircle from "../../ColorCircle/ColorCircle";
 
 const SingleProduct = () => {
   const { productId } = useParams();
-  console.log(productId);
+  // console.log(productId);
 
   const location = useLocation();
   const pathname = location.pathname;
@@ -12,10 +13,15 @@ const SingleProduct = () => {
   const queryParams = new URLSearchParams(location.search);
   const [color, setColor] = useState(queryParams.get("color"));
   const [capacity, setCapacity] = useState(queryParams.get("capacity"));
+
   console.log(color);
 
   const [model, setModel] = useState();
-  console.log(model);
+
+  const byColor = model?.colors.find((el) => el.colorName === color);
+
+  const handleCapacityClick = (capacity) => setCapacity(capacity);
+  const handleColorClick = (color) => setColor(color);
 
   useEffect(() => {
     fetch(`http://localhost:4000/api/mobile-models/${productId}/`)
@@ -49,29 +55,78 @@ const SingleProduct = () => {
           <div className={Style.content}>
             <div className={`${Style.contentProduct} ${Style.imagesWrapper}`}>
               <div className={Style.fiveImagesWrapper}>
-                {model?.colors
-                  .find((byColor) => byColor.colorName === color)
-                  .pictures.map((pic, index) => {
-                    return (
-                      <div key={index}>
-                        <img
-                          src={`${pic.link}`}
-                          alt={`${pic.alt}`}
-                          width={80}
-                          height={80}
-                        />
-                      </div>
-                    );
-                  })}
+                {byColor.pictures.map((pic, index) => {
+                  return (
+                    <div key={index} className={Style.smallPicture}>
+                      <img
+                        src={`${pic.link}`}
+                        alt={`${pic.alt}`}
+                        width={80}
+                        height={80}
+                      />
+                    </div>
+                  );
+                })}
               </div>
               <div className={Style.bigPicture}>
                 <img
-                  src={`${model?.colors.find((byColor) => byColor.colorName === color).pictures[0].link}`}
-                  alt={`${model?.colors.find((byColor) => byColor.colorName === color).pictures[0].link}`}
+                  src={`${byColor.pictures[0].link}`}
+                  alt={`${byColor.pictures[0].link}`}
+                  height={331}
+                  width={331}
                 />
               </div>
             </div>
-            <div className={Style.contentProduct}>2</div>
+            <div className={Style.contentProduct}>
+              <h3 className={Style.colorsTitle}>Available colors</h3>
+              <div className={Style.availableColors}>
+                {model?.colors.map((el) => {
+                  return (
+                    <ColorCircle
+                      key={el.colorName}
+                      hexColor={el.hexColor}
+                      color={el.colorName}
+                      isActive={el.colorName === color}
+                      pathname={pathname}
+                      capacity={capacity}
+                      changeColor={handleColorClick}
+                    />
+                  );
+                })}
+              </div>
+              <div className={Style.capacities}>
+                <Link
+                  to={`${pathname}?color=${color}&capacity=${128}`}
+                  onClick={() => handleCapacityClick("128")}
+                >
+                  <div
+                    className={`${capacity === "128" ? Style.capacityActive : Style.capacitiesItem}`}
+                  >
+                    128 GB
+                  </div>
+                </Link>
+                <Link
+                  to={`${pathname}?color=${color}&capacity=${256}`}
+                  onClick={() => handleCapacityClick("256")}
+                >
+                  <div
+                    className={`${capacity === "256" ? Style.capacityActive : Style.capacitiesItem}`}
+                  >
+                    256 GB
+                  </div>
+                </Link>
+                <Link
+                  to={`${pathname}?color=${color}&capacity=${512}`}
+                  onClick={() => handleCapacityClick("512")}
+                >
+                  <div
+                    className={`${capacity === "512" ? Style.capacityActive : Style.capacitiesItem}`}
+                  >
+                    512 GB
+                  </div>
+                </Link>
+              </div>
+            </div>
             <div className={Style.contentProduct}>3</div>
             <div className={Style.contentProduct}>4</div>
           </div>

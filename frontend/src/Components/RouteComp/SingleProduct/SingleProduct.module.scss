@@ -76,7 +76,42 @@
   margin-right: 35px;
 }
 
+.smallPicture {
+  height: 80px;
+  width: 80px;
+}
+
 .bigPicture {
-  width: 442px;
-  height: 442px;
+  width: 331px;
+  height: 331px;
+}
+
+.colorsTitle {
+  text-align: center;
+}
+
+.availableColors {
+  display: flex;
+  margin-bottom: 40px;
+}
+
+.availableColors:last-child {
+  margin-right: 0;
+}
+
+.capacities {
+  display: flex;
+  gap: 30px;
+}
+
+.capacitiesItem {
+  border: 2px solid #ffffff;
+  padding: 15px;
+}
+
+.capacityActive {
+  border: 2px solid #ffffff;
+  padding: 15px;
+  background: #ffffff;
+  color: #111111;
 }

@@ -1,0 +1,14 @@
+.circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin: 5px 8px 5px 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.active {
+  border: 5px solid #8b7d22;
+}
