@@ -68,7 +68,8 @@ app.use('/api/shipping-methods', shippingMethods);
 app.use('/api/payment-methods', paymentMethods);
 app.use('/api/partners', partners);
 app.use('/api/phones', mobileProducts);
-app.use('/api/mobile-models', mobileModels);
+app.use('/api/phones-models', mobileModels);
+// app.use('/api/tablets-models', mobileModels);
 app.use('/api/mobile-models-amount', mobileModelsAmount);
 
 // Server static assets if in production

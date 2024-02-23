@@ -14,17 +14,21 @@ const SingleProduct = () => {
   const [color, setColor] = useState(queryParams.get("color"));
   const [capacity, setCapacity] = useState(queryParams.get("capacity"));
 
-  console.log(color);
+  console.log(pathname);
 
   const [model, setModel] = useState();
-
+  const arr = pathname.split("/");
+  const typeModel = arr[arr.length - 2];
+  // console.log(typeModel);
+  // console.log(arr);
   const byColor = model?.colors.find((el) => el.colorName === color);
 
   const handleCapacityClick = (capacity) => setCapacity(capacity);
   const handleColorClick = (color) => setColor(color);
 
   useEffect(() => {
-    fetch(`http://localhost:4000/api/mobile-models/${productId}/`)
+    fetch(`http://localhost:4000/api/${typeModel}-models/${productId}/`)
+      // fetch(`http://localhost:4000/api/tablets-models/${productId}/`)
       .then((response) => {
         console.log("THEEEEEEEEEN");
         if (!response.ok) {
