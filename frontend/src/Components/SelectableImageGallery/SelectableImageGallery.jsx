@@ -20,8 +20,8 @@ const SelectableImageGallery = ({ images }) => {
                 onClick={() => handleSelectedImg(index)}
                 src={`${pic.link}`}
                 alt={`${pic.alt}`}
-                width={80}
-                height={80}
+                // width={80}
+                // height={80}
               />
             </div>
           );
