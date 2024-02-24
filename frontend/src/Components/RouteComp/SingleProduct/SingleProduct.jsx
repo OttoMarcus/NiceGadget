@@ -18,10 +18,16 @@ const SingleProduct = () => {
   const arr = useMemo(() => pathname.split("/"), [pathname]);
   const typeModel = arr[arr.length - 2];
 
-  const byColor = useMemo(
-    () => model?.colors.find((el) => el.colorName === color),
-    [color]
-  );
+  // const byColor = useMemo(
+  //   () => model?.colors.find((el) => el.colorName === color),
+  //   [color]
+  // );
+  const byColor = useMemo(() => {
+    if (model) {
+      return model?.colors.find((el) => el.colorName === color);
+    }
+    return null;
+  }, [model, color]);
 
   const handleCapacityClick = (capacity) => setCapacity(capacity);
   const handleColorClick = (color) => setColor(color);
