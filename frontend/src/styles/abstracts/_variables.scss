@@ -1,88 +1,52 @@
-/* ------------ Main colors ---------------*/
+@import "../global/fonts";
 
-$ui-color-gray-white: #f1f2f9;
-$ui-color-gray: #4a4d58;
+/* ------------ Colors ---------------*/
+$ui-color-primary-accent: #905bff;
+$ui-color-primary-accent-hover: #a378ff;
 $ui-color-gray-secondary: #75767f;
-$ui-color-accent: #905bff;
-$ui-color-green: #27ae60;
-$ui-color-red: #eb5757;
-$ui-color-background-mobile: #6d6474;
-$ui-color-background-tablets: #8d8d92;
-$ui-color-background-accessories: #973d5f;
-/* ------------ Buttons colors --------------- */
-$ui-color-gray-surface: #161827;
-$ui-color-gray-surface_2: #323542;
+$ui-color-gray-icons-placeholders: #4a4d58;
 $ui-color-gray-elements: #3b3e4a;
-$ui-color-gray-elements_placeholders: #4a4d58;
+$ui-color-gray-selected-surface-2: #323542;
+$ui-color-gray-surface-1: #161827;
+$ui-color-gray-black-background: #0f1121;
 $ui-color-gray-white: #f1f2f9;
-$ui-color-primary: #905bff;
-$ui-color-hover: #a378ff;
-$ui-color-select: #323542;
+$ui-color-green: #27ae60;
+$ui-color-red-badge-favorite: #eb5757;
+$ui-color-background-mobiles-section: #6d6474;
+$ui-color-background-tablets-section: #8d8d92;
+$ui-color-background-accessories-section: #973d5f;
 
 /* ------------ Breakpoints --------------- */
-$ui-breakpoint-sm: 320px;
-$ui-breakpoint-md: 639px;
-$ui-breakpoint-lg: 640px;
-$ui-breakpoint-xl: 1199px;
-$ui-breakpoint-xxl: 1200px;
-
-/*-----------------  Mobile ----------------------------------------------------
-@media only screen and (min-device-width: $ui-breakpoint-sm) and (max-device-width: $ui-breakpoint-md) {}
-//-----------------  Tablet ----------------------------------------------------
-@media only screen and (min-device-width: $ui-breakpoint-lg) and (max-device-width: $ui-breakpoint-xl) {}
-//----------------- Desktop ----------------------------------------------------
-@media only screen and (min-device-width: $ui-breakpoint-xxl)  {}
-*/
+$ui-breakpoint-mobile-min: 320px;
+// $ui-breakpoint-sm: 576px;
+$ui-breakpoint-tablet-min: 640px;
+// $ui-breakpoint-lg: 768px;
+// $ui-breakpoint-xl: 992px;
+$ui-breakpoint-desktop-min: 1200px;
 
 /*-----------Containers max-width----------*/
-
-$ui-max-container-width: 1136px;
-
-/* ---------- Background colors -----------*/
-
-$ui-color-background: #0f1121;
-
-/*------------  TYPOGRAPHY  ---------------*/
+$ui-max-container-width: 1136px; // треба буде розписати параметри контейнера для різних брейкпойнтс
 
 /* ------------ Font families -------------*/
-$ui-font-family: "Montserrat", sans-serif;
+$ui-font-family-bold: "Mont Bold", sans-serif;
+$ui-font-family-semibold: "Mont SemiBold", sans-serif;
+$ui-font-family-regular: "Mont Regular", sans-serif;
 
-/*---------- Font sizes: MOBILE -----------*/
+/*-------- Font sizes: Desktop & Tablet ------*/
+$ui-font-size-h1: 48px;
+$ui-font-size-h2: 32px;
+$ui-font-size-h3: 22px;
+$ui-font-size-h4: 20px;
+$ui-font-size-uppercase: 12px;
+$ui-font-size-buttons: 14px;
+$ui-font-size-body-text: 14px;
+$ui-font-size-small-text: 12px;
+
+/*---------- Font sizes: Mobile -----------*/
 $ui-font-size-mobile-h1: 32px;
 $ui-font-size-mobile-h2: 22px;
 $ui-font-size-mobile-h3: 20px;
 $ui-font-size-mobile-h4: 16px;
 
-/*-------- Font sizes: DESKTOP/TABLET ------*/
-$ui-font-size-desk-h1: 48px;
-$ui-font-size-desk-h2: 32px;
-$ui-font-size-desk-h3: 22px;
-$ui-font-size-desk-h4: 20px;
-$ui-font-size-desk-uppercase: 12px;
-$ui-font-size-desk-buttons: 14px;
-$ui-font-size-desk-body-text: 14px;
-$ui-font-size-desk-small-text: 12px;
-
-/* ---------- Font sizes: buttons ---------*/
-$ui-font-size-save-button: 20px;
-$ui-font-sizes-header-buttons: 24px;
-
-// ----------- Font sizes: cards ----------
-$ui-font-sizes-card-data: 20px;
-$ui-font-sizes-card-doctor: 18px;
-$ui-font-sizes-card-more: 14px;
-
-// ----------- Fields paddings ------------
-$ui-fields-padding: 8px;
-
 // --------------  Other ------------------
 $ui-transition-duration: 0.3s;
-
-$ui-display-none: none;
-$ui-display-block: block;
-$ui-display-flex: flex;
-$ui-display-grid: grid;
-$ui-display-inline-block: inline-block;
-
-$ui-position-ab: absolute;
-$ui-position-rv: relative;

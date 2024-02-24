@@ -10,7 +10,6 @@
   flex-direction: column;
   min-height: 100vh;
   box-sizing: border-box;
-  font-family: $ui-font-family;
 
   .content-wrapper {
     flex: 1 1 0;
@@ -21,7 +20,7 @@
 }
 
 body {
-  background-color: $ui-color-background;
+  background-color: $ui-color-gray-black-background;
   height: 100%;
   margin: 0;
 }

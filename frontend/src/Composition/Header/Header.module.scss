@@ -12,7 +12,7 @@
   align-items: center;
   justify-content: center;
 
-  @media only screen and (min-device-width: $ui-breakpoint-xxl) {
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
     height: 64px;
   }
 }

@@ -14,8 +14,8 @@
 .title {
   @include mobile-h2;
 
-  @media only screen and (min-device-width: $ui-breakpoint-lg) {
-    @include tablet-h2;
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    @include h2;
   }
 }
 
@@ -36,7 +36,7 @@
     justify-content: center;
 
     &:last-child {
-      background-color: $ui-color-select;
+      background-color: $ui-color-gray-selected-surface-2;
     }
   }
 }

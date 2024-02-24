@@ -6,7 +6,7 @@
   background-image: url("./img/carousel.png");
   background-size: contain;
 
-  @media only screen and (min-device-width: $ui-breakpoint-lg) {
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
     width: 100%;
     max-width: $ui-max-container-width;
     height: 0;
@@ -17,7 +17,7 @@
     margin: 0 auto;
   }
 
-  @media only screen and (min-device-width: $ui-breakpoint-xxl) {
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
     height: 463px;
     padding-top: 0;
   }
