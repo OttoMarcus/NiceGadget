@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import Style from "./SingleProduct.module.scss";
 import ColorCircle from "../../ColorCircle/ColorCircle";
@@ -14,30 +14,27 @@ const SingleProduct = () => {
   const [color, setColor] = useState(queryParams.get("color"));
   const [capacity, setCapacity] = useState(queryParams.get("capacity"));
 
-  console.log(pathname);
-
   const [model, setModel] = useState();
-  const arr = pathname.split("/");
+  const arr = useMemo(() => pathname.split("/"), [pathname]);
   const typeModel = arr[arr.length - 2];
-  // console.log(typeModel);
-  // console.log(arr);
-  const byColor = model?.colors.find((el) => el.colorName === color);
+
+  const byColor = useMemo(
+    () => model?.colors.find((el) => el.colorName === color),
+    [color]
+  );
 
   const handleCapacityClick = (capacity) => setCapacity(capacity);
   const handleColorClick = (color) => setColor(color);
 
   useEffect(() => {
     fetch(`http://localhost:4000/api/${typeModel}-models/${productId}/`)
-      // fetch(`http://localhost:4000/api/tablets-models/${productId}/`)
       .then((response) => {
-        console.log("THEEEEEEEEEN");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         return response.json();
       })
       .then((data) => {
-        console.log("THEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEN", data);
         setModel(data);
       })
       .catch((error) => {
