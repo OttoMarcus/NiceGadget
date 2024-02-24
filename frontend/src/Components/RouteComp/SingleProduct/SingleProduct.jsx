@@ -114,14 +114,23 @@ const SingleProduct = () => {
                   </div>
                 </Link>
               </div>
+              <div>
+                <h3>Price</h3>
+                <span
+                  className={`${byColor?.capacity[capacity].discount ? Style.priceCheck : Style.actualPrice}`}
+                  style={{ marginRight: 20 }}
+                >
+                  {byColor?.capacity[capacity].price}
+                </span>
+                <span className={Style.actualPrice}>
+                  {byColor?.capacity[capacity].discount
+                    ? byColor?.capacity[capacity].price *
+                      (1 - byColor?.capacity[capacity]?.discount)
+                    : ""}
+                </span>
+              </div>
             </div>
-            <div className={Style.contentProduct}>
-              {/*<div>*/}
-              {/*  <h3>Price</h3>*/}
-              {/*  <p className={`${byColor.capacity[capacity].discount ? Style.priceCheck : ""}`}>{byColor?.capacity[capacity].price}</p>*/}
-              {/*  <p>{byColor?.capacity[capacity].discount ? byColor?.capacity[capacity].price * (1 - byColor?.capacity[capacity]?.discount) : ""}</p>*/}
-              {/*</div>*/}
-            </div>
+            <div className={Style.contentProduct}></div>
             <div className={Style.contentProduct}>4</div>
           </div>
         </div>
