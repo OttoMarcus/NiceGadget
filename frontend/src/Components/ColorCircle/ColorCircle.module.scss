@@ -2,6 +2,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
+  border: 5px solid #37383f;
   margin: 5px 8px 5px 5px;
   cursor: pointer;
   display: flex;
@@ -10,5 +11,5 @@
 }
 
 .active {
-  border: 5px solid #8b7d22;
+  border: 5px solid #8b8400;
 }
