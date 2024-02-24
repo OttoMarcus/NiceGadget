@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import styles from "./SelectableImageGallery.module.scss";
 
 const SelectableImageGallery = ({ images }) => {
-  console.log(images);
   const [selectedImgIndex, setSelectedImg] = useState(0);
 
   const handleSelectedImg = (imgIndex) => setSelectedImg(imgIndex);
@@ -13,14 +12,16 @@ const SelectableImageGallery = ({ images }) => {
       <div className={styles.smallImagesWrapper}>
         {images.map((pic, index) => {
           return (
-            <div key={index}>
+            <div
+              className={`${styles.smallImgWrapper} ${index === selectedImgIndex ? styles.selectedImg : ""}`}
+              key={index}
+            >
               <img
                 onClick={() => handleSelectedImg(index)}
                 src={`${pic.link}`}
                 alt={`${pic.alt}`}
                 width={80}
                 height={80}
-                className={`${index === selectedImgIndex ? styles.selectedImg : ""}`}
               />
             </div>
           );
@@ -30,8 +31,8 @@ const SelectableImageGallery = ({ images }) => {
         <img
           src={`${images[selectedImgIndex].link}`}
           alt={`${images[selectedImgIndex].alt}`}
-          height={442}
-          width={442}
+          // height={442}
+          // width={442}
         />
       </div>
     </div>

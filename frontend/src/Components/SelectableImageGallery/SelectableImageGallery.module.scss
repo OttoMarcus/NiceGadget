@@ -1,3 +1,8 @@
+img {
+  object-fit: cover;
+  overflow: hidden;
+}
+
 .selectableGallery {
   display: flex;
 }
@@ -9,6 +14,21 @@
 
 .smallImgWrapper {
   margin-bottom: 16px;
+  width: 80px;
+  height: 80px;
+  border: 1px solid #ccc;
+  position: relative;
+  overflow: hidden;
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
   &:last-child {
     margin-bottom: 0;
   }
@@ -16,6 +36,21 @@
 
 .bigImgWrapper {
   flex-shrink: 0;
+  width: 442px;
+  height: 442px;
+  border: 1px solid #ccc;
+  position: relative;
+  overflow: hidden;
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 .selectedImg {
