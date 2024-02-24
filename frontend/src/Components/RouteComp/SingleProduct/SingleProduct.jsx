@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import Style from "./SingleProduct.module.scss";
 import ColorCircle from "../../ColorCircle/ColorCircle";
+import SelectableImageGallery from "../../SelectableImageGallery/SelectableImageGallery";
 
 const SingleProduct = () => {
   const { productId } = useParams();
@@ -14,6 +15,7 @@ const SingleProduct = () => {
   const [capacity, setCapacity] = useState(queryParams.get("capacity"));
 
   const [model, setModel] = useState();
+
   const arr = useMemo(() => pathname.split("/"), [pathname]);
   const typeModel = arr[arr.length - 2];
 
@@ -41,7 +43,7 @@ const SingleProduct = () => {
       .catch((error) => {
         console.error("There was a problem with your fetch operation:", error);
       });
-  }, [pathname]);
+  }, [pathname, productId, typeModel]);
 
   return (
     <>
@@ -55,30 +57,7 @@ const SingleProduct = () => {
         <div className={Style.container}>
           <h2>{model?.name}</h2>
           <div className={Style.content}>
-            <div className={`${Style.contentProduct} ${Style.imagesWrapper}`}>
-              <div className={Style.fiveImagesWrapper}>
-                {byColor.pictures.map((pic, index) => {
-                  return (
-                    <div key={index} className={Style.smallPicture}>
-                      <img
-                        src={`${pic.link}`}
-                        alt={`${pic.alt}`}
-                        width={80}
-                        height={80}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-              <div className={Style.bigPicture}>
-                <img
-                  src={`${byColor.pictures[0].link}`}
-                  alt={`${byColor.pictures[0].link}`}
-                  height={331}
-                  width={331}
-                />
-              </div>
-            </div>
+            <SelectableImageGallery images={byColor.pictures} />
             <div className={Style.contentProduct}>
               <h3 className={Style.colorsTitle}>Available colors</h3>
               <div className={Style.availableColors}>

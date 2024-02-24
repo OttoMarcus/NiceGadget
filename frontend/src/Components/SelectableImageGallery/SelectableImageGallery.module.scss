@@ -1,0 +1,23 @@
+.selectableGallery {
+  display: flex;
+}
+.smallImagesWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-right: 16px;
+}
+
+.smallImgWrapper {
+  margin-bottom: 16px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.bigImgWrapper {
+  flex-shrink: 0;
+}
+
+.selectedImg {
+  border: 5px solid #8b7d22;
+}
