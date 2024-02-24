@@ -13,6 +13,7 @@ img {
 }
 
 .smallImgWrapper {
+  cursor: pointer;
   margin-bottom: 16px;
   width: 80px;
   height: 80px;
@@ -28,6 +29,7 @@ img {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    pointer-events: none;
   }
   &:last-child {
     margin-bottom: 0;
@@ -35,6 +37,7 @@ img {
 }
 
 .bigImgWrapper {
+  cursor: pointer;
   flex-shrink: 0;
   width: 442px;
   height: 442px;
@@ -50,9 +53,10 @@ img {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    pointer-events: none;
   }
 }
 
 .selectedImg {
-  border: 5px solid #8b7d22;
+  box-shadow: 0 0 0 5px #8b7d22;
 }

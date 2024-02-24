@@ -15,9 +15,9 @@ const SelectableImageGallery = ({ images }) => {
             <div
               className={`${styles.smallImgWrapper} ${index === selectedImgIndex ? styles.selectedImg : ""}`}
               key={index}
+              onClick={() => handleSelectedImg(index)}
             >
               <img
-                onClick={() => handleSelectedImg(index)}
                 src={`${pic.link}`}
                 alt={`${pic.alt}`}
                 // width={80}

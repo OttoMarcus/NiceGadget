@@ -14,6 +14,8 @@ const SingleProduct = () => {
   const [color, setColor] = useState(queryParams.get("color"));
   const [capacity, setCapacity] = useState(queryParams.get("capacity"));
 
+  const [shownPrice, setShownPrice] = useState();
+
   const [model, setModel] = useState();
 
   const arr = useMemo(() => pathname.split("/"), [pathname]);
@@ -25,6 +27,9 @@ const SingleProduct = () => {
     }
     return null;
   }, [model, color]);
+
+  console.log(byColor?.capacity[capacity]);
+  // console.log(byColor);
 
   const handleCapacityClick = (capacity) => setCapacity(capacity);
   const handleColorClick = (color) => setColor(color);
@@ -55,7 +60,9 @@ const SingleProduct = () => {
       </div>
       {model && (
         <div className={Style.container}>
-          <h2>{model?.name}</h2>
+          <h2>
+            {model?.name} {color} {capacity} GB
+          </h2>
           <div className={Style.content}>
             <SelectableImageGallery images={byColor.pictures} />
             <div className={Style.contentProduct}>
@@ -108,7 +115,13 @@ const SingleProduct = () => {
                 </Link>
               </div>
             </div>
-            <div className={Style.contentProduct}>3</div>
+            <div className={Style.contentProduct}>
+              {/*<div>*/}
+              {/*  <h3>Price</h3>*/}
+              {/*  <p className={`${byColor.capacity[capacity].discount ? Style.priceCheck : ""}`}>{byColor?.capacity[capacity].price}</p>*/}
+              {/*  <p>{byColor?.capacity[capacity].discount ? byColor?.capacity[capacity].price * (1 - byColor?.capacity[capacity]?.discount) : ""}</p>*/}
+              {/*</div>*/}
+            </div>
             <div className={Style.contentProduct}>4</div>
           </div>
         </div>
