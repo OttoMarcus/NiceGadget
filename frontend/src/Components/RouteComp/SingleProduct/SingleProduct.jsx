@@ -5,7 +5,7 @@ import ColorCircle from "../../ColorCircle/ColorCircle";
 import SelectableImageGallery from "../../SelectableImageGallery/SelectableImageGallery";
 
 const SingleProduct = () => {
-  const { productId } = useParams();
+  const { modelId } = useParams();
 
   const location = useLocation();
   const pathname = location.pathname;
@@ -19,7 +19,9 @@ const SingleProduct = () => {
   const [model, setModel] = useState();
 
   const arr = useMemo(() => pathname.split("/"), [pathname]);
+  console.log(pathname);
   const typeModel = arr[arr.length - 2];
+  console.log(typeModel);
 
   const byColor = useMemo(() => {
     if (model) {
@@ -35,7 +37,7 @@ const SingleProduct = () => {
   const handleColorClick = (color) => setColor(color);
 
   useEffect(() => {
-    fetch(`http://localhost:4000/api/${typeModel}-models/${productId}/`)
+    fetch(`http://localhost:4000/api/${typeModel}-models/${modelId}/`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -48,7 +50,7 @@ const SingleProduct = () => {
       .catch((error) => {
         console.error("There was a problem with your fetch operation:", error);
       });
-  }, [pathname, productId, typeModel]);
+  }, [pathname, modelId, typeModel]);
 
   return (
     <>
