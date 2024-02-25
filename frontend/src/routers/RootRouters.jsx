@@ -20,7 +20,7 @@ const RootRouters = () => {
       <Route path="/order" element={<Order />} />
       <Route path="/accessories" element={<Accessories />} />
       <Route path="/phones" element={<Phones />} />
-      <Route path="/phones/:productId" element={<SingleProduct />} />
+      <Route path="/phones/:modelId" element={<SingleProduct />} />
 
       <Route path="/favorites" element={<Favorites />} />
       <Route path="/shopingcart" element={<ShoppingCart />} />
