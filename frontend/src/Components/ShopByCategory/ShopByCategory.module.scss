@@ -34,7 +34,7 @@ h2 {
   }
 
   & > h4 {
-    @include mobile-h4;
+    @include h4;
     margin-bottom: 0;
   }
 

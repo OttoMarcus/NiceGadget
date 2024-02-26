@@ -35,7 +35,7 @@ const HomePage = () => {
     <>
       <h1 className={Style.container}>Welcome to Nice Gadgets store!</h1>
 
-      <section>
+      <section className={Style.container}>
         <Carousel />
       </section>
 

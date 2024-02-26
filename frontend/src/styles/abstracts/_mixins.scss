@@ -94,14 +94,6 @@
   letter-spacing: 0;
 }
 
-@mixin mobile-h4 {
-  font-family: $ui-font-family-semibold;
-  font-size: $ui-font-size-mobile-h4;
-  font-weight: 700;
-  line-height: 1.25;
-  letter-spacing: 0;
-}
-
 // ---------- Flex ----------
 
 @mixin flex-start {
