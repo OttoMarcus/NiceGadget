@@ -9,9 +9,9 @@ import ShoppingCart from "../Components/RouteComp/ShopppingCart/ShoppingCart";
 import Login from "../Components/RouteComp/LogIn/Login";
 import Logout from "../Components/RouteComp/LogOut/Logout";
 import Registration from "../Components/RouteComp/Registration/Registration";
-
 import HomePage from "../pages/HomePage/HomePage";
 import WrongRoute from "../pages/WrongRoutePage/WrongRoute";
+import SingleProductPage from "../pages/SIngleProductPage/SingleProductPage";
 
 const RootRouters = () => {
   return (
@@ -20,6 +20,7 @@ const RootRouters = () => {
       <Route path="/order" element={<Order />} />
       <Route path="/accessories" element={<Accessories />} />
       <Route path="/phones" element={<Phones />} />
+      <Route path="/phones/:modelId" element={<SingleProductPage />} />
       <Route path="/favorites" element={<Favorites />} />
       <Route path="/shopingcart" element={<ShoppingCart />} />
       <Route path="/tablets" element={<Tablets />} />

@@ -19,32 +19,36 @@ const Card = (props) => {
     available,
   } = props;
   return (
-    <div className={Style.card}>
-      <div className={Style.cardImg}>
-        <img src={picture} alt="Card" />
+    <Link
+      to={`/phones/${refModel.modelId}?color=${color}&capacity=${capacity}`}
+    >
+      <div className={Style.card}>
+        <div className={Style.cardImg}>
+          <img src={picture} alt="Card" />
+        </div>
+        <div className={Style.model}>{name}</div>
+        <div className={Style.price}>${price}</div>
+        <div className={Style.divider}></div>
+        <ul className={Style.paramsGroup}>
+          <li>
+            <p>Screen</p>
+            <p>{screen}</p>
+          </li>
+          <li>
+            <p>Capacity</p>
+            <p>{capacity}</p>
+          </li>
+          <li>
+            <p>RAM</p>
+            <p>{ram}</p>
+          </li>
+        </ul>
+        <div className={Style.buttonWrapper}>
+          <Button btnName={"Add cart"} />
+          <Favorite />
+        </div>
       </div>
-      <div className={Style.model}>{name}</div>
-      <div className={Style.price}>${price}</div>
-      <div className={Style.divider}></div>
-      <ul className={Style.paramsGroup}>
-        <li>
-          <p>Screen</p>
-          <p>{screen}</p>
-        </li>
-        <li>
-          <p>Capacity</p>
-          <p>{capacity}</p>
-        </li>
-        <li>
-          <p>RAM</p>
-          <p>{ram}</p>
-        </li>
-      </ul>
-      <div className={Style.buttonWrapper}>
-        <Button btnName={"Add cart"} />
-        <Favorite />
-      </div>
-    </div>
+    </Link>
   );
 };
 
