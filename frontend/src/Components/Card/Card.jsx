@@ -16,6 +16,7 @@ const Card = (props) => {
     brandNew,
     refModel,
     color,
+    available,
   } = props;
   return (
     <div className={Style.card}>
@@ -60,6 +61,7 @@ Card.propTypes = {
     modelName: PropTypes.string.isRequired,
   }).isRequired,
   color: PropTypes.string.isRequired,
+  available: PropTypes.bool.isRequired,
 };
 
 export default Card;

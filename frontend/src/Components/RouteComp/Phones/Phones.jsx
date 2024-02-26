@@ -44,6 +44,7 @@ const Phones = () => {
                 capacity={card.capacity}
                 ram={card.ram}
                 screen={card.screen}
+                available={card.available}
               />
             );
           })}

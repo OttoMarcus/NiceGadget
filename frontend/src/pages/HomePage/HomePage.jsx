@@ -12,27 +12,31 @@ const HomePage = () => {
       modelId: "iphone-15-pro-max",
       modelName: "iPhone15ProMax",
     },
-    name: "Apple iPhone 14 Pro 128GB Silver (MQ023)",
-    price: 999,
-    screen: "6.1” OLED",
-    capacity: "256 GB",
-    ram: "5 GB",
+    name: "Apple iPhone 15 Pro Max 512GB White",
+    capacity: "512",
     color: "white",
+    price: 1575,
+    ram: "8",
+    brandNew: true,
+    screen: "6.7",
+    available: true,
   };
 
   const hotPrices = {
     title: "Hot prices",
     picture: "MocPic/iphone3.png",
-    name: "Apple iPhone 13 Pro 64GB Grey (MQ023)",
-    price: 888,
-    screen: "6.1” OLED",
-    capacity: "64 GB",
-    ram: "6 GB",
-    color: "white",
     refModel: {
       modelId: "iphone-15-pro-max",
       modelName: "iPhone15ProMax",
     },
+    name: "Apple iPhone 15 Pro Max 256GB White",
+    capacity: "256",
+    color: "white",
+    price: 1575,
+    ram: "8",
+    brandNew: true,
+    screen: "6.7",
+    available: true,
   };
 
   const totalByCategory = {
