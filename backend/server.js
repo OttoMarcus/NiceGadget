@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const path = require('path');
+const cors = require('cors');
 require('dotenv').config();
 
 const globalConfigs = require('./routes/globalConfigs');
@@ -23,12 +24,17 @@ const comments = require('./routes/comments');
 const shippingMethods = require('./routes/shippingMethods');
 const paymentMethods = require('./routes/paymentMethods');
 const partners = require('./routes/partners');
+const mobileModels = require('./routes/mobileModels');
+const mobileProducts = require('./routes/mobileProducts');
+const mobileModelsQuantity = require('./routes/mobileModelsQuantity')
 
 const app = express();
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(cors());
 
 // Connect to MongoDB
 mongoose
@@ -61,6 +67,10 @@ app.use('/api/comments', comments);
 app.use('/api/shipping-methods', shippingMethods);
 app.use('/api/payment-methods', paymentMethods);
 app.use('/api/partners', partners);
+app.use('/api/phones-models', mobileModels);
+app.use('/api/phones', mobileProducts);
+app.use('/api/phones-models-quantity', mobileModelsQuantity);
+
 
 // Server static assets if in production
 if (process.env.NODE_ENV === 'production') {
