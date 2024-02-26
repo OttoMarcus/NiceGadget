@@ -7,22 +7,32 @@ import Style from "./HomePage.module.scss";
 const HomePage = () => {
   const brandNewModels = {
     title: "Brand new models",
-    imageSrc: "MocPic/iphone1.png",
-    model: "Apple iPhone 14 Pro 128GB Silver (MQ023)",
+    picture: "MocPic/iphone1.png",
+    refModel: {
+      modelId: "iphone-15-pro-max",
+      modelName: "iPhone15ProMax",
+    },
+    name: "Apple iPhone 14 Pro 128GB Silver (MQ023)",
     price: 999,
     screen: "6.1” OLED",
-    capacity: "128 GB",
+    capacity: "256 GB",
     ram: "5 GB",
+    color: "white",
   };
 
   const hotPrices = {
     title: "Hot prices",
-    imageSrc: "MocPic/iphone3.png",
-    model: "Apple iPhone 13 Pro 64GB Grey (MQ023)",
+    picture: "MocPic/iphone3.png",
+    name: "Apple iPhone 13 Pro 64GB Grey (MQ023)",
     price: 888,
     screen: "6.1” OLED",
     capacity: "64 GB",
     ram: "6 GB",
+    color: "white",
+    refModel: {
+      modelId: "iphone-15-pro-max",
+      modelName: "iPhone15ProMax",
+    },
   };
 
   const totalByCategory = {

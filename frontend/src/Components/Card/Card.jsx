@@ -3,15 +3,26 @@ import Button from "../Button/Button";
 import Favorite from "../Favorite/Favorite";
 import Style from "./Card.module.scss";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const Card = (props) => {
-  const { imageSrc, model, price, screen, capacity, ram } = props;
+  const {
+    picture,
+    name,
+    price,
+    screen,
+    capacity,
+    ram,
+    brandNew,
+    refModel,
+    color,
+  } = props;
   return (
     <div className={Style.card}>
       <div className={Style.cardImg}>
-        <img src={imageSrc} alt="Card" />
+        <img src={picture} alt="Card" />
       </div>
-      <div className={Style.model}>{model}</div>
+      <div className={Style.model}>{name}</div>
       <div className={Style.price}>${price}</div>
       <div className={Style.divider}></div>
       <ul className={Style.paramsGroup}>
@@ -37,12 +48,18 @@ const Card = (props) => {
 };
 
 Card.propTypes = {
-  imageSrc: PropTypes.string.isRequired,
-  model: PropTypes.string.isRequired,
+  picture: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   screen: PropTypes.string,
   capacity: PropTypes.string,
   ram: PropTypes.string,
+  brandNew: PropTypes.bool,
+  refModel: PropTypes.shape({
+    modelId: PropTypes.string.isRequired,
+    modelName: PropTypes.string.isRequired,
+  }).isRequired,
+  color: PropTypes.string.isRequired,
 };
 
 export default Card;
