@@ -1,0 +1,45 @@
+@import "../../styles/abstracts/mixins";
+@import "../../styles/abstracts/variables";
+
+.rectangleFooter {
+  @include flex-center;
+
+  width: 100%;
+  padding: 32px 0;
+
+  gap: 32px;
+
+  background: #0f1121;
+
+  ul {
+    min-width: 500px;
+    display: flex;
+    justify-content: flex-start;
+    text-transform: uppercase;
+    align-items: center;
+    gap: 64px;
+  }
+
+  a {
+    color: #75767f;
+    font-weight: 700;
+  }
+
+  p {
+    display: block;
+    color: grey;
+    text-align: right;
+
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+
+  .footerUpArrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+  }
+}

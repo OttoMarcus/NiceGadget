@@ -1,18 +1,27 @@
-//EXAMPLE!!!
-.container {
-  max-width: $ui-breakpoint-xxl;
-  padding: 0 10px;
-  margin: 0 auto;
-  @media screen and (max-width: $ui-breakpoint-xl) {
-    max-width: $ui-breakpoint-lg;
+@import "../abstracts/variables";
+@import "fonts";
+
+.App {
+  text-align: center;
+}
+
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  box-sizing: border-box;
+
+  .content-wrapper {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  @media screen and (max-width: $ui-breakpoint-lg) {
-    max-width: $ui-breakpoint-md;
-  }
-  @media screen and (max-width: $ui-breakpoint-md) {
-    max-width: $ui-breakpoint-sm;
-  }
-  @media screen and (max-width: $ui-breakpoint-sm) {
-    max-width: 380px;
-  }
+}
+
+body {
+  background-color: $ui-color-gray-black-background;
+  height: 100%;
+  margin: 0;
+  color: $ui-color-gray-white;
 }
