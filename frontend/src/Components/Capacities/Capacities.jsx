@@ -9,14 +9,19 @@ const Capacities = ({
   capacityOption,
   actualCapacity,
   capacityChange,
+  availability,
+  // setAvailability,
 }) => {
   return (
     <Link
       to={`${pathname}?color=${color}&capacity=${capacityOption}`}
-      onClick={() => capacityChange(capacityOption)}
+      onClick={() => {
+        capacityChange(capacityOption);
+        // setAvailability(availability);
+      }}
     >
       <div
-        className={`${actualCapacity === capacityOption ? styles.capacityActive : styles.capacitiesItem}`}
+        className={`${actualCapacity === capacityOption ? styles.capacityActive : styles.capacitiesItem} ${!availability ? styles.notAvailable : ""} `}
       >
         {capacityOption} GB
       </div>
@@ -30,6 +35,8 @@ Capacities.propTypes = {
   capacityOption: PropTypes.string.isRequired,
   actualCapacity: PropTypes.string.isRequired,
   capacityChange: PropTypes.func.isRequired,
+  availability: PropTypes.bool.isRequired,
+  // setAvailability: PropTypes.func.isRequired,
 };
 
 export default Capacities;

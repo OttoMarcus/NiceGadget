@@ -10,14 +10,17 @@ const ColorCircle = ({
   color,
   isActive,
   changeColor,
+  availabilityArr,
 }) => {
+  const notAvailable = availabilityArr.every((el) => el?.available === false);
+
   return (
     <Link
       to={`${pathname}?color=${color}&capacity=${capacity}`}
       onClick={() => changeColor(color)}
     >
       <div
-        className={`${styles.circle} ${isActive ? styles.active : ""}`}
+        className={`${styles.circle} ${isActive ? styles.active : ""} ${notAvailable && styles.notAvailable}`}
         style={{ backgroundColor: hexColor }}
       ></div>
     </Link>
@@ -31,6 +34,7 @@ ColorCircle.propTypes = {
   color: PropTypes.string.isRequired,
   isActive: PropTypes.bool.isRequired,
   changeColor: PropTypes.func.isRequired,
+  availabilityArr: PropTypes.array,
 };
 
 export default ColorCircle;

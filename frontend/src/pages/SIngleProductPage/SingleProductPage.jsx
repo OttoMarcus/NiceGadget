@@ -6,6 +6,8 @@ import SelectableImageGallery from "../../Components/SelectableImageGallery/Sele
 import Capacities from "../../Components/Capacities/Capacities";
 import ProductAbout from "../../Components/ProductAbout/ProductAbout";
 import TechSpecs from "../../Components/ProductTechSpecs/ProductTechSpecs";
+import Button from "../../Components/Button/Button";
+import Favorite from "../../Components/Favorite/Favorite";
 
 const SingleProductPage = () => {
   const { modelId } = useParams();
@@ -80,6 +82,7 @@ const SingleProductPage = () => {
                       pathname={pathname}
                       capacity={capacity}
                       changeColor={handleColorClick}
+                      availabilityArr={el.capacities}
                     />
                   );
                 })}
@@ -94,11 +97,12 @@ const SingleProductPage = () => {
                       pathname={pathname}
                       capacityOption={el?.capacity}
                       actualCapacity={capacity}
+                      availability={el?.available}
                     />
                   );
                 })}
               </div>
-              <div>
+              <div className={styles.priceWrapper}>
                 <h3>Price</h3>
                 <span
                   className={`${chosenCapacityObject.discount ? styles.priceCheck : styles.actualPrice}`}
@@ -113,6 +117,13 @@ const SingleProductPage = () => {
                       (1 - chosenCapacityObject.discount)
                     }`}
                 </span>
+              </div>
+              <div className={styles.buttonsWrapper}>
+                <Button
+                  onClick={() => {}}
+                  isAvailable={chosenCapacityObject?.available}
+                />
+                <Favorite />
               </div>
             </div>
             <div className={styles.contentProduct}>

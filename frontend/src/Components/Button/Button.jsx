@@ -1,12 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Style from "./Button.module.scss";
+import styles from "./Button.module.scss";
 
-const Button = ({ btnName }) => {
-  return <button className={Style.button}>{btnName}</button>;
+const Button = ({ btnName, isAvailable, onClick, inCart }) => {
+  return (
+    <button className={styles.button} onClick={onClick}>
+      {isAvailable
+        ? inCart
+          ? "Added to cart"
+          : btnName
+        : "E-mail me when available"}
+    </button>
+  );
 };
 
 Button.propTypes = {
   btnName: PropTypes.string,
+  isAvailable: PropTypes.bool,
+  onClick: PropTypes.func,
+  inCart: PropTypes.bool,
+};
+
+Button.defaultProps = {
+  btnName: "Add to cart",
+  isAvailable: true,
+  onClick: () => {},
+  inCart: false,
 };
 export default Button;

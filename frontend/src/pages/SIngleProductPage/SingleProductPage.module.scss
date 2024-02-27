@@ -125,6 +125,10 @@ a {
   color: #111111;
 }
 
+.priceWrapper {
+  margin-bottom: 16px;
+}
+
 .actualPrice {
   text-align: center;
   font-size: 32px;
@@ -134,4 +138,11 @@ a {
   text-align: center;
   font-size: 32px;
   text-decoration: line-through;
+}
+
+.buttonsWrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  text-align: center;
 }
