@@ -6,18 +6,8 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const Card = (props) => {
-  const {
-    picture,
-    name,
-    price,
-    screen,
-    capacity,
-    ram,
-    brandNew,
-    refModel,
-    color,
-    available,
-  } = props;
+  const { picture, name, price, screen, capacity, ram, refModel, color } =
+    props;
   return (
     <Link
       to={`/phones/${refModel.modelId}?color=${color}&capacity=${capacity}`}

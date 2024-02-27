@@ -5,8 +5,8 @@ import styles from "./ProductAbout.module.scss";
 const ProductAbout = ({ title, text }) => {
   return (
     <>
-      <h4>{title}</h4>
-      <p>{text}</p>
+      <h4 className={styles.aboutTitle}>{title}</h4>
+      <p className={styles.aboutDescription}>{text}</p>
     </>
   );
 };
