@@ -3,10 +3,12 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import styles from "./SingleProductPage.module.scss";
 import ColorCircle from "../../Components/ColorCircle/ColorCircle";
 import SelectableImageGallery from "../../Components/SelectableImageGallery/SelectableImageGallery";
+import Capacities from "../../Components/Capacities/Capacities";
+import ProductAbout from "../../Components/ProductAbout/ProductAbout";
+import TechSpecs from "../../Components/ProductTechSpecs/ProductTechSpecs";
 
 const SingleProductPage = () => {
   const { modelId } = useParams();
-
   const location = useLocation();
   const pathname = location.pathname;
 
@@ -25,6 +27,10 @@ const SingleProductPage = () => {
     }
     return null;
   }, [model, color]);
+
+  const chosenCapacityObject = byColor?.capacities.find(
+    (capacitiesObj) => capacitiesObj?.capacity === capacity
+  );
 
   const handleCapacityClick = (capacity) => setCapacity(capacity);
   const handleColorClick = (color) => setColor(color);
@@ -78,9 +84,53 @@ const SingleProductPage = () => {
                   );
                 })}
               </div>
+              <div className={styles.capacities}>
+                {byColor.capacities.map((el, index) => {
+                  return (
+                    <Capacities
+                      key={index}
+                      capacityChange={handleCapacityClick}
+                      color={color}
+                      pathname={pathname}
+                      capacityOption={el?.capacity}
+                      actualCapacity={capacity}
+                    />
+                  );
+                })}
+              </div>
+              <div>
+                <h3>Price</h3>
+                <span
+                  className={`${chosenCapacityObject.discount ? styles.priceCheck : styles.actualPrice}`}
+                  style={{ marginRight: 20 }}
+                >
+                  ${chosenCapacityObject.price}
+                </span>
+                <span className={styles.actualPrice}>
+                  {chosenCapacityObject.discount &&
+                    `$${
+                      chosenCapacityObject.price *
+                      (1 - chosenCapacityObject.discount)
+                    }`}
+                </span>
+              </div>
             </div>
-            <div className={styles.contentProduct}></div>
-            <div className={styles.contentProduct}>4</div>
+            <div className={styles.contentProduct}>
+              <h3>About</h3>
+              {model?.about.map((item, index) => {
+                return (
+                  <ProductAbout
+                    key={index}
+                    text={item.text}
+                    title={item.title}
+                  />
+                );
+              })}
+            </div>
+            <div className={styles.contentProduct}>
+              <h3>Tech specs</h3>
+              <TechSpecs techSpecs={model?.techSpecs} capacity={capacity} />
+            </div>
           </div>
         </div>
       )}
