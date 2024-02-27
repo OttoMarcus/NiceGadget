@@ -1,52 +1,82 @@
-@import "../global/fonts";
+//EXAMPLE!!!
 
-/* ------------ Colors ---------------*/
-$ui-color-primary-accent: #905bff;
-$ui-color-primary-accent-hover: #a378ff;
-$ui-color-gray-secondary: #75767f;
-$ui-color-gray-icons-placeholders: #4a4d58;
-$ui-color-gray-elements: #3b3e4a;
-$ui-color-gray-selected-surface-2: #323542;
-$ui-color-gray-surface-1: #161827;
-$ui-color-gray-black-background: #0f1121;
-$ui-color-gray-white: #f1f2f9;
-$ui-color-green: #27ae60;
-$ui-color-red-badge-favorite: #eb5757;
-$ui-color-background-mobiles-section: #6d6474;
-$ui-color-background-tablets-section: #8d8d92;
-$ui-color-background-accessories-section: #973d5f;
+// ------------ Main colors ---------------
+$ui-color-primary: #008337;
+$ui-color-primary-hover: #00642A;
+$ui-color-text-white: #FFFFFF;
+$ui-color-text-black: #000000;
 
-/* ------------ Breakpoints --------------- */
-$ui-breakpoint-mobile-min: 320px;
-// $ui-breakpoint-sm: 576px;
-$ui-breakpoint-tablet-min: 640px;
-// $ui-breakpoint-lg: 768px;
-// $ui-breakpoint-xl: 992px;
-$ui-breakpoint-desktop-min: 1200px;
+// ------------ Breakpoints ---------------
+$ui-breakpoint-sm: 576px;
+$ui-breakpoint-md: 768px;
+$ui-breakpoint-lg: 992px;
+$ui-breakpoint-xl: 1200px;
+$ui-breakpoint-xxl: 1400px;
 
-/*-----------Containers max-width----------*/
-$ui-max-container-width: 1136px; // треба буде розписати параметри контейнера для різних брейкпойнтс
 
-/* ------------ Font families -------------*/
-$ui-font-family-bold: "Mont Bold", sans-serif;
-$ui-font-family-semibold: "Mont SemiBold", sans-serif;
-$ui-font-family-regular: "Mont Regular", sans-serif;
+//-----------Containers max-width----------
 
-/*-------- Font sizes: Desktop & Tablet ------*/
-$ui-font-size-h1: 48px;
-$ui-font-size-h2: 32px;
-$ui-font-size-h3: 22px;
-$ui-font-size-h4: 20px;
-$ui-font-size-uppercase: 12px;
-$ui-font-size-buttons: 14px;
-$ui-font-size-body-text: 14px;
-$ui-font-size-small-text: 12px;
 
-/*---------- Font sizes: Mobile -----------*/
-$ui-font-size-mobile-h1: 32px;
-$ui-font-size-mobile-h2: 22px;
-$ui-font-size-mobile-h3: 20px;
-$ui-font-size-mobile-h4: 16px;
+// ---------- Background colors -----------
+$ui-color-background-main: #196539;
+$ui-color-background-header: #000000;
+$ui-color-background-modal: rgba(0,0,0,0.4);
+$ui-color-background-modal-body: #FFFFFF;
+$ui-color-background-filters: rgb(232, 239, 235);
+$ui-color-background-card: rgb(232, 239, 235);
+$ui-color-background-card-done: rgba(191,211,199,255);
+$ui-color-background-button-logout: rgb(246, 169, 200);
+$ui-color-background-button-logout-hover: rgb(190, 85, 127);
+
+// ------------ Shadow colors -------------
+$ui-color-shadow: #000000;
+
+// ------------ Border colors -------------
+$ui-color-border: #003A18;
+
+// -------- Disabled button colors --------
+$ui-color-disabled-background: #CCCCCC;
+$ui-color-disabled-text: #666666;
+
+// ------------ Border radius -------------
+$ui-border-radius: 5px;
+
+// ------------ Font families -------------
+$ui-font-family: 'Roboto', sans-serif;
+
+// ------- Font sizes: filters form -------
+$ui-font-size-filters-form-item: 18px;
+
+// ---------- Font sizes: modal -----------
+$ui-font-size-modal-label: 16px;
+$ui-font-size-modal-item: 16px;
+$ui-font-size-modal-title: 28px;
+
+// -------- Font sizes: visit form --------
+$ui-font-size-form-label: 16px;
+$ui-font-size-form-item: 16px;
+
+// ---------- Font sizes: buttons ---------
+$ui-font-size-save-button: 20px;
+$ui-font-sizes-header-buttons: 24px;
+
+// ----------- Font sizes: cards ----------
+$ui-font-sizes-card-data: 20px;
+$ui-font-sizes-card-doctor: 18px;
+$ui-font-sizes-card-more: 14px;
+
+// ----------- Fields paddings ------------
+$ui-fields-padding: 8px;
 
 // --------------  Other ------------------
 $ui-transition-duration: 0.3s;
+
+
+$ui-display-none: none;
+$ui-display-block: block;
+$ui-display-flex: flex;
+$ui-display-grid: grid;
+$ui-display-inline-block: inline-block;
+
+$ui-position-ab: absolute;
+$ui-position-rv: relative;
