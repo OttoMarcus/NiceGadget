@@ -1,15 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Style from "./AccessoriesPage.module.scss";
+import CardAccessories from "../../Components/CardAccessories/CardAccessories";
+const Accessories = () => {
+  const [accessoriesArr, setAccessoriesArr] = useState();
 
-const AccessoriesPage = () => {
+  useEffect(() => {
+    fetch("http://localhost:4000/api/accessories")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then(({ data }) => {
+        console.log(data);
+        setAccessoriesArr(data);
+      })
+      .catch((error) => {
+        console.error("There was a problem with your fetch operation:", error);
+      });
+  }, []);
+
   return (
-    <div>
-      <section className={Style.container}>
-        <h1>Accessories</h1>
-        <div className={Style.cardWrapper}>{/*<AccessoriesCard />*/}</div>
-      </section>
-    </div>
+    <>
+      <div className={Style.testBox}>
+        <h1 className={Style.tittle}>This is Accessories Page</h1>
+        <Link className={Style.linksBtn} to="/">
+          Home
+        </Link>
+      </div>
+      <div className={Style.cardWrapper}>
+        {accessoriesArr &&
+          accessoriesArr.map((accessory, index) => (
+            <CardAccessories
+              key={index}
+              name={accessory.name}
+              color={accessory.color}
+              price={accessory.price}
+              picture={accessory.picture}
+              weight={accessory.weight}
+              size={accessory.size}
+              available={accessory.available}
+            />
+          ))}
+      </div>
+    </>
   );
 };
 
-export default AccessoriesPage;
+export default Accessories;
