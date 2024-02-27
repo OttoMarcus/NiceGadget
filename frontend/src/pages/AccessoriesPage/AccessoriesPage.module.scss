@@ -45,3 +45,11 @@ h1 {
     @include h1;
   }
 }
+
+.cardWrapper {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  max-width: $ui-max-container-width;
+  gap: 40px;
+}
