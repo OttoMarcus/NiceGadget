@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Order from "../Components/RouteComp/Order/Order";
-import Accessories from "../Components/RouteComp/Accessories/Accessories";
+import AccessoriesPage from "../pages/AccessoriesPage/AccessoriesPage";
 import Phones from "../Components/RouteComp/Phones/Phones";
 import Favorites from "../Components/RouteComp/Favorites/Favorites";
 import Tablets from "../Components/RouteComp/Tablets/Tablets";
@@ -18,7 +18,7 @@ const RootRouters = () => {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/order" element={<Order />} />
-      <Route path="/accessories" element={<Accessories />} />
+      <Route path="/accessories" element={<AccessoriesPage />} />
       <Route path="/phones" element={<Phones />} />
       <Route path="/phones/:modelId" element={<SingleProductPage />} />
       <Route path="/favorites" element={<Favorites />} />
