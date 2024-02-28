@@ -3,8 +3,9 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import * as Sentry from "@sentry/react";
 import reportWebVitals from "./reportWebVitals";
-
+import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import { store } from "./store/store";
 
 if (process.env.NODE_ENV === "production") {
   Sentry.init({
@@ -29,9 +30,11 @@ if (process.env.NODE_ENV === "production") {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
 

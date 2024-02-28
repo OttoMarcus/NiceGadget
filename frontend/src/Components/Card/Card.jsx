@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const Card = (props) => {
-  const { picture, name, price, screen, capacity, ram, refModel, color } =
+  const { id, picture, name, price, screen, capacity, ram, refModel, color } =
     props;
   return (
     <Link
@@ -35,7 +35,7 @@ const Card = (props) => {
         </ul>
         <div className={Style.buttonWrapper}>
           <Button btnName={"Add cart"} />
-          <Favorite />
+          <Favorite id={id}/>
         </div>
       </div>
     </Link>
@@ -43,6 +43,7 @@ const Card = (props) => {
 };
 
 Card.propTypes = {
+  id: PropTypes.number.isRequired,
   picture: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,

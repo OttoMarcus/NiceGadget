@@ -6,6 +6,7 @@ import Style from "./HomePage.module.scss";
 
 const HomePage = () => {
   const brandNewModels = {
+    id: 1234,
     title: "Brand new models",
     picture: "MocPic/iphone1.png",
     refModel: {
@@ -23,6 +24,7 @@ const HomePage = () => {
   };
 
   const hotPrices = {
+    id: 5678,
     title: "Hot prices",
     picture: "MocPic/iphone3.png",
     refModel: {
