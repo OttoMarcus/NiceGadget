@@ -91,17 +91,47 @@ exports.getAccessoryModels = async (req, res, next) => {
     }
 };
 
+// exports.getAccessoryModelById = (req, res, next) => {
+//     const { name } = req.params;
+//
+//     console.log("name:", name)
+//     accessoriesModels.findOne({ name: name })
+//         .then(accessoryModel => {
+//             console.log("TRIPLE IF:", accessoryModel)
+//
+//             if (!accessoryModel) {
+//                 console.log("DOBULE IF:", accessoryModel)
+//
+//                 res.status(400).json({
+//                     message: `Accessory model with id ${name} is not found`
+//                 });
+//             } else {
+//                 console.log("ELSE IF:", accessoryModel)
+//
+//                 res.json(accessoryModel);
+//             }
+//         })
+//         .catch(err =>
+//             res.status(400).json({
+//                 message: `Error happened on server: "${err}" `
+//             })
+//         );
+// };
 exports.getAccessoryModelById = (req, res, next) => {
-    const { id } = req.params;
-    accessoriesModels.findOne({ _id: id })
+    const { name } = req.params;
+    console.log(name)
+    accessoriesModels.findOne({ name: name })
         .then(accessoryModel => {
+            console.log(accessoryModel)
+
             if (!accessoryModel) {
-                res.status(400).json({
-                    message: `Accessory model with id ${id} is not found`
+                console.log(accessoryModel)
+
+                return res.status(400).json({
+                    message: `Accessory model with name "${name}" is not found`
                 });
-            } else {
-                res.json(accessoryModel);
             }
+            res.json(accessoryModel);
         })
         .catch(err =>
             res.status(400).json({

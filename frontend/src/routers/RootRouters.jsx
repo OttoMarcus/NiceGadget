@@ -12,6 +12,7 @@ import Registration from "../Components/RouteComp/Registration/Registration";
 import HomePage from "../pages/HomePage/HomePage";
 import WrongRoute from "../pages/WrongRoutePage/WrongRoute";
 import SingleProductPage from "../pages/SIngleProductPage/SingleProductPage";
+import SingleAccessoriesPage from "../pages/SingleAccessoriesPage/SingleAccessoriesPage";
 
 const RootRouters = () => {
   return (
@@ -19,6 +20,10 @@ const RootRouters = () => {
       <Route path="/" element={<HomePage />} />
       <Route path="/order" element={<Order />} />
       <Route path="/accessories" element={<AccessoriesPage />} />
+      <Route
+        path="/accessories/:accessoryId"
+        element={<SingleAccessoriesPage />}
+      />
       <Route path="/phones" element={<Phones />} />
       <Route path="/phones/:modelId" element={<SingleProductPage />} />
       <Route path="/favorites" element={<Favorites />} />

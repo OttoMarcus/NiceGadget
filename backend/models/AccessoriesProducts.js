@@ -7,16 +7,6 @@ const accessoriesProductSchema = new Schema({
         required: true,
         unique: true,
     },
-    refModel: {
-        modelId: {
-            type: String,
-            required: true,
-        },
-        modelName: {
-            type: String,
-            required: true,
-        }
-    },
     name: {
         type: String,
         required: true
@@ -38,11 +28,11 @@ const accessoriesProductSchema = new Schema({
         required: true
     },
     weight: {
-        type: Boolean,
+        type: String,
         required: true
     },
     size: {
-        type: Boolean,
+        type: String,
         required: true
     }
 });

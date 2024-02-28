@@ -74,6 +74,6 @@ router.get("/", getAccessoryModels);
 // @route   GET /accessoriesModels/:id
 // @desc    GET existing accessory models by id
 // @access  Public
-router.get("/:id", getAccessoryModelById);
+router.get("/:name", getAccessoryModelById);
 
 module.exports = router;

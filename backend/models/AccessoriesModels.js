@@ -12,7 +12,6 @@ const accessoriesModelSchema = new Schema({
         required: true,
         unique: true,
     },
-
     pictures: [
         {
             alt: {
@@ -25,7 +24,6 @@ const accessoriesModelSchema = new Schema({
             }
         }
     ],
-
     techSpecs: [{
         specName: {
             type: String,

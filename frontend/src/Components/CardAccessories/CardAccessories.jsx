@@ -7,6 +7,8 @@ import Favorite from "../Favorite/Favorite";
 
 const CardAccessories = (props) => {
   const { name, color, price, picture, size, weight } = props;
+  console.log(name);
+
   return (
     <Link to={`/accessories/${name}?color=${color}`}>
       <div className={Style.card}>
