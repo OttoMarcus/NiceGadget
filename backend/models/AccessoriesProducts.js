@@ -36,6 +36,14 @@ const accessoriesProductSchema = new Schema({
     available: {
         type: Boolean,
         required: true
+    },
+    weight: {
+        type: Boolean,
+        required: true
+    },
+    size: {
+        type: Boolean,
+        required: true
     }
 });
 

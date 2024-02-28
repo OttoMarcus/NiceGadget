@@ -12,61 +12,43 @@ const accessoriesModelSchema = new Schema({
         required: true,
         unique: true,
     },
-    colors: [
+
+    pictures: [
         {
-            colorName: {
+            alt: {
                 type: String,
-                default: "white",
                 required: true
             },
-            pictures: [
-                {
-                    alt: {
-                        type: String,
-                        required: true
-                    },
-                    link: {
-                        type: String,
-                        required: true
-                    }
-                }
-            ]
+            link: {
+                type: String,
+                required: true
+            }
         }
     ],
-    techSpecs: {
-        weight: {
+
+    techSpecs: [{
+        specName: {
             type: String,
             required: true
         },
-        size: {
-            type: String,
-            required: true
-        },
-        type: {
-            type: String,
-            required: true
-        },
-        power: {
+        specDescription: {
             type: String,
             required: true
         }
-    },
-    about: {
-        type: [{
-            title: {
-                type: String,
-                required: true
-            },
-            text: {
-                type: String,
-                required: true
-            },
-        }],
-        required: true
-    }
+    }],
+    about: [{
+        title: {
+            type: String,
+            required: true
+        },
+        text: {
+            type: String,
+            required: true
+        }
+    }],
 });
 
-accessoriesModelSchema.index({ "$**": "text" });
+accessoriesModelSchema.index({"$**": "text"});
 
 module.exports = AccessoriesModel = mongoose.model("accessories-model", accessoriesModelSchema);
 
