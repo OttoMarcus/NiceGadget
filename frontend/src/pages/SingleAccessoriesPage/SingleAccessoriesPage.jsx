@@ -27,33 +27,38 @@ const SingleAccessoriesPage = () => {
 
   return (
     <>
-      <div className={styles.testBox}>
-        <h2 className={styles.tittle}>This is SingleProductPage </h2>
-        <Link className={styles.linksBtn} to="/">
-          Home
-        </Link>
-      </div>
+      <Link className={styles.linksBtn} to="/">
+        Home
+      </Link>
 
       <div>
         {accessories && (
           <div>
             <h2>{accessories.name}</h2>
             <SelectableImageGallery images={accessories.pictures} />
-            <ul>
-              {accessories.techSpecs.map((spec, index) => (
-                <li key={index}>
-                  <strong>{spec.specName}:</strong> {spec.specDescription}
-                </li>
-              ))}
-            </ul>
-            <ul>
-              {accessories.about &&
-                accessories.about.map((info, index) => (
-                  <li key={index}>
-                    <strong>{info.title}:</strong> {info.text}
-                  </li>
-                ))}
-            </ul>
+            <div className={styles.paramWrapperContainer}>
+              <div className={styles.paramWrapper}>
+                {accessories.about &&
+                  accessories.about.map((info, index) => (
+                    <div className={styles.paramsGroupFirst} key={index}>
+                      <p className={styles.title}>{info.title}</p>
+                      <p className={styles.description}>{info.text}</p>
+                    </div>
+                  ))}
+              </div>
+              <div className={styles.paramContainer}>
+                <div className={styles.paramWrapper}>
+                  {accessories.techSpecs.map((spec, index) => (
+                    <div className={styles.paramsGroup} key={index}>
+                      <p className={styles.title}>{spec.specName}</p>
+                      <p className={styles.description}>
+                        {spec.specDescription}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>
