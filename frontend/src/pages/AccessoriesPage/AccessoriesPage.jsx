@@ -25,10 +25,12 @@ const Accessories = () => {
   return (
     <>
       <div className={Style.testBox}>
-        <h1 className={Style.tittle}>This is Accessories Page</h1>
-        <Link className={Style.linksBtn} to="/">
-          Home
-        </Link>
+        <div className={Style.timeWrapper}>
+          <h1 className={Style.tittle}>This is Accessories Page</h1>
+          <Link className={Style.linksBtn} to="/">
+            Home
+          </Link>
+        </div>
       </div>
       <div className={Style.cardWrapper}>
         {accessoriesArr &&
