@@ -1,0 +1,38 @@
+.specContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.paramsGroup {
+  display: flex;
+  justify-content: space-between;
+  width: 400px;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.divider {
+  width: 72%;
+  height: 2px;
+  background-color: #323542ff;
+  margin: 0 auto;
+}
+
+.title {
+  color: var(--Gray-Secondary, #75767f);
+  font-family: "Mont Bold", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 21px;
+}
+
+.description {
+  color: var(--Gray-White, #f1f2f9);
+  text-align: right;
+  font-family: "Mont Bold", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 21px;
+}

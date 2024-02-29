@@ -55,13 +55,14 @@ h1 {
 }
 
 .linksBtn {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #007bff;
+  padding: 10px;
+  gap: 10px;
   color: #fff;
   text-decoration: none;
   border-radius: 5px;
   transition: background-color 0.3s ease;
+  display: flex;
+  justify-content: center;
 }
 
 .timeWrapper {
@@ -72,4 +73,41 @@ h1 {
   text-align: center;
   max-height: 150px;
   margin: 120px;
+}
+
+.buttonHome {
+  margin: 10px;
+  border: 1px solid #75767f;
+  width: 100px;
+  height: 40px;
+}
+
+.buttonHome:hover {
+  margin: 10px;
+  border: 1px solid #ffffff;
+  width: 100px;
+  height: 40px;
+  transition: background-color 0.3s ease;
+  background-color: #75767f;
+}
+
+.buttonBack {
+  color: white;
+  margin: 10px;
+  border: 1px solid #75767f;
+  width: 100px;
+  height: 40px;
+}
+
+.buttonBack:hover {
+  margin: 10px;
+  border: 1px solid #ffffff;
+  width: 100px;
+  height: 40px;
+  transition: background-color 0.3s ease;
+  background-color: #75767f;
+}
+
+.buttonWrapper {
+  display: flex;
 }

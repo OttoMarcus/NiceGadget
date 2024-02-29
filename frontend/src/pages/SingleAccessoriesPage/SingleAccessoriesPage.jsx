@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-
+import AboutCard from "../../Components/AboutCard/AboutCard";
 import styles from "./SingleAccessoriesPage.module.scss";
+import AccessoriesTechSpecs from "../../Components/AccessoriesTechSpec/AccessoriesTechSpecs";
 import SelectableImageGallery from "../../Components/SelectableImageGallery/SelectableImageGallery";
+import AccesorriesPriceGroup from "../../Components/AccessoriesPriceGroup/AccesorriesPriceGroup";
+import Style from "../AccessoriesPage/AccessoriesPage.module.scss";
+import Home from "../../Components/Icons/Home";
+import LeftArrow from "../../Components/Icons/LeftArrow";
 
 const SingleAccessoriesPage = () => {
   const { accessoryId } = useParams();
@@ -27,36 +32,39 @@ const SingleAccessoriesPage = () => {
 
   return (
     <>
-      <Link className={styles.linksBtn} to="/">
-        Home
-      </Link>
+      <div className={Style.buttonWrapper}>
+        <div className={Style.buttonBack}>
+          <Link className={Style.linksBtn} to="/accessories">
+            <LeftArrow />
+            Back
+          </Link>
+        </div>
+        <div className={Style.buttonHome}>
+          <Link className={Style.linksBtn} to="/">
+            <Home />
+            Home
+          </Link>
+        </div>
+      </div>
 
       <div>
         {accessories && (
-          <div>
-            <h2>{accessories.name}</h2>
-            <SelectableImageGallery images={accessories.pictures} />
-            <div className={styles.paramWrapperContainer}>
-              <div className={styles.paramWrapper}>
-                {accessories.about &&
-                  accessories.about.map((info, index) => (
-                    <div className={styles.paramsGroupFirst} key={index}>
-                      <p className={styles.title}>{info.title}</p>
-                      <p className={styles.description}>{info.text}</p>
-                    </div>
-                  ))}
+          <div className={styles.container}>
+            <div className={styles.title3}>{accessories.name}</div>
+            <div className={styles.content}>
+              <div className={styles.contentProduct}>
+                <SelectableImageGallery images={accessories.pictures} />
               </div>
-              <div className={styles.paramContainer}>
-                <div className={styles.paramWrapper}>
-                  {accessories.techSpecs.map((spec, index) => (
-                    <div className={styles.paramsGroup} key={index}>
-                      <p className={styles.title}>{spec.specName}</p>
-                      <p className={styles.description}>
-                        {spec.specDescription}
-                      </p>
-                    </div>
-                  ))}
-                </div>
+              <div className={styles.contentProduct}>
+                <AccesorriesPriceGroup price={accessories.price} />
+              </div>
+              <div className={styles.contentProduct}>
+                <div className={styles.title}>About</div>
+                <AboutCard about={accessories.about} />
+              </div>
+              <div className={styles.contentProduct}>
+                <div className={styles.title2}>Tech Specs</div>
+                <AccessoriesTechSpecs specs={accessories.techSpecs} />
               </div>
             </div>
           </div>

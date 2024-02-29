@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Style from "./AccessoriesPage.module.scss";
 import CardAccessories from "../../Components/CardAccessories/CardAccessories";
+import Home from "../../Components/Icons/Home";
+import LeftArrow from "../../Components/Icons/LeftArrow";
 const Accessories = () => {
   const [accessoriesArr, setAccessoriesArr] = useState();
 
@@ -14,7 +16,6 @@ const Accessories = () => {
         return response.json();
       })
       .then(({ data }) => {
-        console.log(data);
         setAccessoriesArr(data);
       })
       .catch((error) => {
@@ -24,14 +25,21 @@ const Accessories = () => {
 
   return (
     <>
-      <div className={Style.testBox}>
-        <div className={Style.timeWrapper}>
-          <h1 className={Style.tittle}>This is Accessories Page</h1>
+      <div className={Style.buttonWrapper}>
+        <div className={Style.buttonBack}>
           <Link className={Style.linksBtn} to="/">
+            <LeftArrow />
+            Back
+          </Link>
+        </div>
+        <div className={Style.buttonHome}>
+          <Link className={Style.linksBtn} to="/">
+            <Home />
             Home
           </Link>
         </div>
       </div>
+
       <div className={Style.cardWrapper}>
         {accessoriesArr &&
           accessoriesArr.map((accessory, index) => (
