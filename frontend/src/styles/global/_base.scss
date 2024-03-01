@@ -25,3 +25,17 @@ body {
   margin: 0;
   color: $ui-color-gray-white;
 }
+
+.container {
+  padding: 16px;
+  max-width: $ui-max-container-width;
+
+  /*-----------------  Tablet ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    padding: 24px;
+  }
+  /*----------------- Desktop ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    padding: 32px;
+  }
+}
