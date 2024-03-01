@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Style from "./Registration.module.scss";
+import UserRegForm from "../../Forms/UserRegFrom/UserRegForm";
 
 const Registration = () => {
   return (
@@ -9,6 +10,7 @@ const Registration = () => {
       <Link className={Style.linksBtn} to="/">
         Home
       </Link>
+      <UserRegForm />
     </div>
   );
 };
