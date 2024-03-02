@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-
-import styles from "./SingleAccessoriesPage.module.scss";
+import { useParams } from "react-router-dom";
 import SelectableImageGallery from "../../Components/SelectableImageGallery/SelectableImageGallery";
+import styles from "./SingleAccessoriesPage.module.scss";
+import Button from "../../Components/Button/Button";
+import Favorite from "../../Components/Favorite/Favorite";
+import TechSpecs from "../../Components/ProductTechSpecs/ProductTechSpecs";
+import ProductAbout from "../../Components/ProductAbout/ProductAbout";
 
 const SingleAccessoriesPage = () => {
   const { accessoryId } = useParams();
@@ -27,41 +30,60 @@ const SingleAccessoriesPage = () => {
 
   return (
     <>
-      <Link className={styles.linksBtn} to="/">
-        Home
-      </Link>
-
-      <div>
-        {accessories && (
-          <div>
-            <h2>{accessories.name}</h2>
-            <SelectableImageGallery images={accessories.pictures} />
-            <div className={styles.paramWrapperContainer}>
-              <div className={styles.paramWrapper}>
-                {accessories.about &&
-                  accessories.about.map((info, index) => (
-                    <div className={styles.paramsGroupFirst} key={index}>
-                      <p className={styles.title}>{info.title}</p>
-                      <p className={styles.description}>{info.text}</p>
-                    </div>
-                  ))}
+      {accessories && (
+        <div className={styles.container}>
+          <h2 className={styles.productTitle}>{accessories.name}</h2>
+          <div className={styles.content}>
+            <div className={styles.imagesAndCustomizationWrapper}>
+              <div className={styles.outerImagesWrapper}>
+                <SelectableImageGallery
+                  images={accessories.colors[0].pictures}
+                />
               </div>
-              <div className={styles.paramContainer}>
-                <div className={styles.paramWrapper}>
-                  {accessories.techSpecs.map((spec, index) => (
-                    <div className={styles.paramsGroup} key={index}>
-                      <p className={styles.title}>{spec.specName}</p>
-                      <p className={styles.description}>
-                        {spec.specDescription}
-                      </p>
+              <div className={styles.outerCustomizationWrapper}>
+                <div className={styles.productCustomizationWrapper}>
+                  <div className={styles.priceWrapper}>
+                    <div className={styles.actualPrice}>
+                      ${accessories.price}
                     </div>
-                  ))}
+                  </div>
+                  <div className={styles.buttonsWrapper}>
+                    <Button onClick={() => {}} />
+                    <Favorite click={() => console.log("click")} />
+                  </div>
+                  <div>
+                    <TechSpecs
+                      techSpecs={
+                        accessories?.techSpecs.length > 4
+                          ? accessories?.techSpecs.slice(0, 4)
+                          : accessories?.techSpecs
+                      }
+                    />
+                  </div>
                 </div>
               </div>
             </div>
+            <div className={styles.aboutAndTechSpecsWrapper}>
+              <div className={styles.aboutSection}>
+                <h3 className={styles.aboutHeader}>About</h3>
+                {accessories.about.map((item, index) => {
+                  return (
+                    <ProductAbout
+                      key={index}
+                      title={item.title}
+                      text={item.text}
+                    />
+                  );
+                })}
+              </div>
+              <div className={styles.techSpecsSection}>
+                <h3 className={styles.techSpecsHeader}>Tech specs</h3>
+                <TechSpecs techSpecs={accessories.techSpecs} />
+              </div>
+            </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
 };

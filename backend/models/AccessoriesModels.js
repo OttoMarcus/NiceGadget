@@ -5,23 +5,37 @@ const accessoriesModelSchema = new Schema({
     id: {
         type: String,
         required: true,
-        unique: true,
+        unique: true
     },
     name: {
         type: String,
         required: true,
-        unique: true,
+        unique: true
     },
-    pictures: [
+    price: {
+        type: String,
+        required: true,
+        unique: true
+    },
+
+    colors: [
         {
-            alt: {
+            colorName: {
                 type: String,
                 required: true
             },
-            link: {
-                type: String,
-                required: true
-            }
+            pictures: [
+                {
+                    alt: {
+                        type: String,
+                        required: true
+                    },
+                    link: {
+                        type: String,
+                        required: true
+                    }
+                }
+            ],
         }
     ],
     techSpecs: [{
@@ -44,6 +58,7 @@ const accessoriesModelSchema = new Schema({
             required: true
         }
     }],
+
 });
 
 accessoriesModelSchema.index({"$**": "text"});
