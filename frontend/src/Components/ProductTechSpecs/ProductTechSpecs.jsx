@@ -19,12 +19,16 @@ const TechSpecs = ({ techSpecs, capacity }) => {
 };
 
 TechSpecs.propTypes = {
-  capacity: PropTypes.string.isRequired,
+  capacity: PropTypes.string,
   techSpecs: PropTypes.arrayOf(
     PropTypes.shape({
       specName: PropTypes.string.isRequired,
       specDescription: PropTypes.string.isRequired,
     })
   ).isRequired,
+};
+
+TechSpecs.defaultProps = {
+  capacity: "",
 };
 export default TechSpecs;

@@ -1,11 +1,17 @@
+@import "../../styles/abstracts/variables";
+@import "../../styles/abstracts/mixins";
+
 .aboutTitle {
-  color: #ffffff;
-  text-align: center;
+  @include h4;
+  margin-bottom: 16px;
 }
 
 .aboutDescription {
-  color: #6d6474;
-  text-align: left;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  @include small-text;
+  color: $ui-color-gray-secondary;
+  margin-bottom: 32px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
