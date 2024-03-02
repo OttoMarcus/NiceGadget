@@ -8,6 +8,7 @@ import ProductAbout from "../../Components/ProductAbout/ProductAbout";
 import TechSpecs from "../../Components/ProductTechSpecs/ProductTechSpecs";
 import Button from "../../Components/Button/Button";
 import Favorite from "../../Components/Favorite/Favorite";
+import { capitalizeFirstLetterOfWord } from "../../helpers/capitalizeFirstLetterOfWord";
 
 const SingleProductPage = () => {
   const { modelId } = useParams();
@@ -59,7 +60,7 @@ const SingleProductPage = () => {
       {model && (
         <div className={styles.container}>
           <h2 className={styles.productTitle}>
-            {model?.name} {color} {capacity} GB
+            {model?.name} {capitalizeFirstLetterOfWord(color)} {capacity} GB
           </h2>
           <div className={styles.content}>
             <div className={styles.imagesAndCustomizationWrapper}>
