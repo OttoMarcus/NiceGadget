@@ -9,7 +9,7 @@ const Button = ({ btnName, isAvailable, onClick, inCart }) => {
         ? inCart
           ? "Added to cart"
           : btnName
-        : "E-mail me when available"}
+        : "Notify when available"}
     </button>
   );
 };

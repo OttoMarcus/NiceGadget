@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Link, useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import styles from "./SingleProductPage.module.scss";
 import ColorCircle from "../../Components/ColorCircle/ColorCircle";
 import SelectableImageGallery from "../../Components/SelectableImageGallery/SelectableImageGallery";
@@ -8,6 +8,7 @@ import ProductAbout from "../../Components/ProductAbout/ProductAbout";
 import TechSpecs from "../../Components/ProductTechSpecs/ProductTechSpecs";
 import Button from "../../Components/Button/Button";
 import Favorite from "../../Components/Favorite/Favorite";
+import { capitalizeFirstLetterOfWord } from "../../helpers/capitalizeFirstLetterOfWord";
 
 const SingleProductPage = () => {
   const { modelId } = useParams();
@@ -56,91 +57,138 @@ const SingleProductPage = () => {
 
   return (
     <>
-      <div className={styles.testBox}>
-        <h2 className={styles.tittle}>This is SingleProductPage </h2>
-        <Link className={styles.linksBtn} to="/">
-          Home
-        </Link>
-      </div>
       {model && (
         <div className={styles.container}>
-          <h3>
-            {model?.name} {color} {capacity} GB
-          </h3>
+          <h2 className={styles.productTitle}>
+            {model?.name} {capitalizeFirstLetterOfWord(color)} {capacity} GB
+          </h2>
           <div className={styles.content}>
-            <SelectableImageGallery images={byColor.pictures} />
-            <div className={styles.contentProduct}>
-              <h4 className={styles.colorsTitle}>Available colors</h4>
-              <div className={styles.availableColors}>
-                {model?.colors.map((el) => {
-                  return (
-                    <ColorCircle
-                      key={el.colorName}
-                      hexColor={el.hexColor}
-                      color={el.colorName}
-                      isActive={el.colorName === color}
-                      pathname={pathname}
+            <div className={styles.imagesAndCustomizationWrapper}>
+              <div className={styles.outerImagesWrapper}>
+                <SelectableImageGallery images={byColor.pictures} />
+              </div>
+              <div className={styles.outerCustomizationWrapper}>
+                <div className={styles.productCustomizationWrapper}>
+                  <h4 className={styles.customizationHeader}>
+                    Available colors
+                  </h4>
+                  <div className={styles.availableColors}>
+                    {model?.colors.map((el) => {
+                      return (
+                        <ColorCircle
+                          key={el.colorName}
+                          hexColor={el.hexColor}
+                          color={el.colorName}
+                          isActive={el.colorName === color}
+                          pathname={pathname}
+                          capacity={capacity}
+                          changeColor={handleColorClick}
+                          availabilityArr={el.capacities}
+                        />
+                      );
+                    })}
+                  </div>
+                  <div>
+                    <h4 className={styles.customizationHeader}>
+                      Select capacity
+                    </h4>
+                    <div className={styles.capacities}>
+                      {byColor.capacities.map((el, index) => {
+                        return (
+                          <Capacities
+                            key={index}
+                            capacityChange={handleCapacityClick}
+                            color={color}
+                            pathname={pathname}
+                            capacityOption={el?.capacity}
+                            actualCapacity={capacity}
+                            availability={el?.available}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <div className={styles.priceWrapper}>
+                    {chosenCapacityObject.discount ? (
+                      <>
+                        <div className={styles.actualPrice}>
+                          $
+                          {Math.round(
+                            chosenCapacityObject.price *
+                              (1 - chosenCapacityObject.discount)
+                          )}
+                        </div>
+                        <div className={styles.priceCheck}>
+                          ${chosenCapacityObject.price}
+                        </div>
+                      </>
+                    ) : (
+                      <div className={styles.actualPrice}>
+                        ${chosenCapacityObject.price}
+                      </div>
+                    )}
+                  </div>
+                  <div className={styles.buttonsWrapper}>
+                    <Button
+                      onClick={() => {}}
+                      isAvailable={chosenCapacityObject?.available}
+                    />
+                    <Favorite
+                      click={() => {
+                        console.log(chosenCapacityObject?.productId);
+                        console.log(capacity);
+                        console.log(color);
+                        console.log(model?.name);
+                        console.log(byColor?.pictures[0]?.link);
+                        console.log(chosenCapacityObject?.price);
+                        console.log(
+                          chosenCapacityObject?.discount
+                            ? chosenCapacityObject?.discount
+                            : "no discount"
+                        );
+                        console.log(
+                          model?.techSpecs[0]?.specName,
+                          model?.techSpecs[0]?.specDescription
+                        );
+                        console.log(
+                          model?.techSpecs[3]?.specName,
+                          model?.techSpecs[0]?.specDescription
+                        );
+                        console.log("refModel", modelId);
+                        console.log("category", typeModel);
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <TechSpecs
+                      techSpecs={
+                        model?.techSpecs.length > 4
+                          ? model?.techSpecs.slice(0, 4)
+                          : model?.techSpecs
+                      }
                       capacity={capacity}
-                      changeColor={handleColorClick}
-                      availabilityArr={el.capacities}
                     />
-                  );
-                })}
+                  </div>
+                </div>
               </div>
-              <div className={styles.capacities}>
-                {byColor.capacities.map((el, index) => {
+            </div>
+            <div className={styles.aboutAndTechSpecsWrapper}>
+              <div className={styles.aboutSection}>
+                <h3 className={styles.aboutHeader}>About</h3>
+                {model?.about.map((item, index) => {
                   return (
-                    <Capacities
+                    <ProductAbout
                       key={index}
-                      capacityChange={handleCapacityClick}
-                      color={color}
-                      pathname={pathname}
-                      capacityOption={el?.capacity}
-                      actualCapacity={capacity}
-                      availability={el?.available}
+                      text={item.text}
+                      title={item.title}
                     />
                   );
                 })}
               </div>
-              <div className={styles.priceWrapper}>
-                <h3>Price</h3>
-                <span
-                  className={`${chosenCapacityObject.discount ? styles.priceCheck : styles.actualPrice}`}
-                  style={{ marginRight: 20 }}
-                >
-                  ${chosenCapacityObject.price}
-                </span>
-                <span className={styles.actualPrice}>
-                  {chosenCapacityObject.discount &&
-                    `$${
-                      chosenCapacityObject.price *
-                      (1 - chosenCapacityObject.discount)
-                    }`}
-                </span>
+              <div className={styles.techSpecsSection}>
+                <h3 className={styles.techSpecsHeader}>Tech specs</h3>
+                <TechSpecs techSpecs={model?.techSpecs} capacity={capacity} />
               </div>
-              <div className={styles.buttonsWrapper}>
-                <Button
-                  onClick={() => {}}
-                  isAvailable={chosenCapacityObject?.available}
-                />
-                <Favorite />
-              </div>
-            </div>
-            <div className={styles.contentProduct}>
-              <h3>About</h3>
-              {model?.about.map((item, index) => {
-                return (
-                  <ProductAbout
-                    key={index}
-                    text={item.text}
-                    title={item.title}
-                  />
-                );
-              })}
-            </div>
-            <div className={styles.contentProduct}>
-              <h3>Tech specs</h3>
-              <TechSpecs techSpecs={model?.techSpecs} capacity={capacity} />
             </div>
           </div>
         </div>

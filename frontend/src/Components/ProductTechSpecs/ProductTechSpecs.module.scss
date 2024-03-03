@@ -1,15 +1,23 @@
+@import "../../styles/abstracts/variables";
+
 .techSpec {
   display: flex;
-  margin-bottom: 10px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .specName {
-  flex-basis: 30%;
-  font-weight: bold;
-  color: #6d6474;
+  font-family: $ui-font-family-semibold;
+  color: $ui-color-gray-secondary;
+  font-size: $ui-font-size-body-text;
 }
 
 .specDescription {
-  color: #f1f2f9;
-  flex-basis: 70%;
+  font-family: $ui-font-family-semibold;
+  color: $ui-color-gray-white;
+  font-size: $ui-font-size-body-text;
 }

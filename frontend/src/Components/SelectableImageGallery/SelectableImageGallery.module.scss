@@ -1,27 +1,59 @@
-img {
-  object-fit: cover;
-  overflow: hidden;
-}
+@import "../../styles/abstracts/variables";
 
 .selectableGallery {
   display: flex;
-  margin-right: 64px;
-}
-.smallImagesWrapper {
-  display: flex;
   flex-direction: column;
-  margin-right: 16px;
+  width: 100%;
+  margin-bottom: 40px;
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    margin-bottom: 0;
+    max-width: 560px;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+  }
+}
+
+.smallImagesWrapper {
+  order: 2;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    order: 1;
+    flex-direction: column;
+    width: calc(1 / 7) * 100%;
+  }
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+  }
 }
 
 .smallImgWrapper {
-  margin-bottom: 16px;
-  width: 80px;
-  height: 80px;
-  border: 1px solid #ccc;
+  border: 1px solid #37383f;
   position: relative;
   overflow: hidden;
   user-select: none;
   cursor: pointer;
+  margin-right: 8px;
+  max-height: 464px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    aspect-ratio: 1 / 1;
+  }
+
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    aspect-ratio: 1 / 1;
+  }
+
   img {
     max-width: 100%;
     max-height: 100%;
@@ -33,20 +65,36 @@ img {
     transform: translate(-50%, -50%);
     pointer-events: none;
   }
+
   &:last-child {
     margin-bottom: 0;
   }
 }
 
 .bigImgWrapper {
+  order: 1;
   flex-shrink: 0;
-  width: 464px;
-  height: 464px;
-  border: 1px solid #ccc;
   position: relative;
   overflow: hidden;
   user-select: none;
   cursor: pointer;
+  width: 100%;
+  margin-bottom: 16px;
+  aspect-ratio: 1 / 1;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    width: calc((464 / 560) * 100%);
+    aspect-ratio: 1 / 1;
+    padding-top: 0;
+    margin-bottom: 0;
+    order: 2;
+  }
+
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    max-width: 442px;
+    flex-grow: 1;
+  }
+
   img {
     max-width: 100%;
     max-height: 100%;
@@ -61,5 +109,5 @@ img {
 }
 
 .selectedImg {
-  box-shadow: 0 0 0 5px #8b7d22;
+  border: 1px solid $ui-color-gray-white;
 }

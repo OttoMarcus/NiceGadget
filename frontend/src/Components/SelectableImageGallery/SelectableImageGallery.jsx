@@ -4,7 +4,6 @@ import styles from "./SelectableImageGallery.module.scss";
 
 const SelectableImageGallery = ({ images }) => {
   const [selectedImgIndex, setSelectedImg] = useState(0);
-
   const handleSelectedImg = (imgIndex) => setSelectedImg(imgIndex);
 
   return (

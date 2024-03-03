@@ -35,7 +35,11 @@ const Card = (props) => {
         </ul>
         <div className={Style.buttonWrapper}>
           <Button btnName={"Add cart"} />
-          <Favorite id={id}/>
+          <Favorite
+            click={() => {
+              console.log(id);
+            }}
+          />
         </div>
       </div>
     </Link>
@@ -43,7 +47,7 @@ const Card = (props) => {
 };
 
 Card.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,

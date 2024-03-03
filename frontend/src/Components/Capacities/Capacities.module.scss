@@ -1,25 +1,41 @@
+@import "../../styles/abstracts/variables";
+@import "../../styles/abstracts/mixins";
+
 .capacitiesItem {
+  font-family: $ui-font-family-semibold;
+  padding: 7px 8px 4px;
   text-decoration: none;
-  border: 5px solid #ffffff;
-  padding: 15px;
-  color: #ffffff;
+  border: 1px solid #37383f;
+  background: $ui-color-gray-black-background;
+  color: $ui-color-gray-white;
 }
 
 .capacityActive {
-  border: 5px solid #8b8400;
-  padding: 15px;
-  background: #ffffff;
-  color: #111111;
+  font-family: $ui-font-family-semibold;
+  padding: 7px 8px 4px;
+  border: 1px solid $ui-color-gray-white;
+  background: $ui-color-gray-white;
+  color: $ui-color-gray-black-background;
 }
 
 .notAvailable {
-  padding: 15px;
+  font-family: $ui-font-family-semibold;
+  padding: 7px 8px 4px;
   background: linear-gradient(
-    to top right,
-    transparent 49.5%,
-    #999999 49.5%,
-    #999999 50.5%,
-    transparent 50.5%
-  );
-  color: #666666;
+      to top left,
+      rgba(241, 242, 249, 0) 0%,
+      rgba(241, 242, 249, 0) calc(50% - 0.8px),
+      rgba(241, 242, 249, 1) 50%,
+      rgba(241, 242, 249, 0) calc(50% + 0.8px),
+      rgba(241, 242, 249, 0) 100%
+    ),
+    linear-gradient(
+      to top right,
+      rgba(241, 242, 249, 0) 0%,
+      rgba(241, 242, 249, 0) calc(50% - 0.8px),
+      rgba(241, 242, 249, 1) 50%,
+      rgba(241, 242, 249, 0) calc(50% + 0.8px),
+      rgba(241, 242, 249, 0) 100%
+    );
+  color: $ui-color-gray-white;
 }

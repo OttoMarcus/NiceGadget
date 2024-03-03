@@ -34,7 +34,7 @@ const CardAccessories = (props) => {
         </ul>
         <div className={Style.buttonWrapper}>
           <Button btnName={"Add cart"} />
-          <Favorite />
+          <Favorite click={() => {}} />
         </div>
       </div>
     </Link>

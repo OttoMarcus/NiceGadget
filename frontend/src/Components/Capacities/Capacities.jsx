@@ -10,14 +10,12 @@ const Capacities = ({
   actualCapacity,
   capacityChange,
   availability,
-  // setAvailability,
 }) => {
   return (
     <Link
       to={`${pathname}?color=${color}&capacity=${capacityOption}`}
       onClick={() => {
         capacityChange(capacityOption);
-        // setAvailability(availability);
       }}
     >
       <div
@@ -36,7 +34,6 @@ Capacities.propTypes = {
   actualCapacity: PropTypes.string.isRequired,
   capacityChange: PropTypes.func.isRequired,
   availability: PropTypes.bool.isRequired,
-  // setAvailability: PropTypes.func.isRequired,
 };
 
 export default Capacities;

@@ -5,7 +5,6 @@ import Card from "../../Card/Card";
 
 const Phones = () => {
   const [phonesArr, setPhonesArr] = useState();
-
   useEffect(() => {
     fetch("http://localhost:4000/api/phones")
       .then((response) => {
@@ -45,6 +44,7 @@ const Phones = () => {
                 ram={card.ram}
                 screen={card.screen}
                 available={card.available}
+                id={card.id}
               />
             );
           })}
