@@ -29,6 +29,9 @@ const mobileProducts = require('./routes/mobileProducts');
 const mobileModelsQuantity = require('./routes/mobileModelsQuantity')
 const accessoriesProduct = require('./routes/accessoriesProduct')
 const accessoriesModel = require('./routes/accessoriesModel')
+const tabletModels = require('./routes/tabletModels');
+const tabletProducts = require('./routes/tabletProducts');
+const tabletModelQuantity = require('./routes/tabletModelsQuantity')
 
 const app = express();
 
@@ -74,6 +77,9 @@ app.use('/api/phones', mobileProducts);
 app.use('/api/phones-models-quantity', mobileModelsQuantity);
 app.use('/api/accessories', accessoriesProduct);
 app.use('/api/accessories-models', accessoriesModel);
+app.use('/api/tablets-models', tabletModels);
+app.use('/api/tablets', tabletProducts);
+app.use('/api/tablets-models-quantity', tabletModelQuantity);
 
 // Server static assets if in production
 if (process.env.NODE_ENV === 'production') {
