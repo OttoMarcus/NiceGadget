@@ -1,68 +1,146 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import style from "./Header.module.scss";
+import scrollToTop from "../../helpers/scrollUp";
 import LogOut from "../../Components/Icons/LogOut";
 import LogIn from "../../Components/Icons/LogIn";
-import Registration from "../../Components/Icons/Registration";
-import Order from "../../Components/Icons/Order";
 import Favorite from "../../Components/Icons/Heart";
 import Cart from "../../Components/Icons/Cart";
+import Logo from "../../Components/Icons/Logo";
+
+import style from "./Header.module.scss";
 
 const Header = () => {
+  const [isBurgerActive, setIsBurgerActive] = useState(false);
+
+  const active = null;
+  const toggleBurgerActive = () => {
+    if (window.innerWidth > 320 && window.innerWidth < 640) {
+      setIsBurgerActive(!isBurgerActive);
+      isBurgerActive
+        ? (document.body.style.overflow = "auto")
+        : (document.body.style.overflow = "hidden");
+    }
+  };
+
+  const hideMenuOnLogoClick = () => {
+    if (isBurgerActive) {
+      toggleBurgerActive();
+    }
+  };
+
   return (
     <header>
-      {/*<div className={style.headerLogo}>*/}
-      {/*  {" "}*/}
-      {/*  <ul>*/}
-      {/*    <Link className={style.linksHeader} to="/">*/}
-      {/*      Home*/}
-      {/*    </Link>*/}
-      {/*    <Link className={style.linksHeader} to="/phones">*/}
-      {/*      Phones*/}
-      {/*    </Link>*/}
-      {/*    <Link className={style.linksHeader} to="/tablets">*/}
-      {/*      Tablets*/}
-      {/*    </Link>*/}
-      {/*    <Link className={style.linksHeader} to="/accessories">*/}
-      {/*      Accessories*/}
-      {/*    </Link>*/}
-      {/*  </ul>*/}
-      {/*</div>*/}
-
       <div className={style.headerBody}>
-        <a href="#" className={style.headerLogo}>
-          <img src="" alt="logo" />
-        </a>
-        <div className={style.headerBurger}>
+        <Link
+          onClick={() => {
+            hideMenuOnLogoClick();
+            scrollToTop();
+          }}
+          to="/"
+          className={style.headerLogo}
+        >
+          <Logo width={64} height={22} />
+        </Link>
+        <div
+          onClick={toggleBurgerActive}
+          className={
+            !isBurgerActive
+              ? style.headerBurger
+              : `${style.headerBurger} ${style.activeBurger}`
+          }
+        >
           <span></span>
         </div>
-        <nav className={style.headerMenu}>
-          <ul className={style.headerList}>
-            <Link className={style.linksHeader} to="/">
+        <nav
+          className={
+            !isBurgerActive
+              ? style.headerMenu
+              : `${style.headerMenu} ${style.activeBurger}`
+          }
+        >
+          <div className={style.headerList}>
+            <Link
+              onClick={toggleBurgerActive}
+              className={`${style.linksHeader} ${active ? style.linkActive : ""}`}
+              to="/"
+            >
               Home
             </Link>
-            <Link className={style.linksHeader} to="/phones">
+
+            <Link
+              path="/phones"
+              onClick={toggleBurgerActive}
+              className={`${style.linksHeader} ${active ? style.linkActive : ""}`}
+              to="/phones"
+            >
               Phones
             </Link>
-            <Link className={style.linksHeader} to="/tablets">
+
+            <Link
+              path="/tablets"
+              onClick={toggleBurgerActive}
+              className={`${style.linksHeader} ${active ? style.linkActive : ""}`}
+              to="/tablets"
+            >
               Tablets
             </Link>
-            <Link className={style.linksHeader} to="/accessories">
+
+            <Link
+              path="/accessories"
+              onClick={toggleBurgerActive}
+              className={`${style.linksHeader} ${active ? style.linkActive : ""}`}
+              to="/accessories"
+            >
               Accessories
             </Link>
-          </ul>
-          <ul className={style.btnGroup}>
-            <Link className={style.mainLinks} to="/registration">
-              <Registration />
+
+            <Link
+              onClick={toggleBurgerActive}
+              className={`${style.linksHeader} ${style.additionalMobileMenu}`}
+              to="/registration"
+            >
+              Registration
             </Link>
+
+            <Link
+              onClick={toggleBurgerActive}
+              className={`${style.linksHeader} ${style.additionalMobileMenu}`}
+              to="/favorires"
+            >
+              Favorites
+            </Link>
+
+            <Link
+              onClick={toggleBurgerActive}
+              className={`${style.linksHeader} ${style.additionalMobileMenu}`}
+              to="/orders"
+            >
+              Orders
+            </Link>
+
+            <Link
+              onClick={toggleBurgerActive}
+              className={`${style.linksHeader} ${style.additionalMobileMenu}`}
+              to="/cart"
+            >
+              Cart
+            </Link>
+          </div>
+
+          <div className={style.auth}>
+            <Link className={style.authChild} to="/login">
+              <LogIn />
+            </Link>
+            <Link className={style.authChild} to="/logout">
+              <LogOut />
+            </Link>
+          </div>
+          <div className={style.btnGroup}>
             <Link className={style.mainLinks} to="/login">
               <LogIn />
             </Link>
             <Link className={style.mainLinks} to="/logout">
               <LogOut />
-            </Link>
-            <Link className={style.mainLinks} to="/order">
-              <Order />
             </Link>
             <Link className={style.mainLinks} to="/favorites">
               <Favorite />
@@ -70,7 +148,7 @@ const Header = () => {
             <Link className={style.mainLinks} to="/shopingcart">
               <Cart />
             </Link>
-          </ul>
+          </div>
         </nav>
       </div>
     </header>
