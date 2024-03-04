@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import Style from "./Phones.module.scss";
-import Card from "../../Card/Card";
+// import styles from "./Phones.module.scss";
+import Card from "../../Components/Card/Card";
+import { useLocation } from "react-router-dom";
 
 const Phones = () => {
   const [phonesArr, setPhonesArr] = useState();
+
+  const location = useLocation();
+  const typeModel = location.pathname.slice(1);
+
   useEffect(() => {
     fetch("http://localhost:4000/api/phones")
       .then((response) => {
@@ -22,12 +26,6 @@ const Phones = () => {
   }, []);
   return (
     <>
-      <div className={Style.testBox}>
-        <h1 className={Style.tittle}>This is Phones Page </h1>
-        <Link className={Style.linksBtn} to="/">
-          Home
-        </Link>
-      </div>
       <div>
         {phonesArr &&
           phonesArr.map((card) => {
@@ -45,6 +43,7 @@ const Phones = () => {
                 screen={card.screen}
                 available={card.available}
                 id={card.id}
+                typeModel={typeModel}
               />
             );
           })}

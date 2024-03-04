@@ -6,11 +6,21 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const Card = (props) => {
-  const { id, picture, name, price, screen, capacity, ram, refModel, color } =
-    props;
+  const {
+    id,
+    picture,
+    name,
+    price,
+    screen,
+    capacity,
+    ram,
+    refModel,
+    color,
+    typeModel,
+  } = props;
   return (
     <Link
-      to={`/phones/${refModel.modelId}?color=${color}&capacity=${capacity}`}
+      to={`/${typeModel}/${refModel.modelId}?color=${color}&capacity=${capacity}`}
     >
       <div className={Style.card}>
         <div className={Style.cardImg}>
@@ -61,6 +71,7 @@ Card.propTypes = {
   }).isRequired,
   color: PropTypes.string.isRequired,
   available: PropTypes.bool.isRequired,
+  typeModel: PropTypes.string,
 };
 
 export default Card;
