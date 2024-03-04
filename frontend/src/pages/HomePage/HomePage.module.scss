@@ -1,5 +1,6 @@
 @import "../../styles/abstracts/variables";
 @import "../../styles/abstracts/mixins";
+@import "../../styles/global/base";
 
 section {
   width: 100%;
@@ -12,20 +13,6 @@ section {
 
   @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
     margin-bottom: 16px;
-  }
-}
-
-.container {
-  padding: 16px;
-  max-width: $ui-max-container-width;
-
-  /*-----------------  Tablet ---------------------*/
-  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
-    padding: 24px;
-  }
-  /*----------------- Desktop ---------------------*/
-  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
-    padding: 32px;
   }
 }
 
