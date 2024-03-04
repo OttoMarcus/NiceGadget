@@ -2,9 +2,9 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Order from "../Components/RouteComp/Order/Order";
 import AccessoriesPage from "../pages/AccessoriesPage/AccessoriesPage";
-import Phones from "../Components/RouteComp/Phones/Phones";
+import Phones from "../pages/Phones/Phones";
 import Favorites from "../Components/RouteComp/Favorites/Favorites";
-import Tablets from "../Components/RouteComp/Tablets/Tablets";
+import Tablets from "../pages/Tablets/Tablets";
 import ShoppingCart from "../Components/RouteComp/ShopppingCart/ShoppingCart";
 import Login from "../Components/RouteComp/LogIn/Login";
 import Logout from "../Components/RouteComp/LogOut/Logout";
@@ -29,6 +29,7 @@ const RootRouters = () => {
       <Route path="/favorites" element={<Favorites />} />
       <Route path="/shopingcart" element={<ShoppingCart />} />
       <Route path="/tablets" element={<Tablets />} />
+      <Route path="/tablets/:modelId" element={<SingleProductPage />} />
       <Route path="/registration" element={<Registration />} />
       <Route path="/login" element={<Login />} />
       <Route path="/logout" element={<Logout />} />
