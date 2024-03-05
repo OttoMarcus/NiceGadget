@@ -5,23 +5,17 @@ import PropTypes from "prop-types";
 // import { useDispatch } from "react-redux";
 // import { toggleFavorite } from "../../store/favorites/favoriteSlice";
 
-const Favorite = ({ click }) => {
-  // const dispatch = useDispatch();
-
-  // const handleFavorite = (event, id) => {
-  //   event.preventDefault();
-  //   dispatch(toggleFavorite(id));
-  // };
-
+const Favorite = ({ click, some }) => {
   return (
     <div onClick={click} className={Style.favorite}>
-      <Heart />
+      <Heart some={some} />
     </div>
   );
 };
 
 Favorite.propTypes = {
   click: PropTypes.func.isRequired,
+  some: PropTypes.bool.isRequired,
 };
 
 export default Favorite;

@@ -143,7 +143,7 @@ const Header = () => {
               <LogOut />
             </Link>
             <Link className={style.mainLinks} to="/favorites">
-              <Favorite />
+              <Favorite some={false} />
             </Link>
             <Link className={style.mainLinks} to="/shopingcart">
               <Cart />

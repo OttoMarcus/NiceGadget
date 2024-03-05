@@ -6,10 +6,16 @@ import Button from "../../Components/Button/Button";
 import Favorite from "../../Components/Favorite/Favorite";
 import TechSpecs from "../../Components/ProductTechSpecs/ProductTechSpecs";
 import ProductAbout from "../../Components/ProductAbout/ProductAbout";
-
+import { useDispatch, useSelector } from "react-redux";
+import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
 const SingleAccessoriesPage = () => {
   const { accessoryId } = useParams();
   const [accessories, setAccessories] = useState();
+
+  const dispatch = useDispatch();
+  const favor = useSelector((state) => state.favorite.favorites);
+  let some = favor.some((el) => accessories?.id === el?.id);
+  // let some = 1
 
   useEffect(() => {
     fetch(`http://localhost:4000/api/accessories-models/${accessoryId}`)
@@ -49,7 +55,23 @@ const SingleAccessoriesPage = () => {
                   </div>
                   <div className={styles.buttonsWrapper}>
                     <Button onClick={() => {}} />
-                    <Favorite click={() => console.log("click")} />
+                    <Favorite
+                      click={() =>
+                        dispatch(
+                          Tooglefavorites({
+                            id: accessories.id,
+                            name: accessories.name,
+                            color: accessories.colors[0].colorName,
+                            price: accessories.price,
+                            picture: accessories.colors[0].pictures[0].link,
+                            size: accessories?.size,
+                            weight: accessories?.weight,
+                            category: accessories?.category,
+                          })
+                        )
+                      }
+                      some={some}
+                    />
                   </div>
                   <div>
                     <TechSpecs

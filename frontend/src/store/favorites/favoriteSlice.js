@@ -1,32 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  favorites: JSON.parse(localStorage.getItem("favorites")) || [],
-};
-
 const favoriteSlice = createSlice({
-  name: "favorite",
-  initialState,
+  name: "favorites",
+  initialState: {
+    favorites: JSON.parse(localStorage.getItem("favorites")) || [],
+  },
   reducers: {
-    toggleFavorite: (state, action) => {
-      const favoriteIndex = state.favorites.indexOf(action.payload);
-      let newFavoriteList;
-      if (favoriteIndex === -1) {
-        newFavoriteList = [...state.favorites, action.payload];
-        // localStorage.setItem("favorites", JSON.stringify(state.favorites));
-      } else {
-        newFavoriteList = state.favorites.filter(
-          (itemId) => itemId !== action.payload
-        );
-        // localStorage.setItem("favorites", JSON.stringify(state.favorites));
-      }
-      return {
-        ...state,
-        favorites: newFavoriteList,
-      };
+    Tooglefavorites: (state, action) => {
+      let approve = false;
+      state.favorites.filter((el) => {
+        if (el.id === action.payload.id) {
+          approve = true;
+          return true;
+        }
+        return false;
+      });
+      !approve
+        ? state.favorites.push(action.payload)
+        : (state.favorites = state.favorites.filter(
+            (el) => el.id !== action.payload.id
+          ));
+      localStorage.setItem("favorites", JSON.stringify(state.favorites));
     },
   },
 });
-
-export const { toggleFavorite } = favoriteSlice.actions;
+export const { Tooglefavorites } = favoriteSlice.actions;
 export default favoriteSlice.reducer;

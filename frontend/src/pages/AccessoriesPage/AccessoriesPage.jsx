@@ -44,6 +44,8 @@ const Accessories = () => {
               weight={accessory.weight}
               size={accessory.size}
               available={accessory.available}
+              id={accessory.id}
+              category={accessory.category}
             />
           ))}
       </div>
