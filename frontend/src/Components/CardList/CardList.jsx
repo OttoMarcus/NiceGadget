@@ -27,6 +27,7 @@ const CardList = (props) => {
         <Card {...cardParams} />
         <Card {...cardParams} />
         <Card {...cardParams} />
+        <Card {...cardParams} />
       </div>
     </>
   );

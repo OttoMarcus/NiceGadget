@@ -3,7 +3,7 @@
 
 .card {
   display: flex;
-  width: 148px;
+  width: 212px;
   height: auto;
   padding: 32px;
   flex-direction: column;
@@ -14,11 +14,11 @@
   margin-right: 16px;
 
   @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
-    width: 173px;
+    width: 237px;
   }
 
   @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
-    width: 208px;
+    width: 272px;
   }
 
   .cardImg {
