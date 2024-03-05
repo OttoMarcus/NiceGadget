@@ -4,6 +4,8 @@ import Favorite from "../Favorite/Favorite";
 import Style from "./Card.module.scss";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
 
 const Card = (props) => {
   const {
@@ -16,11 +18,15 @@ const Card = (props) => {
     ram,
     refModel,
     color,
-    typeModel,
+    category,
   } = props;
+  const dispatch = useDispatch();
+  const favor = useSelector((state) => state.favorite.favorites);
+  const some = favor.some((el) => id === el.id);
+
   return (
     <Link
-      to={`/${typeModel}/${refModel.modelId}?color=${color}&capacity=${capacity}`}
+      to={`/${category}/${refModel.modelId}?color=${color}&capacity=${capacity}`}
     >
       <div className={Style.card}>
         <div className={Style.cardImg}>
@@ -47,8 +53,11 @@ const Card = (props) => {
           <Button btnName={"Add cart"} />
           <Favorite
             click={() => {
-              console.log(id);
+              console.log(`props`, props);
+
+              dispatch(Tooglefavorites(props));
             }}
+            some={some}
           />
         </div>
       </div>
@@ -71,7 +80,7 @@ Card.propTypes = {
   }).isRequired,
   color: PropTypes.string.isRequired,
   available: PropTypes.bool.isRequired,
-  typeModel: PropTypes.string,
+  category: PropTypes.string,
 };
 
 export default Card;

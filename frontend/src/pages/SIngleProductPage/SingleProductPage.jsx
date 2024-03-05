@@ -9,6 +9,8 @@ import TechSpecs from "../../Components/ProductTechSpecs/ProductTechSpecs";
 import Button from "../../Components/Button/Button";
 import Favorite from "../../Components/Favorite/Favorite";
 import { capitalizeFirstLetterOfWord } from "../../helpers/capitalizeFirstLetterOfWord";
+import { useDispatch, useSelector } from "react-redux";
+import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
 
 const SingleProductPage = () => {
   const { modelId } = useParams();
@@ -34,7 +36,9 @@ const SingleProductPage = () => {
   const chosenCapacityObject = byColor?.capacities.find(
     (capacitiesObj) => capacitiesObj?.capacity === capacity
   );
-
+  const favor = useSelector((state) => state.favorite.favorites);
+  const some = favor.some((el) => chosenCapacityObject?.productId === el.id);
+  const dispatch = useDispatch();
   const handleCapacityClick = (capacity) => setCapacity(capacity);
   const handleColorClick = (color) => setColor(color);
 
@@ -135,28 +139,28 @@ const SingleProductPage = () => {
                     />
                     <Favorite
                       click={() => {
-                        console.log(chosenCapacityObject?.productId);
-                        console.log(capacity);
-                        console.log(color);
-                        console.log(model?.name);
-                        console.log(byColor?.pictures[0]?.link);
-                        console.log(chosenCapacityObject?.price);
-                        console.log(
-                          chosenCapacityObject?.discount
-                            ? chosenCapacityObject?.discount
-                            : "no discount"
+                        dispatch(
+                          Tooglefavorites({
+                            id: chosenCapacityObject?.productId,
+                            capacity: capacity,
+                            color: color,
+                            name: model?.name,
+                            picture: byColor?.pictures[0]?.link,
+                            price: chosenCapacityObject?.price,
+                            discount: chosenCapacityObject?.discount
+                              ? chosenCapacityObject?.discount
+                              : "no discount",
+                            refModel: {
+                              modelId: modelId,
+                              modelName: model?.name,
+                            },
+                            category: typeModel,
+                            ram: model?.techSpecs[3]?.specDescription,
+                            screen: model?.techSpecs[0]?.specDescription,
+                          })
                         );
-                        console.log(
-                          model?.techSpecs[0]?.specName,
-                          model?.techSpecs[0]?.specDescription
-                        );
-                        console.log(
-                          model?.techSpecs[3]?.specName,
-                          model?.techSpecs[0]?.specDescription
-                        );
-                        console.log("refModel", modelId);
-                        console.log("category", typeModel);
                       }}
+                      some={some}
                     />
                   </div>
                   <div>

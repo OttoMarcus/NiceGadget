@@ -43,7 +43,7 @@ const Phones = () => {
                 screen={card.screen}
                 available={card.available}
                 id={card.id}
-                typeModel={typeModel}
+                category={typeModel}
               />
             );
           })}
