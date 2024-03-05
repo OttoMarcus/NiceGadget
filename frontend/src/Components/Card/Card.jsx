@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
+import { addToCart } from "../../store/cart/cartSlice";
 
 const Card = (props) => {
   const {
@@ -23,6 +24,37 @@ const Card = (props) => {
   const dispatch = useDispatch();
   const favor = useSelector((state) => state.favorite.favorites);
   const some = favor.some((el) => id === el.id);
+
+  const handleAddToCart = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    if (id) {
+      const productDetailsUrl = `http://localhost:4000/api/${category}/${id}`;
+
+      fetch(productDetailsUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((productDetails) => {
+          dispatch(
+            addToCart({
+              ...productDetails,
+            })
+          );
+        })
+        .catch((error) => {
+          console.error(
+            "There was a problem with your fetch operation:",
+            error
+          );
+        });
+    } else {
+      console.error("Product ID is missing");
+    }
+  };
 
   return (
     <Link
@@ -50,9 +82,14 @@ const Card = (props) => {
           </li>
         </ul>
         <div className={Style.buttonWrapper}>
-          <Button btnName={"Add cart"} />
+          <Button
+            onClick={(event) => handleAddToCart(event)}
+            btnName={"Add cart"}
+          />
           <Favorite
-            click={() => {
+            click={(event) => {
+              event.stopPropagation();
+              event.preventDefault();
               console.log(`props`, props);
 
               dispatch(Tooglefavorites(props));

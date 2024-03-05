@@ -6,12 +6,45 @@ import Button from "../Button/Button";
 import Favorite from "../Favorite/Favorite";
 import { useDispatch, useSelector } from "react-redux";
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
+import { addToCart } from "../../store/cart/cartSlice";
 
 const CardAccessories = (props) => {
-  const { name, color, price, picture, size, weight, id } = props;
+  const { category, name, color, price, picture, size, weight, id } = props;
   const dispatch = useDispatch();
   const favor = useSelector((state) => state.favorite.favorites);
   const some = favor.some((el) => id === el.id);
+
+  const handleAddToCart = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    if (id) {
+      const productDetailsUrl = `http://localhost:4000/api/${category}/${id}`;
+
+      fetch(productDetailsUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((productDetails) => {
+          dispatch(
+            addToCart({
+              ...productDetails,
+            })
+          );
+        })
+        .catch((error) => {
+          console.error(
+            "There was a problem with your fetch operation:",
+            error
+          );
+        });
+    } else {
+      console.error("Product ID is missing");
+    }
+  };
+
   return (
     <Link to={`/accessories/${name}?color=${color}`}>
       <div className={Style.card}>
@@ -36,9 +69,14 @@ const CardAccessories = (props) => {
           </li>
         </ul>
         <div className={Style.buttonWrapper}>
-          <Button btnName={"Add cart"} />
+          <Button
+            onClick={(event) => handleAddToCart(event)}
+            btnName={"Add cart"}
+          />
           <Favorite
-            click={() => {
+            click={(event) => {
+              event.stopPropagation();
+              event.preventDefault();
               dispatch(Tooglefavorites(props));
             }}
             some={some}
@@ -50,6 +88,7 @@ const CardAccessories = (props) => {
 };
 
 CardAccessories.propTypes = {
+  category: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   picture: PropTypes.string.isRequired,
