@@ -1,5 +1,6 @@
 @import "../abstracts/variables";
 @import "fonts";
+@import "./reset";
 
 .App {
   text-align: center;
@@ -10,19 +11,22 @@
   flex-direction: column;
   min-height: 100vh;
   box-sizing: border-box;
+  margin: 0 auto;
 
   .content-wrapper {
     flex: 1 1 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0 auto;
   }
 }
 
 body {
   background-color: $ui-color-gray-black-background;
   height: 100%;
-  margin: 0;
+  min-width: 100vw;
+  margin: 0 auto;
   color: $ui-color-gray-white;
   overflow-y: scroll;
 }

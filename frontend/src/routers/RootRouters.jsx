@@ -5,7 +5,7 @@ import AccessoriesPage from "../pages/AccessoriesPage/AccessoriesPage";
 import Phones from "../pages/Phones/Phones";
 import Favorites from "../Components/RouteComp/Favorites/Favorites";
 import Tablets from "../pages/Tablets/Tablets";
-import ShoppingCart from "../Components/RouteComp/ShopppingCart/ShoppingCart";
+import CartPage from "../pages/CartPage/CartPage";
 import Login from "../Components/RouteComp/LogIn/Login";
 import Logout from "../Components/RouteComp/LogOut/Logout";
 import Registration from "../Components/RouteComp/Registration/Registration";
@@ -27,7 +27,7 @@ const RootRouters = () => {
       <Route path="/phones" element={<Phones />} />
       <Route path="/phones/:modelId" element={<SingleProductPage />} />
       <Route path="/favorites" element={<Favorites />} />
-      <Route path="/shopingcart" element={<ShoppingCart />} />
+      <Route path="/cart" element={<CartPage />} />
       <Route path="/tablets" element={<Tablets />} />
       <Route path="/tablets/:modelId" element={<SingleProductPage />} />
       <Route path="/registration" element={<Registration />} />

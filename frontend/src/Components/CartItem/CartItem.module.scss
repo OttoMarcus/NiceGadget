@@ -1,0 +1,105 @@
+@import "../../styles/abstracts/mixins";
+@import "../../styles/abstracts/variables";
+
+.cartItem {
+  @include flex-start;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  min-width: 288px;
+  padding: 16px;
+  margin: 0 auto;
+  background-color: $ui-color-gray-surface-1;
+
+  /*-----------------  Tablet ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    padding: 24px;
+    @include flex-between;
+    flex-direction: row;
+    min-width: 544px;
+    // gap: 24px;
+  }
+  /*----------------- Desktop ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    min-width: 704px;
+  }
+}
+
+.cartItemInfo {
+  @include flex-between;
+  // gap: 16px;
+}
+
+.deleteButton {
+  @include flex-center;
+  width: 16px;
+  height: 16px;
+}
+
+.cartItemLink {
+  @include flex-between;
+  gap: 16px;
+}
+
+.cartItemImg {
+  @include flex-center;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+
+  & img {
+    width: 66px;
+    height: 66px;
+    object-position: center;
+    object-fit: cover;
+  }
+}
+
+.cartItemName {
+  @include body-text;
+  font-weight: 600;
+  color: $ui-color-gray-white;
+  word-wrap: break-word;
+}
+
+.counterPriceWrapper {
+  @include flex-between;
+  width: 100%;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    width: auto;
+    gap: 24px;
+  }
+}
+
+.counter {
+  @include flex-center;
+
+  & button {
+    @include flex-center;
+    width: 32px;
+    height: 32px;
+
+    // &:default {
+    //     background-color: $ui-color-gray-selected-surface-2;
+    // }
+
+    // &:hover {
+    //     background-color: $ui-color-gray-icons-placeholders;
+    // }
+  }
+}
+
+.quantity {
+  @include flex-center;
+  width: 32px;
+  height: 32px;
+  @include body-text;
+  font-weight: 600;
+  color: $ui-color-gray-white;
+}
+
+.totalItemPrice {
+  @include h2;
+  color: $ui-color-gray-white;
+}

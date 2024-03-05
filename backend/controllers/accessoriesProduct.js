@@ -95,26 +95,46 @@ exports.getAccessoryProducts = async (req, res, next) => {
     }
 };
 
+// exports.getAccessoryProductById = (req, res, next) => {
+//     const { id } = req.params;
+//     if (!isValidMongoId(id)) {
+//         return res.status(400).json({
+//             message: `Accessory product with id "${id}" is not valid`
+//         });
+//     }
+//     accessoriesProducts.findById(id)
+//         .then(accessoryProduct => {
+//             if (!accessoryProduct) {
+//                 res.status(400).json({
+//                     message: `Accessory product with id ${id} is not found`
+//                 });
+//             } else {
+//                 res.json(accessoryProduct);
+//             }
+//         })
+//         .catch(err =>
+//             res.status(400).json({
+//                 message: `Error happened on server: "${err}" `
+//             })
+//         );
+// };
+
 exports.getAccessoryProductById = (req, res, next) => {
     const { id } = req.params;
-    if (!isValidMongoId(id)) {
-        return res.status(400).json({
-            message: `Accessory product with id "${id}" is not valid`
-        });
-    }
-    accessoriesProducts.findById(id)
-        .then(accessoryProduct => {
-            if (!accessoryProduct) {
-                res.status(400).json({
-                    message: `Accessory product with id ${id} is not found`
-                });
-            } else {
-                res.json(accessoryProduct);
-            }
+  
+    accessoriesProducts.findOne({id: id})
+      .then(accessoryProduct => {
+        if (!accessoryProduct) {
+          res.status(400).json({
+            message: `Accessory product with id ${req.params.id} is not found`
+          });
+        } else {
+          res.json(accessoryProduct);
+        }
+      })
+      .catch(err =>
+        res.status(400).json({
+          message: `Error happened on server: "${err}" `
         })
-        .catch(err =>
-            res.status(400).json({
-                message: `Error happened on server: "${err}" `
-            })
-        );
-};
+      );
+  };
