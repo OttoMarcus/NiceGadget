@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import scrollToTop from "../../helpers/scrollUp";
 import LogOut from "../../Components/Icons/LogOut";
 import LogIn from "../../Components/Icons/LogIn";
 import Favorite from "../../Components/Icons/Heart";
 import Cart from "../../Components/Icons/Cart";
-import Logo from "../../Components/Icons/Logo";
+import LogoOk from "../../Components/Icons/Logo+ok";
 
 import style from "./Header.module.scss";
 
@@ -31,16 +30,7 @@ const Header = () => {
   return (
     <header>
       <div className={style.headerBody}>
-        <Link
-          onClick={() => {
-            hideMenuOnLogoClick();
-            scrollToTop();
-          }}
-          to="/"
-          className={style.headerLogo}
-        >
-          <Logo width={64} height={22} />
-        </Link>
+        <LogoOk hideMe={hideMenuOnLogoClick} />
         <div
           onClick={toggleBurgerActive}
           className={

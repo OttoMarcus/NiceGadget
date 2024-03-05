@@ -1,11 +1,10 @@
 import React from "react";
-import PropTypes from "prop-types";
 
-const Logo = ({ width, height }) => {
+const Logo = () => {
   return (
     <svg
-      width={width}
-      height={height}
+      width="100%"
+      height="100%"
       viewBox="0 0 89 31"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -58,11 +57,6 @@ const Logo = ({ width, height }) => {
       </g>
     </svg>
   );
-};
-
-Logo.propTypes = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
 };
 
 export default Logo;
