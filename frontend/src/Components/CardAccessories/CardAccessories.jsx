@@ -9,10 +9,15 @@ import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
 import { addToCart } from "../../store/cart/cartSlice";
 
 const CardAccessories = (props) => {
-  const { category, name, color, price, picture, size, weight, id } = props;
+  const { category, name, color, price, picture, size, weight, id, available } =
+    props;
   const dispatch = useDispatch();
   const favor = useSelector((state) => state.favorite.favorites);
   const some = favor.some((el) => id === el.id);
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const inCart = cartItems.some((item) => item.id === id);
+  const isAvailable = available;
+  const backgroundColorBtn = isAvailable && !inCart ? "#905BFF" : "#323542";
 
   const handleAddToCart = (event) => {
     event.stopPropagation();
@@ -71,8 +76,15 @@ const CardAccessories = (props) => {
         <div className={Style.buttonWrapper}>
           <Button
             onClick={(event) => handleAddToCart(event)}
-            btnName={"Add cart"}
-          />
+            backgroundColor={backgroundColorBtn}
+          >
+            {isAvailable
+              ? inCart
+                ? "Added to cart"
+                : "Add to cart"
+              : "Notify when available"}
+          </Button>
+
           <Favorite
             click={(event) => {
               event.stopPropagation();

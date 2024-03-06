@@ -40,6 +40,14 @@ const SingleProductPage = () => {
   );
   const favor = useSelector((state) => state.favorite.favorites);
   const some = favor.some((el) => chosenCapacityObject?.productId === el.id);
+
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const inCart = cartItems.some(
+    (item) => item.id === chosenCapacityObject?.productId
+  );
+  const isAvailable = chosenCapacityObject?.available;
+  const backgroundColorBtn = isAvailable && !inCart ? "#905BFF" : "#323542";
+
   const handleCapacityClick = (capacity) => setCapacity(capacity);
   const handleColorClick = (color) => setColor(color);
 
@@ -164,9 +172,15 @@ const SingleProductPage = () => {
                   </div>
                   <div className={styles.buttonsWrapper}>
                     <Button
-                      onClick={handleAddToCart}
-                      isAvailable={chosenCapacityObject?.available}
-                    />
+                      onClick={(event) => handleAddToCart(event)}
+                      backgroundColor={backgroundColorBtn}
+                    >
+                      {isAvailable
+                        ? inCart
+                          ? "Added to cart"
+                          : "Add to cart"
+                        : "Notify when available"}
+                    </Button>
                     <Favorite
                       click={() => {
                         dispatch(

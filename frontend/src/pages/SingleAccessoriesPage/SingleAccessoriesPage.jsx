@@ -19,8 +19,12 @@ const SingleAccessoriesPage = () => {
   let some = favor.some((el) => accessories?.id === el?.id);
   // let some = 1
   const [activeAccessoryId, setActiveAccessoryId] = useState(null);
+  const [accessoryAvailable, setAccessoryAvailable] = useState(true);
 
-  console.log(accessoryId);
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const inCart = cartItems.some((item) => item.id === activeAccessoryId);
+  const isAvailable = accessoryAvailable;
+  const backgroundColorBtn = isAvailable && !inCart ? "#905BFF" : "#323542";
 
   useEffect(() => {
     fetch(`http://localhost:4000/api/accessories-models/${accessoryId}`)
@@ -32,6 +36,7 @@ const SingleAccessoriesPage = () => {
       })
       .then((data) => {
         console.log(data);
+        setAccessoryAvailable(data.available);
         setActiveAccessoryId(data.id);
         setAccessories(data);
       })
@@ -89,7 +94,16 @@ const SingleAccessoriesPage = () => {
                     </div>
                   </div>
                   <div className={styles.buttonsWrapper}>
-                    <Button onClick={handleAddToCart} />
+                    <Button
+                      onClick={(event) => handleAddToCart(event)}
+                      backgroundColor={backgroundColorBtn}
+                    >
+                      {isAvailable
+                        ? inCart
+                          ? "Added to cart"
+                          : "Add to cart"
+                        : "Notify when available"}
+                    </Button>
                     <Favorite
                       click={() =>
                         dispatch(
