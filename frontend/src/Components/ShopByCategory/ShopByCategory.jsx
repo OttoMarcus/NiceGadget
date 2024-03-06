@@ -1,27 +1,29 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Style from "./ShopByCategory.module.scss";
+import style from "./ShopByCategory.module.scss";
 
 const ShopByCategory = (props) => {
   const { totalPhones, totalTablets, totalAccessories } = props;
 
   return (
     <>
-      <h2>Shop by category</h2>
-      <div className={Style.wrapper}>
+      <div className={style.header}>
+        <h2 className={style.categoryTitle}>Shop by category</h2>
+      </div>
+      <div className={style.wrapper}>
         <div>
-          <div className={Style.wallpaperPhone}></div>
-          <h4>Mobile phones</h4>
+          <div className={style.wallpaperPhone}></div>
+          <h4 className={style.subTitle}>Mobile phones</h4>
           <p>{totalPhones} models</p>
         </div>
         <div>
-          <div className={Style.wallpaperTablets}></div>
-          <h4>Tablets</h4>
+          <div className={style.wallpaperTablets}></div>
+          <h4 className={style.subTitle}>Tablets</h4>
           <p>{totalTablets} models</p>
         </div>
         <div>
-          <div className={Style.wallpaperAccessories}></div>
-          <h4>Accessories</h4>
+          <div className={style.wallpaperAccessories}></div>
+          <h4 className={style.subTitle}>Accessories</h4>
           <p>{totalAccessories} models</p>
         </div>
       </div>

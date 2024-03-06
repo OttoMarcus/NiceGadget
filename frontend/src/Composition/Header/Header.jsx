@@ -6,7 +6,7 @@ import Favorite from "../../Components/Icons/Heart";
 import Cart from "../../Components/Icons/Cart";
 import Logo from "../../Components/Icons/Logo";
 import Ok from "../../Components/Icons/Ok";
-import scrollToTop from "../../helpers/scrollUp";
+import scrollUp from "../../helpers/scrollUp";
 
 import style from "./Header.module.scss";
 
@@ -25,9 +25,9 @@ const Header = () => {
   const hideMenuOnLogoClick = () => {
     if (isBurgerActive) {
       toggleBurgerActive();
-      scrollToTop();
+      scrollUp();
     } else {
-      scrollToTop();
+      scrollUp();
     }
   };
 
