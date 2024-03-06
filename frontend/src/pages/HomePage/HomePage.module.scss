@@ -2,7 +2,7 @@
 @import "../../styles/abstracts/mixins";
 @import "../../styles/global/base";
 
-section {
+.homePageSection {
   width: 100%;
   box-sizing: border-box;
   margin-bottom: 32px;
@@ -17,7 +17,7 @@ section {
 }
 
 /*----------------------- welcome -------------------------*/
-h1 {
+.homePageTitle {
   @include mobile-h1;
   margin: 72px 0 24px;
 

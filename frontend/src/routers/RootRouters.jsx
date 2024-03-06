@@ -13,6 +13,8 @@ import HomePage from "../pages/HomePage/HomePage";
 import WrongRoute from "../pages/WrongRoutePage/WrongRoute";
 import SingleProductPage from "../pages/SIngleProductPage/SingleProductPage";
 import SingleAccessoriesPage from "../pages/SingleAccessoriesPage/SingleAccessoriesPage";
+import Right from "../pages/Right/Right";
+import Contacts from "../pages/Contacts/Contacts";
 
 const RootRouters = () => {
   return (
@@ -33,6 +35,8 @@ const RootRouters = () => {
       <Route path="/registration" element={<Registration />} />
       <Route path="/login" element={<Login />} />
       <Route path="/logout" element={<Logout />} />
+      <Route path="/right" element={<Right />} />
+      <Route path="/contacts" element={<Contacts />} />
       <Route path="*" element={<WrongRoute />} />
     </Routes>
   );

@@ -2,7 +2,7 @@ import React from "react";
 import Carousel from "../../Components/Carousel/Carousel";
 import CardList from "../../Components/CardList/CardList";
 import ShopByCategory from "../../Components/ShopByCategory/ShopByCategory";
-import Style from "./HomePage.module.scss";
+import style from "./HomePage.module.scss";
 
 const HomePage = () => {
   const brandNewModels = {
@@ -49,21 +49,23 @@ const HomePage = () => {
 
   return (
     <>
-      <h1 className={Style.container}>Welcome to Nice Gadgets store!</h1>
+      <h1 className={`${style.container} ${style.homePageTitle}`}>
+        Welcome to Nice Gadgets store!
+      </h1>
 
-      <section className={Style.container}>
+      <section className={`${style.container} ${style.homePageSection}`}>
         <Carousel />
       </section>
 
-      <section className={Style.container}>
+      <section className={`${style.container} ${style.homePageSection}`}>
         <CardList {...brandNewModels} />
       </section>
 
-      <section className={Style.container}>
+      <section className={`${style.container} ${style.homePageSection}`}>
         <ShopByCategory {...totalByCategory} />
       </section>
 
-      <section className={Style.container}>
+      <section className={`${style.container} ${style.homePageSection}`}>
         <CardList {...hotPrices} />
       </section>
     </>

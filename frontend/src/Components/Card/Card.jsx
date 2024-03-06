@@ -102,8 +102,6 @@ const Card = (props) => {
             click={(event) => {
               event.stopPropagation();
               event.preventDefault();
-              console.log(`props`, props);
-
               dispatch(Tooglefavorites(props));
             }}
             some={some}

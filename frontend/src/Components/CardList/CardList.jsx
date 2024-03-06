@@ -2,7 +2,7 @@ import React from "react";
 import LeftArrow from "../Icons/LeftArrow";
 import RightArrow from "../Icons/RightArrow";
 import Card from "../Card/Card";
-import Style from "./CardList.module.scss";
+import style from "./CardList.module.scss";
 import PropTypes from "prop-types";
 
 const CardList = (props) => {
@@ -10,9 +10,9 @@ const CardList = (props) => {
 
   return (
     <>
-      <div className={Style.header}>
-        <h2 className={Style.title}>{title}</h2>
-        <div className={Style.btnGroup}>
+      <div className={style.header}>
+        <h2 className={style.title}>{title}</h2>
+        <div className={style.btnGroup}>
           <div>
             <LeftArrow />
           </div>
@@ -21,7 +21,7 @@ const CardList = (props) => {
           </div>
         </div>
       </div>
-      <div className={Style.cardsContainer}>
+      <div className={style.cardsContainer}>
         <Card {...cardParams} />
         <Card {...cardParams} />
         <Card {...cardParams} />
