@@ -1,13 +1,12 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import "@testing-library/jest-dom";
+import "@testing-library/jest-dom/extend-expect";
 
 import Button from "./Button";
 
-describe("Button tests: ", () => {
-  test("should be clickable and have text", () => {
-    const btn = render(<Button btnName={"Click me"} />);
-
-    expect(btn).toMatchSnapshot();
+describe("Button tests", () => {
+  test("matches snapshot", () => {
+    const { asFragment } = render(<Button>Click me</Button>);
+    expect(asFragment()).toMatchSnapshot();
   });
 });

@@ -145,7 +145,7 @@ const Header = () => {
             <Link className={style.mainLinks} to="/favorites">
               <Favorite some={false} />
             </Link>
-            <Link className={style.mainLinks} to="/shopingcart">
+            <Link className={style.mainLinks} to="/cart">
               <Cart />
             </Link>
           </div>

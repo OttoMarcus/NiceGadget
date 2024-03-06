@@ -133,16 +133,12 @@ exports.getTabletProducts = async (req, res, next) => {
 
 exports.getTabletProductById = (req, res, next) => {
   const { id } = req.params;
-  if (!isValidMongoId(id)) {
-    return res.status(400).json({
-      message: `tabletProduct with id "${id}" is not valid`
-    });
-  }
-  tabletProducts.findById(id)
+
+tabletProducts.findOne({id: id})
     .then(tabletProduct => {
       if (!tabletProduct) {
         res.status(400).json({
-          message: `tabletProduct with itemNo ${req.params.itemNo} is not found`
+          message: `tabletProduct with id ${req.params.id} is not found`
         });
       } else {
         res.json(tabletProduct);

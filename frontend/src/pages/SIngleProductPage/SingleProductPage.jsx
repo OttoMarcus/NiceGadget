@@ -11,8 +11,10 @@ import Favorite from "../../Components/Favorite/Favorite";
 import { capitalizeFirstLetterOfWord } from "../../helpers/capitalizeFirstLetterOfWord";
 import { useDispatch, useSelector } from "react-redux";
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
+import { addToCart } from "../../store/cart/cartSlice";
 
 const SingleProductPage = () => {
+  const dispatch = useDispatch();
   const { modelId } = useParams();
   const location = useLocation();
   const pathname = location.pathname;
@@ -38,7 +40,14 @@ const SingleProductPage = () => {
   );
   const favor = useSelector((state) => state.favorite.favorites);
   const some = favor.some((el) => chosenCapacityObject?.productId === el.id);
-  const dispatch = useDispatch();
+
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const inCart = cartItems.some(
+    (item) => item.id === chosenCapacityObject?.productId
+  );
+  const isAvailable = chosenCapacityObject?.available;
+  const backgroundColorBtn = isAvailable && !inCart ? "#905BFF" : "#323542";
+
   const handleCapacityClick = (capacity) => setCapacity(capacity);
   const handleColorClick = (color) => setColor(color);
 
@@ -58,6 +67,35 @@ const SingleProductPage = () => {
         console.error("There was a problem with your fetch operation:", error);
       });
   }, [pathname, modelId, typeModel]);
+
+  const handleAddToCart = () => {
+    if (chosenCapacityObject?.productId) {
+      const productDetailsUrl = `http://localhost:4000/api/${typeModel}/${chosenCapacityObject.productId}`;
+
+      fetch(productDetailsUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((productDetails) => {
+          dispatch(
+            addToCart({
+              ...productDetails,
+            })
+          );
+        })
+        .catch((error) => {
+          console.error(
+            "There was a problem with your fetch operation:",
+            error
+          );
+        });
+    } else {
+      console.error("Product ID is missing");
+    }
+  };
 
   return (
     <>
@@ -134,9 +172,15 @@ const SingleProductPage = () => {
                   </div>
                   <div className={styles.buttonsWrapper}>
                     <Button
-                      onClick={() => {}}
-                      isAvailable={chosenCapacityObject?.available}
-                    />
+                      onClick={(event) => handleAddToCart(event)}
+                      backgroundColor={backgroundColorBtn}
+                    >
+                      {isAvailable
+                        ? inCart
+                          ? "Added to cart"
+                          : "Add to cart"
+                        : "Notify when available"}
+                    </Button>
                     <Favorite
                       click={() => {
                         dispatch(
