@@ -42,8 +42,7 @@
     @include flex-start;
     flex-direction: column;
     gap: 16px;
-    align-self: stretch;
-    align-items: center;
+    align-items: flex-start;
     list-style: none;
     padding: 0;
 

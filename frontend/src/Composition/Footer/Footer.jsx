@@ -1,5 +1,5 @@
 import React from "react";
-import style from "./Footer.module.scss";
+import styles from "./Footer.module.scss";
 import UpArrow from "../../Components/Icons/UpArrow";
 import Logo from "../../Components/Icons/Logo";
 import Ok from "../../Components/Icons/Ok";
@@ -8,15 +8,15 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className={style.footer}>
-      <div className={`${style.rectangleFooter} ${style.container}`}>
-        <div className={style.logo}>
+    <footer className={styles.footer}>
+      <div className={`${styles.rectangleFooter} ${styles.container}`}>
+        <div className={styles.logo}>
           <Logo />
-          <div className={style.ok}>
+          <div className={styles.ok}>
             <Ok />
           </div>
         </div>
-        <ul className={style.policy}>
+        <ul className={styles.policy}>
           <li>
             <a href="https://github.com/" target="_blank" rel="noreferrer">
               Github
@@ -29,9 +29,9 @@ const Footer = () => {
             <Link to="/right">rights</Link>
           </li>
         </ul>
-        <div className={style.backTop}>
+        <div className={styles.backTop}>
           <p>Back to top</p>
-          <div onClick={scrollUp} className={style.arrow}>
+          <div onClick={scrollUp} className={styles.arrow}>
             <UpArrow />
           </div>
         </div>
