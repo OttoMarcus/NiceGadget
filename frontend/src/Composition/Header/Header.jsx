@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Style from "./Header.module.scss";
 import LogOut from "../../Components/Icons/LogOut";
 import LogIn from "../../Components/Icons/LogIn";
@@ -7,10 +7,40 @@ import Registration from "../../Components/Icons/Registration";
 import Order from "../../Components/Icons/Order";
 import Favorite from "../../Components/Icons/Heart";
 import Cart from "../../Components/Icons/Cart";
+import { removeUser } from "../../store/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
+  const [currentPath, setCurrentPath] = useState("");
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const loggedInUser = useSelector((state) => state.user.user);
+  const isUserLoggedIn = Object?.keys(loggedInUser).length === 0 ? false : true;
+  console.log(isUserLoggedIn);
+
+  useEffect(() => {
+    if (
+      location.pathname !== "/registration" &&
+      location.pathname !== "/login"
+    ) {
+      setCurrentPath(location.pathname);
+    }
+  }, [location.pathname]);
+
+  const logOutUser = () => {
+    console.log("logOutUser success!");
+    dispatch(removeUser());
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   return (
     <header>
+      <p style={{ width: "40px", color: "white", fontSize: "18px" }}>
+        {loggedInUser?.login}
+      </p>
       <div className={Style.headerLogo}>
         {" "}
         <ul>
@@ -29,15 +59,7 @@ const Header = () => {
         </ul>
       </div>
       <div className={Style.btnGroup}>
-        <Link className={Style.mainLinks} to="/registration">
-          <Registration />
-        </Link>
-        <Link className={Style.mainLinks} to="/login">
-          <LogIn />
-        </Link>
-        <Link className={Style.mainLinks} to="/logout">
-          <LogOut />
-        </Link>
+        {isUserLoggedIn && <LogOut handleUserLogOut={logOutUser} />}
         <Link className={Style.mainLinks} to="/order">
           <Order />
         </Link>
@@ -47,6 +69,24 @@ const Header = () => {
         <Link className={Style.mainLinks} to="/shopingcart">
           <Cart />
         </Link>
+        {!isUserLoggedIn && (
+          <>
+            <Link
+              className={Style.mainLinks}
+              to="/registration"
+              onClick={sessionStorage.setItem("prevPath", currentPath)}
+            >
+              <Registration />
+            </Link>
+            <Link
+              className={Style.mainLinks}
+              to="/login"
+              onClick={sessionStorage.setItem("prevPath", currentPath)}
+            >
+              <LogIn />
+            </Link>
+          </>
+        )}
       </div>
     </header>
   );

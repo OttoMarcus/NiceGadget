@@ -4,7 +4,7 @@ import UpArrow from "../../Components/Icons/UpArrow";
 
 const Footer = () => {
   return (
-    <div className={Style.rectangleFooter}>
+    <footer className={Style.rectangleFooter}>
       <ul>
         <li>
           <p>Github</p>
@@ -20,7 +20,7 @@ const Footer = () => {
         <p>Back to top</p>
         <UpArrow />
       </div>
-    </div>
+    </footer>
   );
 };
 

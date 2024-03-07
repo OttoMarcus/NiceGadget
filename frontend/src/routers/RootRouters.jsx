@@ -6,9 +6,9 @@ import Phones from "../Components/RouteComp/Phones/Phones";
 import Favorites from "../Components/RouteComp/Favorites/Favorites";
 import Tablets from "../Components/RouteComp/Tablets/Tablets";
 import ShoppingCart from "../Components/RouteComp/ShopppingCart/ShoppingCart";
-import Login from "../Components/RouteComp/LogIn/Login";
-import Logout from "../Components/RouteComp/LogOut/Logout";
-import Registration from "../Components/RouteComp/Registration/Registration";
+import Login from "../pages/LogIn/Login";
+// import Logout from "../Components/RouteComp/LogOut/Logout";
+import Registration from "../pages/Registration/Registration";
 import HomePage from "../pages/HomePage/HomePage";
 import WrongRoute from "../pages/WrongRoutePage/WrongRoute";
 import SingleProductPage from "../pages/SIngleProductPage/SingleProductPage";
@@ -31,7 +31,7 @@ const RootRouters = () => {
       <Route path="/tablets" element={<Tablets />} />
       <Route path="/registration" element={<Registration />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/logout" element={<Logout />} />
+      {/* <Route path="/logout" element={<Logout />} /> */}
       <Route path="*" element={<WrongRoute />} />
     </Routes>
   );
