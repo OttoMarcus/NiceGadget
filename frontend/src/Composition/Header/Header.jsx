@@ -1,24 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import LogOut from "../../Components/Icons/LogOut";
-import LogIn from "../../Components/Icons/LogIn";
+import User from "../../Components/Icons/User";
 import Favorite from "../../Components/Icons/Heart";
 import Cart from "../../Components/Icons/Cart";
 import Logo from "../../Components/Icons/Logo";
 import Ok from "../../Components/Icons/Ok";
 import scrollUp from "../../helpers/scrollUp";
+import LogIn from "../../Components/Icons/LogIn";
 
-import style from "./Header.module.scss";
+import styles from "./Header.module.scss";
 
 const Header = () => {
-  const [isBurgerActive, setIsBurgerActive] = useState(false);
   const active = null;
+  const [isBurgerActive, setIsBurgerActive] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(false);
+
+  useEffect(() => {}, [isAuthorized]);
+
+  const handleAuthorized = () => {
+    setIsAuthorized(!isAuthorized);
+  };
+
+  const handleAuthUser = (event) => {
+    if (isAuthorized) {
+      toggleBurgerActive();
+    } else {
+      event.preventDefault();
+    }
+  };
   const toggleBurgerActive = () => {
     if (window.innerWidth >= 320 && window.innerWidth < 640) {
       setIsBurgerActive(!isBurgerActive);
       isBurgerActive
-        ? (document.body.style.overflow = "auto")
-        : (document.body.style.overflow = "hidden");
+        ? (document.body.styles.overflow = "auto")
+        : (document.body.styles.overflow = "hidden");
     }
   };
 
@@ -33,10 +49,14 @@ const Header = () => {
 
   return (
     <header>
-      <div className={style.headerBody}>
-        <Link onClick={hideMenuOnLogoClick} to="/" className={style.headerLogo}>
+      <div className={styles.headerBody}>
+        <Link
+          onClick={hideMenuOnLogoClick}
+          to="/"
+          className={styles.headerLogo}
+        >
           <Logo />
-          <div className={style.ok}>
+          <div className={styles.ok}>
             <Ok />
           </div>
         </Link>
@@ -45,8 +65,8 @@ const Header = () => {
           onClick={toggleBurgerActive}
           className={
             !isBurgerActive
-              ? style.headerBurger
-              : `${style.headerBurger} ${style.activeBurger}`
+              ? styles.headerBurger
+              : `${styles.headerBurger} ${styles.activeBurger}`
           }
         >
           <span></span>
@@ -54,14 +74,14 @@ const Header = () => {
         <nav
           className={
             !isBurgerActive
-              ? style.headerMenu
-              : `${style.headerMenu} ${style.activeBurger}`
+              ? styles.headerMenu
+              : `${styles.headerMenu} ${styles.activeBurger}`
           }
         >
-          <div className={style.headerList}>
+          <div className={styles.headerList}>
             <Link
               onClick={toggleBurgerActive}
-              className={`${style.linksHeader} ${active ? style.linkActive : ""}`}
+              className={`${styles.linksHeader} ${active ? styles.linkActive : ""}`}
               to="/"
             >
               Home
@@ -70,7 +90,7 @@ const Header = () => {
             <Link
               path="/phones"
               onClick={toggleBurgerActive}
-              className={`${style.linksHeader} ${active ? style.linkActive : ""}`}
+              className={`${styles.linksHeader} ${active ? styles.linkActive : ""}`}
               to="/phones"
             >
               Phones
@@ -79,7 +99,7 @@ const Header = () => {
             <Link
               path="/tablets"
               onClick={toggleBurgerActive}
-              className={`${style.linksHeader} ${active ? style.linkActive : ""}`}
+              className={`${styles.linksHeader} ${active ? styles.linkActive : ""}`}
               to="/tablets"
             >
               Tablets
@@ -88,64 +108,90 @@ const Header = () => {
             <Link
               path="/accessories"
               onClick={toggleBurgerActive}
-              className={`${style.linksHeader} ${active ? style.linkActive : ""}`}
+              className={`${styles.linksHeader} ${active ? styles.linkActive : ""}`}
               to="/accessories"
             >
               Accessories
             </Link>
 
-            <Link
-              onClick={toggleBurgerActive}
-              className={`${style.linksHeader} ${style.additionalMobileMenu}`}
-              to="/registration"
-            >
-              Registration
-            </Link>
+            {isAuthorized && (
+              <Link
+                onClick={toggleBurgerActive}
+                className={`${styles.linksHeader} ${styles.additionalMobileMenu}`}
+                to="/favorires"
+              >
+                Favorites
+              </Link>
+            )}
 
             <Link
               onClick={toggleBurgerActive}
-              className={`${style.linksHeader} ${style.additionalMobileMenu}`}
-              to="/favorires"
-            >
-              Favorites
-            </Link>
-
-            <Link
-              onClick={toggleBurgerActive}
-              className={`${style.linksHeader} ${style.additionalMobileMenu}`}
-              to="/orders"
-            >
-              Orders
-            </Link>
-
-            <Link
-              onClick={toggleBurgerActive}
-              className={`${style.linksHeader} ${style.additionalMobileMenu}`}
+              className={`${styles.linksHeader} ${styles.additionalMobileMenu}`}
               to="/cart"
             >
               Cart
             </Link>
           </div>
 
-          <div className={style.auth}>
-            <Link className={style.authChild} to="/login">
-              <LogIn />
+          <div className={styles.auth}>
+            <Link
+              onClick={handleAuthUser}
+              className={styles.authChild}
+              to="/user"
+            >
+              <User fill={isAuthorized ? "white" : "#3b3e4a"} />
             </Link>
-            <Link className={style.authChild} to="/logout">
-              <LogOut />
-            </Link>
+            {isAuthorized ? (
+              <Link
+                onClick={handleAuthorized}
+                className={styles.authChild}
+                to="/"
+              >
+                <LogOut />
+              </Link>
+            ) : (
+              <Link
+                onClick={handleAuthorized}
+                className={styles.authChild}
+                to="/login"
+              >
+                <LogIn />
+              </Link>
+            )}
           </div>
-          <div className={style.btnGroup}>
-            <Link className={style.mainLinks} to="/login">
-              <LogIn />
-            </Link>
-            <Link className={style.mainLinks} to="/logout">
-              <LogOut />
-            </Link>
-            <Link className={style.mainLinks} to="/favorites">
-              <Favorite some={false} />
-            </Link>
-            <Link className={style.mainLinks} to="/cart">
+          <div className={styles.btnGroup}>
+            {isAuthorized ? (
+              <>
+                <Link
+                  onClick={handleAuthorized}
+                  className={styles.mainLinks}
+                  to="/"
+                >
+                  <LogOut />
+                </Link>
+                <Link
+                  onClick={handleAuthUser}
+                  className={styles.mainLinks}
+                  to="/user"
+                >
+                  <User />
+                </Link>
+              </>
+            ) : (
+              <Link
+                onClick={handleAuthorized}
+                className={styles.mainLinks}
+                to="/login"
+              >
+                <LogIn />
+              </Link>
+            )}
+            {isAuthorized && (
+              <Link className={styles.mainLinks} to="/favorites">
+                <Favorite some={false} />
+              </Link>
+            )}
+            <Link className={styles.mainLinks} to="/cart">
               <Cart />
             </Link>
           </div>
