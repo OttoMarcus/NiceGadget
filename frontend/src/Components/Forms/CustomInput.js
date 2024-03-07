@@ -1,5 +1,7 @@
 import React from "react";
 import { useField } from "formik";
+import PropTypes from "prop-types";
+// import PropTypes from 'prop-types';
 
 const Input = (props) => {
   const [field, meta] = useField(props);
@@ -9,13 +11,12 @@ const Input = (props) => {
 
   return (
     <div className="delivery-form__input-block">
-      {/* <label htmlFor={props.name} className="delivery-form__label">
-        {props.name}
-      </label> */}
+      <label htmlFor={props.name} className="delivery-form__label">
+        {props.label}
+      </label>
       <input
         {...field}
         {...props}
-        className="delivery-form__input"
         style={{
           borderColor:
             meta.touched && meta.error
@@ -23,7 +24,7 @@ const Input = (props) => {
               : meta.touched && !meta.error
                 ? "green"
                 : "black",
-          background: meta.touched && !meta.error ? "#a3f4ad" : "transparent",
+          background: meta.touched && !meta.error ? "#a3f4ad" : "white",
         }}
       />
       <p
@@ -37,6 +38,11 @@ const Input = (props) => {
       </p>
     </div>
   );
+};
+
+Input.propTypes = {
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
 };
 
 export default Input;

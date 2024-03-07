@@ -1,4 +1,4 @@
-import { number, object, string } from "yup";
+import { number, object, string, date } from "yup";
 
 const validationSchema = object({
   firstName: string("First name must be a string")
@@ -37,7 +37,7 @@ const validationSchema = object({
     )
     .min(3)
     .max(30)
-    .required(),
+    .required("Login is required"),
   password: string()
     .matches(
       /^[a-zA-Z0-9]+$/,
@@ -46,6 +46,9 @@ const validationSchema = object({
     .min(7, "Password must be between 7 and 30 characters")
     .max(30)
     .required("Password is required"),
+  birthDate: date()
+    .min("1924-01-01", "Birth date must be later than 1924-01-01")
+    .max("2008-01-01", "Birth date must be earlier than 2008-01-01"),
 });
 
 export default validationSchema;

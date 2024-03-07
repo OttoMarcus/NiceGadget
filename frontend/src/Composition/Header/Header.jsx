@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import Style from "./Header.module.scss";
 import LogOut from "../../Components/Icons/LogOut";
 import User from "../../Components/Icons/User";
 import Favorite from "../../Components/Icons/Heart";
@@ -10,8 +11,35 @@ import scrollUp from "../../helpers/scrollUp";
 import LogIn from "../../Components/Icons/LogIn";
 
 import styles from "./Header.module.scss";
+import { removeUser } from "../../store/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
+  const [currentPath, setCurrentPath] = useState("");
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const loggedInUser = useSelector((state) => state.user.user);
+  const isUserLoggedIn = Object?.keys(loggedInUser).length === 0 ? false : true;
+  console.log(isUserLoggedIn);
+
+  useEffect(() => {
+    if (
+      location.pathname !== "/registration" &&
+      location.pathname !== "/login"
+    ) {
+      setCurrentPath(location.pathname);
+    }
+  }, [location.pathname]);
+
+  const logOutUser = () => {
+    console.log("logOutUser success!");
+    dispatch(removeUser());
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   const active = null;
   const [isBurgerActive, setIsBurgerActive] = useState(false);
   const [isAuthorized, setIsAuthorized] = useState(false);
