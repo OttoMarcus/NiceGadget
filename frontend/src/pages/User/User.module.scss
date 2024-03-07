@@ -1,0 +1,27 @@
+@import "../../styles/abstracts/variables";
+@import "../../styles/abstracts/mixins";
+@import "../../styles/global/base";
+
+.title {
+  @include mobile-h2;
+  color: $ui-color-gray-white;
+  margin-bottom: 40px;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    @include h2;
+  }
+}
+
+.description {
+  @include h3;
+  margin-bottom: 16px;
+  color: $ui-color-gray-secondary;
+}
+.listStyle {
+  list-style-type: square;
+
+  & li {
+    @include body-text;
+    color: $ui-color-gray-secondary;
+  }
+}
