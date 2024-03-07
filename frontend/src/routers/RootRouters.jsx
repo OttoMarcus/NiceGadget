@@ -6,9 +6,9 @@ import Phones from "../pages/Phones/Phones";
 import Favorites from "../pages/Favorites/Favorites";
 import Tablets from "../pages/Tablets/Tablets";
 import CartPage from "../pages/CartPage/CartPage";
-import Login from "../Components/RouteComp/LogIn/Login";
-import Logout from "../Components/RouteComp/LogOut/Logout";
-import Registration from "../Components/RouteComp/Registration/Registration";
+import Login from "../pages/LogIn/Login";
+// import Logout from "../Components/RouteComp/LogOut/Logout";
+import Registration from "../pages/Registration/Registration";
 import HomePage from "../pages/HomePage/HomePage";
 import WrongRoute from "../pages/WrongRoutePage/WrongRoute";
 import SingleProductPage from "../pages/SIngleProductPage/SingleProductPage";
@@ -39,6 +39,7 @@ const RootRouters = () => {
       <Route path="/user" element={<User />} />
       <Route path="/right" element={<Right />} />
       <Route path="/contacts" element={<Contacts />} />
+      {/* <Route path="/logout" element={<Logout />} /> */}
       <Route path="*" element={<WrongRoute />} />
     </Routes>
   );
