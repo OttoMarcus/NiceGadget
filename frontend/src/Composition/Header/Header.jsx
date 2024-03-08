@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import LogOut from "../../Components/Icons/LogOut";
 import User from "../../Components/Icons/User";
@@ -16,8 +16,6 @@ const Header = () => {
   const [isBurgerActive, setIsBurgerActive] = useState(false);
   const [isAuthorized, setIsAuthorized] = useState(false);
 
-  useEffect(() => {}, [isAuthorized]);
-
   const handleAuthorized = () => {
     setIsAuthorized(!isAuthorized);
   };
@@ -29,12 +27,13 @@ const Header = () => {
       event.preventDefault();
     }
   };
+
   const toggleBurgerActive = () => {
     if (window.innerWidth >= 320 && window.innerWidth < 640) {
       setIsBurgerActive(!isBurgerActive);
       isBurgerActive
-        ? (document.body.styles.overflow = "auto")
-        : (document.body.styles.overflow = "hidden");
+        ? (document.body.style.overflow = "auto")
+        : (document.body.style.overflow = "hidden");
     }
   };
 
@@ -88,7 +87,6 @@ const Header = () => {
             </Link>
 
             <Link
-              path="/phones"
               onClick={toggleBurgerActive}
               className={`${styles.linksHeader} ${active ? styles.linkActive : ""}`}
               to="/phones"
@@ -97,7 +95,6 @@ const Header = () => {
             </Link>
 
             <Link
-              path="/tablets"
               onClick={toggleBurgerActive}
               className={`${styles.linksHeader} ${active ? styles.linkActive : ""}`}
               to="/tablets"
@@ -106,7 +103,6 @@ const Header = () => {
             </Link>
 
             <Link
-              path="/accessories"
               onClick={toggleBurgerActive}
               className={`${styles.linksHeader} ${active ? styles.linkActive : ""}`}
               to="/accessories"
@@ -143,7 +139,10 @@ const Header = () => {
             </Link>
             {isAuthorized ? (
               <Link
-                onClick={handleAuthorized}
+                onClick={() => {
+                  handleAuthorized();
+                  toggleBurgerActive();
+                }}
                 className={styles.authChild}
                 to="/"
               >
