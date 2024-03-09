@@ -35,11 +35,9 @@ const RootRouters = () => {
       <Route path="/tablets/:modelId" element={<SingleProductPage />} />
       <Route path="/registration" element={<Registration />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/logout" element={<Logout />} />
       <Route path="/user" element={<User />} />
       <Route path="/right" element={<Right />} />
       <Route path="/contacts" element={<Contacts />} />
-      {/* <Route path="/logout" element={<Logout />} /> */}
       <Route path="*" element={<WrongRoute />} />
     </Routes>
   );

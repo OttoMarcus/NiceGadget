@@ -21,17 +21,6 @@ const UserRegForm = () => {
     // setCredentials({})
   }, []);
 
-  const initialValues = {
-    firstName: "",
-    lastName: "",
-    telephone: "",
-    email: "",
-    login: "",
-    password: "",
-    gender: "",
-    birthDate: "2000-01-01",
-  };
-
   const createNewUser = async (userData) => {
     try {
       console.log(userData);
@@ -120,6 +109,17 @@ const UserRegForm = () => {
     onAuthRedirect();
 
     // return user
+  };
+
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    telephone: "",
+    email: "",
+    login: "",
+    password: "",
+    gender: "",
+    birthDate: "2000-01-01",
   };
 
   return (

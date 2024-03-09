@@ -33,15 +33,6 @@ function App() {
     }
   }, [location.pathname, dispatch, getUserOnLogin]);
 
-  useEffect(() => {
-    const token = localStorage?.getItem("token");
-    if (token) {
-      getUserOnLogin(token);
-    } else {
-      dispatch(removeUser());
-    }
-  }, [location.pathname, dispatch, getUserOnLogin]);
-
   return (
     <div className="app-wrapper">
       <Header />
