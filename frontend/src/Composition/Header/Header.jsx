@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import Style from "./Header.module.scss";
 import LogOut from "../../Components/Icons/LogOut";
 import User from "../../Components/Icons/User";
 import Favorite from "../../Components/Icons/Heart";
