@@ -116,6 +116,7 @@ const SingleAccessoriesPage = () => {
                             size: accessories?.size,
                             weight: accessories?.weight,
                             category: accessories?.category,
+                            available: accessoryAvailable,
                           })
                         )
                       }

@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Order from "../Components/RouteComp/Order/Order";
 import AccessoriesPage from "../pages/AccessoriesPage/AccessoriesPage";
 import Phones from "../pages/Phones/Phones";
-import Favorites from "../Components/RouteComp/Favorites/Favorites";
+import Favorites from "../pages/Favorites/Favorites";
 import Tablets from "../pages/Tablets/Tablets";
 import CartPage from "../pages/CartPage/CartPage";
 import Login from "../Components/RouteComp/LogIn/Login";

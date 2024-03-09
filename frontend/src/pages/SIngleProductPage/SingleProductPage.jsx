@@ -191,6 +191,7 @@ const SingleProductPage = () => {
                             name: model?.name,
                             picture: byColor?.pictures[0]?.link,
                             price: chosenCapacityObject?.price,
+                            available: chosenCapacityObject?.available,
                             discount: chosenCapacityObject?.discount
                               ? chosenCapacityObject?.discount
                               : "no discount",
