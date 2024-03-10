@@ -10,6 +10,7 @@ import scrollUp from "../../helpers/scrollUp";
 import LogIn from "../../Components/Icons/LogIn";
 
 import styles from "./Header.module.scss";
+import SearchForm from "../../Components/SearchForm/SearchForm";
 
 const Header = () => {
   const active = null;
@@ -110,15 +111,13 @@ const Header = () => {
               Accessories
             </Link>
 
-            {isAuthorized && (
-              <Link
-                onClick={toggleBurgerActive}
-                className={`${styles.linksHeader} ${styles.additionalMobileMenu}`}
-                to="/favorires"
-              >
-                Favorites
-              </Link>
-            )}
+            <Link
+              onClick={toggleBurgerActive}
+              className={`${styles.linksHeader} ${styles.additionalMobileMenu}`}
+              to="/favorires"
+            >
+              Favorites
+            </Link>
 
             <Link
               onClick={toggleBurgerActive}
@@ -127,6 +126,8 @@ const Header = () => {
             >
               Cart
             </Link>
+
+            <SearchForm />
           </div>
 
           <div className={styles.auth}>
@@ -185,11 +186,9 @@ const Header = () => {
                 <LogIn />
               </Link>
             )}
-            {isAuthorized && (
-              <Link className={styles.mainLinks} to="/favorites">
-                <Favorite some={false} />
-              </Link>
-            )}
+            <Link className={styles.mainLinks} to="/favorites">
+              <Favorite some={false} />
+            </Link>
             <Link className={styles.mainLinks} to="/cart">
               <Cart />
             </Link>
