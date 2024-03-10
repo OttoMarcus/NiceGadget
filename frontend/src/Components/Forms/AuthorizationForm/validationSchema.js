@@ -1,4 +1,4 @@
-import { number, object, string, date } from "yup";
+import { object, string, date } from "yup";
 
 const validationSchema = object({
   loginOrEmail: string()

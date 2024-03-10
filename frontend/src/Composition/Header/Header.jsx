@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../../store/user/userSlice";
 
@@ -21,7 +21,7 @@ const Header = () => {
 
   const active = null;
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   // const loggedInUser = useSelector((state) => state.user.user);
@@ -46,9 +46,6 @@ const Header = () => {
     // navigate("/login");
   };
 
-  // const handleAuthorized = () => {
-  //   setIsAuthorized(!isAuthorized);
-  // };
 
   const handleAuthUser = (event) => {
     if (isAuthorized) {
