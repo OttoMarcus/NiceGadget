@@ -1,13 +1,9 @@
 import React from "react";
 import { useField } from "formik";
 import PropTypes from "prop-types";
-// import PropTypes from 'prop-types';
 
 const Input = (props) => {
   const [field, meta] = useField(props);
-  // console.log(field);
-  // console.log(meta.error);
-  // console.log(props);
 
   return (
     <div className="delivery-form__input-block">
