@@ -9,8 +9,18 @@ import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
 import { addToCart } from "../../store/cart/cartSlice";
 
 const CardAccessories = (props) => {
-  const { category, name, color, price, picture, size, weight, id, available } =
-    props;
+  const {
+    id,
+    picture,
+    name,
+    price,
+    category,
+    color,
+    available,
+
+    size,
+    weight,
+  } = props;
   const dispatch = useDispatch();
   const favor = useSelector((state) => state.favorite.favorites);
   const some = favor.some((el) => id === el.id);
@@ -61,15 +71,15 @@ const CardAccessories = (props) => {
         <div className={Style.divider}></div>
         <ul className={Style.paramsGroup}>
           <li>
-            <p>Size:</p>
+            <p>Size</p>
             <p>{size}</p>
           </li>
           <li>
-            <p>Color:</p>
+            <p>Color</p>
             <p>{color}</p>
           </li>
           <li>
-            <p>Weight:</p>
+            <p>Weight</p>
             <p>{weight}</p>
           </li>
         </ul>
@@ -100,15 +110,16 @@ const CardAccessories = (props) => {
 };
 
 CardAccessories.propTypes = {
-  category: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  picture: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  picture: PropTypes.string.isRequired,
-  weight: PropTypes.string.isRequired,
-  size: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
   available: PropTypes.bool.isRequired,
-  id: PropTypes.string.isRequired,
+
+  weight: PropTypes.string.isRequired,
+  size: PropTypes.string.isRequired,
 };
 
 export default CardAccessories;

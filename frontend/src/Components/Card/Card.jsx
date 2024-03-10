@@ -14,13 +14,14 @@ const Card = (props) => {
     picture,
     name,
     price,
-    screen,
+    category,
+    color,
+    available,
+
     capacity,
     ram,
+    screen,
     refModel,
-    color,
-    category,
-    available,
   } = props;
   const dispatch = useDispatch();
   const favor = useSelector((state) => state.favorite.favorites);
@@ -117,17 +118,18 @@ Card.propTypes = {
   picture: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  category: PropTypes.string,
+  color: PropTypes.string.isRequired,
+  available: PropTypes.bool.isRequired,
+
   screen: PropTypes.string,
   capacity: PropTypes.string,
   ram: PropTypes.string,
   brandNew: PropTypes.bool,
   refModel: PropTypes.shape({
-    modelId: PropTypes.string.isRequired,
-    modelName: PropTypes.string.isRequired,
-  }).isRequired,
-  color: PropTypes.string.isRequired,
-  available: PropTypes.bool.isRequired,
-  category: PropTypes.string,
+    modelId: PropTypes.string,
+    modelName: PropTypes.string,
+  }),
 };
 
 export default Card;
