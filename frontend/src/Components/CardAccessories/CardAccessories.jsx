@@ -1,75 +1,89 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import styles from "./CardAccessories.module.scss";
+import Style from "./CardAccessories.module.scss";
 import Button from "../Button/Button";
 import Favorite from "../Favorite/Favorite";
 import { useDispatch, useSelector } from "react-redux";
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
-import { addToCartLocal } from "../../store/cart/cartSlice";
-import { addToCartServer } from "../../API/cartAPI";
+import { addToCart } from "../../store/cart/cartSlice";
 
 const CardAccessories = (props) => {
   const {
-    _id,
     id,
-    name,
     picture,
+    name,
     price,
+    category,
     color,
+    available,
+
     size,
     weight,
-    category,
-    available,
   } = props;
   const dispatch = useDispatch();
-  const isAuthorized = useSelector((state) => state.user.isAuthorized);
-
   const favor = useSelector((state) => state.favorite.favorites);
   const some = favor.some((el) => id === el.id);
-
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const inCart = cartItems.some((item) => item.productId === _id);
+  const inCart = cartItems.some((item) => item.id === id);
   const isAvailable = available;
   const backgroundColorBtn = isAvailable && !inCart ? "#905BFF" : "#323542";
 
   const handleAddToCart = (event) => {
     event.stopPropagation();
     event.preventDefault();
+    if (id) {
+      const productDetailsUrl = `http://localhost:4000/api/${category}/${id}`;
 
-    const productToAdd = { ...props };
-
-    if (isAuthorized) {
-      dispatch(addToCartServer(productToAdd));
+      fetch(productDetailsUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((productDetails) => {
+          dispatch(
+            addToCart({
+              ...productDetails,
+            })
+          );
+        })
+        .catch((error) => {
+          console.error(
+            "There was a problem with your fetch operation:",
+            error
+          );
+        });
     } else {
-      dispatch(addToCartLocal({ productToAdd }));
+      console.error("Product ID is missing");
     }
   };
 
   return (
-    <Link to={`/${category}/${name}?color=${color}`}>
-      <div className={styles.card}>
-        <div className={styles.cardImg}>
+    <Link to={`/accessories/${name}?color=${color}`}>
+      <div className={Style.card}>
+        <div className={Style.cardImg}>
           <img src={picture} alt="Card" />
         </div>
-        <div className={styles.model}>{name}</div>
-        <div className={styles.price}>${price}</div>
-        <div className={styles.divider}></div>
-        <ul className={styles.paramsGroup}>
+        <div className={Style.model}>{name}</div>
+        <div className={Style.price}>${price}</div>
+        <div className={Style.divider}></div>
+        <ul className={Style.paramsGroup}>
           <li>
-            <p>Size:</p>
+            <p>Size</p>
             <p>{size}</p>
           </li>
           <li>
-            <p>Color:</p>
+            <p>Color</p>
             <p>{color}</p>
           </li>
           <li>
-            <p>Weight:</p>
+            <p>Weight</p>
             <p>{weight}</p>
           </li>
         </ul>
-        <div className={styles.buttonWrapper}>
+        <div className={Style.buttonWrapper}>
           <Button
             onClick={(event) => handleAddToCart(event)}
             backgroundColor={backgroundColorBtn}
@@ -96,16 +110,16 @@ const CardAccessories = (props) => {
 };
 
 CardAccessories.propTypes = {
-  _id: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  category: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
+  available: PropTypes.bool.isRequired,
+
   weight: PropTypes.string.isRequired,
   size: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
-  available: PropTypes.bool.isRequired,
 };
 
 export default CardAccessories;

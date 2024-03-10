@@ -1,0 +1,36 @@
+@import "../../styles/abstracts/variables";
+@import "../../styles/abstracts/mixins";
+@import "../../styles/global/base";
+
+.searchTitle {
+  @include mobile-h2;
+  color: $ui-color-gray-white;
+  margin-bottom: 8px;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    @include h2;
+    margin-bottom: 24px;
+  }
+}
+
+.searchCategory {
+  @include uppercase;
+  color: $ui-color-gray-icons-placeholders;
+  text-align: left;
+}
+
+.resultWrapper {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(212px, 1fr));
+  gap: 16px;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    grid-template-columns: repeat(auto-fit, minmax(237px, 1fr));
+    //gap: 24px;
+  }
+
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
+  }
+}

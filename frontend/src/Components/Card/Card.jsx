@@ -6,46 +6,59 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
-import { addToCartLocal } from "../../store/cart/cartSlice";
-import { addToCartServer } from "../../API/cartAPI";
+import { addToCart } from "../../store/cart/cartSlice";
 
 const Card = (props) => {
   const {
-    _id,
     id,
-    name,
     picture,
+    name,
     price,
+    category,
     color,
-    screen,
+    available,
+
     capacity,
     ram,
+    screen,
     refModel,
-    category,
-    available,
   } = props;
   const dispatch = useDispatch();
-  const isAuthorized = useSelector((state) => state.user.isAuthorized);
-
   const favor = useSelector((state) => state.favorite.favorites);
   const some = favor.some((el) => id === el.id);
-
   const cartItems = useSelector((state) => state.cart.cartItems);
-
-  const inCart = cartItems.some((item) => item.productId === _id);
+  const inCart = cartItems.some((item) => item.id === id);
   const isAvailable = available;
   const backgroundColorBtn = isAvailable && !inCart ? "#905BFF" : "#323542";
 
   const handleAddToCart = (event) => {
     event.stopPropagation();
     event.preventDefault();
+    if (id) {
+      const productDetailsUrl = `http://localhost:4000/api/${category}/${id}`;
 
-    const productToAdd = { ...props };
-
-    if (isAuthorized) {
-      dispatch(addToCartServer(productToAdd));
+      fetch(productDetailsUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((productDetails) => {
+          dispatch(
+            addToCart({
+              ...productDetails,
+            })
+          );
+        })
+        .catch((error) => {
+          console.error(
+            "There was a problem with your fetch operation:",
+            error
+          );
+        });
     } else {
-      dispatch(addToCartLocal({ productToAdd }));
+      console.error("Product ID is missing");
     }
   };
 
@@ -101,21 +114,22 @@ const Card = (props) => {
 };
 
 Card.propTypes = {
-  _id: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  category: PropTypes.string,
   color: PropTypes.string.isRequired,
+  available: PropTypes.bool.isRequired,
+
   screen: PropTypes.string,
   capacity: PropTypes.string,
   ram: PropTypes.string,
+  brandNew: PropTypes.bool,
   refModel: PropTypes.shape({
-    modelId: PropTypes.string.isRequired,
-    modelName: PropTypes.string.isRequired,
-  }).isRequired,
-  category: PropTypes.string,
-  available: PropTypes.bool.isRequired,
+    modelId: PropTypes.string,
+    modelName: PropTypes.string,
+  }),
 };
 
 export default Card;

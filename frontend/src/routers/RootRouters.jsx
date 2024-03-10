@@ -15,6 +15,7 @@ import SingleAccessoriesPage from "../pages/SingleAccessoriesPage/SingleAccessor
 import Right from "../pages/Right/Right";
 import Contacts from "../pages/Contacts/Contacts";
 import User from "../pages/User/User";
+import Search from "../pages/Search/Search";
 
 const RootRouters = () => {
   return (
@@ -36,6 +37,7 @@ const RootRouters = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/user" element={<User />} />
       <Route path="/right" element={<Right />} />
+      <Route path="/search" element={<Search />} />
       <Route path="/contacts" element={<Contacts />} />
       <Route path="*" element={<WrongRoute />} />
     </Routes>
