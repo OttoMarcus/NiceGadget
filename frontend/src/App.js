@@ -13,25 +13,25 @@ function App() {
   const location = useLocation();
   // console.log(location.pathname);
 
-  const getUserOnLogin = async (token) => {
-    const user = await fetch(`http://localhost:4000/api/customers/customer`, {
-      method: "GET",
-      headers: {
-        Authorization: token,
-      },
-    }).then((res) => res.json());
-    console.log(user);
-    dispatch(addUser(user));
-  };
 
   useEffect(() => {
+    const getUserOnLogin = async (token) => {
+      const user = await fetch(`http://localhost:4000/api/customers/customer`, {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+      }).then((res) => res.json());
+      console.log(user);
+      dispatch(addUser(user));
+    }
     const token = localStorage?.getItem("token");
     if (token) {
       getUserOnLogin(token);
     } else {
       dispatch(removeUser());
     }
-  }, [location.pathname, dispatch, getUserOnLogin]);
+  }, [location.pathname, dispatch]);
 
   return (
     <div className="app-wrapper">

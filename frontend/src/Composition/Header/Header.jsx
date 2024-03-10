@@ -46,9 +46,6 @@ const Header = () => {
     // navigate("/login");
   };
 
-  // const handleAuthorized = () => {
-  //   setIsAuthorized(!isAuthorized);
-  // };
 
   const handleAuthUser = (event) => {
     if (isAuthorized) {
