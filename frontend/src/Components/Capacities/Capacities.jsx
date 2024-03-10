@@ -17,6 +17,7 @@ const Capacities = ({
       onClick={() => {
         capacityChange(capacityOption);
       }}
+      className={`${actualCapacity === capacityOption ? styles.noPointerEvent : ""}`}
     >
       <div
         className={`${actualCapacity === capacityOption ? styles.capacityActive : styles.capacitiesItem} ${!availability ? styles.notAvailable : ""} `}

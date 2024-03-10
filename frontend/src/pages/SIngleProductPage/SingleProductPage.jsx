@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import styles from "./SingleProductPage.module.scss";
 import ColorCircle from "../../Components/ColorCircle/ColorCircle";
@@ -12,6 +12,8 @@ import { capitalizeFirstLetterOfWord } from "../../helpers/capitalizeFirstLetter
 import { useDispatch, useSelector } from "react-redux";
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
 import { addToCart } from "../../store/cart/cartSlice";
+import { useFetchModelData } from "./hooks/useFetchModelData";
+import { useSelectedColorData } from "./hooks/useSelectedColorData";
 
 const SingleProductPage = () => {
   const dispatch = useDispatch();
@@ -23,19 +25,14 @@ const SingleProductPage = () => {
   const [color, setColor] = useState(queryParams.get("color"));
   const [capacity, setCapacity] = useState(queryParams.get("capacity"));
 
-  const [model, setModel] = useState();
-
   const arr = useMemo(() => pathname.split("/"), [pathname]);
   const typeModel = arr[arr.length - 2];
 
-  const byColor = useMemo(() => {
-    if (model) {
-      return model?.colors.find((el) => el.colorName === color);
-    }
-    return null;
-  }, [model, color]);
+  const model = useFetchModelData(pathname, modelId, typeModel);
 
-  const chosenCapacityObject = byColor?.capacities.find(
+  const selectedColorData = useSelectedColorData(model, color);
+
+  const chosenCapacityObject = selectedColorData?.capacities.find(
     (capacitiesObj) => capacitiesObj?.capacity === capacity
   );
   const favor = useSelector((state) => state.favorite.favorites);
@@ -50,23 +47,6 @@ const SingleProductPage = () => {
 
   const handleCapacityClick = (capacity) => setCapacity(capacity);
   const handleColorClick = (color) => setColor(color);
-
-  useEffect(() => {
-    fetch(`http://localhost:4000/api/${typeModel}-models/${modelId}/`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        setModel(data);
-      })
-      .catch((error) => {
-        console.error("There was a problem with your fetch operation:", error);
-      });
-  }, [pathname, modelId, typeModel]);
 
   const handleAddToCart = () => {
     if (chosenCapacityObject?.productId) {
@@ -107,7 +87,7 @@ const SingleProductPage = () => {
           <div className={styles.content}>
             <div className={styles.imagesAndCustomizationWrapper}>
               <div className={styles.outerImagesWrapper}>
-                <SelectableImageGallery images={byColor.pictures} />
+                <SelectableImageGallery images={selectedColorData.pictures} />
               </div>
               <div className={styles.outerCustomizationWrapper}>
                 <div className={styles.productCustomizationWrapper}>
@@ -135,7 +115,7 @@ const SingleProductPage = () => {
                       Select capacity
                     </h4>
                     <div className={styles.capacities}>
-                      {byColor.capacities.map((el, index) => {
+                      {selectedColorData.capacities.map((el, index) => {
                         return (
                           <Capacities
                             key={index}
@@ -189,7 +169,7 @@ const SingleProductPage = () => {
                             capacity: capacity,
                             color: color,
                             name: model?.name,
-                            picture: byColor?.pictures[0]?.link,
+                            picture: selectedColorData?.pictures[0]?.link,
                             price: chosenCapacityObject?.price,
                             available: chosenCapacityObject?.available,
                             discount: chosenCapacityObject?.discount

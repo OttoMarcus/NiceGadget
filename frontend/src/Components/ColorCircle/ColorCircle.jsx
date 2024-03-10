@@ -18,6 +18,7 @@ const ColorCircle = ({
     <Link
       to={`${pathname}?color=${color}&capacity=${capacity}`}
       onClick={() => changeColor(color)}
+      className={`${isActive ? styles.noPointerEvent : ""}`}
     >
       <div
         className={`${styles.circle} ${isActive ? styles.active : ""} ${notAvailable && styles.notAvailable}`}
