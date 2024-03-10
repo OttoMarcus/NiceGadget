@@ -3,7 +3,7 @@
 
 .searchForm {
   @include flex-between;
-  width: 80%;
+  width: auto;
   height: 30px;
 }
 
@@ -13,7 +13,7 @@
   padding: 0 8px;
   border: none;
   color: $ui-color-gray-white;
-  text-align: center;
+
   box-sizing: border-box;
   background-color: inherit;
   border-bottom: 1px solid $ui-color-gray-secondary;
