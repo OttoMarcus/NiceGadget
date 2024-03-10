@@ -13,9 +13,9 @@ import HomePage from "../pages/HomePage/HomePage";
 import WrongRoute from "../pages/WrongRoutePage/WrongRoute";
 import SingleProductPage from "../pages/SIngleProductPage/SingleProductPage";
 import SingleAccessoriesPage from "../pages/SingleAccessoriesPage/SingleAccessoriesPage";
-import Right from "../pages/Right/Right";
-import Contacts from "../pages/Contacts/Contacts";
-import User from "../pages/User/User";
+// import Right from "../pages/Right/Right";
+// import Contacts from "../pages/Contacts/Contacts";
+// import User from "../pages/User/User";
 
 const RootRouters = () => {
   return (
