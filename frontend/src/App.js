@@ -31,7 +31,7 @@ function App() {
     } else {
       dispatch(removeUser());
     }
-  }, [location.pathname, dispatch, getUserOnLogin]);
+  }, [location.pathname, dispatch]);
 
   return (
     <div className="app-wrapper">
