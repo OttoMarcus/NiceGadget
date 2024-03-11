@@ -17,7 +17,7 @@ const {
 // @access  Private
 router.post(
   "/",
-  passport.authenticate("jwt", { session: false }),
+  // passport.authenticate("jwt", { session: false }),
   createWishlist
 );
 
@@ -60,6 +60,8 @@ router.delete(
 // @route   GET /wishlist
 // @desc    Get wishlist for customer
 // @access  Private
-router.get("/", passport.authenticate("jwt", { session: false }), getWishlist);
+router.get("/",
+    // passport.authenticate("jwt", { session: false }),
+    getWishlist);
 
 module.exports = router;
