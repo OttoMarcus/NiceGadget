@@ -4,8 +4,6 @@ import Card from "../../Components/Card/Card";
 import backConnectionString from "../../helpers/backConnectionString";
 
 import styles from "./Search.module.scss";
-import SearchForm from "../../Components/SearchForm/SearchForm";
-
 const Search = () => {
   const [searchList, setSearchList] = useState([]);
   const searchResult = () => {
@@ -13,6 +11,8 @@ const Search = () => {
       setSearchList(response.data);
     });
   };
+
+  searchResult();
 
   return (
     <>
