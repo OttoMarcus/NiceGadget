@@ -2,11 +2,13 @@ variables:
   SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
   GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
   RULES_CHANGES_PATH: "**/*"
+  LIGHTHOUSE_TEST_URL: "https://mern-b6d37.web.app/"
 stages:
   - build
   - test
   - sonar
   - deploy
+  - audit
 
 .base-rules:
   rules:
@@ -158,6 +160,26 @@ deploy-to-firebase:
     - cat "$GCP_APPLICATION_CREDENTIALS" > ./gcp-application-credentials.json
     - export GOOGLE_APPLICATION_CREDENTIALS=./gcp-application-credentials.json
     - firebase deploy --only hosting
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      changes:
+        - "frontend/**/*"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual
+
+lighthouse:
+  image: markhobson/node-chrome
+  stage: audit
+  needs: ["deploy-to-firebase"]
+  before_script:
+    - cd frontend/
+    - npm i -g lighthouse
+  script:
+    - lighthouse --chrome-flags="--headless --no-sandbox" $LIGHTHOUSE_TEST_URL --output html --output-path ./report.html
+  artifacts:
+    paths:
+      - frontend/report.html
+    expire_in: 1 week
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       changes:
