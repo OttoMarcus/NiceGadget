@@ -16,7 +16,7 @@ const SearchForm = () => {
     <form
       action=""
       onClick={handleShow}
-      onMouseOver={handleShow}
+      // onMouseOver={handleShow}
       onBlur={handleBlur}
       className={styles.searchForm}
     >
