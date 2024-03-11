@@ -2,24 +2,22 @@ const Wishlist = require('../models/Wishlist');
 const Product = require('../models/Product');
 const queryCreator = require('../commonHelpers/queryCreator');
 const _ = require('lodash');
-const Cart = require("../models/Cart");
 
 
 exports.createWishlist = (req, res, next) => {
-    Wishlist.findOne({ id: req.body.id })
-        .then((wishlist ) => {
-            console.log( `suda`,req.body.id  )
+    Wishlist.findOne({ customerId: req.body.customerId })
+        .then((wishlist) => {
+            console.log( `suda`,req.body.customerId  )
             console.log(`wishlist`, wishlist);
             if (wishlist) {
                 return res
                     .status(400)
                     .json({ message: `Wishlist for this customer already exists` });
-            } else if (!wishlist) {
+            } else {
                 console.log(`req.body`, req.body);
                 const wishlistData = _.cloneDeep(req.body);
-                console.log(`qwerty1` ,req.body.id)
-                 wishlistData.id = req.body.id;
-                wishlistData.products = req.body.products;
+                console.log(`qwerty1` ,req.body.customerId)
+                 wishlistData.customerId = req.body.customerId;
                 console.log(`qwerty` ,wishlistData )
                 const newWishlist = new Wishlist(queryCreator(wishlistData));
 
@@ -45,89 +43,51 @@ exports.createWishlist = (req, res, next) => {
         });
 };
 
-exports.updateWishlist = async (req, res, next) => {
-    try {
-        const wishlist = await Wishlist.findOne({ id: req.body.id });
 
-        if (!wishlist) {
-            const newFavor = {
-                id: req.body.id,
-                products: req.body.products || []
-            };
-            const favor = new Wishlist(newFavor);
-            const savedCart = await favor.save();
+exports.updateWishlist = (req, res, next) => {
+  Wishlist.findOne({ customerId: req.user.id })
+    .then((wishlist) => {
+      if (!wishlist) {
+        const wishlistData = _.cloneDeep(req.body);
+        wishlistData.customerId = req.user.id;
 
-            return res.json(savedCart);
-        } else {
-            wishlist.products = req.body.products || wishlist.products;
-            const updatedCart = await wishlist.save();
-            return res.json(updatedCart);
-        }
-    } catch (err) {
-        return res.status(400).json({
-            message: `Error happened on server: "${err}" `,
-        });
-    }
+        const newWishlist = new Wishlist(queryCreator(wishlistData));
+
+        newWishlist.populate('products').populate('customerId').execPopulate();
+
+        newWishlist
+          .save()
+          .then((wishlist) => res.json(wishlist))
+          .catch((err) =>
+            res.status(400).json({
+              message: `Error happened on server: "${err}" `,
+            })
+          );
+      } else {
+        const wishlistData = _.cloneDeep(req.body);
+        const updatedWishlist = queryCreator(wishlistData);
+
+        Wishlist.findOneAndUpdate(
+          { customerId: req.user.id },
+          { $set: updatedWishlist },
+          { new: true }
+        )
+          .populate('products')
+          .populate('customerId')
+          .then((wishlist) => res.json(wishlist))
+          .catch((err) =>
+            res.status(400).json({
+              message: `Error happened on server: "${err}" `,
+            })
+          );
+      }
+    })
+    .catch((err) =>
+      res.status(400).json({
+        message: `Error happened on server: "${err}" `,
+      })
+    );
 };
-// exports.updateWishlist =(req, res, next) => {
-//   Wishlist.findOne({ id: req.body.id })
-//     .then((wishlist) => {
-//         if (!wishlist) {
-//             const newFavor = {
-//                 id: req.body.id,
-//                 products: req.body.products || []
-//             };
-//             const favor = new Wishlist(newFavor);
-//             const savedCart = favor.save();
-//
-//             return res.json(savedCart);
-//         } else {
-//             wishlist.products = req.body.products || wishlist.products;
-//             const updatedCart = wishlist.save();
-//             return res.json(updatedCart);
-//         }
-//       // if (!wishlist) {
-//       //   const wishlistData = _.cloneDeep(req.body);
-//       //   wishlistData.id = req.body.id;
-//       //
-//       //   const newWishlist = new Wishlist(queryCreator(wishlistData));
-//       //
-//       //   newWishlist.populate('products').populate('customerId').execPopulate();
-//       //
-//       //   newWishlist
-//       //     .save()
-//       //     .then((wishlist) => res.json(wishlist))
-//       //     .catch((err) =>
-//       //       res.status(400).json({
-//       //         message: `Error happened on server: "${err}" `,
-//       //       })
-//       //     );
-//       // }
-//       // else {
-//       //   const wishlistData =  new Wishlist(req.body);
-//       //   // const updatedWishlist = queryCreator(wishlistData);
-//       //
-//       //   Wishlist.findOneAndUpdate(
-//       //     { id: req.body.id },
-//       //     { $set: updatedWishlist },
-//       //     { new: true }
-//       //   )
-//       //     .populate('products')
-//       //     .populate('id')
-//       //     .then((wishlist) => res.json(wishlist))
-//       //     .catch((err) =>
-//       //       res.status(400).json({
-//       //         message: `Error happened on server: "${err}" `,
-//       //       })
-//       //     );
-//       // }
-//     })
-//     .catch((err) =>
-//       res.status(400).json({
-//         message: `Error happened on server: "${err}" `,
-//       })
-//     );
-// };
 
 exports.addProductToWishlist = async (req, res, next) => {
   let productToAdd;
@@ -280,16 +240,13 @@ exports.deleteWishlist = (req, res, next) => {
 };
 
 exports.getWishlist = (req, res, next) => {
-    console.log(`response`, req.headers);
-    // console.log(`response user`, req.user.id);
-
-    Wishlist.findOne({id: req.headers.id})
-    // Wishlist.findOne({id: req.user.id})
-        .then((wishlist) => {
-            console.log(`wishlist` ,wishlist )
-            res.json(wishlist)})
-        .catch((err) => res.status(400).json({
-            message: `Error happened on server: "${err}" `,
-        }));
+  Wishlist.findOne({ customerId: req.user.id })
+    .populate('products')
+    .populate('customerId')
+    .then((wishlist) => res.json(wishlist))
+    .catch((err) =>
+      res.status(400).json({
+        message: `Error happened on server: "${err}" `,
+      })
+    );
 };
-

@@ -5,10 +5,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const WishlistSchema = new Schema({
-    id: {
-        type : String
+        // _id:{
+        //     type: Schema.Types.ObjectId,
+        //     require:  false
+        // },
+    customerId: {
+        type : Number
     },
-    products: []
+    products: [Object]
 });
 
 module.exports = Wishlist = mongoose.model(
