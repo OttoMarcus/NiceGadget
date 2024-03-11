@@ -26,7 +26,7 @@ router.post(
 // @access  Private
 router.put(
   "/",
-  passport.authenticate("jwt", { session: false }),
+  // passport.authenticate("jwt", { session: false }),
   updateWishlist
 );
 
