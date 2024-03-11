@@ -3,31 +3,46 @@ const Product = require('../models/Product');
 const queryCreator = require('../commonHelpers/queryCreator');
 const _ = require('lodash');
 
+
 exports.createWishlist = (req, res, next) => {
-  Wishlist.findOne({ customerId: req.user.id }).then((wishlist) => {
-    if (wishlist) {
-      return res
-        .status(400)
-        .json({ message: `Wishlist for this customer is already exists` });
-    } else {
-      const wishlistData = _.cloneDeep(req.body);
-      wishlistData.customerId = req.user.id;
+    Wishlist.findOne({ customerId: req.body.customerId })
+        .then((wishlist) => {
+            console.log( `suda`,req.body.customerId  )
+            console.log(`wishlist`, wishlist);
+            if (wishlist) {
+                return res
+                    .status(400)
+                    .json({ message: `Wishlist for this customer already exists` });
+            } else {
+                console.log(`req.body`, req.body);
+                const wishlistData = _.cloneDeep(req.body);
+                console.log(`qwerty1` ,req.body.customerId)
+                 wishlistData.customerId = req.body.customerId;
+                console.log(`qwerty` ,wishlistData )
+                const newWishlist = new Wishlist(queryCreator(wishlistData));
 
-      const newWishlist = new Wishlist(queryCreator(wishlistData));
-
-      newWishlist.populate('products').populate('customerId').execPopulate();
-
-      newWishlist
-        .save()
-        .then((wishlist) => res.json(wishlist))
-        .catch((err) =>
-          res.status(400).json({
-            message: `Error happened on server: "${err}" `,
-          })
-        );
-    }
-  });
+                newWishlist
+                    .save()
+                    .then((wishlist) => {
+                        return Wishlist.populate(wishlist, { path: 'products customerId' });
+                    })
+                    .then((populatedWishlist) => {
+                        res.json(populatedWishlist);
+                    })
+                    .catch((err) => {
+                        res.status(400).json({
+                            message: `Error happened on server: "${err}" `,
+                        });
+                    });
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({
+                message: `Error happened on server: "${err}" `,
+            });
+        });
 };
+
 
 exports.updateWishlist = (req, res, next) => {
   Wishlist.findOne({ customerId: req.user.id })
