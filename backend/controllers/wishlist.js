@@ -5,9 +5,9 @@ const _ = require('lodash');
 
 
 exports.createWishlist = (req, res, next) => {
-    Wishlist.findOne({ customerId: req.body.customerId })
+    Wishlist.findOne({ id: req.body.id })
         .then((wishlist) => {
-            console.log( `suda`,req.body.customerId  )
+            console.log( `suda`,req.body.id  )
             console.log(`wishlist`, wishlist);
             if (wishlist) {
                 return res
@@ -16,8 +16,8 @@ exports.createWishlist = (req, res, next) => {
             } else {
                 console.log(`req.body`, req.body);
                 const wishlistData = _.cloneDeep(req.body);
-                console.log(`qwerty1` ,req.body.customerId)
-                 wishlistData.customerId = req.body.customerId;
+                console.log(`qwerty1` ,req.body.id)
+                 wishlistData.id = req.body.id;
                 console.log(`qwerty` ,wishlistData )
                 const newWishlist = new Wishlist(queryCreator(wishlistData));
 
@@ -45,11 +45,11 @@ exports.createWishlist = (req, res, next) => {
 
 
 exports.updateWishlist = (req, res, next) => {
-  Wishlist.findOne({ customerId: req.user.id })
+  Wishlist.findOne({ id: req.body.id })
     .then((wishlist) => {
       if (!wishlist) {
         const wishlistData = _.cloneDeep(req.body);
-        wishlistData.customerId = req.user.id;
+        wishlistData.id = req.body.id;
 
         const newWishlist = new Wishlist(queryCreator(wishlistData));
 
@@ -68,12 +68,12 @@ exports.updateWishlist = (req, res, next) => {
         const updatedWishlist = queryCreator(wishlistData);
 
         Wishlist.findOneAndUpdate(
-          { customerId: req.user.id },
+          { id: req.body.id },
           { $set: updatedWishlist },
           { new: true }
         )
           .populate('products')
-          .populate('customerId')
+          .populate('id')
           .then((wishlist) => res.json(wishlist))
           .catch((err) =>
             res.status(400).json({
