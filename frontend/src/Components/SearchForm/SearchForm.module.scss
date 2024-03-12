@@ -2,7 +2,8 @@
 @import "../../styles/abstracts/mixins";
 
 .searchForm {
-  @include flex-between;
+  @include flex-start;
+  align-items: center;
   width: auto;
   height: 30px;
 }

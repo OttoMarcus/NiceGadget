@@ -27,7 +27,6 @@
 
   @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
     grid-template-columns: repeat(auto-fit, minmax(237px, 1fr));
-    //gap: 24px;
   }
 
   @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
