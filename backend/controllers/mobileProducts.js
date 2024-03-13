@@ -104,6 +104,8 @@ exports.updateMobileProduct = (req, res, next) => {
 
 exports.getMobileProducts = async (req, res, next) => {
   const mongooseQuery = filterParser(req.query);
+  console.log(`mongooseQuery is ${mongooseQuery}`);
+  console.log(`req.query is ${req.query}`);
   const perPage = Number(req.query.perPage);
   const startPage = Number(req.query.startPage);
   const sort = req.query.sort;

@@ -72,6 +72,7 @@ SORTING
   }, []);
 
   function handleSortChange(e) {
+    e.preventDefault();
     const newSortValue = e.target.value;
     console.log(`newSortValue + ${newSortValue}`);
 
@@ -86,12 +87,18 @@ SORTING
 
     setSortValue(newSortValue);
 
+    const findMatchingProducts = async () => {
+      const mathcingProducts = await fetch(
+        `http://localhost:4000/api/phones?sort=${newSortValue}&perPage=8&startPage=1`
+      ).then((res) => console.log(res.json()));
+    };
+    findMatchingProducts();
     // fetchDataWithSort(sortValue);
   }
 
-  function handleChange() {
-    console.log("option changed!");
-  }
+  //   function handleChange() {
+  //     console.log("option changed!");
+  //   }
 
   return (
     <>
@@ -106,18 +113,10 @@ SORTING
         <option value="" onChange={searchParams.get("sort")}>
           All
         </option>
-        <option value="brandNew" onChange={handleChange}>
-          Newest
-        </option>
-        <option value="available" onChange={handleChange}>
-          In Stock
-        </option>
-        <option value="price_desc" onChange={handleChange}>
-          Price desc
-        </option>
-        <option value="price_asc" onChange={handleChange}>
-          Price asc
-        </option>
+        <option value="brandNew">Newest</option>
+        <option value="available">In Stock</option>
+        <option value="price_desc">Price desc</option>
+        <option value="price_asc">Price asc</option>
       </select>
     </>
   );
