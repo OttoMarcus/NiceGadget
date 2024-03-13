@@ -102,7 +102,6 @@ const Card = (props) => {
 
 Card.propTypes = {
   _id: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
@@ -110,6 +109,7 @@ Card.propTypes = {
   color: PropTypes.string.isRequired,
   available: PropTypes.bool.isRequired,
 
+  id: PropTypes.string,
   screen: PropTypes.string,
   capacity: PropTypes.string,
   ram: PropTypes.string,
