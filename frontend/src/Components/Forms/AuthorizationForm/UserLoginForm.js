@@ -66,6 +66,7 @@ const UserLoginForm = () => {
     }).then((res) => res.json());
     console.log(user);
     dispatch(addUser(user));
+
     return user;
   };
 

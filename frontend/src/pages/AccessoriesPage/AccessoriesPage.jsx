@@ -36,7 +36,7 @@ const Accessories = () => {
         {accessoriesArr &&
           accessoriesArr.map((accessory, index) => (
             <CardAccessories
-              key={index}
+              key={accessory._id}
               name={accessory.name}
               color={accessory.color}
               price={accessory.price}
@@ -45,6 +45,7 @@ const Accessories = () => {
               size={accessory.size}
               available={accessory.available}
               id={accessory.id}
+              _id={accessory._id}
               category={accessory.category}
             />
           ))}

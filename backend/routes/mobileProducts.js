@@ -11,6 +11,7 @@ const {
   getMobileProducts,
   getMobileProductById,
   getMobileProductsTotal,
+  getMobileProductByCustomId,
 } = require("../controllers/mobileProducts");
 
 // Configurations for multer
@@ -88,5 +89,10 @@ router.get("/total", getMobileProductsTotal);
 // @desc    GET existing mobileProduct by id
 // @access  Public
 router.get("/:id", getMobileProductById);
+
+// @route   GET /mobileProducts/byProductId/:productId
+// @desc    GET existing mobileProduct by custom productId
+// @access  Public
+router.get("/byProductId/:id", getMobileProductByCustomId);
 
 module.exports = router;

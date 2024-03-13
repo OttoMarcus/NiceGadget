@@ -8,10 +8,12 @@ import TechSpecs from "../../Components/ProductTechSpecs/ProductTechSpecs";
 import ProductAbout from "../../Components/ProductAbout/ProductAbout";
 import { useDispatch, useSelector } from "react-redux";
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
-import { addToCart } from "../../store/cart/cartSlice";
+import { addToCartLocal } from "../../store/cart/cartSlice";
+import { addToCartServer } from "../../API/cartAPI";
 
 const SingleAccessoriesPage = () => {
   const dispatch = useDispatch();
+  const isAuthorized = useSelector((state) => state.user.isAuthorized);
   const { accessoryId } = useParams();
   const [accessories, setAccessories] = useState();
 
@@ -22,7 +24,7 @@ const SingleAccessoriesPage = () => {
   const [accessoryAvailable, setAccessoryAvailable] = useState(true);
 
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const inCart = cartItems.some((item) => item.id === activeAccessoryId);
+  const inCart = cartItems.some((item) => item.customId === activeAccessoryId);
   const isAvailable = accessoryAvailable;
   const backgroundColorBtn = isAvailable && !inCart ? "#905BFF" : "#323542";
 
@@ -46,22 +48,19 @@ const SingleAccessoriesPage = () => {
   }, [accessoryId]);
 
   const handleAddToCart = () => {
-    if (accessoryId) {
-      const productDetailsUrl = `http://localhost:4000/api/accessories/${activeAccessoryId}`;
+    if (activeAccessoryId) {
+      const productDetailsUrl = `http://localhost:4000/api/accessories/byProductId/${activeAccessoryId}`;
 
       fetch(productDetailsUrl)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
+        .then((response) => response.json())
         .then((productDetails) => {
-          dispatch(
-            addToCart({
-              ...productDetails,
-            })
-          );
+          const productToAdd = { ...productDetails };
+
+          if (isAuthorized) {
+            dispatch(addToCartServer(productToAdd));
+          } else {
+            dispatch(addToCartLocal({ productToAdd }));
+          }
         })
         .catch((error) => {
           console.error(

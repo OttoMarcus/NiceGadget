@@ -7,12 +7,12 @@ import "./styles/global/_base.scss";
 import Breadcrumbs from "./Composition/Breadcrumbs/Breadcrumbs";
 import { addUser, removeUser } from "./store/user/userSlice";
 import { useLocation } from "react-router-dom";
+import { fetchCartItems } from "./API/cartAPI";
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
   // console.log(location.pathname);
-
 
   useEffect(() => {
     const getUserOnLogin = async (token) => {
@@ -24,7 +24,7 @@ function App() {
       }).then((res) => res.json());
       console.log(user);
       dispatch(addUser(user));
-    }
+    };
     const token = localStorage?.getItem("token");
     if (token) {
       getUserOnLogin(token);
@@ -32,6 +32,10 @@ function App() {
       dispatch(removeUser());
     }
   }, [location.pathname, dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchCartItems());
+  }, [dispatch]);
 
   return (
     <div className="app-wrapper">

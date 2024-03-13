@@ -11,6 +11,7 @@ const {
     getAccessoryProducts,
     getAccessoryProductById,
     getAccessoryProductsTotal,
+    getAccessoryProductByCustomId,
 } = require("../controllers/accessoriesProduct");
 
 
@@ -80,5 +81,10 @@ router.get("/total", getAccessoryProductsTotal);
 // @desc    GET existing accessory product by id
 // @access  Public
 router.get("/:id", getAccessoryProductById);
+
+// @route   GET /mobileProducts/byProductId/:productId
+// @desc    GET existing mobileProduct by custom productId
+// @access  Public
+router.get("/byProductId/:id", getAccessoryProductByCustomId);
 
 module.exports = router;

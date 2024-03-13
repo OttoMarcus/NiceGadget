@@ -11,12 +11,14 @@ import Favorite from "../../Components/Favorite/Favorite";
 import { capitalizeFirstLetterOfWord } from "../../helpers/capitalizeFirstLetterOfWord";
 import { useDispatch, useSelector } from "react-redux";
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
-import { addToCart } from "../../store/cart/cartSlice";
+import { addToCartLocal } from "../../store/cart/cartSlice";
 import { useFetchModelData } from "./hooks/useFetchModelData";
 import { useSelectedColorData } from "./hooks/useSelectedColorData";
+import { addToCartServer } from "../../API/cartAPI";
 
 const SingleProductPage = () => {
   const dispatch = useDispatch();
+  const isAuthorized = useSelector((state) => state.user.isAuthorized);
   const { modelId } = useParams();
   const location = useLocation();
   const pathname = location.pathname;
@@ -40,7 +42,7 @@ const SingleProductPage = () => {
 
   const cartItems = useSelector((state) => state.cart.cartItems);
   const inCart = cartItems.some(
-    (item) => item.id === chosenCapacityObject?.productId
+    (item) => item.customId === chosenCapacityObject?.productId
   );
   const isAvailable = chosenCapacityObject?.available;
   const backgroundColorBtn = isAvailable && !inCart ? "#905BFF" : "#323542";
@@ -50,7 +52,7 @@ const SingleProductPage = () => {
 
   const handleAddToCart = () => {
     if (chosenCapacityObject?.productId) {
-      const productDetailsUrl = `http://localhost:4000/api/${typeModel}/${chosenCapacityObject.productId}`;
+      const productDetailsUrl = `http://localhost:4000/api/${typeModel}/byProductId/${chosenCapacityObject.productId}`;
 
       fetch(productDetailsUrl)
         .then((response) => {
@@ -60,11 +62,13 @@ const SingleProductPage = () => {
           return response.json();
         })
         .then((productDetails) => {
-          dispatch(
-            addToCart({
-              ...productDetails,
-            })
-          );
+          const productToAdd = { ...productDetails };
+
+          if (isAuthorized) {
+            dispatch(addToCartServer(productToAdd));
+          } else {
+            dispatch(addToCartLocal({ productToAdd }));
+          }
         })
         .catch((error) => {
           console.error(

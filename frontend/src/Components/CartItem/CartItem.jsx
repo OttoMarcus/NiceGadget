@@ -4,16 +4,22 @@ import { Link } from "react-router-dom";
 import DeleteIcon from "../Icons/Close";
 import Minus from "../Icons/Minus";
 import Plus from "../Icons/Plus";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import {
-  incrementQuantity,
-  decrementQuantity,
-  removeFromCart,
+  incrementQuantityLocal,
+  decrementQuantityLocal,
+  removeFromCartLocal,
 } from "../../store/cart/cartSlice";
+import {
+  incrementQuantityServer,
+  decrementQuantityServer,
+  removeFromCartServer,
+} from "../../API/cartAPI";
 
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
+  const isAuthorized = useSelector((state) => state.user.isAuthorized);
 
   const calculateTotalItemPrice = (price, discount = 0, quantity) => {
     return Math.round(price * (1 - discount) * quantity);
@@ -22,7 +28,7 @@ const CartItem = ({ item }) => {
   const totalItemPrice = calculateTotalItemPrice(
     item.price,
     item.discount,
-    item.quantity
+    item.cartQuantity
   );
 
   const getPath = () => {
@@ -39,15 +45,27 @@ const CartItem = ({ item }) => {
   };
 
   const handleIncrement = () => {
-    dispatch(incrementQuantity({ category: item.category, id: item.id }));
+    if (isAuthorized) {
+      dispatch(incrementQuantityServer(item.productId));
+    } else {
+      dispatch(incrementQuantityLocal({ _id: item.productId }));
+    }
   };
 
   const handleDecrement = () => {
-    dispatch(decrementQuantity({ category: item.category, id: item.id }));
+    if (isAuthorized) {
+      dispatch(decrementQuantityServer(item.productId));
+    } else {
+      dispatch(decrementQuantityLocal({ _id: item.productId }));
+    }
   };
 
   const handleRemove = () => {
-    dispatch(removeFromCart({ category: item.category, id: item.id }));
+    if (isAuthorized) {
+      dispatch(removeFromCartServer(item.productId));
+    } else {
+      dispatch(removeFromCartLocal({ _id: item.productId }));
+    }
   };
 
   return (
@@ -68,7 +86,7 @@ const CartItem = ({ item }) => {
           <button onClick={handleDecrement}>
             <Minus />
           </button>
-          <span className={styles.quantity}>{item.quantity}</span>
+          <span className={styles.quantity}>{item.cartQuantity}</span>
           <button onClick={handleIncrement}>
             <Plus />
           </button>
@@ -81,12 +99,13 @@ const CartItem = ({ item }) => {
 
 CartItem.propTypes = {
   item: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
+    productId: PropTypes.string.isRequired,
     picture: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     discount: PropTypes.number,
-    quantity: PropTypes.number.isRequired,
+    cartQuantity: PropTypes.number.isRequired,
     category: PropTypes.string.isRequired,
     color: PropTypes.string,
     capacity: PropTypes.string,
