@@ -15,8 +15,8 @@ import SingleAccessoriesPage from "../pages/SingleAccessoriesPage/SingleAccessor
 import Right from "../pages/Right/Right";
 import Contacts from "../pages/Contacts/Contacts";
 import User from "../pages/User/User";
-import Search from "../pages/Search/Search";
 import BuyForm from "../Components/BuyForm/BuyForm";
+import Search from "../pages/Search/Search";
 
 const RootRouters = () => {
   return (
