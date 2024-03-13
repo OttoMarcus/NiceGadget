@@ -2,46 +2,25 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchTodos = createAsyncThunk(
   "todos/fetchTodos",
-  async function (user, isAuthorized) {
+  async function (user) {
     try {
-      const token = localStorage.getItem("token");
-      const userId = localStorage.getItem("user");
-
-      const resultSlice = userId.slice(1, -1);
-      // console.log(`token111111111111111111111111111111`, token);
-      // console.log(`isAuthorized11111111111111111111111`, isAuthorized);
-      // console.log(`user1111111111111111111111111111111`, user);
-      console.log(`token`, token);
-      console.log(userId);
-      if (token && resultSlice) {
-        //token && user._id
-        //  console.log(`fetchTodos ruseruser `, user)
-        const response = await fetch(`http://localhost:4000/api/wishlist`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-            // id: user._id,
-            id: resultSlice,
-          },
-        });
-        const data = await response.json();
-        console.log(
-          `data fetchTodosfetchTodosfetchTodosfetchTodos`,
-          data.products
-        );
-        console.log(`data fetchTodosfetchTodosfetchTodosfetchTodos`);
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        let ret = data.products || [];
-        console.log(`ret ret `, ret);
-        localStorage.setItem("favorites", JSON.stringify(ret));
-        return ret;
+      // console.log(111111111111111111111, user);
+      const response = await fetch(`http://localhost:4000/api/wishlist`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          id: user._id,
+        },
+      });
+      const data = await response.json();
+      console.log(`data fetchTodosfetchTodosfetchTodosfetchTodos`, response);
+      if (response.ok !== 200) {
+        throw new Error("Network response was not ok");
       }
+
+      return data;
     } catch (error) {
-      console.warn("Error fetching wishlist:", error);
+      console.error("Error fetching wishlist:", error);
       throw error; // Перебрасываем ошибку, чтобы ее можно было обработать в UI
     }
   }
@@ -50,41 +29,8 @@ export const fetchChange = createAsyncThunk(
   "todos/fetchChange",
   async function ({ user, ...products }) {
     try {
-      // console.log(`cyka cyda dochla1`, products.favor);
-      if (user) {
-        console.log(`change featchfeatchfeatchfeatchfeatch`, user);
-        const token = localStorage.getItem("token");
-        const response = await fetch(`http://localhost:4000/api/wishlist`, {
-          method: `PUT`,
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-          body: JSON.stringify({ id: user._id, products: products.favor }),
-        });
-        // console.log(`cyka cyda dochla`, user, products);
-        // console.log(`response.ok`, response.ok === 200);
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const data = await response.json();
-        console.log(`data vheng`, data);
-        // console.log(`data fetchChangefetchChangefetchChangefetchChange`, data);
-        return data;
-      }
-    } catch (error) {
-      console.warn("Error updating wishlist:", error);
-      throw error; // Перебрасываем ошибку, чтобы ее можно было обработать в UI
-    }
-  }
-);
-
-export const featchClearFavor = createAsyncThunk(
-  "todos/featchClearFavor",
-  async function (user) {
-    try {
+      console.log(`cyka cyda dochla1`, products.favor);
+      // console.log(`change featchfeatchfeatchfeatchfeatch`, user , products)
       const token = localStorage.getItem("token");
       const response = await fetch(`http://localhost:4000/api/wishlist`, {
         method: `PUT`,
@@ -92,27 +38,28 @@ export const featchClearFavor = createAsyncThunk(
           "Content-Type": "application/json",
           Authorization: token,
         },
-        body: JSON.stringify({ id: user._id, products: [] }),
+        body: JSON.stringify({ id: user._id, products: products.favor }),
       });
-
-      if (!response.ok) {
+      console.log(`cyka cyda dochla`, user, products);
+      if (response.ok !== 200) {
         throw new Error("Network response was not ok");
       }
 
       const data = await response.json();
-      return data.products;
+      // console.log(`data fetchChangefetchChangefetchChangefetchChange`, data);
+      return data;
     } catch (error) {
-      console.warn("Error updating wishlist:", error);
-      throw error;
+      console.error("Error updating wishlist:", error);
+      throw error; // Перебрасываем ошибку, чтобы ее можно было обработать в UI
     }
   }
 );
-const currentLocalInitialState = JSON.parse(localStorage.getItem("favorites"));
+
 const favoriteSlice = createSlice({
   name: "favorites",
   initialState: {
     status: null,
-    favorites: currentLocalInitialState || [],
+    favorites: [],
     error: null,
   },
   reducers: {
@@ -130,14 +77,11 @@ const favoriteSlice = createSlice({
         : (state.favorites = state.favorites.filter(
             (el) => el.id !== action.payload.id
           ));
-      // localStorage.setItem("favorites", JSON.stringify(state.favorites));
-      const elms = JSON.parse(localStorage.getItem("favorites"));
-      console.log(`in slice `, state.favorites);
-      console.log(`in slice local `, elms);
+      // console.log(`in slice ` , state.favorites)
+      localStorage.setItem("favorites", JSON.stringify(state.favorites));
     },
     SetFavor: (state, action) => {
       state.favorites = action.payload;
-      // localStorage.setItem("favorites", JSON.stringify(action.payload));
     },
   },
   extraReducers(builder) {
@@ -148,9 +92,12 @@ const favoriteSlice = createSlice({
       })
       .addCase(fetchTodos.fulfilled, (state, action) => {
         state.status = "resolve";
-        if (action.payload) {
-          state.favorites = action.payload;
-        }
+        // console.log(`action. payload `, action.payload?.products)
+        state.favorites = action.payload?.products;
+        localStorage.setItem(
+          "favorites",
+          JSON.stringify(action.payload?.products)
+        );
       })
       .addCase(fetchTodos.rejected, (state, action) => {
         state.status = "rejected";
@@ -162,23 +109,11 @@ const favoriteSlice = createSlice({
       })
       .addCase(fetchChange.fulfilled, (state, action) => {
         state.status = "resolve";
-        // state.favorites = action.payload
+        // console.log(`action. payload `, action.payload?.products)
+        // state.favorites = action.payload?.products;
+        // localStorage.setItem("favorites", JSON.stringify(action.payload?.products));
       })
       .addCase(fetchChange.rejected, (state, action) => {
-        state.status = "rejected";
-        state.error = action.error.message;
-      })
-      .addCase(featchClearFavor.pending, (state) => {
-        state.status = "loading";
-        state.error = null;
-      })
-      .addCase(featchClearFavor.fulfilled, (state, action) => {
-        state.status = "resolve";
-        if (action.payload?.products) {
-          state.favorites = action.payload?.products;
-        }
-      })
-      .addCase(featchClearFavor.rejected, (state, action) => {
         state.status = "rejected";
         state.error = action.error.message;
       });
