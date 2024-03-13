@@ -10,6 +10,7 @@ const {
   updateMobileProduct,
   getMobileProducts,
   getMobileProductById,
+  getMobileProductsTotal,
 } = require("../controllers/mobileProducts");
 
 // Configurations for multer
@@ -80,6 +81,8 @@ router.put(
 // @desc    GET existing mobileProducts
 // @access  Public
 router.get("/", getMobileProducts);
+
+router.get("/total", getMobileProductsTotal);
 
 // @route   GET /mobileProducts/:id
 // @desc    GET existing mobileProduct by id

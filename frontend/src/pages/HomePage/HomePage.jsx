@@ -41,12 +41,6 @@ const HomePage = () => {
     available: true,
   };
 
-  const totalByCategory = {
-    totalPhones: 100,
-    totalTablets: 200,
-    totalAccessories: 300,
-  };
-
   return (
     <>
       <h1 className={`${style.container} ${style.homePageTitle}`}>
@@ -62,7 +56,7 @@ const HomePage = () => {
       </section>
 
       <section className={`${style.container} ${style.homePageSection}`}>
-        <ShopByCategory {...totalByCategory} />
+        <ShopByCategory />
       </section>
 
       <section className={`${style.container} ${style.homePageSection}`}>

@@ -95,6 +95,27 @@ exports.getAccessoryProducts = async (req, res, next) => {
     }
 };
 
+exports.getAccessoryProductsTotal = async (req, res, next) => {
+  const mongooseQuery = filterParser(req.query);
+  const q = typeof req.query.q === 'string' ? req.query.q.trim() : null;
+
+  if (q) {
+    mongooseQuery.name = {
+      $regex: new RegExp(q, "i"),
+    };
+  }
+
+  try {
+    const total = await accessoriesProducts.countDocuments(mongooseQuery);
+
+    res.json({ total });
+  } catch (err) {
+    res.status(400).json({
+      message: `Error happened on server: "${err}" `,
+    });
+  }
+};
+
 // exports.getAccessoryProductById = (req, res, next) => {
 //     const { id } = req.params;
 //     if (!isValidMongoId(id)) {
@@ -121,7 +142,7 @@ exports.getAccessoryProducts = async (req, res, next) => {
 
 exports.getAccessoryProductById = (req, res, next) => {
     const { id } = req.params;
-  
+
     accessoriesProducts.findOne({id: id})
       .then(accessoryProduct => {
         if (!accessoryProduct) {

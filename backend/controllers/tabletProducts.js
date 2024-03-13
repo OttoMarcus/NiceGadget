@@ -7,6 +7,7 @@ const rand = uniqueRandom(0, 999999);
 const queryCreator = require("../commonHelpers/queryCreator");
 const filterParser = require("../commonHelpers/filterParser");
 const _ = require("lodash");
+const mobileProducts = require("../models/MobileProduct");
 
 // exports.addImages = (req, res, next) => {
 //   if (req.files.length > 0) {
@@ -127,6 +128,27 @@ exports.getTabletProducts = async (req, res, next) => {
   } catch (err) {
     res.status(400).json({
       message: `Error happened on server: "${err}" `
+    });
+  }
+};
+
+exports.getTabletProductsTotal = async (req, res, next) => {
+  const mongooseQuery = filterParser(req.query);
+  const q = typeof req.query.q === 'string' ? req.query.q.trim() : null;
+
+  if (q) {
+    mongooseQuery.name = {
+      $regex: new RegExp(q, "i"),
+    };
+  }
+
+  try {
+    const total = await tabletProducts.countDocuments(mongooseQuery);
+
+    res.json({ total });
+  } catch (err) {
+    res.status(400).json({
+      message: `Error happened on server: "${err}" `,
     });
   }
 };
