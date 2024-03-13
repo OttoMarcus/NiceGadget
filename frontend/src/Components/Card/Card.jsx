@@ -101,21 +101,23 @@ const Card = (props) => {
 };
 
 Card.propTypes = {
-  _id: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  _id: PropTypes.string,
   picture: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  category: PropTypes.string,
   color: PropTypes.string.isRequired,
+  available: PropTypes.bool.isRequired,
+
+  id: PropTypes.string,
   screen: PropTypes.string,
   capacity: PropTypes.string,
   ram: PropTypes.string,
+  brandNew: PropTypes.bool,
   refModel: PropTypes.shape({
-    modelId: PropTypes.string.isRequired,
-    modelName: PropTypes.string.isRequired,
-  }).isRequired,
-  category: PropTypes.string,
-  available: PropTypes.bool.isRequired,
+    modelId: PropTypes.string,
+    modelName: PropTypes.string,
+  }),
 };
 
 export default Card;

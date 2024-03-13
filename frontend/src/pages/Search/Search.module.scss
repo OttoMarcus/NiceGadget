@@ -2,7 +2,7 @@
 @import "../../styles/abstracts/mixins";
 @import "../../styles/global/base";
 
-.tabletsTitle {
+.searchTitle {
   @include mobile-h2;
   color: $ui-color-gray-white;
   margin-bottom: 8px;
@@ -13,7 +13,7 @@
   }
 }
 
-.subtitle {
+.searchCategory {
   @include uppercase;
   color: $ui-color-gray-icons-placeholders;
   text-align: left;
