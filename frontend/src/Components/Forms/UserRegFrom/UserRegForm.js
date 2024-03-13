@@ -5,12 +5,9 @@ import Input from "../CustomInput.js";
 import Button from "../../Button/Button.jsx";
 import styles from "./UserRegForm.module.scss";
 import { addUser } from "../../../store/user/userSlice.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  synchronizeCartWithServer,
-  fetchCartItems,
-} from "../../../API/cartAPI.js";
+import { CreateFavorUser } from "../../../API/favorietesAPI";
 
 const UserRegForm = () => {
   const [regStatus, setRegStatus] = useState("");
@@ -25,10 +22,10 @@ const UserRegForm = () => {
     setRegError("");
     // setCredentials({})
   }, []);
-
+  const user = useSelector((state) => state.user.user);
   const createNewUser = async (userData) => {
     try {
-      // console.log(userData);
+      console.log(userData);
       // setCredentials({loginOrEmail: userData.login, password: userData.password})
       const response = await fetch(`http://localhost:4000/api/customers`, {
         method: "POST",
@@ -39,6 +36,9 @@ const UserRegForm = () => {
       });
       if (response.ok) {
         setRegStatus("successful");
+        setTimeout(() => {
+          console.log(`user`, user);
+        }, 1000);
         return await response.json();
       } else {
         setRegStatus("failed");
@@ -154,8 +154,6 @@ const UserRegForm = () => {
 
     const token = await loginUser(userCredentials);
     await getUserOnLogin(token);
-    dispatch(synchronizeCartWithServer());
-    dispatch(fetchCartItems());
     onAuthRedirect();
 
     // return user
