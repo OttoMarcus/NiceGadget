@@ -5,7 +5,10 @@ import styles from "./Card.module.scss";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
+import {
+  Tooglefavorites,
+  fetchChange,
+} from "../../store/favorites/favoriteSlice";
 import { addToCartLocal } from "../../store/cart/cartSlice";
 import { addToCartServer } from "../../API/cartAPI";
 
@@ -48,6 +51,15 @@ const Card = (props) => {
       dispatch(addToCartLocal({ productToAdd }));
     }
   };
+  //   const favorfunc = (event) => {
+  //     event.stopPropagation();
+  //     event.preventDefault();
+  //     if (isAuthorized) {
+  // dispatch(fetchChange(props))
+  //     } else {
+  //       dispatch(Tooglefavorites(props));
+  //     }
+  //   };
 
   return (
     <Link

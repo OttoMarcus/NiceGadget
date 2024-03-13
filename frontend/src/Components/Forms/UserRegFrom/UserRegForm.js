@@ -4,8 +4,9 @@ import validationSchema from "./validationSchema.js";
 import Input from "../CustomInput.js";
 import styles from "./UserRegForm.module.scss";
 import { addUser } from "../../../store/user/userSlice.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { CreateFavorUser } from "../../../API/favorietesAPI";
 
 const UserRegForm = () => {
   const [regStatus, setRegStatus] = useState("");
@@ -20,7 +21,7 @@ const UserRegForm = () => {
     setRegError("");
     // setCredentials({})
   }, []);
-
+  const user = useSelector((state) => state.user.user);
   const createNewUser = async (userData) => {
     try {
       console.log(userData);
@@ -34,6 +35,9 @@ const UserRegForm = () => {
       });
       if (response.ok) {
         setRegStatus("successful");
+        setTimeout(() => {
+          console.log(`user`, user);
+        }, 1000);
         return await response.json();
       } else {
         setRegStatus("failed");
