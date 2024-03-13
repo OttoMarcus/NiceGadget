@@ -240,13 +240,12 @@ exports.deleteWishlist = (req, res, next) => {
 };
 
 exports.getWishlist = (req, res, next) => {
-  Wishlist.findOne({ customerId: req.user.id })
-    .populate('products')
-    .populate('customerId')
-    .then((wishlist) => res.json(wishlist))
-    .catch((err) =>
-      res.status(400).json({
-        message: `Error happened on server: "${err}" `,
-      })
-    );
+    console.log(`response`, req.headers.aboba);
+    Wishlist.findOne({id: req.headers.aboba})
+
+        .then((wishlist) => res.json(wishlist))
+        .catch((err) => res.status(400).json({
+            message: `Error happened on server: "${err}" `,
+        }));
 };
+
