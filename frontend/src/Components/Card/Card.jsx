@@ -1,12 +1,13 @@
 import React from "react";
 import Button from "../Button/Button";
 import Favorite from "../Favorite/Favorite";
-import styles from "./Card.module.scss";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
 import { addToCart } from "../../store/cart/cartSlice";
+
+import styles from "./Card.module.scss";
 
 const Card = (props) => {
   const {

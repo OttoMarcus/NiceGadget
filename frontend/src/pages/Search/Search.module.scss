@@ -17,19 +17,17 @@
   @include uppercase;
   color: $ui-color-gray-icons-placeholders;
   text-align: left;
+  margin-bottom: 16px;
 }
 
 .resultWrapper {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(212px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+  align-items: center;
   gap: 16px;
 
-  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
-    grid-template-columns: repeat(auto-fit, minmax(237px, 1fr));
-  }
-
-  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
-    grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
+  a {
+    @include flex-center;
   }
 }

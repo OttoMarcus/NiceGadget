@@ -3,37 +3,27 @@
 
 .card {
   display: flex;
-  width: 212px;
-  height: auto;
-  padding: 32px;
   flex-direction: column;
   align-items: flex-start;
+  width: 100%;
+  max-width: 287px;
+  padding: 32px;
   gap: 8px;
-  flex-shrink: 0;
   background-color: $ui-color-gray-surface-1;
-  margin-right: 16px;
-
-  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
-    width: 237px;
-  }
-
-  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
-    width: 272px;
-  }
 
   .cardImg {
     @include flex-center;
     width: 100%;
 
     & > img {
-      width: 148px;
+      max-width: 148px;
 
       @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
-        width: 173px;
+        max-width: 173px;
       }
 
       @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
-        width: 208px;
+        max-width: 208px;
       }
     }
   }
