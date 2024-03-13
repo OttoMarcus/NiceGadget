@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import styles from "./Cart.module.scss";
 import CartItem from "../CartItem/CartItem";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -43,7 +44,9 @@ const Cart = () => {
                 className={styles.totalItemsQuantity}
               >{`Total for ${totalItemsQuantity} items`}</p>
             </div>
-            <button className={styles.checkoutBtn}>Checkout</button>
+            <Link to="/buyform" className={styles.checkoutBtn}>
+              Checkout
+            </Link>
           </div>
         </>
       )}
