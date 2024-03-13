@@ -1,8 +1,8 @@
 import React from "react";
-import Carousel from "../../Components/Carousel/Carousel";
 import CardList from "../../Components/CardList/CardList";
 import ShopByCategory from "../../Components/ShopByCategory/ShopByCategory";
 import style from "./HomePage.module.scss";
+import Slider from "../../Components/AdvertisingSlider/Slider";
 
 const HomePage = () => {
   const brandNewModels = {
@@ -54,7 +54,7 @@ const HomePage = () => {
       </h1>
 
       <section className={`${style.container} ${style.homePageSection}`}>
-        <Carousel />
+        <Slider />
       </section>
 
       <section className={`${style.container} ${style.homePageSection}`}>
