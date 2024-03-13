@@ -15,6 +15,7 @@ import SingleAccessoriesPage from "../pages/SingleAccessoriesPage/SingleAccessor
 import Right from "../pages/Right/Right";
 import Contacts from "../pages/Contacts/Contacts";
 import User from "../pages/User/User";
+import BuyForm from "../Components/BuyForm/BuyForm";
 
 const RootRouters = () => {
   return (
@@ -30,6 +31,7 @@ const RootRouters = () => {
       <Route path="/phones/:modelId" element={<SingleProductPage />} />
       <Route path="/favorites" element={<Favorites />} />
       <Route path="/cart" element={<CartPage />} />
+      <Route path="/buyform" element={<BuyForm />} />
       <Route path="/tablets" element={<Tablets />} />
       <Route path="/tablets/:modelId" element={<SingleProductPage />} />
       <Route path="/registration" element={<Registration />} />

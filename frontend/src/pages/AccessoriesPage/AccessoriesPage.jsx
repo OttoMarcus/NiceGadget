@@ -24,14 +24,7 @@ const Accessories = () => {
 
   return (
     <>
-      <div className={Style.testBox}>
-        <div className={Style.timeWrapper}>
-          <h1 className={Style.tittle}>This is Accessories Page</h1>
-          <Link className={Style.linksBtn} to="/">
-            Home
-          </Link>
-        </div>
-      </div>
+      <div className={Style.testBox}></div>
       <div className={Style.cardWrapper}>
         {accessoriesArr &&
           accessoriesArr.map((accessory, index) => (

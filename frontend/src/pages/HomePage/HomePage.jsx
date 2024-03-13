@@ -3,6 +3,7 @@ import CardList from "../../Components/CardList/CardList";
 import ShopByCategory from "../../Components/ShopByCategory/ShopByCategory";
 import style from "./HomePage.module.scss";
 import Slider from "../../Components/AdvertisingSlider/Slider";
+import BuyForm from "../../Components/BuyForm/BuyForm";
 
 const HomePage = () => {
   const brandNewModels = {
