@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Formik, Form } from "formik";
 import validationSchema from "./validationSchema.js";
 import Input from "../CustomInput.js";
+import Button from "../../Button/Button.jsx";
 import styles from "./UserLoginForm.module.scss";
 import { addUser } from "../../../store/user/userSlice.js";
 import { useDispatch } from "react-redux";
@@ -95,8 +96,8 @@ const UserLoginForm = () => {
     >
       {({ isValid }) => {
         return (
-          <Form>
-            <h2>Login Form</h2>
+          <Form className={styles.loginForm}>
+            <h1>Login Form</h1>
             <Input
               type="text"
               name="loginOrEmail"
@@ -111,10 +112,22 @@ const UserLoginForm = () => {
               label="Password"
               placeholder="Password"
             />
-            <button type="submit" disabled={!isValid}>
-              Sign up
+            <div className={styles.submitContainer}>
+              {/* <button type="submit" disabled={!isValid} className={styles.submitBtn}>
+                Register
+              </button> */}
+              <Button
+                // children="Log In"
+                disabled={!isValid}
+              />
+              <p>
+                or <Link to="/registration">Register</Link>
+              </p>
+            </div>
+            {/* <button type="submit" disabled={!isValid}>
+              Log In
             </button>
-            <Link to="/registration">LogIn</Link>
+            <Link to="/registration">Register</Link> */}
             {regStatus === "failed" && (
               <p className={styles.submitStatus}>Login {regStatus}!</p>
             )}

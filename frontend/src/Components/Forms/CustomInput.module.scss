@@ -1,0 +1,23 @@
+@import "../../styles/abstracts/variables";
+@import "../../styles/abstracts/mixins";
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputLabel {
+  @include body-text;
+}
+
+.inputField {
+  padding: 5px;
+}
+
+.inputErrMsg {
+  color: red;
+}
+
+.hidden {
+  visibility: hidden;
+}

@@ -1,18 +1,20 @@
 import React from "react";
 import { useField } from "formik";
+import styles from "../Forms/CustomInput.module.scss";
 import PropTypes from "prop-types";
 
 const Input = (props) => {
   const [field, meta] = useField(props);
 
   return (
-    <div className="delivery-form__input-block">
-      <label htmlFor={props.name} className="delivery-form__label">
+    <div className={styles.inputWrapper}>
+      <label htmlFor={props.name} className={styles.inputLabel}>
         {props.label}
       </label>
       <input
         {...field}
         {...props}
+        className={styles.inputField}
         style={{
           borderColor:
             meta.touched && meta.error
@@ -26,8 +28,8 @@ const Input = (props) => {
       <p
         className={
           meta.touched && meta.error
-            ? "delivery-form__error-msg"
-            : "delivery-form__error-msg hidden"
+            ? `${styles.inputErrMsg}`
+            : `${styles.hidden}`
         }
       >
         {meta.error}
