@@ -13,14 +13,15 @@ const CardAccessories = (props) => {
   const {
     _id,
     id,
-    name,
     picture,
+    name,
     price,
+    category,
     color,
+    available,
+
     size,
     weight,
-    category,
-    available,
   } = props;
   const dispatch = useDispatch();
   const isAuthorized = useSelector((state) => state.user.isAuthorized);
@@ -57,15 +58,15 @@ const CardAccessories = (props) => {
         <div className={styles.divider}></div>
         <ul className={styles.paramsGroup}>
           <li>
-            <p>Size:</p>
+            <p>Size</p>
             <p>{size}</p>
           </li>
           <li>
-            <p>Color:</p>
+            <p>Color</p>
             <p>{color}</p>
           </li>
           <li>
-            <p>Weight:</p>
+            <p>Weight</p>
             <p>{weight}</p>
           </li>
         </ul>

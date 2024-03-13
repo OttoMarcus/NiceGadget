@@ -1,75 +1,33 @@
 @import "../../styles/abstracts/variables";
 @import "../../styles/abstracts/mixins";
+@import "../../styles/global/base";
 
-section {
+.accessoriesTitle {
+  @include mobile-h2;
+  color: $ui-color-gray-white;
+  margin-bottom: 8px;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    @include h2;
+    margin-bottom: 24px;
+  }
+}
+
+.subtitle {
+  @include uppercase;
+  color: $ui-color-gray-icons-placeholders;
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+.resultWrapper {
   width: 100%;
-  box-sizing: border-box;
-  margin-bottom: 32px;
-
-  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
-    margin-bottom: 26px;
-  }
-
-  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
-    margin-bottom: 16px;
-  }
-}
-
-.container {
-  padding: 16px;
-  max-width: $ui-max-container-width;
-
-  /*-----------------  Tablet ---------------------*/
-  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
-    padding: 24px;
-  }
-  /*----------------- Desktop ---------------------*/
-  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
-    padding: 32px;
-  }
-}
-
-/*----------------------- welcome -------------------------*/
-h1 {
-  @include mobile-h1;
-  margin: 72px 0 24px;
-
-  /*-----------------  Tablet ---------------------*/
-  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
-    margin: 80px 0 32px;
-    @include h1;
-  }
-  /*----------------- Desktop ---------------------*/
-  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
-    margin: 120px 0 56px;
-    @include h1;
-  }
-}
-
-.cardWrapper {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  max-width: 1320px;
-  gap: 40px;
-}
-
-.linksBtn {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-.timeWrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
   align-items: center;
-  text-align: center;
-  max-height: 150px;
-  margin: 120px;
+  gap: 16px;
+
+  a {
+    @include flex-center;
+  }
 }

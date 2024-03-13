@@ -13,16 +13,16 @@ const Card = (props) => {
   const {
     _id,
     id,
-    name,
     picture,
+    name,
     price,
+    category,
     color,
+    available,
     screen,
     capacity,
     ram,
     refModel,
-    category,
-    available,
   } = props;
   const dispatch = useDispatch();
   const isAuthorized = useSelector((state) => state.user.isAuthorized);
