@@ -1,3 +1,35 @@
+@import "../../styles/abstracts/variables";
+@import "../../styles/abstracts/mixins";
+@import "../../styles/global/base";
+
+.container {
+  padding: 0px;
+}
+
+.categoryWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.pageTitle {
+  @include mobile-h1;
+  margin: 72px 0 24px;
+  align-self: flex-start;
+
+  /*-----------------  Tablet ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    margin: 80px 0 32px;
+    @include h1;
+  }
+  /*----------------- Desktop ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    margin: 120px 0 56px;
+    @include h1;
+    align-self: flex-start;
+  }
+}
+
 .linksBtn {
   display: inline-block;
   padding: 10px 20px;

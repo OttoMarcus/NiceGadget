@@ -13,21 +13,33 @@ function App() {
   const location = useLocation();
   // console.log(location.pathname);
 
-
   useEffect(() => {
-    const getUserOnLogin = async (token) => {
-      const user = await fetch(`http://localhost:4000/api/customers/customer`, {
-        method: "GET",
-        headers: {
-          Authorization: token,
-        },
-      }).then((res) => res.json());
-      console.log(user);
-      dispatch(addUser(user));
-    }
+    // const getUserOnLogin = async (token) => {
+    //   const user = await fetch(`http://localhost:4000/api/customers/customer`, {
+    //     method: "GET",
+    //     headers: {
+    //       Authorization: token,
+    //     },
+    //   }).then((res) => res.json());
+    //   console.log(user);
+    //   dispatch(addUser(user));
+    // }
     const token = localStorage?.getItem("token");
     if (token) {
-      getUserOnLogin(token);
+      // getUserOnLogin(token);
+      const getUserOnLogin = async (token) => {
+        const user = await fetch(
+          `http://localhost:4000/api/customers/customer`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: token,
+            },
+          }
+        ).then((res) => res.json());
+        console.log(user);
+        dispatch(addUser(user));
+      };
     } else {
       dispatch(removeUser());
     }

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 // import styles from "./Phones.module.scss";
 import Card from "../../Components/Card/Card";
+import Filter from "../../Components/Filter/Filter";
 import { useLocation } from "react-router-dom";
+import styles from "../Phones/Phones.module.scss";
 
 const Phones = () => {
   const [phonesArr, setPhonesArr] = useState();
@@ -26,7 +28,9 @@ const Phones = () => {
   }, []);
   return (
     <>
-      <div>
+      <h1 className={styles.pageTitle}>Mobile phones</h1>
+      <Filter />
+      <div className={`${styles.container} ${styles.categoryWrapper}`}>
         {phonesArr &&
           phonesArr.map((card) => {
             return (
