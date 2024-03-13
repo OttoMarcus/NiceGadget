@@ -1,5 +1,8 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { removeUser } from "../../store/user/userSlice";
+
 import LogOut from "../../Components/Icons/LogOut";
 import User from "../../Components/Icons/User";
 import Favorite from "../../Components/Icons/Heart";
@@ -12,13 +15,37 @@ import LogIn from "../../Components/Icons/LogIn";
 import styles from "./Header.module.scss";
 
 const Header = () => {
-  const active = null;
+  const [currentPath, setCurrentPath] = useState("");
   const [isBurgerActive, setIsBurgerActive] = useState(false);
-  const [isAuthorized, setIsAuthorized] = useState(false);
+  // const [isAuthorized, setIsAuthorized] = useState(false);
 
-  const handleAuthorized = () => {
-    setIsAuthorized(!isAuthorized);
+  const active = null;
+
+  // const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  // const loggedInUser = useSelector((state) => state.user.user);
+  const isAuthorized = useSelector((state) => state.user.isAuthorized);
+
+  // const isUserLoggedIn = Object?.keys(loggedInUser).length === 0 ? false : true;
+  // console.log(isUserLoggedIn);
+
+  useEffect(() => {
+    if (
+      location.pathname !== "/registration" &&
+      location.pathname !== "/login"
+    ) {
+      setCurrentPath(location.pathname);
+    }
+  }, [location.pathname]);
+
+  const logOutUser = () => {
+    console.log("logOutUser success!");
+    dispatch(removeUser());
+    localStorage.removeItem("token");
+    // navigate("/login");
   };
+
 
   const handleAuthUser = (event) => {
     if (isAuthorized) {
@@ -140,8 +167,9 @@ const Header = () => {
             {isAuthorized ? (
               <Link
                 onClick={() => {
-                  handleAuthorized();
+                  // handleAuthorized();
                   toggleBurgerActive();
+                  logOutUser();
                 }}
                 className={styles.authChild}
                 to="/"
@@ -150,7 +178,7 @@ const Header = () => {
               </Link>
             ) : (
               <Link
-                onClick={handleAuthorized}
+                onClick={sessionStorage.setItem("prevPath", currentPath)}
                 className={styles.authChild}
                 to="/login"
               >
@@ -161,11 +189,7 @@ const Header = () => {
           <div className={styles.btnGroup}>
             {isAuthorized ? (
               <>
-                <Link
-                  onClick={handleAuthorized}
-                  className={styles.mainLinks}
-                  to="/"
-                >
+                <Link onClick={logOutUser} className={styles.mainLinks} to="/">
                   <LogOut />
                 </Link>
                 <Link
@@ -178,7 +202,7 @@ const Header = () => {
               </>
             ) : (
               <Link
-                onClick={handleAuthorized}
+                onClick={sessionStorage.setItem("prevPath", currentPath)}
                 className={styles.mainLinks}
                 to="/login"
               >

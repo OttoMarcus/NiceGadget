@@ -1,132 +1,137 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import {
+  fetchCartItems,
+  addToCartServer,
+  incrementQuantityServer,
+  decrementQuantityServer,
+  removeFromCartServer,
+} from "../../API/cartAPI";
 
-// export const fetchCartItems = createAsyncThunk(
-//   "cart/fetchCartItems",
-//   async (_, { rejectWithValue }) => {
-//     try {
-//       const response = await fetch("http://localhost:4000/api/cart");
-//       if (!response.ok) {
-//         throw new Error('Network response was not ok');
-//       }
-//       const data = await response.json();
-//       return data;
-//     } catch (error) {
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
-
-export const fetchCartItems = createAsyncThunk(
-  "cart/fetchCartItems",
-  async (_, { rejectWithValue }) => {
-    try {
-      const cart = JSON.parse(localStorage.getItem("cart"));
-      if (!cart) {
-        throw new Error("No cart items found");
-      }
-      return cart;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-const currentCartState = JSON.parse(localStorage.getItem("cart")) || [];
+const currentLocalInitialState = JSON.parse(localStorage.getItem("cart"));
 
 const initialState = {
-  cartItems: currentCartState,
+  cartItems: currentLocalInitialState || [],
+  status: "idle",
+  error: null,
 };
 
 const saveCartToLocalStorage = (cartItems) => {
   localStorage.setItem("cart", JSON.stringify(cartItems));
 };
 
-const calculateTotalItemPrice = (price, discount, quantity) => {
-  return Math.round(price * (1 - discount / 100)) * quantity;
-};
-
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCart: (state, action) => {
-      const product = action.payload;
-      const index = state.cartItems.findIndex((item) => item.id === product.id);
-
-      if (index !== -1) {
-        state.cartItems[index].quantity += 1;
-        state.cartItems[index].totalItemPrice = calculateTotalItemPrice(
-          product.price,
-          product.discount || 0,
-          state.cartItems[index].quantity
-        );
+    addToCartLocal: (state, action) => {
+      const { productToAdd } = action.payload;
+      const productExistsIndex = state.cartItems.findIndex(
+        (item) => item.productId === productToAdd._id
+      );
+      if (productExistsIndex !== -1) {
+        state.cartItems[productExistsIndex].cartQuantity += 1;
       } else {
-        product.quantity = 1;
-        product.totalItemPrice = calculateTotalItemPrice(
-          product.price,
-          product.discount || 0,
-          product.quantity
-        );
-        state.cartItems.push(product);
+        state.cartItems.push({
+          productId: productToAdd._id,
+          customId: productToAdd.id,
+          ...productToAdd,
+          cartQuantity: 1,
+        });
       }
-
       saveCartToLocalStorage(state.cartItems);
     },
-    removeFromCart: (state, action) => {
-      const { id } = action.payload;
-
-      state.cartItems = state.cartItems.filter((item) => item.id !== id);
-
+    removeFromCartLocal: (state, action) => {
+      const { _id } = action.payload;
+      state.cartItems = state.cartItems.filter(
+        (item) => item.productId !== _id
+      );
       saveCartToLocalStorage(state.cartItems);
     },
-    incrementQuantity: (state, action) => {
-      const { id } = action.payload;
-      const index = state.cartItems.findIndex((item) => item.id === id);
-
+    incrementQuantityLocal: (state, action) => {
+      const { _id } = action.payload;
+      const index = state.cartItems.findIndex((item) => item.productId === _id);
       if (index !== -1) {
-        state.cartItems[index].quantity += 1;
-        state.cartItems[index].totalItemPrice = calculateTotalItemPrice(
-          state.cartItems[index].price,
-          state.cartItems[index].discount || 0,
-          state.cartItems[index].quantity
-        );
+        state.cartItems[index].cartQuantity += 1;
       }
-
       saveCartToLocalStorage(state.cartItems);
     },
-    decrementQuantity: (state, action) => {
-      const { id } = action.payload;
-      const index = state.cartItems.findIndex((item) => item.id === id);
-
+    decrementQuantityLocal: (state, action) => {
+      const { _id } = action.payload;
+      const index = state.cartItems.findIndex((item) => item.productId === _id);
       if (index !== -1) {
-        state.cartItems[index].quantity -= 1;
-
-        if (state.cartItems[index].quantity < 1) {
-          state.cartItems.splice(index, 1);
+        state.cartItems[index].cartQuantity -= 1;
+        if (state.cartItems[index].cartQuantity > 0) {
         } else {
-          state.cartItems[index].totalItemPrice = calculateTotalItemPrice(
-            state.cartItems[index].price,
-            state.cartItems[index].discount || 0,
-            state.cartItems[index].quantity
-          );
+          state.cartItems.splice(index, 1);
         }
       }
-
       saveCartToLocalStorage(state.cartItems);
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchCartItems.fulfilled, (state, action) => {
-      state.cartItems = action.payload;
-    });
+    builder
+      // Fetch cart items
+      .addCase(fetchCartItems.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchCartItems.fulfilled, (state, action) => {
+        const products = action.payload.products || action.payload;
+        state.cartItems = Array.isArray(products) ? products : [];
+        state.status = "succeeded";
+      })
+      .addCase(fetchCartItems.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      // Add to cart server
+      .addCase(addToCartServer.fulfilled, (state, action) => {
+        const products = action.payload.products;
+        if (Array.isArray(products)) {
+          state.cartItems = products;
+        }
+        state.status = "succeeded";
+      })
+      // Increment item quantity server
+      .addCase(incrementQuantityServer.fulfilled, (state, action) => {
+        const products = action.payload.products;
+        if (Array.isArray(products)) {
+          state.cartItems = products;
+        }
+        state.status = "succeeded";
+      })
+      // Decrement item quantity server
+      .addCase(decrementQuantityServer.fulfilled, (state, action) => {
+        const products = action.payload.products;
+        if (Array.isArray(products)) {
+          state.cartItems = products;
+        }
+        state.status = "succeeded";
+      })
+      // Remove from cart server
+      .addCase(removeFromCartServer.fulfilled, (state, action) => {
+        const products = action.payload.products;
+        if (Array.isArray(products)) {
+          state.cartItems = products;
+        } else {
+          state.cartItems = [];
+        }
+        state.status = "succeeded";
+      })
+      .addCase(removeFromCartServer.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(removeFromCartServer.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      });
   },
 });
 
 export const {
-  addToCart,
-  removeFromCart,
-  incrementQuantity,
-  decrementQuantity,
+  addToCartLocal,
+  removeFromCartLocal,
+  incrementQuantityLocal,
+  decrementQuantityLocal,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

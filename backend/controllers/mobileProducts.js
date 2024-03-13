@@ -131,24 +131,67 @@ exports.getMobileProducts = async (req, res, next) => {
   }
 };
 
+exports.getMobileProductsTotal = async (req, res, next) => {
+  const mongooseQuery = filterParser(req.query);
+  const q = typeof req.query.q === 'string' ? req.query.q.trim() : null;
+
+  if (q) {
+    mongooseQuery.name = {
+      $regex: new RegExp(q, "i"),
+    };
+  }
+
+  try {
+    const total = await mobileProducts.countDocuments(mongooseQuery);
+
+    res.json({ total });
+  } catch (err) {
+    res.status(400).json({
+      message: `Error happened on server: "${err}" `,
+    });
+  }
+};
+
 exports.getMobileProductById = (req, res, next) => {
   const { id } = req.params;
 
-  mobileProducts.findOne({ id: id })
-    .then(mobileProduct => {
-      if (!mobileProduct) {
-        res.status(404).json({
-          message: `mobileProduct with id "${id}" is not found`
+  if (!isValidMongoId(id)) {
+    return res.status(400).json({
+      message: `Product with id "${id}" is not valid`
+    });
+  }
+  mobileProducts.findById(id)
+    .then(product => {
+      if (!product) {
+        res.status(400).json({
+          message: `Product with itemNo ${req.params.itemNo} is not found`
         });
       } else {
-        res.json(mobileProduct);
+        res.json(product);
       }
     })
     .catch(err =>
-      res.status(500).json({
-        message: `Error happened on server: "${err}"`
+      res.status(400).json({
+        message: `Error happened on server: "${err}" `
       })
     );
+};
+
+exports.getMobileProductByCustomId = (req, res, next) => {
+  const { id } = req.params;
+
+  mobileProducts.findOne({ id })
+    .then(product => {
+      if (!product) {
+        return res.status(404).json({
+          message: `Product with productId ${id} is not found`
+        });
+      }
+      res.json(product);
+    })
+    .catch(err => res.status(500).json({
+      message: `Error happened on server: "${err}"`
+    }));
 };
 
 

@@ -34,7 +34,7 @@ const Tablets = () => {
                 picture={card.picture}
                 name={card.name}
                 price={card.price}
-                key={card.id}
+                key={card._id}
                 color={card.color}
                 refModel={card.refModel}
                 brandNew={card.brandNew}
@@ -43,6 +43,7 @@ const Tablets = () => {
                 screen={card.screen}
                 available={card.available}
                 id={card.id}
+                _id={card._id}
                 category={typeModel}
               />
             );
