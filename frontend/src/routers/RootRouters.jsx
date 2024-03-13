@@ -16,6 +16,7 @@ import Right from "../pages/Right/Right";
 import Contacts from "../pages/Contacts/Contacts";
 import User from "../pages/User/User";
 import Search from "../pages/Search/Search";
+import BuyForm from "../Components/BuyForm/BuyForm";
 
 const RootRouters = () => {
   return (
@@ -28,6 +29,7 @@ const RootRouters = () => {
         element={<SingleAccessoriesPage />}
       />
       <Route path="/phones" element={<Phones />} />
+      <Route path="/buyform" element={<BuyForm />} />
       <Route path="/phones/:modelId" element={<SingleProductPage />} />
       <Route path="/favorites" element={<Favorites />} />
       <Route path="/cart" element={<CartPage />} />
