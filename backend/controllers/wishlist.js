@@ -6,18 +6,19 @@ const _ = require('lodash');
 
 exports.createWishlist = (req, res, next) => {
     Wishlist.findOne({ id: req.body.id })
-        .then((wishlist) => {
+        .then((wishlist ) => {
             console.log( `suda`,req.body.id  )
             console.log(`wishlist`, wishlist);
             if (wishlist) {
                 return res
                     .status(400)
                     .json({ message: `Wishlist for this customer already exists` });
-            } else {
+            } else if (!wishlist) {
                 console.log(`req.body`, req.body);
                 const wishlistData = _.cloneDeep(req.body);
                 console.log(`qwerty1` ,req.body.id)
                  wishlistData.id = req.body.id;
+                wishlistData.products = req.body.products;
                 console.log(`qwerty` ,wishlistData )
                 const newWishlist = new Wishlist(queryCreator(wishlistData));
 
@@ -240,10 +241,10 @@ exports.deleteWishlist = (req, res, next) => {
 };
 
 exports.getWishlist = (req, res, next) => {
-    console.log(`response`, req.headers.aboba);
-    Wishlist.findOne({id: req.headers.aboba})
+    console.log(`response`, req.headers.id);
+    Wishlist.findOne({id: req.headers.id})
 
-        .then((wishlist) => res.json(wishlist))
+        .then((wishlist) => console.log(`wishlistwishlist` , wishlist), res.json(wishlist))
         .catch((err) => res.status(400).json({
             message: `Error happened on server: "${err}" `,
         }));
