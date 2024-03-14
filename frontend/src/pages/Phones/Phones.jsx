@@ -2,11 +2,15 @@ import React, { useState, useEffect } from "react";
 // import styles from "./Phones.module.scss";
 import Card from "../../Components/Card/Card";
 import Filter from "../../Components/Filter/Filter";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import styles from "../Phones/Phones.module.scss";
 
 const Phones = () => {
   const [phonesArr, setPhonesArr] = useState();
+
+  const [sortValue, setSortValue] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [sortedPhones, setSortedPhones] = useState();
 
   const location = useLocation();
   const typeModel = location.pathname.slice(1);
@@ -26,10 +30,50 @@ const Phones = () => {
         console.error("There was a problem with your fetch operation:", error);
       });
   }, []);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sort = urlParams.get("sort");
+
+    console.log(`urlParams + ${urlParams}`);
+    console.log(`sort + ${sort}`);
+    console.log(`searchParams + ${searchParams}`);
+
+    if (sort) {
+      setSortValue(sort);
+      // fetchDataWithSort(sort)
+      console.log("SORT  is true!");
+    }
+  }, []);
+
+  const handleSortChange = async (e) => {
+    e.preventDefault();
+    const newSortValue = e.target.value;
+    console.log(`newSortValue: ${newSortValue}`);
+
+    const currentUrl = new URL(window.location);
+
+    if (newSortValue) {
+      currentUrl.searchParams.set("sort", newSortValue);
+    } else {
+      currentUrl.searchParams.delete("sort");
+    }
+    window.history.pushState({}, "", currentUrl.toString());
+
+    setSortValue(newSortValue);
+
+    const sortedProducts = await fetch(
+      `http://localhost:4000/api/phones?sort=${newSortValue}&perPage=8&startPage=1`
+    ).then((res) => console.log(res.json()));
+    // .then((data) => setSortedPhones(sortedProducts))
+
+    setSortedPhones(sortedProducts);
+  };
+
   return (
     <>
       <h1 className={styles.pageTitle}>Mobile phones</h1>
-      <Filter />
+      <Filter handleSortChange={handleSortChange} sortValue={sortValue} />
       <div className={`${styles.container} ${styles.categoryWrapper}`}>
         {phonesArr &&
           phonesArr.map((card) => {

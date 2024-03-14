@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { Formik, Form } from "formik";
+import PropTypes from "prop-types";
+// import { Formik, Form } from "formik";
 import styles from "../Filter/Filter.module.scss";
 
-const Filter = () => {
+const Filter = ({ handleSortChange, sortValue }) => {
   /* 
 _id: 65dccf574fe60adcc4cf54c7
 id: "1"
@@ -53,55 +54,48 @@ SORTING
 
 
 */
-  const [sortValue, setSortValue] = useState("");
-  const [searchParams, setSearchParams] = useSearchParams();
+  //   const [sortValue, setSortValue] = useState("");
+  //   const [searchParams, setSearchParams] = useSearchParams();
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const sort = urlParams.get("sort");
+  //   useEffect(() => {
+  //     const urlParams = new URLSearchParams(window.location.search);
+  //     const sort = urlParams.get("sort");
 
-    console.log(`urlParams + ${urlParams}`);
-    console.log(`sort + ${sort}`);
-    console.log(`searchParams + ${searchParams}`);
+  //     console.log(`urlParams + ${urlParams}`);
+  //     console.log(`sort + ${sort}`);
+  //     console.log(`searchParams + ${searchParams}`);
 
-    if (sort) {
-      setSortValue(sort);
-      // fetchDataWithSort(sort)
-      console.log("SORT  is true!");
-    }
-  }, []);
+  //     if (sort) {
+  //       setSortValue(sort);
+  //       // fetchDataWithSort(sort)
+  //       console.log("SORT  is true!");
+  //     }
+  //   }, []);
 
-  function handleSortChange(e) {
-    e.preventDefault();
-    const newSortValue = e.target.value;
-    console.log(`newSortValue + ${newSortValue}`);
+  //     const handleSortChange = async (e) => {
+  //         e.preventDefault();
+  //         const newSortValue = e.target.value;
+  //         console.log(`newSortValue: ${newSortValue}`);
 
-    const currentUrl = new URL(window.location);
+  //         const currentUrl = new URL(window.location);
 
-    if (newSortValue) {
-      currentUrl.searchParams.set("sort", newSortValue);
-    } else {
-      currentUrl.searchParams.delete("sort");
-    }
-    window.history.pushState({}, "", currentUrl.toString());
+  //         if (newSortValue) {
+  //             currentUrl.searchParams.set("sort", newSortValue);
+  //         } else {
+  //             currentUrl.searchParams.delete("sort");
+  //         }
+  //         window.history.pushState({}, "", currentUrl.toString());
 
-    setSortValue(newSortValue);
+  //         setSortValue(newSortValue);
 
-    // sort=price%201&perPage=8&startPage=1
+  //         const sortedProducts = await fetch(
+  //             `http://localhost:4000/api/phones?sort=${newSortValue}&perPage=8&startPage=1`)
+  //             .then((res) => res.json());
 
-    const findMatchingProducts = async () => {
-      const newSortValue = new URLSearchParams();
-      // newSortValue.set('price', 'asc')
-      // const newSortValue = queryString.stringify({price: 'asc'})
-      const mathcingProducts = await fetch(
-        `http://localhost:4000/api/phones?sort=${newSortValue}&perPage=8&startPage=1`
-      ).then((res) => console.log(res.json()));
-    };
-    findMatchingProducts();
-    // fetchDataWithSort(sortValue);
-  }
+  //     }
 
   //   function handleChange() {
+  // onChange={searchParams.get("sort")}
   //     console.log("option changed!");
   //   }
 
@@ -115,16 +109,19 @@ SORTING
           handleSortChange(e);
         }}
       >
-        <option value="" onChange={searchParams.get("sort")}>
-          All
-        </option>
-        <option value="brandNew">Newest</option>
-        <option value="available">In Stock</option>
-        <option value="price_desc">Price desc</option>
-        <option value="price_asc">Price asc</option>
+        <option value="">All</option>
+        <option value="-brandNew">Newest first</option>
+        <option value="-available">In Stock first</option>
+        <option value="-price">Price asc</option>
+        <option value="price">Price desc</option>
       </select>
     </>
   );
+};
+
+Filter.propTypes = {
+  handleSortChange: PropTypes.func.isRequired,
+  sortValue: PropTypes.string.isRequired,
 };
 
 export default Filter;

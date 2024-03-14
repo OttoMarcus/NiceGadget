@@ -116,7 +116,7 @@ exports.getMobileProducts = async (req, res, next) => {
 
   const perPage = Number(req.query.perPage);
   const startPage = Number(req.query.startPage);
-  // const sort = queryCreator(req.query.sort);
+
   const sort = req.query.sort;
 
   console.log('Sort in mobileProducts is');
