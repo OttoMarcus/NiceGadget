@@ -95,6 +95,27 @@ exports.getAccessoryProducts = async (req, res, next) => {
     }
 };
 
+exports.getAccessoryProductsTotal = async (req, res, next) => {
+  const mongooseQuery = filterParser(req.query);
+  const q = typeof req.query.q === 'string' ? req.query.q.trim() : null;
+
+  if (q) {
+    mongooseQuery.name = {
+      $regex: new RegExp(q, "i"),
+    };
+  }
+
+  try {
+    const total = await accessoriesProducts.countDocuments(mongooseQuery);
+
+    res.json({ total });
+  } catch (err) {
+    res.status(400).json({
+      message: `Error happened on server: "${err}" `,
+    });
+  }
+};
+
 // exports.getAccessoryProductById = (req, res, next) => {
 //     const { id } = req.params;
 //     if (!isValidMongoId(id)) {
@@ -121,20 +142,41 @@ exports.getAccessoryProducts = async (req, res, next) => {
 
 exports.getAccessoryProductById = (req, res, next) => {
     const { id } = req.params;
-  
-    accessoriesProducts.findOne({id: id})
-      .then(accessoryProduct => {
-        if (!accessoryProduct) {
-          res.status(400).json({
-            message: `Accessory product with id ${req.params.id} is not found`
-          });
-        } else {
-          res.json(accessoryProduct);
-        }
-      })
-      .catch(err =>
-        res.status(400).json({
-          message: `Error happened on server: "${err}" `
+    if (!isValidMongoId(id)) {
+        return res.status(400).json({
+            message: `Accessory product with id "${id}" is not valid`
+        });
+    }
+    accessoriesProducts.findById(id)
+        .then(accessoryProduct => {
+            if (!accessoryProduct) {
+                res.status(400).json({
+                    message: `Accessory product with id ${id} is not found`
+                });
+            } else {
+                res.json(accessoryProduct);
+            }
         })
-      );
+        .catch(err =>
+            res.status(400).json({
+                message: `Error happened on server: "${err}" `
+            })
+        );
+};
+
+exports.getAccessoryProductByCustomId = (req, res, next) => {
+    const { id } = req.params;
+  
+    accessoriesProducts.findOne({ id })
+      .then(product => {
+        if (!product) {
+          return res.status(404).json({
+            message: `Product with productId ${id} is not found`
+          });
+        }
+        res.json(product);
+      })
+      .catch(err => res.status(500).json({
+        message: `Error happened on server: "${err}"`
+      }));
   };

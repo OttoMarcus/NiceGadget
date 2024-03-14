@@ -1,9 +1,11 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styles from "./ShopByCategory.module.scss";
+import useFetchTotalsOfCategories from "../../pages/HomePage/hooks/useFetchTotalsOfCategories";
+import { Link } from "react-router-dom";
 
-const ShopByCategory = (props) => {
-  const { totalPhones, totalTablets, totalAccessories } = props;
+const ShopByCategory = () => {
+  const { phonesTotal, tabletsTotal, accessoriesTotal } =
+    useFetchTotalsOfCategories();
 
   return (
     <>
@@ -11,29 +13,24 @@ const ShopByCategory = (props) => {
         <h2 className={styles.categoryTitle}>Shop by category</h2>
       </div>
       <div className={styles.wrapper}>
-        <div>
+        <Link to="/phones" className={`${styles.categoryItem}`}>
           <div className={styles.wallpaperPhone}></div>
           <h4 className={styles.subTitle}>Mobile phones</h4>
-          <p>{totalPhones} models</p>
-        </div>
-        <div>
-          <div className={styles.wallpaperTablets}></div>
-          <h4 className={styles.subTitle}>Tablets</h4>
-          <p>{totalTablets} models</p>
-        </div>
-        <div>
+          <p>{phonesTotal} models</p>
+        </Link>
+        <Link to="/accessories" className={`${styles.categoryItem}`}>
           <div className={styles.wallpaperAccessories}></div>
           <h4 className={styles.subTitle}>Accessories</h4>
-          <p>{totalAccessories} models</p>
-        </div>
+          <p>{accessoriesTotal} models</p>
+        </Link>
+        <Link to="/tablets" className={`${styles.categoryItem}`}>
+          <div className={styles.wallpaperTablets}></div>
+          <h4 className={styles.subTitle}>Tablets</h4>
+          <p>{tabletsTotal} models</p>
+        </Link>
       </div>
     </>
   );
 };
 
-ShopByCategory.propTypes = {
-  totalPhones: PropTypes.number.isRequired,
-  totalTablets: PropTypes.number.isRequired,
-  totalAccessories: PropTypes.number.isRequired,
-};
 export default ShopByCategory;

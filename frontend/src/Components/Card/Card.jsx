@@ -6,10 +6,12 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
-import { addToCart } from "../../store/cart/cartSlice";
+import { addToCartLocal } from "../../store/cart/cartSlice";
+import { addToCartServer } from "../../API/cartAPI";
 
 const Card = (props) => {
   const {
+    _id,
     id,
     picture,
     name,
@@ -17,48 +19,33 @@ const Card = (props) => {
     category,
     color,
     available,
-
+    screen,
     capacity,
     ram,
-    screen,
     refModel,
   } = props;
   const dispatch = useDispatch();
+  const isAuthorized = useSelector((state) => state.user.isAuthorized);
+
   const favor = useSelector((state) => state.favorite.favorites);
   const some = favor.some((el) => id === el.id);
+
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const inCart = cartItems.some((item) => item.id === id);
+
+  const inCart = cartItems.some((item) => item.productId === _id);
   const isAvailable = available;
   const backgroundColorBtn = isAvailable && !inCart ? "#905BFF" : "#323542";
 
   const handleAddToCart = (event) => {
     event.stopPropagation();
     event.preventDefault();
-    if (id) {
-      const productDetailsUrl = `http://localhost:4000/api/${category}/${id}`;
 
-      fetch(productDetailsUrl)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((productDetails) => {
-          dispatch(
-            addToCart({
-              ...productDetails,
-            })
-          );
-        })
-        .catch((error) => {
-          console.error(
-            "There was a problem with your fetch operation:",
-            error
-          );
-        });
+    const productToAdd = { ...props };
+
+    if (isAuthorized) {
+      dispatch(addToCartServer(productToAdd));
     } else {
-      console.error("Product ID is missing");
+      dispatch(addToCartLocal({ productToAdd }));
     }
   };
 
@@ -114,7 +101,7 @@ const Card = (props) => {
 };
 
 Card.propTypes = {
-  id: PropTypes.string.isRequired,
+  _id: PropTypes.string,
   picture: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
@@ -122,6 +109,7 @@ Card.propTypes = {
   color: PropTypes.string.isRequired,
   available: PropTypes.bool.isRequired,
 
+  id: PropTypes.string,
   screen: PropTypes.string,
   capacity: PropTypes.string,
   ram: PropTypes.string,

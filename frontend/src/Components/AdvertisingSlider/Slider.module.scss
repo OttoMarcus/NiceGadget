@@ -1,0 +1,187 @@
+@import "../../styles/abstracts/variables";
+@import "../../styles/abstracts/mixins";
+
+* {
+  user-select: none;
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.slider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 400px;
+  padding: 16px;
+  max-width: $ui-max-container-width;
+  position: relative;
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+  /*-----------------  Tablet ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    height: 320px;
+    padding: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1040px;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+  }
+  /*----------------- Desktop ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    height: 400px;
+    padding: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1040px;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+  }
+}
+
+.leftArrow {
+  align-items: center;
+  display: none;
+  justify-content: center;
+  width: 32px;
+  height: 320px;
+  background: #323542;
+  color: white;
+  position: absolute;
+  left: 0;
+  /*-----------------  Tablet ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    height: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+  }
+  /*----------------- Desktop ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+  }
+}
+
+.arrow:hover {
+  background: #424556;
+}
+
+.rightArrow {
+  align-items: center;
+  display: none;
+  justify-content: center;
+  width: 32px;
+  height: 320px;
+  background: #323542;
+  color: white;
+  position: absolute;
+  right: 0;
+  /*-----------------  Tablet ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    height: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 0;
+  }
+  /*----------------- Desktop ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 0;
+  }
+}
+
+.rightArrow:hover,
+.leftArrow:hover {
+  background: #424556;
+}
+
+.sliderContent {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.title {
+  @include mobile-h1;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 2px;
+  border-radius: 10px;
+  padding: 30px 80px;
+  box-shadow: 1px 0 41px 6px rgba(0, 0, 0, 0.38);
+  -webkit-box-shadow: 1px 0 41px 6px rgba(0, 0, 0, 0.38);
+  -moz-box-shadow: 1px 0 41px 6px rgba(0, 0, 0, 0.38);
+  text-shadow: 2px 3px 3px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+.subtitle {
+  @include mobile-h3;
+  text-shadow: 2px 3px 3px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+
+.imageContainer {
+  position: relative;
+  overflow: hidden;
+}
+
+.imageContainer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: rgb(15, 17, 33);
+  width: 190px;
+  height: 40px;
+  @include mobile-h3;
+  cursor: pointer;
+  z-index: 3;
+}

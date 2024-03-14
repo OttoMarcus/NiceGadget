@@ -8,6 +8,7 @@
   border: 1px solid #37383f;
   background: $ui-color-gray-black-background;
   color: $ui-color-gray-white;
+  user-select: none;
 }
 
 .capacityActive {
@@ -16,6 +17,7 @@
   border: 1px solid $ui-color-gray-white;
   background: $ui-color-gray-white;
   color: $ui-color-gray-black-background;
+  user-select: none;
 }
 
 .notAvailable {
@@ -38,4 +40,9 @@
       rgba(241, 242, 249, 0) 100%
     );
   color: $ui-color-gray-white;
+  user-select: none;
+}
+
+.noPointerEvent {
+  pointer-events: none;
 }

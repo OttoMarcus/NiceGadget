@@ -7,10 +7,11 @@ const {
   createCart,
   updateCart,
   addProductToCart,
+  increaseCartProductQuantity,
   decreaseCartProductQuantity,
   deleteCart,
   deleteProductFromCart,
-  getCart
+  getCart,
 } = require("../controllers/cart");
 
 // @route   POST /cart
@@ -53,10 +54,28 @@ router.delete(
 // @route   DELETE /cart/product/:productId
 // @desc    Delete one product from cart
 // @access  Private
-router.delete(
-  "/product/:productId",
+// router.delete(
+//   "/product/:productId",
+//   passport.authenticate("jwt", { session: false }),
+//   decreaseCartProductQuantity
+// );
+
+// @route   PUT /cart/decrease/:productId
+// @desc    Decrease quantity of a product in the cart by one
+// @access  Private
+router.put(
+  "/decrease/:productId",
   passport.authenticate("jwt", { session: false }),
   decreaseCartProductQuantity
+);
+
+// @route   PUT /cart/decrease/:productId
+// @desc    Decrease quantity of a product in the cart by one
+// @access  Private
+router.put(
+  "/increase/:productId",
+  passport.authenticate("jwt", { session: false }),
+  increaseCartProductQuantity
 );
 
 // @route   GET /cart

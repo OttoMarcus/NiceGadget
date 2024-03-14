@@ -1,55 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import Style from "./AccessoriesPage.module.scss";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 import CardAccessories from "../../Components/CardAccessories/CardAccessories";
+
+import styles from "./AccessoriesPage.module.scss";
+
 const Accessories = () => {
-  const [accessoriesArr, setAccessoriesArr] = useState();
+  const [accessoriesArr, setAccessoriesArr] = useState({ data: [] });
+  // const location = useLocation();
+  // const typeModel = location.pathname.slice(1);
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/accessories")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then(({ data }) => {
-        console.log(data);
-        setAccessoriesArr(data);
-      })
-      .catch((error) => {
-        console.error("There was a problem with your fetch operation:", error);
-      });
+    fetchAccessories();
   }, []);
 
+  const fetchAccessories = () => {
+    axios
+      .get("http://localhost:4000/api/accessories")
+      .then((response) => {
+        setAccessoriesArr({ data: response.data.data });
+      })
+      .catch((error) => {
+        console.error("Fetching error:", error);
+      });
+  };
+
   return (
-    <>
-      <div className={Style.testBox}>
-        <div className={Style.timeWrapper}>
-          <h1 className={Style.tittle}>This is Accessories Page</h1>
-          <Link className={Style.linksBtn} to="/">
-            Home
-          </Link>
-        </div>
-      </div>
-      <div className={Style.cardWrapper}>
-        {accessoriesArr &&
-          accessoriesArr.map((accessory, index) => (
-            <CardAccessories
-              key={index}
-              name={accessory.name}
-              color={accessory.color}
-              price={accessory.price}
-              picture={accessory.picture}
-              weight={accessory.weight}
-              size={accessory.size}
-              available={accessory.available}
-              id={accessory.id}
-              category={accessory.category}
-            />
+    <article className={styles.container}>
+      <h1 className={styles.accessoriesTitle}>Accessories</h1>
+      <h3 className={styles.subtitle}>models</h3>
+
+      <div className={styles.resultWrapper}>
+        {Array.isArray(accessoriesArr.data) &&
+          accessoriesArr.data.map((item) => (
+            <CardAccessories key={item.id} {...item} />
           ))}
       </div>
-    </>
+    </article>
   );
 };
 

@@ -46,6 +46,13 @@ Instructions at:
 * [Activate and configure ESLint in WebStorm](https://www.jetbrains.com/help/webstorm/eslint.html#ws_js_eslint_activate).
 * [Activate and configure ESLint in VS Code](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint).
 
+### Running Lighthouse locally
+
+`npm i -g lighthouse` (one time command)
+
+* Start frontend locally 
+* `lighthouse --chrome-flags="--headless --no-sandbox" "http://localhost:3000" --output html --output-path ./report.html`
+
 ### Deployment
 
 The frontend is deployed to [Firebase Hosting](https://firebase.google.com/docs/hosting?authuser=0).

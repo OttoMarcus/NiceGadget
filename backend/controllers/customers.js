@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const _ = require("lodash");
 const uniqueRandom = require("unique-random");
 const rand = uniqueRandom(10000000, 99999999);
+const sendMail = require("../commonHelpers/mailSender");
 
 // Load Customer model
 const Customer = require("../models/Customer");
@@ -12,6 +13,7 @@ const validateRegistrationForm = require("../validation/validationHelper");
 
 // Load helper for creating correct query to save customer to DB
 const queryCreator = require("../commonHelpers/queryCreator");
+const { createWelcomeEmailHtml } = require("../emailGenerators/welcomeEmailGenerator");
 
 // Controller for creating customer and saving to DB
 exports.createCustomer = (req, res, next) => {
@@ -27,7 +29,7 @@ exports.createCustomer = (req, res, next) => {
   }
 
   Customer.findOne({
-    $or: [{ email: req.body.email }, { login: req.body.login }]
+    $or: [{ email: req.body.email }, { login: req.body.login }],
   })
     .then(customer => {
       if (customer) {
@@ -58,21 +60,54 @@ exports.createCustomer = (req, res, next) => {
           }
 
           newCustomer.password = hash;
+
+          //       newCustomer
+          //         .save()
+          //         .then(customer => res.json(customer))
+          //         .catch(err =>
+          //           res.status(400).json({
+          //             message: `Error happened on server: "${err}" `
+          //           })
+          //         );
+          //     });
+          //   });
+          // })
+          // .catch(err =>
+          //   res.status(400).json({
+          //     message: `Error happened on server: "${err}" `
+          //   })
           newCustomer
             .save()
-            .then(customer => res.json(customer))
-            .catch(err =>
+            .then(savedCustomer => {
+              const letterSubject = "Welcome to Nice Gadgets!";
+              const letterHtml = createWelcomeEmailHtml(
+                savedCustomer.firstName,
+                savedCustomer.lastName,
+                savedCustomer.login,
+              );
+
+              sendMail(savedCustomer.email, letterSubject, letterHtml)
+                .then(() => res.json(savedCustomer))
+                .catch(emailError => {
+                  console.error("Error sending welcome email:", emailError);
+                  res.status(500).json({
+                    message: "Customer saved, but failed to send welcome email",
+                    customer: savedCustomer,
+                  });
+                });
+            })
+            .catch(dbError => {
               res.status(400).json({
-                message: `Error happened on server: "${err}" `
-              })
-            );
+                message: `Error happened on server: "${dbError}" `,
+              });
+            });
         });
       });
     })
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `
-      })
+        message: `Error happened on server: "${err}" `,
+      }),
     );
 };
 
@@ -90,7 +125,7 @@ exports.loginCustomer = async (req, res, next) => {
 
   // Find customer by email
   Customer.findOne({
-    $or: [{ email: loginOrEmail }, { login: loginOrEmail }]
+    $or: [{ email: loginOrEmail }, { login: loginOrEmail }],
   })
     .then(customer => {
       // Check for customer
@@ -107,7 +142,7 @@ exports.loginCustomer = async (req, res, next) => {
             id: customer.id,
             firstName: customer.firstName,
             lastName: customer.lastName,
-            isAdmin: customer.isAdmin
+            isAdmin: customer.isAdmin,
           }; // Create JWT Payload
 
           // Sign Token
@@ -118,9 +153,9 @@ exports.loginCustomer = async (req, res, next) => {
             (err, token) => {
               res.json({
                 success: true,
-                token: "Bearer " + token
+                token: "Bearer " + token,
               });
-            }
+            },
           );
         } else {
           errors.password = "Password incorrect";
@@ -130,8 +165,8 @@ exports.loginCustomer = async (req, res, next) => {
     })
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `
-      })
+        message: `Error happened on server: "${err}" `,
+      }),
     );
 };
 
@@ -198,19 +233,19 @@ exports.editCustomerInfo = (req, res) => {
       Customer.findOneAndUpdate(
         { _id: req.user.id },
         { $set: updatedCustomer },
-        { new: true }
+        { new: true },
       )
         .then(customer => res.json(customer))
         .catch(err =>
           res.status(400).json({
-            message: `Error happened on server: "${err}" `
-          })
+            message: `Error happened on server: "${err}" `,
+          }),
         );
     })
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server:"${err}" `
-      })
+        message: `Error happened on server:"${err}" `,
+      }),
     );
 };
 
@@ -242,21 +277,21 @@ exports.updatePassword = (req, res) => {
               { _id: req.user.id },
               {
                 $set: {
-                  password: newPassword
-                }
+                  password: newPassword,
+                },
               },
-              { new: true }
+              { new: true },
             )
               .then(customer => {
                 res.json({
                   message: "Password successfully changed",
-                  customer: customer
+                  customer: customer,
                 });
               })
               .catch(err =>
                 res.status(400).json({
-                  message: `Error happened on server: "${err}" `
-                })
+                  message: `Error happened on server: "${err}" `,
+                }),
               );
           });
         });

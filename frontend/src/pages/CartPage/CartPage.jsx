@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Cart from "../../Components/Cart/Cart";
 import styles from "./CartPage.module.scss";
 import LeftArrow from "../../Components/Icons/LeftArrow";
+import { fetchCartItems } from "../../API/cartAPI";
 
 const CartPage = () => {
+  const dispatch = useDispatch();
+  const isAuthorized = useSelector((state) => state.user.isAuthorized);
+
+  useEffect(() => {
+    if (isAuthorized) {
+      dispatch(fetchCartItems());
+    }
+  }, [dispatch, isAuthorized]);
+
   return (
     <>
       <div className={styles.cartContainer}>
