@@ -44,7 +44,7 @@ const Phones = () => {
       // fetchDataWithSort(sort)
       console.log("SORT  is true!");
     }
-  }, []);
+  }, [searchParams]);
 
   const handleSortChange = async (e) => {
     e.preventDefault();
