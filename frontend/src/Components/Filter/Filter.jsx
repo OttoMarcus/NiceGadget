@@ -87,7 +87,12 @@ SORTING
 
     setSortValue(newSortValue);
 
+    // sort=price%201&perPage=8&startPage=1
+
     const findMatchingProducts = async () => {
+      const newSortValue = new URLSearchParams();
+      // newSortValue.set('price', 'asc')
+      // const newSortValue = queryString.stringify({price: 'asc'})
       const mathcingProducts = await fetch(
         `http://localhost:4000/api/phones?sort=${newSortValue}&perPage=8&startPage=1`
       ).then((res) => console.log(res.json()));

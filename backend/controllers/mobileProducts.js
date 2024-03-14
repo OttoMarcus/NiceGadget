@@ -103,12 +103,25 @@ exports.updateMobileProduct = (req, res, next) => {
 };
 
 exports.getMobileProducts = async (req, res, next) => {
+
+  console.log('req.query in mobileProducts is');
+  console.log(req.query);
+
   const mongooseQuery = filterParser(req.query);
-  console.log(`mongooseQuery is ${mongooseQuery}`);
-  console.log(`req.query is ${req.query}`);
+
+  console.log('mongooseQuery in mobileProducts is');
+  console.log(mongooseQuery);
+
+  
+
   const perPage = Number(req.query.perPage);
   const startPage = Number(req.query.startPage);
+  // const sort = queryCreator(req.query.sort);
   const sort = req.query.sort;
+
+  console.log('Sort in mobileProducts is');
+  console.log(sort);
+
   const q = typeof req.query.q === 'string' ? req.query.q.trim() : null
 
   if (q) {
