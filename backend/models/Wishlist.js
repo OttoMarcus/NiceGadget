@@ -12,7 +12,7 @@ const WishlistSchema = new Schema({
     id: {
         type : String
     },
-    products: [Object]
+    products: []
 });
 
 module.exports = Wishlist = mongoose.model(
