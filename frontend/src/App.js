@@ -12,6 +12,7 @@ import {
   fetchTodos,
   fetchChange,
   SetFavor,
+  featchClearFavor,
 } from "./store/favorites/favoriteSlice";
 import { CreateFavorUser } from "./API/favorietesAPI";
 
@@ -44,45 +45,35 @@ function App() {
   }, [dispatch]);
 
   const user = useSelector((state) => state.user.user);
+
+  const isAuthorized = useSelector((state) => state.user.isAuthorized);
   const token = localStorage?.getItem("token");
   const products = localStorage.getItem("favorites");
-  let parsedProducts;
+  let parsedProducts = [];
   try {
     parsedProducts = JSON.parse(products) || [];
   } catch (error) {
-    console.error("Error parsing JSON from localStorage:", error);
+    console.log("Error parsing JSON from localStorage:", error);
     parsedProducts = [];
   }
 
   const favor = useSelector((state) => state.favorite.favorites);
   console.log(`favorfavorfavorfavorfavorfavorfavor`, favor);
-
-  // console.log(`change appppppp`, user , products)
-  // console.log(`favorfavorfavorfavorfavorfavorfavor`, favor)
-
   useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favor));
     const token = localStorage?.getItem("token");
-    console.log(`in useeffect favor`, favor);
-
-    token && dispatch(fetchChange({ user, favor }));
+    user && dispatch(fetchChange({ user, favor }));
+    favor.length === 0 && dispatch(featchClearFavor(user));
+    localStorage.setItem("favorites", JSON.stringify(favor));
   }, [favor, dispatch]);
   useEffect(() => {
     if (token && user) {
-      CreateFavorUser(user, parsedProducts);
-      dispatch(fetchTodos(user));
+      user && CreateFavorUser(user, parsedProducts);
+      user && dispatch(fetchTodos(user, isAuthorized));
+    } else {
+      const favorSlice = JSON.parse(localStorage.getItem("favorites")) || [];
+      dispatch(SetFavor(favorSlice));
     }
-    // else {
-    //     const favorSlice = JSON.parse(localStorage.getItem("favorites")) || []
-    //     dispatch(SetFavor(favorSlice))
-    // }
   }, [dispatch, token, user, products]);
-  //
-  //     useEffect(() => {
-  //         localStorage.setItem("favorites", JSON.stringify(products))
-  //         const token = localStorage?.getItem("token");
-  //         token && dispatch(fetchChange(user, favor));
-  //     }, [favor, dispatch]);
 
   return (
     <div className="app-wrapper">

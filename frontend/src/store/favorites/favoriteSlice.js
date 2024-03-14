@@ -2,25 +2,33 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchTodos = createAsyncThunk(
   "todos/fetchTodos",
-  async function (user) {
+  async function (user, isAuthorized) {
     try {
-      // console.log(111111111111111111111, user);
-      const response = await fetch(`http://localhost:4000/api/wishlist`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          id: user._id,
-        },
-      });
-      const data = await response.json();
-      console.log(`data fetchTodosfetchTodosfetchTodosfetchTodos`, response);
-      if (response.ok !== 200) {
-        throw new Error("Network response was not ok");
+      const token = localStorage.getItem("token");
+      if (token && isAuthorized) {
+        // console.log(`useruseruseruser `, user)
+        const response = await fetch(`http://localhost:4000/api/wishlist`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+            id: user._id,
+          },
+        });
+        const data = await response.json();
+        // console.log(`data fetchTodosfetchTodosfetchTodosfetchTodos`, data.products);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        let ret = data.products || [];
+        localStorage.setItem(
+          "favorites",
+          JSON.stringify(ret) // Закрывающая скобка была добавлена здесь
+        );
+        return ret;
       }
-
-      return data;
     } catch (error) {
-      console.error("Error fetching wishlist:", error);
+      console.warn("Error fetching wishlist:", error);
       throw error; // Перебрасываем ошибку, чтобы ее можно было обработать в UI
     }
   }
@@ -29,7 +37,7 @@ export const fetchChange = createAsyncThunk(
   "todos/fetchChange",
   async function ({ user, ...products }) {
     try {
-      console.log(`cyka cyda dochla1`, products.favor);
+      // console.log(`cyka cyda dochla1`, products.favor);
       // console.log(`change featchfeatchfeatchfeatchfeatch`, user , products)
       const token = localStorage.getItem("token");
       const response = await fetch(`http://localhost:4000/api/wishlist`, {
@@ -40,8 +48,10 @@ export const fetchChange = createAsyncThunk(
         },
         body: JSON.stringify({ id: user._id, products: products.favor }),
       });
-      console.log(`cyka cyda dochla`, user, products);
-      if (response.ok !== 200) {
+      // console.log(`cyka cyda dochla`, user, products);
+      // console.log(`response.ok`, response.ok === 200);
+
+      if (!response.ok) {
         throw new Error("Network response was not ok");
       }
 
@@ -49,17 +59,45 @@ export const fetchChange = createAsyncThunk(
       // console.log(`data fetchChangefetchChangefetchChangefetchChange`, data);
       return data;
     } catch (error) {
-      console.error("Error updating wishlist:", error);
+      console.warn("Error updating wishlist:", error);
       throw error; // Перебрасываем ошибку, чтобы ее можно было обработать в UI
     }
   }
 );
 
+export const featchClearFavor = createAsyncThunk(
+  "todos/featchClearFavor",
+  async function (user) {
+    try {
+      console.log(`featchClearFavor`, user);
+      const token = localStorage.getItem("token");
+      const response = await fetch(`http://localhost:4000/api/wishlist`, {
+        method: `PUT`,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify({ id: user._id, products: [] }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      return data.products;
+    } catch (error) {
+      console.warn("Error updating wishlist:", error);
+      throw error;
+    }
+  }
+);
+const currentLocalInitialState = JSON.parse(localStorage.getItem("favorites"));
 const favoriteSlice = createSlice({
   name: "favorites",
   initialState: {
     status: null,
-    favorites: [],
+    favorites: currentLocalInitialState || [],
     error: null,
   },
   reducers: {
@@ -92,12 +130,9 @@ const favoriteSlice = createSlice({
       })
       .addCase(fetchTodos.fulfilled, (state, action) => {
         state.status = "resolve";
-        // console.log(`action. payload `, action.payload?.products)
-        state.favorites = action.payload?.products;
-        localStorage.setItem(
-          "favorites",
-          JSON.stringify(action.payload?.products)
-        );
+        if (action.payload?.products) {
+          state.favorites = action.payload?.products;
+        }
       })
       .addCase(fetchTodos.rejected, (state, action) => {
         state.status = "rejected";
@@ -109,11 +144,23 @@ const favoriteSlice = createSlice({
       })
       .addCase(fetchChange.fulfilled, (state, action) => {
         state.status = "resolve";
-        // console.log(`action. payload `, action.payload?.products)
-        // state.favorites = action.payload?.products;
-        // localStorage.setItem("favorites", JSON.stringify(action.payload?.products));
+        // Handle fulfillment for fetchChange action
       })
       .addCase(fetchChange.rejected, (state, action) => {
+        state.status = "rejected";
+        state.error = action.error.message;
+      })
+      .addCase(featchClearFavor.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(featchClearFavor.fulfilled, (state, action) => {
+        state.status = "resolve";
+        if (action.payload?.products) {
+          state.favorites = action.payload?.products;
+        }
+      })
+      .addCase(featchClearFavor.rejected, (state, action) => {
         state.status = "rejected";
         state.error = action.error.message;
       });
