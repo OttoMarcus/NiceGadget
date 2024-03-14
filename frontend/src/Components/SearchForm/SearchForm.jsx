@@ -4,7 +4,7 @@ import styles from "./SearchForm.module.scss";
 
 const SearchForm = () => {
   const [showInput, setShowInput] = useState(false);
-
+  const [value, setValue] = useState("");
   const handleShow = () => {
     setShowInput(true);
   };
@@ -26,6 +26,7 @@ const SearchForm = () => {
           type="text"
           placeholder="Search ..."
           className={styles.searchInput}
+          onChange={(event) => setValue(event.target.value)}
         />
       )}
     </form>
