@@ -109,11 +109,11 @@ SORTING
           handleSortChange(e);
         }}
       >
-        <option value="">All</option>
+        {/* <option value="All">All</option> */}
         <option value="-brandNew">Newest first</option>
         <option value="-available">In Stock first</option>
-        <option value="-price">Price asc</option>
-        <option value="price">Price desc</option>
+        <option value="price">Price asc</option>
+        <option value="-price">Price desc</option>
       </select>
     </>
   );

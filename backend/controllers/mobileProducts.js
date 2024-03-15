@@ -134,7 +134,7 @@ exports.getMobileProducts = async (req, res, next) => {
     const foundMobileProducts = await mobileProducts.find(mongooseQuery)
       .skip(startPage * perPage - perPage)
       .limit(perPage)
-      .sort(sort)
+      .sort(sort === "all"? null : sort)
 
     const total = await mobileProducts.countDocuments(mongooseQuery);
 
