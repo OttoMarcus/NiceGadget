@@ -4,6 +4,9 @@ import LeftArrow from "../Icons/LeftArrow";
 import RightArrow from "../Icons/RightArrow";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Star from "./Star/Star";
+import Recotypole from "./Recotypole/Recotypole";
+import Sakura from "./Sakura/Sakura";
 
 const Slider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -34,7 +37,7 @@ const Slider = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
-    }, 3000);
+    }, 300000);
 
     return () => clearInterval(interval);
   }, [currentIndex, nextSlide]);
@@ -44,36 +47,88 @@ const Slider = () => {
     }
   }, [sliders]);
 
+  const renderSliderContent = (slider) => {
+    if (!slider) return null;
+
+    switch (slider.type) {
+      case "type1":
+        return (
+          <div className={styles.slider}>
+            <Star />
+            <div className={styles.bannerWrapper}>
+              <div className={styles.item}>
+                <img
+                  className={styles.miniImgFirst}
+                  src={slider.miniImg}
+                  alt="miniPhone"
+                />
+              </div>
+
+              <div className={styles.infoWrapper}>
+                <h2 className={styles.titleFirst}>{slider.title}</h2>
+                <Link to="/phones" className={styles.linkBtn}>
+                  Learn More
+                </Link>
+                <p className={styles.subtitleFirst}>
+                  {sliders[currentIndex].subtitle}
+                </p>
+              </div>
+            </div>
+          </div>
+        );
+      case "type2":
+        return (
+          <div className={styles.sliderSecond}>
+            <Recotypole />
+            <div className={styles.bannerWrapperSecond}>
+              <div className={styles.infoWrapper}>
+                <h2 className={styles.titleSecond}>{slider.title}</h2>
+                <Link to="/phones" className={styles.linkBtnSecond}>
+                  Learn More
+                </Link>
+                <p className={styles.subtitleSecond}>
+                  {sliders[currentIndex].subtitle}
+                </p>
+              </div>
+            </div>
+          </div>
+        );
+      case "type3":
+        return (
+          <div className={styles.sliderThird}>
+            <Sakura />
+            <div className={styles.bannerWrapperSecond}>
+              <div className={styles.infoWrapper}>
+                <h2 className={styles.titleThird}>{slider.title}</h2>
+                <Link to="/phones" className={styles.linkBtnThird}>
+                  Buy
+                </Link>
+                <p className={styles.subtitleThird}>
+                  {sliders[currentIndex].subtitle}
+                </p>
+              </div>
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div
-      className={`${styles.slider} ${styles.imageContainer}`}
-      style={{
-        backgroundImage:
-          sliders && sliders.length > 0 && sliders[currentIndex].pictures[0]
-            ? `url(${sliders[currentIndex].pictures[0].link})`
-            : "",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
+    <>
       {sliders && sliders.length > 0 && sliders[currentIndex] && (
-        <>
+        <div className={styles.sliderWrapper}>
           <div className={styles.leftArrow} onClick={prevSlide}>
             <LeftArrow />
           </div>
-          <div className={styles.sliderContent}>
-            <h2 className={styles.title}>{sliders[currentIndex].title}</h2>
-            <p className={styles.subtitle}>{sliders[currentIndex].subtitle}</p>
-            <Link to="/phones" className={styles.link}>
-              Learn More
-            </Link>
-          </div>
+          <div>{renderSliderContent(sliders[currentIndex])}</div>
           <div className={styles.rightArrow} onClick={nextSlide}>
             <RightArrow />
           </div>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
