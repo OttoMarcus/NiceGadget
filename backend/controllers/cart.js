@@ -199,13 +199,74 @@ exports.getCart = async (req, res, next) => {
   try {
     const cart = await Cart.findOne({ customerId: req.user._id });
     if (!cart) {
-      return res.json({customerId: req.user.id, products: []});
+      return res.json({customerId: req.user._id, products: []});
     }
     res.json(cart);
   } catch (error) {
     res.status(500).json({ message: `Error happened on server: "${error}"` });
   }
 };
+
+exports.synchronizeCart = async (req, res, next) => {
+  const localProducts = req.body.products || [];
+  const customerId = req.user._id;
+
+
+  try {
+    let cart = await Cart.findOne({ customerId });
+    if (!cart && localProducts.length > 0) {
+      cart = new Cart({
+        customerId,
+        products: []
+      });
+    }
+
+    for (const localProduct of localProducts) {
+
+      const { productId, category } = localProduct;
+      const productModel = { 'phones': MobileProducts, 'tablets': TabletProducts, 'accessories': AccessoriesProducts }[category];
+
+      if (!productModel) {
+        console.error(`Invalid product category for product ID: ${productId}`);
+        continue; // Skip invalid product categories
+      }
+      
+      const productToAdd = await productModel.findOne({ _id: productId });
+      if (!productToAdd) {
+        console.error(`Product with ID ${productId} not found in category ${category}`);
+        continue; // Skip products that cannot be found
+      }
+      
+      const productIndex = cart.products.findIndex(item => item.productId.equals(productId));
+      if (productIndex !== -1) {
+        // Update product quantity if product already exists in cart
+        cart.products[productIndex].cartQuantity = Math.max(cart.products[productIndex].cartQuantity, localProduct.cartQuantity);
+      } else {
+        // Add new product to cart
+        cart.products.push({
+          productId,
+          category,
+          customId: localProduct.id,
+          ...localProduct,
+          cartQuantity: localProduct.cartQuantity,
+          refModel: localProduct.refModel ? {
+            modelId: localProduct.refModel.modelId,
+            modelName: localProduct.refModel.modelName,
+          } : undefined,
+        });
+      }
+    }
+
+    if (cart.products.length > 0) {
+      await cart.save();
+    }
+    
+    res.json(cart);
+  } catch (error) {
+    res.status(500).json({ message: `Error happened on server: "${error}"` });
+  }
+};
+
 
 
 

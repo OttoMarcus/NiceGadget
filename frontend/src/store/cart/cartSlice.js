@@ -5,6 +5,7 @@ import {
   incrementQuantityServer,
   decrementQuantityServer,
   removeFromCartServer,
+  synchronizeCartWithServer,
 } from "../../API/cartAPI";
 
 const currentLocalInitialState = JSON.parse(localStorage.getItem("cart"));
@@ -123,6 +124,21 @@ const cartSlice = createSlice({
       .addCase(removeFromCartServer.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
+      })
+      .addCase(synchronizeCartWithServer.fulfilled, (state, action) => {
+        const synchronizedProducts = action.payload.products;
+
+        if (Array.isArray(synchronizedProducts)) {
+          state.cartItems = synchronizedProducts;
+        }
+        state.status = "succeeded";
+      })
+      .addCase(synchronizeCartWithServer.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(synchronizeCartWithServer.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       });
   },
 });

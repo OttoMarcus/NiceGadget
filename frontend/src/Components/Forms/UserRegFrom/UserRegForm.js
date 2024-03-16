@@ -6,6 +6,10 @@ import styles from "./UserRegForm.module.scss";
 import { addUser } from "../../../store/user/userSlice.js";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  synchronizeCartWithServer,
+  fetchCartItems,
+} from "../../../API/cartAPI.js";
 
 const UserRegForm = () => {
   const [regStatus, setRegStatus] = useState("");
@@ -23,7 +27,7 @@ const UserRegForm = () => {
 
   const createNewUser = async (userData) => {
     try {
-      console.log(userData);
+      // console.log(userData);
       // setCredentials({loginOrEmail: userData.login, password: userData.password})
       const response = await fetch(`http://localhost:4000/api/customers`, {
         method: "POST",
@@ -106,6 +110,8 @@ const UserRegForm = () => {
 
     const token = await loginUser(userCredentials);
     await getUserOnLogin(token);
+    dispatch(synchronizeCartWithServer());
+    dispatch(fetchCartItems());
     onAuthRedirect();
 
     // return user

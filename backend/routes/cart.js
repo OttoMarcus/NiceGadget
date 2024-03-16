@@ -12,17 +12,36 @@ const {
   deleteCart,
   deleteProductFromCart,
   getCart,
+  synchronizeCart,
 } = require("../controllers/cart");
+
+// @route   PUT /cart/synchronize
+// @desc    Synchronize cart items for authenticated user
+// @access  Private
+router.put(
+  "/sync", 
+  passport.authenticate("jwt", { session: false }), 
+  synchronizeCart
+);
 
 // @route   POST /cart
 // @desc    Create cart
 // @access  Private
-router.post("/", passport.authenticate("jwt", { session: false }), createCart);
+router.post(
+  "/", 
+  passport.authenticate("jwt", { session: false }), 
+  createCart
+);
 
 // @route   PUT /cart
 // @desc    Update cart when adding / deleting products in cart
 // @access  Private
-router.put("/", passport.authenticate("jwt", { session: false }), updateCart);
+router.put(
+  "/", 
+  passport.authenticate("jwt", { session: false }), 
+  updateCart
+);
+
 
 // @route   PUT /cart/:productId
 // @desc    Add one product to cart
@@ -81,6 +100,10 @@ router.put(
 // @route   GET /cart
 // @desc    Get cart for customer
 // @access  Private
-router.get("/", passport.authenticate("jwt", { session: false }), getCart);
+router.get(
+  "/", 
+  passport.authenticate("jwt", { session: false }), 
+  getCart
+);
 
 module.exports = router;
