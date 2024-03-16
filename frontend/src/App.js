@@ -59,21 +59,52 @@ function App() {
 
   const favor = useSelector((state) => state.favorite.favorites);
   console.log(`favorfavorfavorfavorfavorfavorfavor`, favor);
+  // useEffect(() => {
+  //   // user && dispatch(fetchChange({ user, favor }));
+  //   // favor.length === 0 && dispatch(featchClearFavor(user));
+  //   //  favor.length === 0 && localStorage.setItem("favorites", JSON.stringify([]));
+  //   //   localStorage.setItem("favorites", JSON.stringify(favor));
+  //   console.log(`set favor in useEffect`, favor)
+  // }, [favor]);
   useEffect(() => {
-    const token = localStorage?.getItem("token");
     user && dispatch(fetchChange({ user, favor }));
+  }, [favor]);
+  useEffect(() => {
     favor.length === 0 && dispatch(featchClearFavor(user));
-    localStorage.setItem("favorites", JSON.stringify(favor));
-  }, [favor, dispatch]);
+    favor.length === 0 && localStorage.setItem("favorites", JSON.stringify([]));
+  }, [favor]);
+  useEffect(() => {
+    console.log(`ebaniy set favor`, favor);
+    setTimeout(() => {
+      console.log(`ebaniy set favor 2`, favor);
+      localStorage.setItem("favorites", JSON.stringify(favor));
+    }, 1);
+
+    console.log(`user`, user);
+  }, [favor]);
   useEffect(() => {
     if (token && user) {
-      user && CreateFavorUser(user, parsedProducts);
-      user && dispatch(fetchTodos(user, isAuthorized));
-    } else {
-      const favorSlice = JSON.parse(localStorage.getItem("favorites")) || [];
-      dispatch(SetFavor(favorSlice));
+      //  user && CreateFavorUser(user, parsedProducts);
+      // user && dispatch(fetchTodos(user, isAuthorized));
     }
-  }, [dispatch, token, user, products]);
+  }, [favor]);
+  useEffect(() => {
+    if (token && user) {
+      // user && CreateFavorUser(user, parsedProducts);
+      console.log(`ret in effectn user`, user);
+      user._id && dispatch(fetchTodos(user, isAuthorized));
+    }
+  }, []);
+  // useEffect(() => {
+  //   if (token && user) {
+  //     user && CreateFavorUser(user, parsedProducts);
+  //     user && dispatch(fetchTodos(user, isAuthorized));
+  //   } else {
+  //     const favorSlice = JSON.parse(localStorage.getItem("favorites")) || [];
+  //     // dispatch(SetFavor(favorSlice));
+  //     // localStorage.setItem("favorites", JSON.stringify(favor));
+  //   }
+  // }, [favor]);
 
   return (
     <div className="app-wrapper">
