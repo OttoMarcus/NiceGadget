@@ -280,10 +280,14 @@ exports.deleteWishlist = (req, res, next) => {
 };
 
 exports.getWishlist = (req, res, next) => {
-    console.log(`response`, req.headers.id);
-    Wishlist.findOne({id: req.headers.id})
+    console.log(`response`, req.headers);
+    // console.log(`response user`, req.user.id);
 
-        .then((wishlist) =>  res.json(wishlist))
+    Wishlist.findOne({id: req.headers.id})
+    // Wishlist.findOne({id: req.user.id})
+        .then((wishlist) => {
+            console.log(`wishlist` ,wishlist )
+            res.json(wishlist)})
         .catch((err) => res.status(400).json({
             message: `Error happened on server: "${err}" `,
         }));
