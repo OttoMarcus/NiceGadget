@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import RootRouters from "./routers/RootRouters";
 import Header from "./Composition/Header/Header";
@@ -15,12 +15,13 @@ import {
   featchClearFavor,
 } from "./store/favorites/favoriteSlice";
 import { CreateFavorUser } from "./API/favorietesAPI";
+import { setUser } from "@sentry/react";
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
   // console.log(location.pathname);
-
+  const [User, SetUser] = useState();
   useEffect(() => {
     const getUserOnLogin = async (token) => {
       const user = await fetch(`http://localhost:4000/api/customers/customer`, {
@@ -37,28 +38,34 @@ function App() {
       getUserOnLogin(token);
     } else {
       dispatch(removeUser());
+      dispatch(SetFavor([]));
     }
   }, [location.pathname, dispatch]);
+  //location.pathname, dispatch
 
   useEffect(() => {
     dispatch(fetchCartItems());
   }, [dispatch]);
 
   const user = useSelector((state) => state.user.user);
+  useEffect(() => {
+    SetUser(user);
+  }, []);
 
+  // console.log(`User new ` , User)
   const isAuthorized = useSelector((state) => state.user.isAuthorized);
   const token = localStorage?.getItem("token");
   const products = localStorage.getItem("favorites");
-  let parsedProducts = [];
-  try {
-    parsedProducts = JSON.parse(products) || [];
-  } catch (error) {
-    console.log("Error parsing JSON from localStorage:", error);
-    parsedProducts = [];
-  }
+  // let parsedProducts = [];
+  // try {
+  //   parsedProducts = JSON.parse(products) || [];
+  // } catch (error) {
+  //   console.log("Error parsing JSON from localStorage:", error);
+  //   parsedProducts = [];
+  // }
 
   const favor = useSelector((state) => state.favorite.favorites);
-  console.log(`favorfavorfavorfavorfavorfavorfavor`, favor);
+  // console.log(`favorfavorfavorfavorfavorfavorfavor`, favor);
   // useEffect(() => {
   //   // user && dispatch(fetchChange({ user, favor }));
   //   // favor.length === 0 && dispatch(featchClearFavor(user));
@@ -74,9 +81,9 @@ function App() {
     favor.length === 0 && localStorage.setItem("favorites", JSON.stringify([]));
   }, [favor]);
   useEffect(() => {
-    console.log(`ebaniy set favor`, favor);
+    // console.log(`ebaniy set favor`, favor);
     setTimeout(() => {
-      console.log(`ebaniy set favor 2`, favor);
+      // console.log(`ebaniy set favor 2`, favor);
       localStorage.setItem("favorites", JSON.stringify(favor));
     }, 1);
 
@@ -91,8 +98,11 @@ function App() {
   useEffect(() => {
     if (token && user) {
       // user && CreateFavorUser(user, parsedProducts);
-      console.log(`ret in effectn user`, user);
-      user._id && dispatch(fetchTodos(user, isAuthorized));
+
+      setTimeout(() => {
+        // console.log(`ret in effectn user`, user);
+        dispatch(fetchTodos(user, isAuthorized));
+      }, 100);
     }
   }, []);
   // useEffect(() => {
