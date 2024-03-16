@@ -6,6 +6,10 @@ import styles from "./UserLoginForm.module.scss";
 import { addUser } from "../../../store/user/userSlice.js";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  synchronizeCartWithServer,
+  fetchCartItems,
+} from "../../../API/cartAPI.js";
 
 const UserLoginForm = () => {
   const [regStatus, setRegStatus] = useState("");
@@ -49,7 +53,7 @@ const UserLoginForm = () => {
       );
       const result = await response.json();
       localStorage.setItem("token", result.token);
-      console.log(result.token);
+      // console.log(result.token);
 
       return result.token;
     } catch (error) {
@@ -83,6 +87,8 @@ const UserLoginForm = () => {
 
     const token = await loginUser(userCredentials);
     await getUserOnLogin(token);
+    dispatch(synchronizeCartWithServer());
+    dispatch(fetchCartItems());
     onAuthRedirect();
     // navigate(-1)
     // return user
