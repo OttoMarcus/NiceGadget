@@ -98,3 +98,11 @@
   left: 30px;
   top: 420px;
 }
+
+.linkSocial {
+  transition: transform 1s ease;
+}
+
+.linkSocial:hover {
+  transform: translateY(-5px);
+}

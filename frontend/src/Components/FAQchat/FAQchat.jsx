@@ -53,16 +53,28 @@ const FAQchat = () => {
       ))}
       <div className={styles.conctactbtn}>
         <div>
-          <img src={Telegram} alt="telegram" />
+          <a href="https://t.me/nicegadgetstore">
+            <img className={styles.linkSocial} src={Telegram} alt="Telegram" />
+          </a>
         </div>
         <div>
-          <img src={Instagram} alt="instagram" />
+          <a href="https://www.instagram.com/n1cegadgetstore">
+            <img
+              className={styles.linkSocial}
+              src={Instagram}
+              alt="Instagram"
+            />
+          </a>
         </div>
         <div>
-          <img src={Facebook} alt="instagram" />
+          <a href="https://www.facebook.com/groups/258628787334330">
+            <img className={styles.linkSocial} src={Facebook} alt="Facebook" />
+          </a>
         </div>
         <div>
-          <img src={Gmail} alt="instagram" />
+          <a href="mailto:testfrontendmail@gmail.com">
+            <img className={styles.linkSocial} src={Gmail} alt="Gmail" />
+          </a>
         </div>
       </div>
     </div>
