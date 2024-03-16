@@ -5,22 +5,33 @@ export const fetchTodos = createAsyncThunk(
   async function (user, isAuthorized) {
     try {
       const token = localStorage.getItem("token");
-      console.log(`token`, token);
-      console.log(`isAuthorized`, isAuthorized);
-      console.log(`user`, user);
+      const userId = localStorage.getItem("user");
 
-      if (token && isAuthorized && user._id) {
-        // console.log(`useruseruseruser `, user)
+      const resultSlice = userId.slice(1, -1);
+      // console.log(`token111111111111111111111111111111`, token);
+      // console.log(`isAuthorized11111111111111111111111`, isAuthorized);
+      // console.log(`user1111111111111111111111111111111`, user);
+      console.log(`token`, token);
+      console.log(userId);
+      if (token && resultSlice) {
+        //token && user._id
+        //  console.log(`fetchTodos ruseruser `, user)
         const response = await fetch(`http://localhost:4000/api/wishlist`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: token,
-            id: user._id,
+            // id: user._id,
+            id: resultSlice,
           },
         });
         const data = await response.json();
-        // console.log(`data fetchTodosfetchTodosfetchTodosfetchTodos`, data.products);
+        console.log(
+          `data fetchTodosfetchTodosfetchTodosfetchTodos`,
+          data.products
+        );
+        console.log(`data fetchTodosfetchTodosfetchTodosfetchTodos`);
+
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -41,7 +52,7 @@ export const fetchChange = createAsyncThunk(
     try {
       // console.log(`cyka cyda dochla1`, products.favor);
       if (user) {
-        // console.log(`change featchfeatchfeatchfeatchfeatch`, user , products)
+        console.log(`change featchfeatchfeatchfeatchfeatch`, user);
         const token = localStorage.getItem("token");
         const response = await fetch(`http://localhost:4000/api/wishlist`, {
           method: `PUT`,
@@ -74,7 +85,6 @@ export const featchClearFavor = createAsyncThunk(
   "todos/featchClearFavor",
   async function (user) {
     try {
-      console.log(`featchClearFavor`, user);
       const token = localStorage.getItem("token");
       const response = await fetch(`http://localhost:4000/api/wishlist`, {
         method: `PUT`,
@@ -138,8 +148,8 @@ const favoriteSlice = createSlice({
       })
       .addCase(fetchTodos.fulfilled, (state, action) => {
         state.status = "resolve";
-        if (action.payload?.products) {
-          state.favorites = action.payload?.products;
+        if (action.payload) {
+          state.favorites = action.payload;
         }
       })
       .addCase(fetchTodos.rejected, (state, action) => {
