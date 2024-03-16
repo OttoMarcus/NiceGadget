@@ -3,6 +3,10 @@ import CardList from "../../Components/CardList/CardList";
 import ShopByCategory from "../../Components/ShopByCategory/ShopByCategory";
 import style from "./HomePage.module.scss";
 import Slider from "../../Components/AdvertisingSlider/Slider";
+import FAQchat from "../../Components/FAQchat/FAQchat";
+import { useState } from "react";
+import Icon from "../../Components/FAQchat/Image/support.gif";
+import IconClose from "../../Components/FAQchat/Image/letter-x.gif";
 
 const HomePage = () => {
   const brandNewModels = {
@@ -41,11 +45,52 @@ const HomePage = () => {
     available: true,
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isIconVisible, setIsIconVisible] = useState(true);
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+    setIsIconVisible(!isIconVisible);
+  };
+
+  const closeIcon = () => {
+    setIsModalOpen(false);
+    setIsIconVisible(true);
+  };
+
   return (
     <>
       <h1 className={`${style.container} ${style.homePageTitle}`}>
         Welcome to Nice Gadgets store!
       </h1>
+
+      <section className={`${style.container} ${style.homePageSection}`}>
+        {isIconVisible && (
+          <div className={style.helpIcon}>
+            <img
+              className={style.support}
+              src={Icon}
+              onClick={toggleModal}
+              alt="Support Icon"
+            />
+            <p className={style.help}>Need Help ?</p>
+          </div>
+        )}
+
+        {isModalOpen && (
+          <div className={style.modalOverlay}>
+            <div className={style.modal}>
+              <img
+                src={IconClose}
+                className={style.close}
+                onClick={closeIcon}
+                alt="Close Icon"
+              />
+              <FAQchat />
+            </div>
+          </div>
+        )}
+      </section>
 
       <section className={`${style.container} ${style.homePageSection}`}>
         <Slider />
