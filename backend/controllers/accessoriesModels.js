@@ -119,13 +119,10 @@ exports.getAccessoryModels = async (req, res, next) => {
 // };
 exports.getAccessoryModelById = (req, res, next) => {
     const { name } = req.params;
-    console.log(name)
     accessoriesModels.findOne({ name: name })
         .then(accessoryModel => {
-            console.log(accessoryModel)
 
             if (!accessoryModel) {
-                console.log(accessoryModel)
 
                 return res.status(400).json({
                     message: `Accessory model with name "${name}" is not found`
