@@ -30,14 +30,13 @@ export const fetchTodos = createAsyncThunk(
           `data fetchTodosfetchTodosfetchTodosfetchTodos`,
           data.products
         );
-        console.log(`data fetchTodosfetchTodosfetchTodosfetchTodos`);
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         let ret = data.products || [];
         console.log(`ret ret `, ret);
-        localStorage.setItem("favorites", JSON.stringify(ret));
+        // localStorage.setItem("favorites", JSON.stringify(ret));
         return ret;
       }
     } catch (error) {
@@ -149,6 +148,7 @@ const favoriteSlice = createSlice({
       .addCase(fetchTodos.fulfilled, (state, action) => {
         state.status = "resolve";
         if (action.payload) {
+          console.log(`cyka`, action.payload);
           state.favorites = action.payload;
         }
       })
