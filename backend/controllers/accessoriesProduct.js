@@ -63,29 +63,22 @@ exports.updateAccessoryProduct = (req, res, next) => {
 
 exports.getAccessoryProducts = async (req, res, next) => {
     const mongooseQuery = filterParser(req.query);
-    console.log(undefined === mongooseQuery)
     const perPage = Number(req.query.perPage);
     const startPage = Number(req.query.startPage);
     const sort = req.query.sort;
     const q = typeof req.query.q === "string" ? req.query.q.trim() : null;
-    console.log('im here')
-    console.log("-----",q)
     if (q) {
-        console.log("Surprise")
         mongooseQuery.name = {
             $regex: new RegExp(q, "i")
         };
     }
 
     try {
-        console.log('I am still here?')
         const foundAccessoryProducts = await accessoriesProducts.find(mongooseQuery)
             .skip(startPage * perPage - perPage)
             .limit(perPage)
             .sort(sort);
-        await console.log(foundAccessoryProducts)
         const total = await accessoriesProducts.countDocuments(mongooseQuery);
-        await console.log(total)
 
         res.json({ data: foundAccessoryProducts, total });
     } catch (err) {
@@ -166,7 +159,7 @@ exports.getAccessoryProductById = (req, res, next) => {
 
 exports.getAccessoryProductByCustomId = (req, res, next) => {
     const { id } = req.params;
-  
+
     accessoriesProducts.findOne({ id })
       .then(product => {
         if (!product) {

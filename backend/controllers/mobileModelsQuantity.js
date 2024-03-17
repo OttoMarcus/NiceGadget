@@ -7,6 +7,8 @@ const rand = uniqueRandom(0, 999999);
 const queryCreator = require("../commonHelpers/queryCreator");
 const filterParser = require("../commonHelpers/filterParser");
 const _ = require("lodash");
+const MobileModel = require("../models/MobileModel");
+const MobileProduct = require("../models/MobileProduct");
 
 // exports.addImages = (req, res, next) => {
 //   if (req.files.length > 0) {
@@ -52,46 +54,80 @@ exports.addMobileModelQuantity = (req, res, next) => {
     );
 };
 
-exports.updateMobileModelQuantity = (req, res, next) => {
-  const { id } = req.params;
-  if (!isValidMongoId(id)) {
-    return res.status(400).json({
-      message: `mobileModelQuantity with id "${id}" is not valid`
-    });
-  }
+const updateMobileModelQuantity = (req, res, next) => {
+  const { productId } = req.params;
+  const { quantity } = req.body;
 
-  mobileModelsQuantity.findById(id)
+  mobileModelsQuantity.findOne({ productId })
     .then(mobileModelQuantity => {
       if (!mobileModelQuantity) {
         return res.status(400).json({
-          message: `mobileModelQuantity with id "${req.params.id}" is not found.`
+          message: `mobileModelQuantity with id "${productId}" is not found.`
         });
       } else {
-        const mobileModelQuantityFields = _.cloneDeep(req.body);
+        let newQuantity = mobileModelQuantity.quantity + quantity;
 
-        // try {
-        //   mobileModelQuantityFields.name = mobileModelQuantityFields.name
-        //     .toLowerCase()
-        //     .trim()
-        //     .replace(/\s\s+/g, " ");
-        // } catch (err) {
-        //   res.status(400).json({
-        //     message: `Error happened on server: "${err}" `
-        //   });
-        // }
+        if (newQuantity < 0) {
+          return res.status(400).json({
+            message: "Insufficient  quantity.",
+          });
+        }
 
-        const updatedMobileModelQuantity = queryCreator(mobileModelQuantityFields);
 
-        mobileModelQuantity.findOneAndUpdate(
-          { _id: req.params.id },
-          { $set: updatedmobileModelQuantity },
-          { new: true }
+        if (newQuantity === 0) {
+          MobileModel.findOneAndUpdate(
+            { id: mobileModelQuantity.refModel },
+            { $set: { "colors.$[color].capacities.$[capacity].available": false } },
+            {
+              arrayFilters: [{ "color.capacities.productId": productId }, { "capacity.productId": productId }],
+              new: true,
+            },
+          ).then(mobModel => {
+            console.log('here');
+            console.log(mobModel);
+          });
+
+          MobileProduct.findOneAndUpdate(
+            { id: productId },
+            { $set: { available: false } },
+            { new: true },
+          ).then(product => {
+            console.log(product);
+          })
+        }
+
+        if ((mobileModelQuantity.quantity === 0) && (newQuantity > 0)) {
+          // notify product subscribers
+          MobileModel.findOneAndUpdate(
+            { id: mobileModelQuantity.refModel },
+            { $set: { "colors.$[color].capacities.$[capacity].available": true } },
+            {
+              arrayFilters: [{ "color.capacities.productId": productId }, { "capacity.productId": productId }],
+              new: true,
+            },
+          ).then(mobModel => {
+            console.log(mobModel);
+          });
+
+          MobileProduct.findOneAndUpdate(
+            { id: productId },
+            { $set: { available: true } },
+            { new: true },
+          ).then(product => {
+            console.log(product);
+          })
+        }
+
+        mobileModelsQuantity.findOneAndUpdate(
+          { productId: productId },
+          { $set: { quantity: newQuantity } },
+          { new: true },
         )
           .then(mobileModelQuantity => res.json(mobileModelQuantity))
           .catch(err =>
             res.status(400).json({
-              message: `Error happened on server: "${err}" `
-            })
+              message: `Error happened on server: "${err}" `,
+            }),
           );
       }
     })
@@ -100,6 +136,14 @@ exports.updateMobileModelQuantity = (req, res, next) => {
         message: `Error happened on server: "${err}" `
       })
     );
+};
+
+exports.updateMobileModelQuantityAsAdmin = (req, res, next) => {
+  updateMobileModelQuantity(req, res, next);
+};
+
+exports.updateMobileModelQuantityCheckout = (req, res, next) => {
+  updateMobileModelQuantity(req, res, next);
 };
 
 exports.getMobileModelsQuantity = async (req, res, next) => {
@@ -132,10 +176,7 @@ exports.getMobileModelsQuantity = async (req, res, next) => {
 };
 
 exports.getMobileModelsQuantityById = (req, res, next) => {
-  console.log(req.params);
-  console.log('I am here');
   const { id } = req.params;
-  console.log(id);
   // if (!isValidMongoId(id)) {
   //   console.log('I am still here?');
   //   return res.status(400).json({
@@ -145,14 +186,10 @@ exports.getMobileModelsQuantityById = (req, res, next) => {
   // mobileModelsQuantity.findById(id)
   mobileModelsQuantity.findOne({id: id})
     .then(mobileModelQuantity => {
-      console.log('mobileModelQuantity', mobileModelQuantity);
       if (!mobileModelQuantity) {
-        console.log('Surprise, surprise, motherfuckers');
         res.status(400).json({
-          message: `mobileModelQuantity with itemNo ${req.params.id} is not found`
         });
       } else {
-        console.log('else', mobileModelQuantity);
         res.json(mobileModelQuantity);
       }
     })
