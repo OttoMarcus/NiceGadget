@@ -211,14 +211,17 @@ exports.synchronizeCart = async (req, res, next) => {
   const localProducts = req.body.products || [];
   const customerId = req.user._id;
 
-
   try {
     let cart = await Cart.findOne({ customerId });
-    if (!cart && localProducts.length > 0) {
-      cart = new Cart({
-        customerId,
-        products: []
-      });
+    if (!cart) {
+      if (localProducts.length > 0) {
+        cart = new Cart({
+          customerId,
+          products: []
+        });
+      } else {
+        return res.json({ message: "No cart exists and no products provided for synchronization." });
+      }
     }
 
     for (const localProduct of localProducts) {
@@ -228,13 +231,13 @@ exports.synchronizeCart = async (req, res, next) => {
 
       if (!productModel) {
         console.error(`Invalid product category for product ID: ${productId}`);
-        continue; // Skip invalid product categories
+        continue;
       }
       
       const productToAdd = await productModel.findOne({ _id: productId });
       if (!productToAdd) {
         console.error(`Product with ID ${productId} not found in category ${category}`);
-        continue; // Skip products that cannot be found
+        continue;
       }
       
       const productIndex = cart.products.findIndex(item => item.productId.equals(productId));
@@ -259,9 +262,10 @@ exports.synchronizeCart = async (req, res, next) => {
 
     if (cart.products.length > 0) {
       await cart.save();
+      res.json(cart);
+    } else {
+      res.json({ message: "Cart is empty after synchronization." });
     }
-    
-    res.json(cart);
   } catch (error) {
     res.status(500).json({ message: `Error happened on server: "${error}"` });
   }

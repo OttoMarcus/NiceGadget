@@ -6,19 +6,16 @@ import SelectableImageGallery from "../../Components/SelectableImageGallery/Sele
 import Capacities from "../../Components/Capacities/Capacities";
 import ProductAbout from "../../Components/ProductAbout/ProductAbout";
 import TechSpecs from "../../Components/ProductTechSpecs/ProductTechSpecs";
-import Button from "../../Components/Button/Button";
 import Favorite from "../../Components/Favorite/Favorite";
 import { capitalizeFirstLetterOfWord } from "../../helpers/capitalizeFirstLetterOfWord";
 import { useDispatch, useSelector } from "react-redux";
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
-import { addToCartLocal } from "../../store/cart/cartSlice";
 import { useFetchModelData } from "./hooks/useFetchModelData";
 import { useSelectedColorData } from "./hooks/useSelectedColorData";
-import { addToCartServer } from "../../API/cartAPI";
+import CartButton from "../../Components/CartButton/CartButton";
 
 const SingleProductPage = () => {
   const dispatch = useDispatch();
-  const isAuthorized = useSelector((state) => state.user.isAuthorized);
   const { modelId } = useParams();
   const location = useLocation();
   const pathname = location.pathname;
@@ -44,42 +41,9 @@ const SingleProductPage = () => {
   const inCart = cartItems.some(
     (item) => item.customId === chosenCapacityObject?.productId
   );
-  const isAvailable = chosenCapacityObject?.available;
-  const backgroundColorBtn = isAvailable && !inCart ? "#905BFF" : "#323542";
 
   const handleCapacityClick = (capacity) => setCapacity(capacity);
   const handleColorClick = (color) => setColor(color);
-
-  const handleAddToCart = () => {
-    if (chosenCapacityObject?.productId) {
-      const productDetailsUrl = `http://localhost:4000/api/${typeModel}/byProductId/${chosenCapacityObject.productId}`;
-
-      fetch(productDetailsUrl)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((productDetails) => {
-          const productToAdd = { ...productDetails };
-
-          if (isAuthorized) {
-            dispatch(addToCartServer(productToAdd));
-          } else {
-            dispatch(addToCartLocal({ productToAdd }));
-          }
-        })
-        .catch((error) => {
-          console.error(
-            "There was a problem with your fetch operation:",
-            error
-          );
-        });
-    } else {
-      console.error("Product ID is missing");
-    }
-  };
 
   return (
     <>
@@ -155,16 +119,13 @@ const SingleProductPage = () => {
                     )}
                   </div>
                   <div className={styles.buttonsWrapper}>
-                    <Button
-                      onClick={(event) => handleAddToCart(event)}
-                      backgroundColor={backgroundColorBtn}
-                    >
-                      {isAvailable
-                        ? inCart
-                          ? "Added to cart"
-                          : "Add to cart"
-                        : "Notify when available"}
-                    </Button>
+                    <CartButton
+                      productToAdd={null}
+                      isAvailable={chosenCapacityObject?.available}
+                      inCart={inCart}
+                      fetchDetailsUrl={`http://localhost:4000/api/${typeModel}/byProductId/${chosenCapacityObject?.productId}`}
+                    />
+
                     <Favorite
                       click={() => {
                         dispatch(

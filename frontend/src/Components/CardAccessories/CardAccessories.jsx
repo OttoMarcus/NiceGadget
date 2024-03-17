@@ -53,7 +53,11 @@ const CardAccessories = (props) => {
         <div className={styles.cardImg}>
           <img src={picture} alt="Card" />
         </div>
-        <div className={styles.model}>{name}</div>
+        <div className={styles.nameWrapper}>
+          <div className={styles.model}>
+            {name}
+          </div>
+        </div>
         <div className={styles.price}>${price}</div>
         <div className={styles.divider}></div>
         <ul className={styles.paramsGroup}>
@@ -97,7 +101,7 @@ const CardAccessories = (props) => {
 };
 
 CardAccessories.propTypes = {
-  _id: PropTypes.string.isRequired,
+  _id: PropTypes.string,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,

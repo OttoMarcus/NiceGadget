@@ -29,6 +29,7 @@ const cartSlice = createSlice({
       const productExistsIndex = state.cartItems.findIndex(
         (item) => item.productId === productToAdd._id
       );
+
       if (productExistsIndex !== -1) {
         state.cartItems[productExistsIndex].cartQuantity += 1;
       } else {

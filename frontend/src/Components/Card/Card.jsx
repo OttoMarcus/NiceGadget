@@ -57,7 +57,11 @@ const Card = (props) => {
         <div className={styles.cardImg}>
           <img src={picture} alt="Card" />
         </div>
-        <div className={styles.model}>{name}</div>
+        <div className={styles.nameWrapper}>
+          <div className={styles.model}>
+            {name}
+          </div>
+        </div>
         <div className={styles.price}>${price}</div>
         <div className={styles.divider}></div>
         <ul className={styles.paramsGroup}>
