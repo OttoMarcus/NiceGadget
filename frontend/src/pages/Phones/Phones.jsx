@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 // import styles from "./Phones.module.scss";
 import Card from "../../Components/Card/Card";
-import Filter from "../../Components/Filter/Filter";
+import Sort from "../../Components/Sort/Sort";
+import PerPageSelect from "../../Components/PerPageSelect/PerPageSelect";
+import Pagination from "../../Components/Pagination/Pagination";
 import { useLocation, useSearchParams } from "react-router-dom";
 import styles from "../Phones/Phones.module.scss";
 
@@ -9,29 +11,12 @@ const Phones = () => {
   const [phonesArr, setPhonesArr] = useState();
 
   const [sortValue, setSortValue] = useState("");
-  const [cardsPerPage, setCardsPerPage] = useState(8);
-
-  const [searchParams, setSearchParams] = useSearchParams();
-  // const [sortedPhones, setSortedPhones] = useState();
+  const [cardsPerPageValue, setCardsPerPageValue] = useState(8);
+  const [totalPages, setTotalPages] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
 
   const location = useLocation();
   const typeModel = location.pathname.slice(1);
-
-  // useEffect(() => {
-  //   fetch("http://localhost:4000/api/phones")
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error("Network response was not ok");
-  //       }
-  //       return response.json();
-  //     })
-  //     .then(({ data }) => {
-  //       setPhonesArr(data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("There was a problem with your fetch operation:", error);
-  //     });
-  // }, []);
 
   // useEffect(() => {
   //   const urlParams = new URLSearchParams(window.location.search);
@@ -48,17 +33,23 @@ const Phones = () => {
 
   useEffect(() => {
     const preferencesPerPage = localStorage.getItem("cardsPerPage") || 8;
-    setCardsPerPage(preferencesPerPage);
+    setCardsPerPageValue(preferencesPerPage);
 
     const urlParams = new URLSearchParams(window.location.search);
     const sortParam = urlParams.get("sort");
-    const fetchURL = sortParam
-      ? `http://localhost:4000/api/phones?sort=${sortParam}&perPage=${cardsPerPage}&startPage=1`
-      : `http://localhost:4000/api/phones?perPage=${cardsPerPage}&startPage=1`;
-
+    const defaultSortValue = "-brandNew";
     if (sortParam) {
       setSortValue(sortParam);
+    } else {
+      setSortValue(defaultSortValue);
+      // const currentUrl = new URL(window.location);
+      // currentUrl.searchParams.set("sort", defaultSortValue)
+      // window.history.pushState({}, "", currentUrl.toString())
     }
+
+    const fetchURL = sortParam
+      ? `http://localhost:4000/api/phones?sort=${sortParam}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
+      : `http://localhost:4000/api/phones?sort=${defaultSortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`;
 
     fetch(fetchURL)
       .then((res) => {
@@ -68,7 +59,6 @@ const Phones = () => {
         return res.json();
       })
       .then(({ data }) => {
-        // setSortedPhones(data);
         setPhonesArr(data);
       })
       .catch((error) => {
@@ -82,10 +72,13 @@ const Phones = () => {
     // console.log(`newSortValue: ${newSortValue}`);
 
     const currentUrl = new URL(window.location);
-
     currentUrl.searchParams.set("sort", newSortValue);
+    currentUrl.searchParams.set("perPage", cardsPerPageValue);
+    currentUrl.searchParams.set("startPage", "1");
+    window.history.pushState({}, "", currentUrl.toString());
+
     await fetch(
-      `http://localhost:4000/api/phones?sort=${newSortValue}&perPage=${cardsPerPage}&startPage=1`
+      `http://localhost:4000/api/phones?sort=${newSortValue}&perPage=${cardsPerPageValue}&startPage=1`
     )
       .then((res) => {
         if (!res.ok) {
@@ -116,38 +109,52 @@ const Phones = () => {
     //   .catch((error) => {
     //     console.error("There was a problem with your fetch operation:", error);
     //   });
-
     // }
-
-    // const sortedProducts = await serverSortResponse.data;
-    //   console.log(sortedProducts);
-
-    // setSortedPhones(sortedProducts);
 
     // } else {
     //   currentUrl.searchParams.delete("sort");
     // }
+    // window.history.pushState({}, "", currentUrl.toString());
+    setSortValue(newSortValue);
+  };
+
+  const handlePerPageChange = async (e) => {
+    e.preventDefault();
+    const newPerPageValue = e.target.value;
+    // console.log(`newSortValue: ${newSortValue}`);
+
+    const currentUrl = new URL(window.location);
+    currentUrl.searchParams.set("perPage", newPerPageValue);
+    currentUrl.searchParams.set("startPage", "1");
     window.history.pushState({}, "", currentUrl.toString());
 
-    setSortValue(newSortValue);
+    await fetch(
+      `http://localhost:4000/api/phones?sort=${sortValue}&perPage=${newPerPageValue}&startPage=1`
+    )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return res.json();
+      })
+      .then(({ data }) => {
+        setPhonesArr(data);
+      })
+      .catch((error) => {
+        console.error("There was a problem with your fetch operation:", error);
+      });
 
-    // const serverSortResponse = await fetch(
-    //   `http://localhost:4000/api/phones?sort=${newSortValue}&perPage=8&startPage=1`
-    // ).then((res) => res.json())
-
-    // console.log(sortedProducts);
-    // .then((data) => setSortedPhones(sortedProducts))
-
-    // const sortedProducts = await serverSortResponse.data;
-    //   console.log(sortedProducts);
-
-    // setSortedPhones(sortedProducts);
+    setCardsPerPageValue(newPerPageValue);
   };
 
   return (
     <>
       <h1 className={styles.pageTitle}>Mobile phones</h1>
-      <Filter handleSortChange={handleSortChange} sortValue={sortValue} />
+      <Sort handleSortChange={handleSortChange} sortValue={sortValue} />
+      <PerPageSelect
+        handlePerPageChange={handlePerPageChange}
+        cardsPerPageValue={cardsPerPageValue}
+      />
       <div className={`${styles.container} ${styles.categoryWrapper}`}>
         {phonesArr &&
           phonesArr.map((card) => {
@@ -170,6 +177,11 @@ const Phones = () => {
             );
           })}
       </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
     </>
   );
 };

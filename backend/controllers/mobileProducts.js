@@ -137,8 +137,9 @@ exports.getMobileProducts = async (req, res, next) => {
       .sort(sort === "all"? null : sort)
 
     const total = await mobileProducts.countDocuments(mongooseQuery);
+    const totalPages = Math.ceil(total / perPage);
 
-    res.json({ data: foundMobileProducts, total });
+    res.json({ data: foundMobileProducts, total, totalPages });
   } catch (err) {
     res.status(400).json({
       message: `Error happened on server: "${err}" `
