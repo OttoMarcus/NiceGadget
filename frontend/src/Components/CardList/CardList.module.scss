@@ -35,7 +35,7 @@
     align-items: center;
     justify-content: center;
 
-    &:last-child {
+    &.arrow:hover {
       background-color: $ui-color-gray-selected-surface-2;
     }
   }
@@ -47,6 +47,5 @@
   flex-direction: row;
   align-items: center;
   flex-wrap: nowrap;
-  overflow: auto;
-  overflow-y: hidden;
+  overflow: hidden;
 }
