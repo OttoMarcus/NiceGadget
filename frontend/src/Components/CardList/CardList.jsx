@@ -1,27 +1,51 @@
-import React from "react";
 import LeftArrow from "../Icons/LeftArrow";
 import RightArrow from "../Icons/RightArrow";
 import Card from "../Card/Card";
 import style from "./CardList.module.scss";
 import PropTypes from "prop-types";
+import React, { useRef } from "react";
 
 const CardList = (props) => {
   const { title, ...cardParams } = props;
+  const containerRef = useRef(null);
+
+  const scrollLeft = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollTo({
+        left: containerRef.current.scrollLeft - 600,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const scrollRight = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollTo({
+        left: containerRef.current.scrollLeft + 600,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
     <>
       <div className={style.header}>
         <h2 className={style.title}>{title}</h2>
         <div className={style.btnGroup}>
-          <div>
+          <div className={style.arrow} onClick={scrollLeft}>
             <LeftArrow />
           </div>
-          <div>
+          <div className={style.arrow} onClick={scrollRight}>
             <RightArrow />
           </div>
         </div>
       </div>
-      <div className={style.cardsContainer}>
+      <div className={style.cardsContainer} ref={containerRef}>
+        <Card {...cardParams} />
+        <Card {...cardParams} />
+        <Card {...cardParams} />
+        <Card {...cardParams} />
+        <Card {...cardParams} />
         <Card {...cardParams} />
         <Card {...cardParams} />
         <Card {...cardParams} />
