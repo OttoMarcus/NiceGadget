@@ -2,49 +2,21 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import styles from "./CardAccessories.module.scss";
-import Button from "../Button/Button";
 import Favorite from "../Favorite/Favorite";
 import { useDispatch, useSelector } from "react-redux";
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
-import { addToCartLocal } from "../../store/cart/cartSlice";
-import { addToCartServer } from "../../API/cartAPI";
+import CartButton from "../CartButton/CartButton";
 
 const CardAccessories = (props) => {
-  const {
-    _id,
-    id,
-    name,
-    picture,
-    price,
-    color,
-    size,
-    weight,
-    category,
-    available,
-  } = props;
+  const { id, name, picture, price, color, size, weight, category } = props;
   const dispatch = useDispatch();
-  const isAuthorized = useSelector((state) => state.user.isAuthorized);
 
   const favor = useSelector((state) => state.favorite.favorites);
   const some = favor.some((el) => id === el.id);
 
+  const productToAdd = { ...props };
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const inCart = cartItems.some((item) => item.productId === _id);
-  const isAvailable = available;
-  const backgroundColorBtn = isAvailable && !inCart ? "#905BFF" : "#323542";
-
-  const handleAddToCart = (event) => {
-    event.stopPropagation();
-    event.preventDefault();
-
-    const productToAdd = { ...props };
-
-    if (isAuthorized) {
-      dispatch(addToCartServer(productToAdd));
-    } else {
-      dispatch(addToCartLocal({ productToAdd }));
-    }
-  };
+  const inCart = cartItems.some((item) => item.productId === productToAdd._id);
 
   return (
     <Link to={`/${category}/${name}?color=${color}`}>
@@ -70,16 +42,12 @@ const CardAccessories = (props) => {
           </li>
         </ul>
         <div className={styles.buttonWrapper}>
-          <Button
-            onClick={(event) => handleAddToCart(event)}
-            backgroundColor={backgroundColorBtn}
-          >
-            {isAvailable
-              ? inCart
-                ? "Added to cart"
-                : "Add to cart"
-              : "Notify when available"}
-          </Button>
+          <CartButton
+            productToAdd={productToAdd}
+            isAvailable={productToAdd?.available}
+            inCart={inCart}
+            fetchDetailsUrl={null}
+          />
 
           <Favorite
             click={(event) => {
