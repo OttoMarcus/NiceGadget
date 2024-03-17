@@ -116,10 +116,7 @@ const UserLoginForm = () => {
               {/* <button type="submit" disabled={!isValid} className={styles.submitBtn}>
                 Register
               </button> */}
-              <Button
-                // children="Log In"
-                disabled={!isValid}
-              />
+              <Button disabled={!isValid}>Log In</Button>
               <p>
                 or <Link to="/registration">Register</Link>
               </p>

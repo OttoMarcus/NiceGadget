@@ -172,7 +172,7 @@ const UserRegForm = () => {
                 name="gender"
                 label="Male"
                 value="male"
-                className={styles.customInput}
+                // className={styles.customInput}
               />
               <Input type="radio" name="gender" label="Female" value="female" />
             </div>
@@ -180,10 +180,7 @@ const UserRegForm = () => {
               {/* <button type="submit" disabled={!isValid} className={styles.submitBtn}>
                 Register
               </button> */}
-              <Button
-                // children="Register"
-                disabled={!isValid}
-              />
+              <Button disabled={!isValid}>Register</Button>
               <p>
                 or go to <Link to="/login">Log In</Link>
               </p>
