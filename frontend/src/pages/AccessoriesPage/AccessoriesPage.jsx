@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Style from "./AccessoriesPage.module.scss";
 import CardAccessories from "../../Components/CardAccessories/CardAccessories";
+
 const Accessories = () => {
   const [accessoriesArr, setAccessoriesArr] = useState();
 
@@ -14,7 +15,6 @@ const Accessories = () => {
         return response.json();
       })
       .then(({ data }) => {
-        console.log(data);
         setAccessoriesArr(data);
       })
       .catch((error) => {
