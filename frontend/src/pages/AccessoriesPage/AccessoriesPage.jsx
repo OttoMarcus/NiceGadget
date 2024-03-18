@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import axios from "axios";
 import CardAccessories from "../../Components/CardAccessories/CardAccessories";
 
@@ -7,8 +6,6 @@ import styles from "./AccessoriesPage.module.scss";
 
 const Accessories = () => {
   const [accessoriesArr, setAccessoriesArr] = useState({ data: [] });
-  // const location = useLocation();
-  // const typeModel = location.pathname.slice(1);
 
   useEffect(() => {
     fetchAccessories();

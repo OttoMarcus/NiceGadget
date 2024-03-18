@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../../store/user/userSlice";
@@ -16,32 +16,21 @@ import styles from "./Header.module.scss";
 import SearchForm from "../../Components/SearchForm/SearchForm";
 
 const Header = () => {
-  const [currentPath, setCurrentPath] = useState("");
   const [isBurgerActive, setIsBurgerActive] = useState(false);
   // const [isAuthorized, setIsAuthorized] = useState(false);
 
   const active = null;
 
   // const navigate = useNavigate();
-  const location = useLocation();
   const dispatch = useDispatch();
+  const location = useLocation();
   // const loggedInUser = useSelector((state) => state.user.user);
   const isAuthorized = useSelector((state) => state.user.isAuthorized);
 
   // const isUserLoggedIn = Object?.keys(loggedInUser).length === 0 ? false : true;
   // console.log(isUserLoggedIn);
 
-  useEffect(() => {
-    if (
-      location.pathname !== "/registration" &&
-      location.pathname !== "/login"
-    ) {
-      setCurrentPath(location.pathname);
-    }
-  }, [location.pathname]);
-
   const logOutUser = () => {
-    console.log("logOutUser success!");
     dispatch(removeUser());
     localStorage.removeItem("token");
     // navigate("/login");
@@ -140,7 +129,7 @@ const Header = () => {
             <Link
               onClick={toggleBurgerActive}
               className={`${styles.linksHeader} ${styles.additionalMobileMenu}`}
-              to="/favorires"
+              to="/favorites"
             >
               Favorites
             </Link>
@@ -178,7 +167,9 @@ const Header = () => {
               </Link>
             ) : (
               <Link
-                onClick={sessionStorage.setItem("prevPath", currentPath)}
+                onClick={() => {
+                  sessionStorage.setItem("prevPath", location.pathname);
+                }}
                 className={styles.authChild}
                 to="/login"
               >
@@ -202,7 +193,9 @@ const Header = () => {
               </>
             ) : (
               <Link
-                onClick={sessionStorage.setItem("prevPath", currentPath)}
+                onClick={() => {
+                  sessionStorage.setItem("prevPath", location.pathname);
+                }}
                 className={styles.mainLinks}
                 to="/login"
               >

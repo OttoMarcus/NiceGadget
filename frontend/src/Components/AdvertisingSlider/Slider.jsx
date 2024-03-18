@@ -17,7 +17,6 @@ const Slider = () => {
       .get("http://localhost:4000/api/advertising-sliders")
       .then((response) => {
         setSliders(response.data.data);
-        console.log(response.data.data);
       })
       .catch((error) => {
         console.error("There was a problem with fetch:", error);

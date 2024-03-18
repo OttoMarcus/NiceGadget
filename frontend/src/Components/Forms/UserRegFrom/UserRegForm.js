@@ -42,7 +42,7 @@ const UserRegForm = () => {
       } else {
         setRegStatus("failed");
         const failReason = await response.json();
-        console.log(failReason);
+
         setRegError(failReason.message);
 
         return failReason;
@@ -66,7 +66,6 @@ const UserRegForm = () => {
       );
       const result = await response.json();
       localStorage.setItem("token", result.token);
-      console.log(result.token);
 
       return result.token;
     } catch (error) {
@@ -81,7 +80,7 @@ const UserRegForm = () => {
         Authorization: token,
       },
     }).then((res) => res.json());
-    console.log(user);
+
     dispatch(addUser(user));
     return user;
   };
@@ -99,14 +98,14 @@ const UserRegForm = () => {
   const onSubmit = async (values, actions) => {
     setRegStatus("");
     setRegError("");
-    console.log(values);
+
     const userCredentials = {
       loginOrEmail: values.login,
       password: values.password,
     };
+
     const result = await createNewUser(values);
     console.log(result);
-    console.log(userCredentials);
 
     const token = await loginUser(userCredentials);
     await getUserOnLogin(token);

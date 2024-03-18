@@ -26,7 +26,6 @@ const UserLoginForm = () => {
 
   const onAuthRedirect = () => {
     const prevPath = sessionStorage.getItem("prevPath");
-    console.log(prevPath);
     if (prevPath) {
       navigate(prevPath);
     } else {
@@ -53,7 +52,6 @@ const UserLoginForm = () => {
       );
       const result = await response.json();
       localStorage.setItem("token", result.token);
-      // console.log(result.token);
 
       return result.token;
     } catch (error) {
@@ -68,7 +66,7 @@ const UserLoginForm = () => {
         Authorization: token,
       },
     }).then((res) => res.json());
-    console.log(user);
+
     dispatch(addUser(user));
 
     return user;
@@ -77,16 +75,15 @@ const UserLoginForm = () => {
   const onSubmit = async (values, actions) => {
     setRegStatus("");
     setRegError("");
-    console.log(values);
+
     const userCredentials = {
       loginOrEmail: values.loginOrEmail,
       password: values.password,
     };
 
-    console.log(userCredentials);
-
     const token = await loginUser(userCredentials);
     await getUserOnLogin(token);
+
     dispatch(synchronizeCartWithServer());
     dispatch(fetchCartItems());
     onAuthRedirect();

@@ -91,10 +91,6 @@ exports.addProductToCart = async (req, res, next) => {
         customId: productToAdd.id,
         ...productToAdd.toObject(),
         cartQuantity: 1,
-        refModel: productToAdd.refModel ? {
-          modelId: productToAdd.refModel.modelId,
-          modelName: productToAdd.refModel.modelName,
-        } : undefined,
       });
     }
 
@@ -168,7 +164,6 @@ exports.deleteCart = async (req, res, next) => {
     res.status(500).json({ message: `Error happened on server: "${error}"` });
   }
 };
-
 
 exports.deleteProductFromCart = async (req, res, next) => {
   try {
@@ -251,11 +246,7 @@ exports.synchronizeCart = async (req, res, next) => {
           category,
           customId: localProduct.id,
           ...localProduct,
-          cartQuantity: localProduct.cartQuantity,
-          refModel: localProduct.refModel ? {
-            modelId: localProduct.refModel.modelId,
-            modelName: localProduct.refModel.modelName,
-          } : undefined,
+          cartQuantity: localProduct.cartQuantity
         });
       }
     }
