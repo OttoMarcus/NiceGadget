@@ -2,7 +2,7 @@ import React from "react";
 import Style from "./Favorites.module.scss";
 import Card from "../../Components/Card/Card";
 import { useSelector } from "react-redux";
-import CardAccessories from "../../Components/CardAccessories/CardAccessories";
+import CardAccessories from "../../Components/Card/CardAccessories";
 
 const Favorites = () => {
   const favor = useSelector((state) => state.favorite.favorites);

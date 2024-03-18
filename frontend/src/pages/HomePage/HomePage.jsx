@@ -64,7 +64,7 @@ const HomePage = () => {
         Welcome to Nice Gadgets store!
       </h1>
 
-      <section className={`${style.container} ${style.homePageSection}`}>
+      <section className={`${style.container}`}>
         {isIconVisible && (
           <div className={style.helpIcon}>
             <img
