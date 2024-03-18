@@ -1,54 +1,43 @@
 import React, { useState, useEffect } from "react";
-// import styles from "./Phones.module.scss";
+import axios from "axios";
 import Card from "../../Components/Card/Card";
 import { useLocation } from "react-router-dom";
 
-const Phones = () => {
-  const [phonesArr, setPhonesArr] = useState();
+import styles from "./Phones.module.scss";
 
+const Phones = () => {
+  const [phonesArr, setPhonesArr] = useState({ data: [] });
   const location = useLocation();
   const typeModel = location.pathname.slice(1);
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/phones")
+    fetchPhones();
+  }, []);
+
+  const fetchPhones = () => {
+    axios
+      .get(`http://localhost:4000/api/phones`)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then(({ data }) => {
-        setPhonesArr(data);
+        setPhonesArr({ data: response.data.data });
       })
       .catch((error) => {
-        console.error("There was a problem with your fetch operation:", error);
+        console.error("Fetching error:", error);
       });
-  }, []);
+  };
   return (
-    <>
-      <div>
-        {phonesArr &&
-          phonesArr.map((card) => {
-            return (
-              <Card
-                picture={card.picture}
-                name={card.name}
-                price={card.price}
-                key={card.id}
-                color={card.color}
-                refModel={card.refModel}
-                brandNew={card.brandNew}
-                capacity={card.capacity}
-                ram={card.ram}
-                screen={card.screen}
-                available={card.available}
-                id={card.id}
-                category={typeModel}
-              />
-            );
-          })}
+    <article className={styles.container}>
+      <h1 className={styles.phonesTitle}>Mobile phones</h1>
+      <h3 className={styles.subtitle}>models</h3>
+
+      <div>Filtering block</div>
+
+      <div className={styles.resultWrapper}>
+        {Array.isArray(phonesArr.data) &&
+          phonesArr.data.map((item) => (
+            <Card key={item.id} category={typeModel} {...item} />
+          ))}
       </div>
-    </>
+    </article>
   );
 };
 

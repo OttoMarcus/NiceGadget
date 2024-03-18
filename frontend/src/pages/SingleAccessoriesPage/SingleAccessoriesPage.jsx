@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SelectableImageGallery from "../../Components/SelectableImageGallery/SelectableImageGallery";
 import styles from "./SingleAccessoriesPage.module.scss";
-import Button from "../../Components/Button/Button";
 import Favorite from "../../Components/Favorite/Favorite";
 import TechSpecs from "../../Components/ProductTechSpecs/ProductTechSpecs";
 import ProductAbout from "../../Components/ProductAbout/ProductAbout";
 import { useDispatch, useSelector } from "react-redux";
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
-import { addToCart } from "../../store/cart/cartSlice";
+import CartButton from "../../Components/CartButton/CartButton";
 
 const SingleAccessoriesPage = () => {
   const dispatch = useDispatch();
@@ -22,9 +21,7 @@ const SingleAccessoriesPage = () => {
   const [accessoryAvailable, setAccessoryAvailable] = useState(true);
 
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const inCart = cartItems.some((item) => item.id === activeAccessoryId);
-  const isAvailable = accessoryAvailable;
-  const backgroundColorBtn = isAvailable && !inCart ? "#905BFF" : "#323542";
+  const inCart = cartItems.some((item) => item.customId === activeAccessoryId);
 
   useEffect(() => {
     fetch(`http://localhost:4000/api/accessories-models/${accessoryId}`)
@@ -35,7 +32,6 @@ const SingleAccessoriesPage = () => {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         setAccessoryAvailable(data.available);
         setActiveAccessoryId(data.id);
         setAccessories(data);
@@ -44,35 +40,6 @@ const SingleAccessoriesPage = () => {
         console.error("There was a problem with your fetch operation:", error);
       });
   }, [accessoryId]);
-
-  const handleAddToCart = () => {
-    if (accessoryId) {
-      const productDetailsUrl = `http://localhost:4000/api/accessories/${activeAccessoryId}`;
-
-      fetch(productDetailsUrl)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((productDetails) => {
-          dispatch(
-            addToCart({
-              ...productDetails,
-            })
-          );
-        })
-        .catch((error) => {
-          console.error(
-            "There was a problem with your fetch operation:",
-            error
-          );
-        });
-    } else {
-      console.error("Product ID is missing");
-    }
-  };
 
   return (
     <>
@@ -94,16 +61,13 @@ const SingleAccessoriesPage = () => {
                     </div>
                   </div>
                   <div className={styles.buttonsWrapper}>
-                    <Button
-                      onClick={(event) => handleAddToCart(event)}
-                      backgroundColor={backgroundColorBtn}
-                    >
-                      {isAvailable
-                        ? inCart
-                          ? "Added to cart"
-                          : "Add to cart"
-                        : "Notify when available"}
-                    </Button>
+                    <CartButton
+                      productToAdd={null}
+                      isAvailable={accessoryAvailable}
+                      inCart={inCart}
+                      fetchDetailsUrl={`http://localhost:4000/api/accessories/byProductId/${activeAccessoryId}`}
+                    />
+
                     <Favorite
                       click={() =>
                         dispatch(

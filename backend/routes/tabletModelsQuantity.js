@@ -7,10 +7,12 @@ const fse = require("fs-extra");
 //Import controllers
 const {
   addTabletModelQuantity,
-  updateTabletModelQuantity,
+  updateTabletModelQuantityAsAdmin,
   getTabletModelsQuantity,
   getTabletModelsQuantityById,
+  updateTabletModelQuantityCheckout,
 } = require("../controllers/tabletModelsQuantity");
+const { login } = require("passport/lib/http/request");
 
 // Configurations for multer
 const storage = multer.diskStorage({
@@ -67,13 +69,22 @@ router.post(
   addTabletModelQuantity
 );
 
-// @route   PUT /tabletModelsQuantity/:id
+// @route   PUT /tabletModelsQuantity/:id as admin
 // @desc    Update existing product
 // @access  Private
 router.put(
-  "/:id",
+  "/admin/:productId",
   passport.authenticate("jwt-admin", { session: false }),
-  updateTabletModelQuantity
+  updateTabletModelQuantityAsAdmin
+);
+
+// @route   PUT /tabletModelsQuantity/:id
+// @desc    Update existing product
+// @access  user
+router.put(
+  "/checkout/:productId",
+  passport.authenticate("jwt", { session: false }),
+  updateTabletModelQuantityCheckout
 );
 
 // @route   GET /tabletModelsQuantity

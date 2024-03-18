@@ -1,0 +1,22 @@
+.image {
+  height: 150px;
+  width: 150px;
+}
+
+@keyframes rollInOut {
+  0% {
+    transform: translateX(-100%) rotate(0deg);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%) rotate(360deg);
+  }
+}
+
+.rollInOut {
+  position: absolute;
+  top: 250px;
+  animation: rollInOut 3s ease-in-out infinite;
+}

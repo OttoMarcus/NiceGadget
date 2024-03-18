@@ -7,6 +7,10 @@ import styles from "./UserRegForm.module.scss";
 import { addUser } from "../../../store/user/userSlice.js";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  synchronizeCartWithServer,
+  fetchCartItems,
+} from "../../../API/cartAPI.js";
 
 const UserRegForm = () => {
   const [regStatus, setRegStatus] = useState("");
@@ -24,7 +28,7 @@ const UserRegForm = () => {
 
   const createNewUser = async (userData) => {
     try {
-      console.log(userData);
+      // console.log(userData);
       // setCredentials({loginOrEmail: userData.login, password: userData.password})
       const response = await fetch(`http://localhost:4000/api/customers`, {
         method: "POST",
@@ -39,7 +43,7 @@ const UserRegForm = () => {
       } else {
         setRegStatus("failed");
         const failReason = await response.json();
-        console.log(failReason);
+
         setRegError(failReason.message);
 
         return failReason;
@@ -109,7 +113,7 @@ const UserRegForm = () => {
         Authorization: token,
       },
     }).then((res) => res.json());
-    console.log(user);
+
     dispatch(addUser(user));
     return user;
   };
@@ -139,26 +143,20 @@ const UserRegForm = () => {
   const onSubmit = async (values, actions) => {
     setRegStatus("");
     setRegError("");
-    console.log(values);
+
     const userCredentials = {
       loginOrEmail: values.login,
       password: values.password,
     };
+
     const result = await createNewUser(values);
     console.log(result);
-    console.log(userCredentials);
 
-    if (result._id) {
-      const token = await loginUser(userCredentials);
-      if (token) {
-        await getUserOnLogin(token);
-        onAuthRedirect();
-      }
-    }
-
-    // const token = await loginUser(userCredentials);
-    // await getUserOnLogin(token);
-    // onAuthRedirect();
+    const token = await loginUser(userCredentials);
+    await getUserOnLogin(token);
+    dispatch(synchronizeCartWithServer());
+    dispatch(fetchCartItems());
+    onAuthRedirect();
 
     // return user
   };

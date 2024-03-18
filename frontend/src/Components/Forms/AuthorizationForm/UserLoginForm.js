@@ -7,6 +7,10 @@ import styles from "./UserLoginForm.module.scss";
 import { addUser } from "../../../store/user/userSlice.js";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  synchronizeCartWithServer,
+  fetchCartItems,
+} from "../../../API/cartAPI.js";
 
 const UserLoginForm = () => {
   const [regStatus, setRegStatus] = useState("");
@@ -96,18 +100,17 @@ const UserLoginForm = () => {
   const onSubmit = async (values, actions) => {
     setRegStatus("");
     setRegError("");
-    console.log(values);
 
     const userCredentials = {
       loginOrEmail: values.loginOrEmail,
       password: values.password,
     };
 
-    console.log(userCredentials);
-
     const token = await loginUser(userCredentials);
     if (token) {
       await getUserOnLogin(token);
+      dispatch(synchronizeCartWithServer());
+      dispatch(fetchCartItems());
     } else {
       return;
     }

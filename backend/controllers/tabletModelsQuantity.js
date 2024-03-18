@@ -1,25 +1,13 @@
 const tabletModelsQuantity = require("../models/TabletModelQuantity");
-const isValidMongoId = require("../validation/isValidMongoId");
-
+const TabletModel = require("../models/TabletModel");
+const TabletProduct = require("../models/TabletProduct");
 const uniqueRandom = require("unique-random");
 const rand = uniqueRandom(0, 999999);
 
 const queryCreator = require("../commonHelpers/queryCreator");
 const filterParser = require("../commonHelpers/filterParser");
 const _ = require("lodash");
-
-// exports.addImages = (req, res, next) => {
-//   if (req.files.length > 0) {
-//     res.json({
-//       message: "Photos are received"
-//     });
-//   } else {
-//     res.json({
-//       message:
-//         "Something wrong with receiving photos at server. Please, check the path folder"
-//     });
-//   }
-// };
+const { login } = require("passport/lib/http/request");
 
 exports.addTabletModelQuantity = (req, res, next) => {
   const tabletModelQuantityFields = _.cloneDeep(req.body);
@@ -47,59 +35,100 @@ exports.addTabletModelQuantity = (req, res, next) => {
     .then(tabletModelQuantity => res.json(tabletModelQuantity))
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `
-      })
+        message: `Error happened on server: "${err}" `,
+      }),
     );
 };
 
-exports.updateTabletModelQuantity = (req, res, next) => {
-  const { id } = req.params;
-  if (!isValidMongoId(id)) {
-    return res.status(400).json({
-      message: `tabletModelQuantity with id "${id}" is not valid`
-    });
-  }
+const updateTabletModelQuantity = async (req, res, next) => {
+  const { productId } = req.params;
+  const { quantity } = req.body;
 
-  tabletModelsQuantity.findById(id)
+  tabletModelsQuantity.findOne({ productId })
     .then(tabletModelQuantity => {
       if (!tabletModelQuantity) {
         return res.status(400).json({
-          message: `tabletModelQuantity with id "${req.params.id}" is not found.`
+          message: `tabletModelQuantity with id "${productId}" is not found.`,
         });
       } else {
-        const tabletModelQuantityFields = _.cloneDeep(req.body);
+        let newQuantity = tabletModelQuantity.quantity + quantity;
 
-        // try {
-        //   tabletModelQuantityFields.name = tabletModelQuantityFields.name
-        //     .toLowerCase()
-        //     .trim()
-        //     .replace(/\s\s+/g, " ");
-        // } catch (err) {
-        //   res.status(400).json({
-        //     message: `Error happened on server: "${err}" `
-        //   });
-        // }
+        if (newQuantity < 0) {
+          return res.status(400).json({
+            message: "Insufficient  quantity.",
+          });
+        }
 
-        const updatedTabletModelQuantity = queryCreator(tabletModelQuantityFields);
+        if (newQuantity === 0) {
+          TabletModel.findOneAndUpdate(
+            { id: tabletModelQuantity.refModel },
+            { $set: { "colors.$[color].capacities.$[capacity].available": false } },
+            {
+              arrayFilters: [{ "color.capacities.productId": productId }, { "capacity.productId": productId }],
+              new: true,
+            },
+          ).then(tabModel => {
+            console.log(tabModel);
+          });
 
-        tabletModelQuantity.findOneAndUpdate(
-          { _id: req.params.id },
-          { $set: updatedtabletModelQuantity },
-          { new: true }
+          TabletProduct.findOneAndUpdate(
+            { id: productId },
+            { $set: { available: false } },
+            { new: true },
+          ).then(product => {
+            console.log(product);
+          })
+        }
+
+        if ((tabletModelQuantity.quantity === 0) && (newQuantity > 0)) {
+          // notify product subscribers
+          TabletModel.findOneAndUpdate(
+            { id: tabletModelQuantity.refModel },
+            { $set: { "colors.$[color].capacities.$[capacity].available": true } },
+            {
+              arrayFilters: [{ "color.capacities.productId": productId }, { "capacity.productId": productId }],
+              new: true,
+            },
+          ).then(tabModel => {
+            console.log(tabModel);
+          });
+
+          TabletProduct.findOneAndUpdate(
+            { id: productId },
+            { $set: { available: true } },
+            { new: true },
+          ).then(product => {
+            console.log(product);
+          })
+        }
+
+
+        tabletModelsQuantity.findOneAndUpdate(
+          { productId: productId },
+          { $set: { quantity: newQuantity } },
+          { new: true },
         )
           .then(tabletModelQuantity => res.json(tabletModelQuantity))
           .catch(err =>
             res.status(400).json({
-              message: `Error happened on server: "${err}" `
-            })
+              message: `Error happened on server: "${err}" `,
+            }),
           );
       }
     })
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `
-      })
+        message: `Error happened on server: "${err}" `,
+      }),
     );
+};
+
+exports.updateTabletModelQuantityAsAdmin = (req, res, next) => {
+  updateTabletModelQuantity(req, res, next);
+};
+
+exports.updateTabletModelQuantityCheckout = (req, res, next) => {
+  updateTabletModelQuantity(req, res, next);
 };
 
 exports.getTabletModelsQuantity = async (req, res, next) => {
@@ -111,7 +140,7 @@ exports.getTabletModelsQuantity = async (req, res, next) => {
 
   if (q) {
     mongooseQuery.name = {
-      $regex: new RegExp(q, "i")
+      $regex: new RegExp(q, "i"),
     };
   }
 
@@ -126,40 +155,28 @@ exports.getTabletModelsQuantity = async (req, res, next) => {
     res.json({ data: foundTabletModelsQuantity, total });
   } catch (err) {
     res.status(400).json({
-      message: `Error happened on server: "${err}" `
+      message: `Error happened on server: "${err}" `,
     });
   }
 };
 
 exports.getTabletModelsQuantityById = (req, res, next) => {
-  console.log(req.params);
-  console.log('I am here');
   const { id } = req.params;
-  console.log(id);
-  // if (!isValidMongoId(id)) {
-  //   console.log('I am still here?');
-  //   return res.status(400).json({
-  //     message: `tabletModelQuantity with id "${id}" is not valid`
-  //   });
-  // }
-  // tabletModelsQuantity.findById(id)
-  tabletModelsQuantity.findOne({id: id})
+
+  tabletModelsQuantity.findOne({ id: id })
     .then(tabletModelQuantity => {
-      console.log('tabletModelQuantity', tabletModelQuantity);
       if (!tabletModelQuantity) {
-        console.log('Surprise, surprise, motherfuckers');
         res.status(400).json({
-          message: `tabletModelQuantity with itemNo ${req.params.id} is not found`
+          message: `tabletModelQuantity with itemNo ${req.params.id} is not found`,
         });
       } else {
-        console.log('else', tabletModelQuantity);
         res.json(tabletModelQuantity);
       }
     })
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `
-      })
+        message: `Error happened on server: "${err}" `,
+      }),
     );
 };
 

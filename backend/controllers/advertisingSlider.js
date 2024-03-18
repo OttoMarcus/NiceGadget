@@ -88,8 +88,6 @@ exports.getAdvertisingSliders = async (req, res, next) => {
     const startPage = Number(req.query.startPage);
     const sort = req.query.sort;
     const q = typeof req.query.q === "string" ? req.query.q.trim() : null;
-    console.log("simple222222")
-    console.log(req.query)
 
 
     if (q) {
@@ -99,7 +97,6 @@ exports.getAdvertisingSliders = async (req, res, next) => {
     }
 
     try {
-        console.log("THIS:" ,mongooseQuery)
         const foundMobileModels = await advertisingSlider.find(mongooseQuery)
             .skip(startPage * perPage - perPage)
             .limit(perPage)
@@ -117,7 +114,6 @@ exports.getAdvertisingSliders = async (req, res, next) => {
 
 exports.getAdvertisingSliderById = (req, res, next) => {
     const { id } = req.params;
-    console.log("simple")
 
     advertisingSlider.findById(id)
         .then(advertisingSlider => {

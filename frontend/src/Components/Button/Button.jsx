@@ -32,6 +32,7 @@ Button.propTypes = {
 Button.defaultProps = {
   onClick: () => {},
   backgroundColor: "#905BFF",
+  disabled: false,
 };
 
 export default Button;

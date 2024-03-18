@@ -33,6 +33,7 @@ const tabletModels = require('./routes/tabletModels');
 const tabletProducts = require('./routes/tabletProducts');
 const tabletModelQuantity = require('./routes/tabletModelsQuantity')
 const advertisingSlider = require('./routes/advertisingSlider')
+const faqchat = require('./routes/faqchat')
 
 
 const app = express();
@@ -83,6 +84,8 @@ app.use('/api/tablets-models', tabletModels);
 app.use('/api/tablets', tabletProducts);
 app.use('/api/tablets-models-quantity', tabletModelQuantity);
 app.use('/api/advertising-sliders', advertisingSlider);
+app.use('/api/faq', faqchat);
+
 
 
 // Server static assets if in production

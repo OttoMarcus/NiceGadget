@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Style from "./AccessoriesPage.module.scss";
 import CardAccessories from "../../Components/CardAccessories/CardAccessories";
+
 const Accessories = () => {
   const [accessoriesArr, setAccessoriesArr] = useState();
 
@@ -14,7 +15,6 @@ const Accessories = () => {
         return response.json();
       })
       .then(({ data }) => {
-        console.log(data);
         setAccessoriesArr(data);
       })
       .catch((error) => {
@@ -36,7 +36,7 @@ const Accessories = () => {
         {accessoriesArr &&
           accessoriesArr.map((accessory, index) => (
             <CardAccessories
-              key={index}
+              key={accessory._id}
               name={accessory.name}
               color={accessory.color}
               price={accessory.price}
@@ -45,6 +45,7 @@ const Accessories = () => {
               size={accessory.size}
               available={accessory.available}
               id={accessory.id}
+              _id={accessory._id}
               category={accessory.category}
             />
           ))}

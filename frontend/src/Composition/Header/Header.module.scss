@@ -182,11 +182,13 @@ header:before {
   align-items: center;
   justify-content: space-around;
   position: relative;
+  top: 32px;
   z-index: 2;
-  height: 60%;
+  height: 70%;
 
   @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
     flex-direction: row;
+    top: 0;
   }
 
   > * {
