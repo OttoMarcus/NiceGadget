@@ -7,6 +7,8 @@ const rand = uniqueRandom(0, 999999);
 const queryCreator = require("../commonHelpers/queryCreator");
 const filterParser = require("../commonHelpers/filterParser");
 const _ = require("lodash");
+const MobileModel = require("../models/MobileModel");
+const MobileProduct = require("../models/MobileProduct");
 
 // exports.addImages = (req, res, next) => {
 //   if (req.files.length > 0) {
@@ -47,27 +49,23 @@ exports.addMobileProduct = (req, res, next) => {
     .then(mobileProduct => res.json(mobileProduct))
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `
-      })
+        message: `Error happened on server: "${err}" `,
+      }),
     );
 };
 
 exports.updateMobileProduct = (req, res, next) => {
   const { id } = req.params;
-  if (!isValidMongoId(id)) {
-    return res.status(400).json({
-      message: `mobileProduct with id "${id}" is not valid`
-    });
-  }
+  const { discount } = req.body;
 
-  mobileProducts.findById( id)
+  mobileProducts.findOne({ id })
     .then(mobileProduct => {
       if (!mobileProduct) {
         return res.status(400).json({
-          message: `mobileProduct with id "${req.params.id}" is not found.`
+          message: `mobileProduct with id "${id}" is not found.`,
         });
       } else {
-        const mobileProductFields = _.cloneDeep(req.body);
+        // const mobileProductFields = _.cloneDeep(req.body);
 
         // try {
         //   mobileProductFields.name = mobileProductFields.name
@@ -80,25 +78,37 @@ exports.updateMobileProduct = (req, res, next) => {
         //   });
         // }
 
-        const updatedMobileProduct = queryCreator(mobileProductFields);
+        // const updatedMobileProduct = queryCreator(mobileProductFields);
 
-        mobileProduct.findOneAndUpdate(
-          { _id: req.params.id },
-          { $set: updatedMobileProduct },
-          { new: true }
+        MobileModel.findOneAndUpdate(
+          { id: mobileProduct.refModel.modelId },
+          { $set: { "colors.$[color].capacities.$[capacity].discount": discount } },
+          {
+            arrayFilters: [{ "color.capacities.productId": id }, { "capacity.productId": id }],
+            new: true,
+          },
+        ).then(mobModel => {
+          console.log(mobModel);
+        });
+
+        MobileProduct.findOneAndUpdate(
+          { id: id },
+          { $set: { discount: discount } },
+          { new: true },
         )
           .then(mobileProduct => res.json(mobileProduct))
           .catch(err =>
             res.status(400).json({
-              message: `Error happened on server: "${err}" `
-            })
+              message: `Error happened on server: "${err}" `,
+            }),
           );
+
       }
     })
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `
-      })
+        message: `Error happened on server: "${err}" `,
+      }),
     );
 };
 
@@ -118,11 +128,7 @@ exports.getMobileProducts = async (req, res, next) => {
   const startPage = Number(req.query.startPage);
 
   const sort = req.query.sort;
-
-  console.log('Sort in mobileProducts is');
-  console.log(sort);
-
-  const q = typeof req.query.q === 'string' ? req.query.q.trim() : null
+  const q = typeof req.query.q === "string" ? req.query.q.trim() : null;
 
   if (q) {
     mongooseQuery.name = {
@@ -134,7 +140,7 @@ exports.getMobileProducts = async (req, res, next) => {
     const foundMobileProducts = await mobileProducts.find(mongooseQuery)
       .skip(startPage * perPage - perPage)
       .limit(perPage)
-      .sort(sort === "all"? null : sort)
+      .sort(sort);
 
     const total = await mobileProducts.countDocuments(mongooseQuery);
     const totalPages = Math.ceil(total / perPage);
@@ -142,7 +148,49 @@ exports.getMobileProducts = async (req, res, next) => {
     res.json({ data: foundMobileProducts, total, totalPages });
   } catch (err) {
     res.status(400).json({
-      message: `Error happened on server: "${err}" `
+      message: `Error happened on server: "${err}" `,
+    });
+  }
+};
+
+exports.getMobileProductsTotal = async (req, res, next) => {
+  const mongooseQuery = filterParser(req.query);
+  const q = typeof req.query.q === "string" ? req.query.q.trim() : null;
+
+  if (q) {
+    mongooseQuery.name = {
+      $regex: new RegExp(q, "i"),
+    };
+  }
+
+  try {
+    const total = await mobileProducts.countDocuments(mongooseQuery);
+
+    res.json({ data: foundMobileProducts, total });
+  } catch (err) {
+    res.status(400).json({
+      message: `Error happened on server: "${err}" `,
+    });
+  }
+};
+
+exports.getMobileProductsTotal = async (req, res, next) => {
+  const mongooseQuery = filterParser(req.query);
+  const q = typeof req.query.q === "string" ? req.query.q.trim() : null;
+
+  if (q) {
+    mongooseQuery.name = {
+      $regex: new RegExp(q, "i"),
+    };
+  }
+
+  try {
+    const total = await mobileProducts.countDocuments(mongooseQuery);
+
+    res.json({ total });
+  } catch (err) {
+    res.status(400).json({
+      message: `Error happened on server: "${err}" `,
     });
   }
 };
@@ -150,21 +198,43 @@ exports.getMobileProducts = async (req, res, next) => {
 exports.getMobileProductById = (req, res, next) => {
   const { id } = req.params;
 
-  mobileProducts.findOne({ id: id })
-    .then(mobileProduct => {
-      if (!mobileProduct) {
-        res.status(404).json({
-          message: `mobileProduct with id "${id}" is not found`
+  if (!isValidMongoId(id)) {
+    return res.status(400).json({
+      message: `Product with id "${id}" is not valid`,
+    });
+  }
+  mobileProducts.findById(id)
+    .then(product => {
+      if (!product) {
+        res.status(400).json({
+          message: `Product with itemNo ${req.params.itemNo} is not found`,
         });
       } else {
-        res.json(mobileProduct);
+        res.json(product);
       }
     })
     .catch(err =>
-      res.status(500).json({
-        message: `Error happened on server: "${err}"`
-      })
+      res.status(400).json({
+        message: `Error happened on server: "${err}" `,
+      }),
     );
+};
+
+exports.getMobileProductByCustomId = (req, res, next) => {
+  const { id } = req.params;
+
+  mobileProducts.findOne({ id })
+    .then(product => {
+      if (!product) {
+        return res.status(404).json({
+          message: `Product with productId ${id} is not found`,
+        });
+      }
+      res.json(product);
+    })
+    .catch(err => res.status(500).json({
+      message: `Error happened on server: "${err}"`,
+    }));
 };
 
 

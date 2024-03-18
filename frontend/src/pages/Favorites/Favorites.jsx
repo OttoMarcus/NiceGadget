@@ -21,8 +21,9 @@ const Favorites = () => {
               return (
                 <div key={el.id}>
                   <Card
-                    key={el?.id}
+                    key={el?._id}
                     id={el.id}
+                    _id={el._id}
                     picture={el.picture}
                     name={el.name}
                     price={el.price}

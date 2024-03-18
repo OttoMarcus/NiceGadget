@@ -132,10 +132,7 @@ exports.getTabletModels = async (req, res, next) => {
 };
 
 exports.getTabletModelById = (req, res, next) => {
-  console.log(req.params);
-  console.log('I am here');
   const { id } = req.params;
-  console.log(id);
   // if (!isValidMongoId(id)) {
   //   console.log('I am still here?');
   //   return res.status(400).json({
@@ -145,14 +142,11 @@ exports.getTabletModelById = (req, res, next) => {
   // tabletModels.findById(id)
   tabletModels.findOne({id: id})
     .then(tabletModel => {
-      console.log('tabletModel', tabletModel);
       if (!tabletModel) {
-        console.log('Surprise, surprise, motherfuckers');
         res.status(400).json({
           message: `tabletModel with itemNo ${req.params.id} is not found`
         });
       } else {
-        console.log('else', tabletModel);
         res.json(tabletModel);
       }
     })

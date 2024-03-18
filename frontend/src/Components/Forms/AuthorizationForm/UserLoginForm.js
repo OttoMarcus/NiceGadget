@@ -2,10 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Formik, Form } from "formik";
 import validationSchema from "./validationSchema.js";
 import Input from "../CustomInput.js";
+import Button from "../../Button/Button.jsx";
 import styles from "./UserLoginForm.module.scss";
 import { addUser } from "../../../store/user/userSlice.js";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  synchronizeCartWithServer,
+  fetchCartItems,
+} from "../../../API/cartAPI.js";
 
 const UserLoginForm = () => {
   const [regStatus, setRegStatus] = useState("");
@@ -17,16 +22,17 @@ const UserLoginForm = () => {
   useEffect(() => {
     setRegStatus("");
     setRegError("");
-    // setCredentials({})
   }, []);
 
   const onAuthRedirect = () => {
-    const prevPath = sessionStorage.getItem("prevPath");
-    console.log(prevPath);
-    if (prevPath) {
-      navigate(prevPath);
-    } else {
-      navigate("/");
+    if (localStorage.getItem("token")) {
+      const prevPath = sessionStorage.getItem("prevPath");
+      console.log(prevPath);
+      if (prevPath) {
+        navigate(prevPath);
+      } else {
+        navigate("/");
+      }
     }
   };
 
@@ -46,45 +52,69 @@ const UserLoginForm = () => {
           },
           body: JSON.stringify(userCredentials),
         }
-      );
-      const result = await response.json();
-      localStorage.setItem("token", result.token);
-      console.log(result.token);
+      ).then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          setRegError("Check your credentials");
+          setRegStatus("failed");
+          throw new Error("Login failed. Check your credentials");
+        }
+      });
 
-      return result.token;
+      // const result = await response.json();
+      localStorage.setItem("token", response.token);
+      console.log(response.token);
+
+      return response.token;
     } catch (error) {
+      // setRegStatus("failed")
+      // setRegError(error)
       console.error(error.message);
     }
   };
 
   const getUserOnLogin = async (token) => {
-    const user = await fetch(`http://localhost:4000/api/customers/customer`, {
-      method: "GET",
-      headers: {
-        Authorization: token,
-      },
-    }).then((res) => res.json());
-    console.log(user);
-    dispatch(addUser(user));
-    return user;
+    try {
+      const user = await fetch(`http://localhost:4000/api/customers/customer`, {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+      }).then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Failed to get user info");
+        }
+      });
+
+      console.log(user);
+      dispatch(addUser(user));
+      return user;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const onSubmit = async (values, actions) => {
     setRegStatus("");
     setRegError("");
-    console.log(values);
+
     const userCredentials = {
       loginOrEmail: values.loginOrEmail,
       password: values.password,
     };
 
-    console.log(userCredentials);
-
     const token = await loginUser(userCredentials);
-    await getUserOnLogin(token);
+    if (token) {
+      await getUserOnLogin(token);
+      dispatch(synchronizeCartWithServer());
+      dispatch(fetchCartItems());
+    } else {
+      return;
+    }
     onAuthRedirect();
-    // navigate(-1)
-    // return user
   };
 
   return (
@@ -95,8 +125,8 @@ const UserLoginForm = () => {
     >
       {({ isValid }) => {
         return (
-          <Form>
-            <h2>Login Form</h2>
+          <Form className={styles.loginForm}>
+            <h1 className={styles.formHeader}>Login Form</h1>
             <Input
               type="text"
               name="loginOrEmail"
@@ -111,10 +141,24 @@ const UserLoginForm = () => {
               label="Password"
               placeholder="Password"
             />
-            <button type="submit" disabled={!isValid}>
-              Sign up
+            <div className={styles.submitContainer}>
+              {/* <button type="submit" disabled={!isValid} className={styles.submitBtn}>
+                Log In
+              </button> */}
+              <Button type="submit" disabled={!isValid}>
+                Log In
+              </Button>
+              <p className={styles.alternateAction}>
+                <span className={styles.or}>or </span>
+                <Link to="/registration" className={styles.registerLink}>
+                  REGISTER
+                </Link>
+              </p>
+            </div>
+            {/* <button type="submit" disabled={!isValid}>
+              Log In
             </button>
-            <Link to="/registration">LogIn</Link>
+            <Link to="/registration">Register</Link> */}
             {regStatus === "failed" && (
               <p className={styles.submitStatus}>Login {regStatus}!</p>
             )}

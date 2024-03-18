@@ -11,6 +11,10 @@
   border: none;
   margin-right: 8px;
 
+  &:disabled {
+    background-color: $ui-color-gray-surface-1;
+  }
+
   &:hover {
     background-color: $ui-color-primary-accent-hover;
   }

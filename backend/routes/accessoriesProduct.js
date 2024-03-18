@@ -10,6 +10,8 @@ const {
     updateAccessoryProduct,
     getAccessoryProducts,
     getAccessoryProductById,
+    getAccessoryProductsTotal,
+    getAccessoryProductByCustomId,
 } = require("../controllers/accessoriesProduct");
 
 
@@ -73,9 +75,16 @@ router.put(
 // @access  Public
 router.get("/", getAccessoryProducts);
 
+router.get("/total", getAccessoryProductsTotal);
+
 // @route   GET /accessoriesProducts/:id
 // @desc    GET existing accessory product by id
 // @access  Public
 router.get("/:id", getAccessoryProductById);
+
+// @route   GET /mobileProducts/byProductId/:productId
+// @desc    GET existing mobileProduct by custom productId
+// @access  Public
+router.get("/byProductId/:id", getAccessoryProductByCustomId);
 
 module.exports = router;

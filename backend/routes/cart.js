@@ -7,21 +7,41 @@ const {
   createCart,
   updateCart,
   addProductToCart,
+  increaseCartProductQuantity,
   decreaseCartProductQuantity,
   deleteCart,
   deleteProductFromCart,
-  getCart
+  getCart,
+  synchronizeCart,
 } = require("../controllers/cart");
+
+// @route   PUT /cart/synchronize
+// @desc    Synchronize cart items for authenticated user
+// @access  Private
+router.put(
+  "/sync", 
+  passport.authenticate("jwt", { session: false }), 
+  synchronizeCart
+);
 
 // @route   POST /cart
 // @desc    Create cart
 // @access  Private
-router.post("/", passport.authenticate("jwt", { session: false }), createCart);
+router.post(
+  "/", 
+  passport.authenticate("jwt", { session: false }), 
+  createCart
+);
 
 // @route   PUT /cart
 // @desc    Update cart when adding / deleting products in cart
 // @access  Private
-router.put("/", passport.authenticate("jwt", { session: false }), updateCart);
+router.put(
+  "/", 
+  passport.authenticate("jwt", { session: false }), 
+  updateCart
+);
+
 
 // @route   PUT /cart/:productId
 // @desc    Add one product to cart
@@ -53,15 +73,37 @@ router.delete(
 // @route   DELETE /cart/product/:productId
 // @desc    Delete one product from cart
 // @access  Private
-router.delete(
-  "/product/:productId",
+// router.delete(
+//   "/product/:productId",
+//   passport.authenticate("jwt", { session: false }),
+//   decreaseCartProductQuantity
+// );
+
+// @route   PUT /cart/decrease/:productId
+// @desc    Decrease quantity of a product in the cart by one
+// @access  Private
+router.put(
+  "/decrease/:productId",
   passport.authenticate("jwt", { session: false }),
   decreaseCartProductQuantity
+);
+
+// @route   PUT /cart/decrease/:productId
+// @desc    Decrease quantity of a product in the cart by one
+// @access  Private
+router.put(
+  "/increase/:productId",
+  passport.authenticate("jwt", { session: false }),
+  increaseCartProductQuantity
 );
 
 // @route   GET /cart
 // @desc    Get cart for customer
 // @access  Private
-router.get("/", passport.authenticate("jwt", { session: false }), getCart);
+router.get(
+  "/", 
+  passport.authenticate("jwt", { session: false }), 
+  getCart
+);
 
 module.exports = router;

@@ -1,65 +1,33 @@
 import React from "react";
-import Button from "../Button/Button";
 import Favorite from "../Favorite/Favorite";
 import styles from "./Card.module.scss";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
-import { addToCart } from "../../store/cart/cartSlice";
+import CartButton from "../CartButton/CartButton";
 
 const Card = (props) => {
   const {
     id,
-    picture,
     name,
+    picture,
     price,
+    color,
     screen,
     capacity,
     ram,
     refModel,
-    color,
     category,
-    available,
   } = props;
+
   const dispatch = useDispatch();
   const favor = useSelector((state) => state.favorite.favorites);
   const some = favor.some((el) => id === el.id);
+
+  const productToAdd = { ...props };
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const inCart = cartItems.some((item) => item.id === id);
-  const isAvailable = available;
-  const backgroundColorBtn = isAvailable && !inCart ? "#905BFF" : "#323542";
-
-  const handleAddToCart = (event) => {
-    event.stopPropagation();
-    event.preventDefault();
-    if (id) {
-      const productDetailsUrl = `http://localhost:4000/api/${category}/${id}`;
-
-      fetch(productDetailsUrl)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((productDetails) => {
-          dispatch(
-            addToCart({
-              ...productDetails,
-            })
-          );
-        })
-        .catch((error) => {
-          console.error(
-            "There was a problem with your fetch operation:",
-            error
-          );
-        });
-    } else {
-      console.error("Product ID is missing");
-    }
-  };
+  const inCart = cartItems.some((item) => item.productId === productToAdd._id);
 
   return (
     <Link
@@ -87,16 +55,12 @@ const Card = (props) => {
           </li>
         </ul>
         <div className={styles.buttonWrapper}>
-          <Button
-            onClick={(event) => handleAddToCart(event)}
-            backgroundColor={backgroundColorBtn}
-          >
-            {isAvailable
-              ? inCart
-                ? "Added to cart"
-                : "Add to cart"
-              : "Notify when available"}
-          </Button>
+          <CartButton
+            productToAdd={productToAdd}
+            isAvailable={productToAdd?.available}
+            inCart={inCart}
+            fetchDetailsUrl={null}
+          />
 
           <Favorite
             click={(event) => {
@@ -113,21 +77,23 @@ const Card = (props) => {
 };
 
 Card.propTypes = {
-  id: PropTypes.string.isRequired,
+  _id: PropTypes.string,
   picture: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  category: PropTypes.string,
+  color: PropTypes.string.isRequired,
+  available: PropTypes.bool.isRequired,
+
+  id: PropTypes.string,
   screen: PropTypes.string,
   capacity: PropTypes.string,
   ram: PropTypes.string,
   brandNew: PropTypes.bool,
   refModel: PropTypes.shape({
-    modelId: PropTypes.string.isRequired,
-    modelName: PropTypes.string.isRequired,
-  }).isRequired,
-  color: PropTypes.string.isRequired,
-  available: PropTypes.bool.isRequired,
-  category: PropTypes.string,
+    modelId: PropTypes.string,
+    modelName: PropTypes.string,
+  }),
 };
 
 export default Card;

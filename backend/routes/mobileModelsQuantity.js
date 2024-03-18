@@ -7,7 +7,8 @@ const fse = require("fs-extra");
 //Import controllers
 const {
   addMobileModelQuantity,
-  updateMobileModelQuantity,
+  updateMobileModelQuantityAsAdmin,
+  updateMobileModelQuantityCheckout,
   getMobileModelsQuantity,
   getMobileModelsQuantityById,
 } = require("../controllers/mobileModelsQuantity");
@@ -71,9 +72,18 @@ router.post(
 // @desc    Update existing product
 // @access  Private
 router.put(
-  "/:id",
+  "/admin/:productId",
   passport.authenticate("jwt-admin", { session: false }),
-  updateMobileModelQuantity
+  updateMobileModelQuantityAsAdmin
+);
+
+// @route   PUT /mobileModelsQuantity/:id
+// @desc    Update existing product
+// @access  user
+router.put(
+  "/checkout/:productId",
+  passport.authenticate("jwt", { session: false }),
+  updateMobileModelQuantityCheckout
 );
 
 // @route   GET /mobileModelsQuantity

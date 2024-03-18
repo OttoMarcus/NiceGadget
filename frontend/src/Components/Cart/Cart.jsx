@@ -1,23 +1,25 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import styles from "./Cart.module.scss";
-import { fetchCartItems } from "../../store/cart/cartSlice";
 import CartItem from "../CartItem/CartItem";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
 
-  console.log(cartItems);
-
-  useEffect(() => {
-    dispatch(fetchCartItems()).catch((error) =>
-      console.error("Failed to fetch cart items:", error)
-    );
-  }, [dispatch]);
+  const calculateTotalItemPrice = (price, discount = 0, quantity) => {
+    return Math.round(price * (1 - discount) * quantity);
+  };
 
   const totalCartPrice = cartItems.reduce(
-    (total, item) => total + item.totalItemPrice,
+    (total, item) =>
+      total +
+      calculateTotalItemPrice(item.price, item.discount, item.cartQuantity),
+    0
+  );
+
+  const totalItemsQuantity = cartItems.reduce(
+    (total, item) => total + item.cartQuantity,
     0
   );
 
@@ -31,7 +33,7 @@ const Cart = () => {
         <>
           <div className={styles.cartItemsList}>
             {cartItems.map((item) => (
-              <CartItem key={item.id} item={item} />
+              <CartItem key={item._id} item={item} />
             ))}
           </div>
 
@@ -40,9 +42,11 @@ const Cart = () => {
               <p className={styles.totalCartPrice}>{`$${totalCartPrice}`}</p>
               <p
                 className={styles.totalItemsQuantity}
-              >{`Total for ${cartItems.length} items`}</p>
+              >{`Total for ${totalItemsQuantity} items`}</p>
             </div>
-            <button className={styles.checkoutBtn}>Checkout</button>
+            <Link to="/buyform" className={styles.checkoutBtn}>
+              Checkout
+            </Link>
           </div>
         </>
       )}
