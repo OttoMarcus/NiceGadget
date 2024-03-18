@@ -49,6 +49,28 @@ const UserRegForm = () => {
     }
   };
 
+  // const loginUser = async (userCredentials) => {
+  //   try {
+  //     const response = await fetch(
+  //       `http://localhost:4000/api/customers/login`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify(userCredentials),
+  //       }
+  //     );
+  //     const result = await response.json();
+  //     localStorage.setItem("token", result.token);
+  //     console.log(result.token);
+
+  //     return result.token;
+  //   } catch (error) {
+  //     console.error(error.message);
+  //   }
+  // };
+
   const loginUser = async (userCredentials) => {
     try {
       const response = await fetch(
@@ -60,12 +82,21 @@ const UserRegForm = () => {
           },
           body: JSON.stringify(userCredentials),
         }
-      );
-      const result = await response.json();
-      localStorage.setItem("token", result.token);
-      console.log(result.token);
+      ).then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          setRegError("Check your credentials");
+          setRegStatus("failed");
+          throw new Error("Login failed. Check your credentials");
+        }
+      });
 
-      return result.token;
+      // const result = await response.json();
+      localStorage.setItem("token", response.token);
+      console.log(response.token);
+
+      return response.token;
     } catch (error) {
       console.error(error.message);
     }
@@ -83,13 +114,25 @@ const UserRegForm = () => {
     return user;
   };
 
-  const onAuthRedirect = () => {
-    const prevPath = sessionStorage.getItem("prevPath");
+  // const onAuthRedirect = () => {
+  //   const prevPath = sessionStorage.getItem("prevPath");
 
-    if (prevPath) {
-      navigate(prevPath);
-    } else {
-      navigate("/");
+  //   if (prevPath) {
+  //     navigate(prevPath);
+  //   } else {
+  //     navigate("/");
+  //   }
+  // };
+
+  const onAuthRedirect = () => {
+    if (localStorage.getItem("token")) {
+      const prevPath = sessionStorage.getItem("prevPath");
+      console.log(prevPath);
+      if (prevPath) {
+        navigate(prevPath);
+      } else {
+        navigate("/");
+      }
     }
   };
 
@@ -105,9 +148,17 @@ const UserRegForm = () => {
     console.log(result);
     console.log(userCredentials);
 
-    const token = await loginUser(userCredentials);
-    await getUserOnLogin(token);
-    onAuthRedirect();
+    if (result._id) {
+      const token = await loginUser(userCredentials);
+      if (token) {
+        await getUserOnLogin(token);
+        onAuthRedirect();
+      }
+    }
+
+    // const token = await loginUser(userCredentials);
+    // await getUserOnLogin(token);
+    // onAuthRedirect();
 
     // return user
   };
@@ -132,7 +183,7 @@ const UserRegForm = () => {
       {({ isValid }) => {
         return (
           <Form className={styles.regForm}>
-            <h1>Registration Form</h1>
+            <h1 className={styles.formHeader}>Registration Form</h1>
             <Input
               type="text"
               name="firstName"
@@ -165,24 +216,39 @@ const UserRegForm = () => {
               placeholder="Password"
             />
             <Input type="date" name="birthDate" label="Birth Date" />
-            <div>
-              <p>Gender</p>
-              <Input
+            <div className={styles.genderContainer}>
+              <p className={styles.genderTitle}>Gender</p>
+              <input
+                className={styles.genderOption}
                 type="radio"
                 name="gender"
-                label="Male"
                 value="male"
-                // className={styles.customInput}
               />
-              <Input type="radio" name="gender" label="Female" value="female" />
+              <label htmlFor="gender" className={styles.inputLabel}>
+                Male
+              </label>
+              <input
+                className={styles.genderOption}
+                type="radio"
+                name="gender"
+                value="female"
+              />
+              <label htmlFor="gender" className={styles.inputLabel}>
+                Female
+              </label>
             </div>
             <div className={styles.submitContainer}>
               {/* <button type="submit" disabled={!isValid} className={styles.submitBtn}>
                 Register
               </button> */}
-              <Button disabled={!isValid}>Register</Button>
-              <p>
-                or go to <Link to="/login">Log In</Link>
+              <Button type="submit" disabled={!isValid}>
+                Register
+              </Button>
+              <p className={styles.alternateAction}>
+                <span className={styles.or}>or </span>
+                <Link className={styles.loginLink} to="/login">
+                  LOG IN
+                </Link>
               </p>
             </div>
             {regStatus === "failed" && (

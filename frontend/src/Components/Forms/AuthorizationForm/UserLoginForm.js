@@ -18,16 +18,17 @@ const UserLoginForm = () => {
   useEffect(() => {
     setRegStatus("");
     setRegError("");
-    // setCredentials({})
   }, []);
 
   const onAuthRedirect = () => {
-    const prevPath = sessionStorage.getItem("prevPath");
-    console.log(prevPath);
-    if (prevPath) {
-      navigate(prevPath);
-    } else {
-      navigate("/");
+    if (localStorage.getItem("token")) {
+      const prevPath = sessionStorage.getItem("prevPath");
+      console.log(prevPath);
+      if (prevPath) {
+        navigate(prevPath);
+      } else {
+        navigate("/");
+      }
     }
   };
 
@@ -47,33 +48,56 @@ const UserLoginForm = () => {
           },
           body: JSON.stringify(userCredentials),
         }
-      );
-      const result = await response.json();
-      localStorage.setItem("token", result.token);
-      console.log(result.token);
+      ).then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          setRegError("Check your credentials");
+          setRegStatus("failed");
+          throw new Error("Login failed. Check your credentials");
+        }
+      });
 
-      return result.token;
+      // const result = await response.json();
+      localStorage.setItem("token", response.token);
+      console.log(response.token);
+
+      return response.token;
     } catch (error) {
+      // setRegStatus("failed")
+      // setRegError(error)
       console.error(error.message);
     }
   };
 
   const getUserOnLogin = async (token) => {
-    const user = await fetch(`http://localhost:4000/api/customers/customer`, {
-      method: "GET",
-      headers: {
-        Authorization: token,
-      },
-    }).then((res) => res.json());
-    console.log(user);
-    dispatch(addUser(user));
-    return user;
+    try {
+      const user = await fetch(`http://localhost:4000/api/customers/customer`, {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+      }).then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Failed to get user info");
+        }
+      });
+
+      console.log(user);
+      dispatch(addUser(user));
+      return user;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const onSubmit = async (values, actions) => {
     setRegStatus("");
     setRegError("");
     console.log(values);
+
     const userCredentials = {
       loginOrEmail: values.loginOrEmail,
       password: values.password,
@@ -82,10 +106,12 @@ const UserLoginForm = () => {
     console.log(userCredentials);
 
     const token = await loginUser(userCredentials);
-    await getUserOnLogin(token);
+    if (token) {
+      await getUserOnLogin(token);
+    } else {
+      return;
+    }
     onAuthRedirect();
-    // navigate(-1)
-    // return user
   };
 
   return (
@@ -97,7 +123,7 @@ const UserLoginForm = () => {
       {({ isValid }) => {
         return (
           <Form className={styles.loginForm}>
-            <h1>Login Form</h1>
+            <h1 className={styles.formHeader}>Login Form</h1>
             <Input
               type="text"
               name="loginOrEmail"
@@ -114,11 +140,16 @@ const UserLoginForm = () => {
             />
             <div className={styles.submitContainer}>
               {/* <button type="submit" disabled={!isValid} className={styles.submitBtn}>
-                Register
+                Log In
               </button> */}
-              <Button disabled={!isValid}>Log In</Button>
-              <p>
-                or <Link to="/registration">Register</Link>
+              <Button type="submit" disabled={!isValid}>
+                Log In
+              </Button>
+              <p className={styles.alternateAction}>
+                <span className={styles.or}>or </span>
+                <Link to="/registration" className={styles.registerLink}>
+                  REGISTER
+                </Link>
               </p>
             </div>
             {/* <button type="submit" disabled={!isValid}>

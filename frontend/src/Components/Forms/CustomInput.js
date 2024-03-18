@@ -32,7 +32,7 @@ const Input = (props) => {
             : `${styles.hidden}`
         }
       >
-        {meta.error}
+        {meta.error ? meta.error : " "}
       </p>
     </div>
   );

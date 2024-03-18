@@ -2,8 +2,13 @@
 @import "../../styles/abstracts/mixins";
 
 .inputWrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
+  min-height: 80px;
+  // padding-bottom: 25px;
+  margin-bottom: 15px;
+  // box-sizing: border-box;
 }
 
 .inputLabel {
@@ -11,10 +16,17 @@
 }
 
 .inputField {
-  padding: 5px;
+  width: 100%;
+  min-width: 280px;
+  font-size: $ui-font-size-body-text;
+  padding: 7px;
 }
 
 .inputErrMsg {
+  font-family: $ui-font-family-regular;
+  font-size: $ui-font-size-body-text;
+  position: absolute;
+  top: 60px;
   color: red;
 }
 

@@ -11,8 +11,6 @@ import { useLocation } from "react-router-dom";
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
-  // console.log(location.pathname);
-
 
   useEffect(() => {
     const getUserOnLogin = async (token) => {
@@ -24,8 +22,9 @@ function App() {
       }).then((res) => res.json());
       console.log(user);
       dispatch(addUser(user));
-    }
+    };
     const token = localStorage?.getItem("token");
+    console.log(token);
     if (token) {
       getUserOnLogin(token);
     } else {
