@@ -1,11 +1,85 @@
-.customInput {
-  color: white;
+@import "../../../styles/abstracts/variables";
+@import "../../../styles/abstracts/mixins";
+
+.regForm {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px 30px 60px 30px;
+  margin-bottom: 30px;
+  width: 450px;
+  border: 1px solid $ui-color-gray-elements;
+  background-color: $ui-color-gray-surface-1;
+}
+
+.formHeader {
+  @include h2;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.genderContainer {
+  margin-bottom: 20px;
+
+  .genderTitle {
+    @include body-text;
+    margin-bottom: 5px;
+  }
+
+  .genderOption {
+    height: 15px;
+    width: 15px;
+    margin-right: 5px;
+  }
+
+  .inputLabel {
+    @include body-text;
+    margin-right: 15px;
+  }
+}
+
+// .submitBtn {
+//   margin: 0 auto;
+//   padding: 5px 15px;
+//   color: black;
+//   border-color: black;
+//   border-radius: 5px;
+//   background-color: white;
+// }
+
+.alternateAction {
+  margin: 10px 0px;
+  text-align: center;
+  .or {
+    font-size: $ui-font-size-buttons;
+  }
+  .loginLink {
+    font-size: $ui-font-size-buttons;
+    color: $ui-color-gray-white;
+    text-decoration: underline;
+  }
 }
 
 .submitStatus {
+  position: absolute;
+  bottom: 45px;
+  right: 50%;
+  transform: translateX(50%);
+  font-family: $ui-font-family-bold;
+  font-size: $ui-font-size-body-text;
+  text-align: center;
   color: red;
 }
 
 .submitError {
+  position: absolute;
+  width: 100%;
+  bottom: 25px;
+  right: 50%;
+  transform: translateX(50%);
+  font-family: $ui-font-family-bold;
+  font-size: $ui-font-size-body-text;
+  text-align: center;
   color: red;
 }
