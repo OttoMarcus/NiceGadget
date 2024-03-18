@@ -55,13 +55,11 @@ header:before {
 .ok {
   position: absolute;
   top: 0;
-  right: 20px;
+  right: 16px;
   width: 11px;
   height: 15px;
 
   @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
-    top: 0;
-    right: 23px;
     width: 13px;
     height: 18px;
   }
