@@ -3,6 +3,9 @@ const Product = require('../models/Product');
 const queryCreator = require('../commonHelpers/queryCreator');
 const _ = require('lodash');
 const Cart = require("../models/Cart");
+const MobileProducts = require("../models/MobileProduct");
+const TabletProducts = require("../models/TabletProduct");
+const AccessoriesProducts = require("../models/AccessoriesProducts");
 
 
 exports.createWishlist = (req, res, next) => {
@@ -292,4 +295,42 @@ exports.getWishlist = (req, res, next) => {
             message: `Error happened on server: "${err}" `,
         }));
 };
+exports.synchronizeWishlist= async (req, res, next) => {
+    const localProducts = req.body.products || [];
+    const userId = req.body.id;
 
+    try {
+        let wishlist = await Wishlist.findOne({ id: userId });
+        if (!wishlist) {
+            if (localProducts.length > 0) {
+                wishlist = new Wishlist({
+                    id: userId,
+                    products: localProducts
+                });
+            } else {
+                return res.json({ message: "No wishlist exists and no products provided for synchronization." });
+            }
+        }
+const allProducts = [...wishlist.products , ...localProducts]
+        let idSet = new Set();
+        let uniqueObjects = [];
+
+        allProducts.forEach(obj => {
+            if (!idSet.has(obj.id)) {
+                idSet.add(obj.id);
+                uniqueObjects.push(obj);
+            }
+        });
+        wishlist.products = uniqueObjects;
+        if (wishlist.products.length > 0) {
+            await wishlist.save();
+            res.json(wishlist);
+        } else {
+            // Удаление wishlist, если он пуст после синхронизации
+            await Wishlist.deleteOne({ id: userId });
+            res.json({ message: "wishlist is empty after synchronization." });
+        }
+    } catch (error) {
+        res.status(500).json({ message: `Error happened on server: "${error}"` });
+    }
+};

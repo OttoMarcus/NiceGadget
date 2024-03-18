@@ -9,7 +9,8 @@ const {
   addProductToWishlist,
   deleteWishlist,
   deleteProductFromWishlish,
-  getWishlist
+  getWishlist,
+    synchronizeWishlist
 } = require("../controllers/wishlist");
 
 // @route   POST /wishlist
@@ -25,10 +26,16 @@ router.post(
 // @desc    Update wishlist when adding / deleting products in wishlist
 // @access  Private
 router.put(
+    "/synchronize",
+    // passport.authenticate("jwt", { session: false }),
+    synchronizeWishlist
+);
+router.put(
   "/",
   // passport.authenticate("jwt", { session: false }),
   updateWishlist
 );
+
 
 // @route   PUT /wishlist/:productId
 // @desc    Add one product to wishlist

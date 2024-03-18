@@ -45,6 +45,45 @@ export const fetchTodos = createAsyncThunk(
     }
   }
 );
+
+export const synchronizeFavor = createAsyncThunk(
+  "todos/synchronizeFavor",
+  async function () {
+    try {
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("user");
+      const favor = localStorage.getItem("favorites") || [];
+      if (userId && token) {
+        const token = localStorage.getItem("token");
+        const response = await fetch(
+          `http://localhost:4000/api/wishlist/.synchronize`,
+          {
+            method: `PUT`,
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+            body: JSON.stringify({ id: userId, products: favor }),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        localStorage.setItem(`favorites`, []);
+
+        const data = await response.json();
+        console.log(`synchronizeFavor synchronizeFavor`, data);
+        // console.log(`data fetchChangefetchChangefetchChangefetchChange`, data);
+        return data;
+      }
+    } catch (error) {
+      console.warn("Error updating wishlist:", error);
+      throw error; // Перебрасываем ошибку, чтобы ее можно было обработать в UI
+    }
+  }
+);
+
 export const fetchChange = createAsyncThunk(
   "todos/fetchChange",
   async function ({ user, ...products }) {
