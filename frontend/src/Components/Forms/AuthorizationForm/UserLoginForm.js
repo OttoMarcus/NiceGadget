@@ -116,7 +116,7 @@ const UserLoginForm = () => {
       dispatch(synchronizeCartWithServer());
       dispatch(fetchCartItems());
       dispatch(synchronizeFavor());
-      dispatch(fetchTodos());
+      // dispatch(fetchTodos());
     } else {
       return;
     }
