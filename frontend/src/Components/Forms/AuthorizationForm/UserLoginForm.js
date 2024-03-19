@@ -11,10 +11,7 @@ import {
   synchronizeCartWithServer,
   fetchCartItems,
 } from "../../../API/cartAPI.js";
-import {
-  synchronizeFavor,
-  fetchTodos,
-} from "../../../store/favorites/favoriteSlice";
+import { synchronizeFavor } from "../../../store/favorites/favoriteSlice";
 
 const UserLoginForm = () => {
   const [regStatus, setRegStatus] = useState("");
