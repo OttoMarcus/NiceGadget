@@ -8,13 +8,7 @@ import Breadcrumbs from "./Composition/Breadcrumbs/Breadcrumbs";
 import { addUser, removeUser } from "./store/user/userSlice";
 import { useLocation } from "react-router-dom";
 import { fetchCartItems } from "./API/cartAPI";
-import {
-  fetchTodos,
-  fetchChange,
-  SetFavor,
-  featchClearFavor,
-  synchronizeFavor,
-} from "./store/favorites/favoriteSlice";
+import { fetchTodos, fetchChange } from "./store/favorites/favoriteSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -74,7 +68,6 @@ function App() {
   }, [dispatch, token, user, isAuthorized]);
   useEffect(() => {
     user && dispatch(fetchChange({ user, favor }));
-    user && favor.length === 0 && dispatch(featchClearFavor(user));
     !token && localStorage.setItem("favorites", JSON.stringify(favor));
   }, [favor, dispatch, token, user]);
   return (
