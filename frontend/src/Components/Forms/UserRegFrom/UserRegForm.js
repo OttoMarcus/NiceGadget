@@ -7,7 +7,6 @@ import styles from "./UserRegForm.module.scss";
 import { addUser } from "../../../store/user/userSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { CreateFavorUser } from "../../../API/favorietesAPI";
 
 const UserRegForm = () => {
   const [regStatus, setRegStatus] = useState("");
