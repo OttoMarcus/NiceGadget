@@ -13,7 +13,6 @@ import { fetchTodos, fetchChange } from "./store/favorites/favoriteSlice";
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
-  // console.log(location.pathname);
 
   useEffect(() => {
     const getUserOnLogin = async (token) => {
@@ -23,7 +22,6 @@ function App() {
           Authorization: token,
         },
       }).then((res) => res.json());
-      // console.log(user);
       dispatch(addUser(user));
     };
     const token = localStorage?.getItem("token");
@@ -50,10 +48,7 @@ function App() {
         dispatch(fetchTodos(user, isAuthorized));
       }, 100);
   }, [dispatch, token, user, isAuthorized]);
-  // useEffect(() => {
-  //   token && dispatch(fetchChange({ user, favor }));
-  //   !token && localStorage.setItem("favorites", JSON.stringify(favor));
-  // }, [favor , dispatch ]);
+
   useEffect(() => {
     const effect = () => {
       token && dispatch(fetchChange({ user, favor }));
