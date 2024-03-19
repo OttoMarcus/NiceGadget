@@ -16,6 +16,7 @@ import SearchForm from "../../Components/SearchForm/SearchForm";
 import { fetchCartItems } from "../../API/cartAPI";
 
 import styles from "./Header.module.scss";
+import { SetFavor } from "../../store/favorites/favoriteSlice";
 
 const Header = () => {
   const [isBurgerActive, setIsBurgerActive] = useState(false);
@@ -34,6 +35,8 @@ const Header = () => {
 
   const logOutUser = () => {
     dispatch(removeUser());
+    dispatch(SetFavor([]));
+    localStorage.removeItem("user");
     localStorage.removeItem("token");
 
     dispatch(fetchCartItems());
