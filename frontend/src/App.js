@@ -50,11 +50,18 @@ function App() {
         dispatch(fetchTodos(user, isAuthorized));
       }, 100);
   }, [dispatch, token, user, isAuthorized]);
+  // useEffect(() => {
+  //   token && dispatch(fetchChange({ user, favor }));
+  //   !token && localStorage.setItem("favorites", JSON.stringify(favor));
+  // }, [favor , dispatch ]);
   useEffect(() => {
-    user && dispatch(fetchChange({ user, favor }));
-    // user && favor.length === 0 && dispatch(featchClearFavor(user));
-    !token && localStorage.setItem("favorites", JSON.stringify(favor));
-  }, [favor, dispatch, token, user]);
+    const effect = () => {
+      token && dispatch(fetchChange({ user, favor }));
+      !token && localStorage.setItem("favorites", JSON.stringify(favor));
+    };
+    effect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [favor, dispatch]);
   return (
     <div className="app-wrapper">
       <Header />
