@@ -11,6 +11,9 @@ const userSlice = createSlice({
   reducers: {
     addUser: (state, action) => {
       state.user = action.payload;
+      // console.log(`avtorizavtorizavtorizavtorizavtorizavtorizavtorizavtoriz`)
+      // console.log(state.user)
+      localStorage.setItem("user", JSON.stringify(state.user._id));
       state.isAuthorized = Object?.keys(state.user).length === 0 ? false : true;
     },
 
