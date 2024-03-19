@@ -76,7 +76,7 @@ function App() {
     user && dispatch(fetchChange({ user, favor }));
     user && favor.length === 0 && dispatch(featchClearFavor(user));
     !token && localStorage.setItem("favorites", JSON.stringify(favor));
-  }, [favor]);
+  }, [favor, dispatch, token, user]);
   return (
     <div className="app-wrapper">
       <Header />
