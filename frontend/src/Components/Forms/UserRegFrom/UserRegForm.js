@@ -7,6 +7,10 @@ import styles from "./UserRegForm.module.scss";
 import { addUser } from "../../../store/user/userSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  synchronizeCartWithServer,
+  fetchCartItems,
+} from "../../../API/cartAPI.js";
 
 const UserRegForm = () => {
   const [regStatus, setRegStatus] = useState("");
@@ -153,6 +157,8 @@ const UserRegForm = () => {
 
     const token = await loginUser(userCredentials);
     await getUserOnLogin(token);
+    dispatch(synchronizeCartWithServer());
+    dispatch(fetchCartItems());
     onAuthRedirect();
 
     // return user

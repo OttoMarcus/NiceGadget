@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import RootRouters from "./routers/RootRouters";
 import Header from "./Composition/Header/Header";
@@ -13,6 +13,7 @@ import { fetchTodos, fetchChange } from "./store/favorites/favoriteSlice";
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const prevPathRef = useRef(location.pathname);
 
   useEffect(() => {
     const getUserOnLogin = async (token) => {
@@ -30,12 +31,27 @@ function App() {
     } else {
       dispatch(removeUser());
     }
-  }, [location.pathname, dispatch]);
+  }, [prevPathRef, dispatch]);
   //location.pathname, dispatch
 
   useEffect(() => {
     dispatch(fetchCartItems());
   }, [dispatch]);
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      const currentPath = location.pathname;
+      const prevPath = prevPathRef.current;
+
+      if (!["/login", "/registration"].includes(currentPath)) {
+        sessionStorage.setItem("prevPath", prevPath);
+      }
+
+      prevPathRef.current = currentPath;
+    };
+
+    handleRouteChange();
+  }, [location.pathname]);
 
   const user = useSelector((state) => state.user.user);
 
