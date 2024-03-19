@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchTodos = createAsyncThunk(
   "todos/fetchTodos",
-  async function (user, isAuthorized) {
+  async function () {
     try {
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("user");
@@ -202,7 +202,7 @@ const favoriteSlice = createSlice({
         state.status = "loading";
         state.error = null;
       })
-      .addCase(fetchChange.fulfilled, (state, action) => {
+      .addCase(fetchChange.fulfilled, (state) => {
         state.status = "resolve";
         // state.favorites = action.payload
       })
