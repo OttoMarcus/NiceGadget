@@ -51,7 +51,7 @@
     width: 66px;
     height: 66px;
     object-position: center;
-    object-fit: cover;
+    object-fit: contain;
   }
 }
 
@@ -79,15 +79,28 @@
     @include flex-center;
     width: 32px;
     height: 32px;
+    border: 1px solid $ui-color-gray-elements;
 
-    // &:default {
-    //     background-color: $ui-color-gray-selected-surface-2;
-    // }
+    &:hover {
+      background-color: $ui-color-gray-icons-placeholders;
+    }
 
-    // &:hover {
-    //     background-color: $ui-color-gray-icons-placeholders;
-    // }
+    &:disabled {
+      cursor: auto;
+
+      & svg path {
+        fill: $ui-color-gray-icons-placeholders;
+      }
+
+      &:hover {
+        background-color: $ui-color-gray-surface-1;
+      }
+    }
   }
+}
+
+.counterPlus {
+  background-color: $ui-color-gray-selected-surface-2;
 }
 
 .quantity {
@@ -100,6 +113,9 @@
 }
 
 .totalItemPrice {
+  @include flex-kit(flex-end);
+  width: 80px;
+  gap: 8px;
   @include h2;
   color: $ui-color-gray-white;
 }

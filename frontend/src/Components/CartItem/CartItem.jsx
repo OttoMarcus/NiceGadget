@@ -83,11 +83,15 @@ const CartItem = ({ item }) => {
       </div>
       <div className={styles.counterPriceWrapper}>
         <div className={styles.counter}>
-          <button onClick={handleDecrement}>
+          <button
+            className={styles.counterMinus}
+            onClick={handleDecrement}
+            disabled={item.cartQuantity <= 1}
+          >
             <Minus />
           </button>
           <span className={styles.quantity}>{item.cartQuantity}</span>
-          <button onClick={handleIncrement}>
+          <button className={styles.counterPlus} onClick={handleIncrement}>
             <Plus />
           </button>
         </div>

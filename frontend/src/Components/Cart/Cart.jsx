@@ -44,6 +44,7 @@ const Cart = () => {
                 className={styles.totalItemsQuantity}
               >{`Total for ${totalItemsQuantity} items`}</p>
             </div>
+            <div className={styles.divider}></div>
             <Link to="/buyform" className={styles.checkoutBtn}>
               Checkout
             </Link>

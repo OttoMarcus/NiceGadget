@@ -7,11 +7,13 @@ import LogOut from "../../Components/Icons/LogOut";
 import User from "../../Components/Icons/User";
 import Favorite from "../../Components/Icons/Heart";
 import Cart from "../../Components/Icons/Cart";
+import CounterIcon from "../../Components/Icons/CounterIcon";
 import Logo from "../../Components/Icons/Logo";
 import Ok from "../../Components/Icons/Ok";
 import scrollUp from "../../helpers/scrollUp";
 import LogIn from "../../Components/Icons/LogIn";
 import SearchForm from "../../Components/SearchForm/SearchForm";
+import { fetchCartItems } from "../../API/cartAPI";
 
 import styles from "./Header.module.scss";
 
@@ -33,6 +35,8 @@ const Header = () => {
   const logOutUser = () => {
     dispatch(removeUser());
     localStorage.removeItem("token");
+
+    dispatch(fetchCartItems());
     // navigate("/login");
   };
 
@@ -61,6 +65,12 @@ const Header = () => {
       scrollUp();
     }
   };
+
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const cartItemsQuantity = cartItems.reduce(
+    (total, item) => total + item.cartQuantity,
+    0
+  );
 
   return (
     <header>
@@ -206,7 +216,16 @@ const Header = () => {
               <Favorite some={false} />
             </Link>
             <Link className={styles.mainLinks} to="/cart">
-              <Cart />
+              <div className={styles.cartIconWrapper}>
+                <Cart />
+                <div
+                  className={styles.cartCounterWrapper}
+                  style={{ display: cartItemsQuantity > 0 ? "flex" : "none" }}
+                >
+                  <CounterIcon />
+                  <span className={styles.cartBadge}>{cartItemsQuantity}</span>
+                </div>
+              </div>
             </Link>
           </div>
         </nav>
