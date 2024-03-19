@@ -11,17 +11,14 @@ import { fetchCartItems } from "./API/cartAPI";
 import {
   fetchTodos,
   fetchChange,
-  SetFavor,
   featchClearFavor,
 } from "./store/favorites/favoriteSlice";
-import { CreateFavorUser } from "./API/favorietesAPI";
-import { setUser } from "@sentry/react";
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
   // console.log(location.pathname);
-  const [User, SetUser] = useState();
+
   useEffect(() => {
     const getUserOnLogin = async (token) => {
       const user = await fetch(`http://localhost:4000/api/customers/customer`, {
@@ -47,13 +44,9 @@ function App() {
   }, [dispatch]);
 
   const user = useSelector((state) => state.user.user);
-  useEffect(() => {
-    SetUser(user);
-  }, []);
 
   const isAuthorized = useSelector((state) => state.user.isAuthorized);
   const token = localStorage?.getItem("token");
-  const products = localStorage.getItem("favorites");
   const favor = useSelector((state) => state.favorite.favorites);
   useEffect(() => {
     token &&
