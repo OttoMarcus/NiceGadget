@@ -114,20 +114,16 @@ exports.updateMobileProduct = (req, res, next) => {
 
 exports.getMobileProducts = async (req, res, next) => {
 
-  console.log('req.query in mobileProducts is');
-  console.log(req.query);
+  // console.log('req.query in mobileProducts is');
+  // console.log(req.query);
 
   const mongooseQuery = filterParser(req.query);
-
-  console.log('mongooseQuery in mobileProducts is');
-  console.log(mongooseQuery);
-
-  
-
   const perPage = Number(req.query.perPage);
   const startPage = Number(req.query.startPage);
 
   const sort = req.query.sort;
+  // console.log('sort is:');
+  // console.log(sort);
   const q = typeof req.query.q === "string" ? req.query.q.trim() : null;
 
   if (q) {
@@ -140,12 +136,14 @@ exports.getMobileProducts = async (req, res, next) => {
     const foundMobileProducts = await mobileProducts.find(mongooseQuery)
       .skip(startPage * perPage - perPage)
       .limit(perPage)
+      .sort({ available: -1 })
       .sort(sort);
 
     const total = await mobileProducts.countDocuments(mongooseQuery);
+    const totalMatching = foundMobileProducts.length;
     const totalPages = Math.ceil(total / perPage);
 
-    res.json({ data: foundMobileProducts, total, totalPages });
+    res.json({ data: foundMobileProducts, total, totalMatching, totalPages });
   } catch (err) {
     res.status(400).json({
       message: `Error happened on server: "${err}" `,

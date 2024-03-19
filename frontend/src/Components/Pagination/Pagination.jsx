@@ -7,15 +7,16 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
   return (
     <div>
-      {pages.map((page) => (
-        <button
-          key={page}
-          disabled={currentPage === page}
-          onClick={() => onPageChange(page)}
-        >
-          {page}
-        </button>
-      ))}
+      {totalPages > 1 &&
+        pages.map((page) => (
+          <button
+            key={page}
+            disabled={currentPage === page}
+            onClick={() => onPageChange(page)}
+          >
+            {page}
+          </button>
+        ))}
     </div>
   );
 };

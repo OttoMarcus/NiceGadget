@@ -11,8 +11,10 @@ const Phones = () => {
   const [phonesArr, setPhonesArr] = useState();
 
   const [sortValue, setSortValue] = useState("");
+  const [totalNumber, setTotalNumber] = useState();
   const [cardsPerPageValue, setCardsPerPageValue] = useState(8);
   const [totalPages, setTotalPages] = useState();
+  const [totalMatching, setTotalMatching] = useState();
   const [currentPage, setCurrentPage] = useState(1);
 
   const location = useLocation();
@@ -36,8 +38,17 @@ const Phones = () => {
     setCardsPerPageValue(preferencesPerPage);
 
     const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams) {
+      console.log("urlParams present!");
+    }
+
     const sortParam = urlParams.get("sort");
+    const perPageParam = urlParams.get("perPage");
+    const currentPageParam = urlParams.get("startPage");
+
     const defaultSortValue = "-brandNew";
+    const reqPerPage = perPageParam ? perPageParam : preferencesPerPage;
+
     if (sortParam) {
       setSortValue(sortParam);
     } else {
@@ -48,8 +59,8 @@ const Phones = () => {
     }
 
     const fetchURL = sortParam
-      ? `http://localhost:4000/api/phones?sort=${sortParam}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
-      : `http://localhost:4000/api/phones?sort=${defaultSortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`;
+      ? `http://localhost:4000/api/phones?sort=${sortParam}&perPage=${reqPerPage}&startPage=${currentPage}`
+      : `http://localhost:4000/api/phones?sort=${defaultSortValue}&perPage=${reqPerPage}&startPage=${currentPage}`;
 
     fetch(fetchURL)
       .then((res) => {
@@ -58,8 +69,11 @@ const Phones = () => {
         }
         return res.json();
       })
-      .then(({ data }) => {
+      .then(({ data, totalPages, totalMatching, total }) => {
         setPhonesArr(data);
+        setTotalNumber(total);
+        setTotalPages(totalPages);
+        setTotalMatching(totalMatching);
       })
       .catch((error) => {
         console.error("There was a problem with your fetch operation:", error);
@@ -82,8 +96,11 @@ const Phones = () => {
         }
         return res.json();
       })
-      .then(({ data }) => {
+      .then(({ data, totalPages, totalMatching, total }) => {
         setPhonesArr(data);
+        setTotalNumber(total);
+        setTotalPages(totalPages);
+        setTotalMatching(totalMatching);
       })
       .catch((error) => {
         console.error("There was a problem with your fetch operation:", error);
@@ -107,14 +124,21 @@ const Phones = () => {
         }
         return res.json();
       })
-      .then(({ data }) => {
+      .then(({ data, totalPages, totalMatching, total }) => {
         setPhonesArr(data);
+        setTotalNumber(total);
+        setTotalPages(totalPages);
+        setTotalMatching(totalMatching);
       })
       .catch((error) => {
         console.error("There was a problem with your fetch operation:", error);
       });
 
     setCardsPerPageValue(newPerPageValue);
+  };
+
+  const handlePageChange = async (page) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -136,6 +160,11 @@ const Phones = () => {
             <Card key={item.id} category={typeModel} {...item} />
           ))}
       </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </article>
   );
 };
