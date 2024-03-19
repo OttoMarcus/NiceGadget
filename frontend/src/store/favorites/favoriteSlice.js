@@ -34,7 +34,7 @@ export const fetchTodos = createAsyncThunk(
       }
     } catch (error) {
       console.warn("Error fetching wishlist:", error);
-      throw error; // Перебрасываем ошибку, чтобы ее можно было обработать в UI
+      throw error;
     }
   }
 );
