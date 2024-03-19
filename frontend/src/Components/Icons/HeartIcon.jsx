@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-const Heart = ({ some }) => {
+
+const HeartIcon = ({ some }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,8 +20,8 @@ const Heart = ({ some }) => {
     </svg>
   );
 };
-Heart.propTypes = {
+HeartIcon.propTypes = {
   some: PropTypes.bool.isRequired,
 };
 
-export default Heart;
+export default HeartIcon;

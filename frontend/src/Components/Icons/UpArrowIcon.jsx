@@ -1,6 +1,6 @@
 import React from "react";
 
-const UpArrow = () => {
+const UpArrowIcon = () => {
   return (
     <svg
       width="16"
@@ -22,4 +22,4 @@ const UpArrow = () => {
   );
 };
 
-export default UpArrow;
+export default UpArrowIcon;

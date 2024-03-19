@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import styles from "./Slider.module.scss";
-import LeftArrow from "../Icons/LeftArrow";
-import RightArrow from "../Icons/RightArrow";
+import LeftArrowIcon from "../Icons/LeftArrowIcon";
+import RightArrowIcon from "../Icons/RightArrowIcon";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Star from "./Star/Star";
@@ -119,11 +119,11 @@ const Slider = () => {
       {sliders && sliders.length > 0 && sliders[currentIndex] && (
         <div className={styles.sliderWrapper}>
           <div className={styles.leftArrow} onClick={prevSlide}>
-            <LeftArrow />
+            <LeftArrowIcon />
           </div>
           <div>{renderSliderContent(sliders[currentIndex])}</div>
           <div className={styles.rightArrow} onClick={nextSlide}>
-            <RightArrow />
+            <RightArrowIcon />
           </div>
         </div>
       )}

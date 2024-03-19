@@ -9,8 +9,8 @@ import { sendAuthorizedRequest } from "../../helpers/sendRequest";
 import ButtonProfile from "../../Components/Profile/ButtonProfile/ButtonProfile";
 import { ReactComponent as UserIcon } from "./UserImg/profile-user.svg";
 import { ReactComponent as ChangePass } from "./UserImg/change-password-icon.svg";
-import UpArrow from "../../Components/Icons/UpArrow";
-import RightArrow from "../../Components/Icons/RightArrow";
+import UpArrowIcon from "../../Components/Icons/UpArrowIcon";
+import RightArrowIcon from "../../Components/Icons/RightArrowIcon";
 
 const User = () => {
   const { user } = useSelector((state) => state.user);
@@ -67,7 +67,7 @@ const User = () => {
             onClick={toggleSection}
           >
             User profile information
-            {isArrowTurnDownVisible ? <UpArrow /> : <RightArrow />}
+            {isArrowTurnDownVisible ? <UpArrowIcon /> : <RightArrowIcon />}
           </h3>
           {isOpen && (
             <Formik

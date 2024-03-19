@@ -1,6 +1,6 @@
 import React from "react";
 
-const Ok = () => {
+const OkIcon = () => {
   return (
     <svg
       width="100%"
@@ -38,4 +38,4 @@ const Ok = () => {
   );
 };
 
-export default Ok;
+export default OkIcon;

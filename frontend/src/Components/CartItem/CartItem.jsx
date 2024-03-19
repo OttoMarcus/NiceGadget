@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "./CartItem.module.scss";
 import { Link } from "react-router-dom";
-import DeleteIcon from "../Icons/Close";
-import Minus from "../Icons/Minus";
-import Plus from "../Icons/Plus";
+import DeleteIcon from "../Icons/CloseIcon";
+import MinusIcon from "../Icons/MinusIcon";
+import PlusIcon from "../Icons/PlusIcon";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import {
@@ -88,11 +88,11 @@ const CartItem = ({ item }) => {
             onClick={handleDecrement}
             disabled={item.cartQuantity <= 1}
           >
-            <Minus />
+            <MinusIcon />
           </button>
           <span className={styles.quantity}>{item.cartQuantity}</span>
           <button className={styles.counterPlus} onClick={handleIncrement}>
-            <Plus />
+            <PlusIcon />
           </button>
         </div>
         <h2 className={styles.totalItemPrice}>{`$${totalItemPrice}`}</h2>

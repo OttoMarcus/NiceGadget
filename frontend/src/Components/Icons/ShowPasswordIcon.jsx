@@ -1,6 +1,6 @@
 import React from "react";
 
-const ShowPassword = () => {
+const ShowPasswordIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -16,4 +16,4 @@ const ShowPassword = () => {
   );
 };
 
-export default ShowPassword;
+export default ShowPasswordIcon;

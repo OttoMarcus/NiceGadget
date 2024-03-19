@@ -1,6 +1,6 @@
 import React from "react";
 
-const Registration = () => {
+const RegistrationIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -17,4 +17,4 @@ const Registration = () => {
   );
 };
 
-export default Registration;
+export default RegistrationIcon;

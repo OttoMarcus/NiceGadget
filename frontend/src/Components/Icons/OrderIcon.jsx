@@ -1,6 +1,6 @@
 import React from "react";
 
-const Order = () => {
+const OrderIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -16,4 +16,4 @@ const Order = () => {
   );
 };
 
-export default Order;
+export default OrderIcon;

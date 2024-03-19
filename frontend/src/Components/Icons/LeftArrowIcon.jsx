@@ -1,6 +1,6 @@
 import React from "react";
 
-const LeftArrow = () => {
+const LeftArrowIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,4 +19,4 @@ const LeftArrow = () => {
   );
 };
 
-export default LeftArrow;
+export default LeftArrowIcon;

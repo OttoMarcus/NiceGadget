@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const User = ({ fill = "white" }) => {
+const UserIcon = ({ fill = "white" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -18,7 +18,7 @@ const User = ({ fill = "white" }) => {
   );
 };
 
-User.propTypes = {
+UserIcon.propTypes = {
   fill: PropTypes.string,
 };
-export default User;
+export default UserIcon;
