@@ -11,9 +11,9 @@ import Logo from "../../Components/Icons/Logo";
 import Ok from "../../Components/Icons/Ok";
 import scrollUp from "../../helpers/scrollUp";
 import LogIn from "../../Components/Icons/LogIn";
+import SearchForm from "../../Components/SearchForm/SearchForm";
 
 import styles from "./Header.module.scss";
-import SearchForm from "../../Components/SearchForm/SearchForm";
 
 const Header = () => {
   const [isBurgerActive, setIsBurgerActive] = useState(false);
@@ -142,7 +142,7 @@ const Header = () => {
               Cart
             </Link>
 
-            <SearchForm />
+            <SearchForm toggleBurger={toggleBurgerActive} />
           </div>
 
           <div className={styles.auth}>

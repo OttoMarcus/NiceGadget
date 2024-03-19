@@ -12,10 +12,6 @@
   gap: 8px;
   background-color: $ui-color-gray-surface-1;
 
-  .imageWrapper {
-    background-color: $ui-color-gray-black-background;
-  }
-
   .cardImg {
     @include flex-center;
     width: 100%;
@@ -24,10 +20,11 @@
     position: relative;
     overflow: hidden;
     user-select: none;
+    background-color: $ui-color-gray-black-background;
 
     & > img {
-      max-width: 100%;
-      max-height: 100%;
+      max-width: 90%;
+      max-height: 90%;
       width: auto;
       height: auto;
       position: absolute;

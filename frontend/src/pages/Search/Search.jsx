@@ -57,6 +57,7 @@ const Search = () => {
             }
             return <Card key={item.id} {...item} />;
           })}
+        {total === 0 && <h2 className={styles.nothingFound}>Nothing found</h2>}
       </div>
     </article>
   );
