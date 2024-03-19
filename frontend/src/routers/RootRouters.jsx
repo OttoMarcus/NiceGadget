@@ -16,6 +16,8 @@ import Right from "../pages/Right/Right";
 import Contacts from "../pages/Contacts/Contacts";
 import User from "../pages/User/User";
 import Search from "../pages/Search/Search";
+import UserOrderHistory from "../pages/User/UserOrderHistory/UserOrderHistory";
+import UserUpdatePass from "../pages/User/UserUpdatePass/UserUpdatePass";
 import BuyForm from "../Components/BuyForm/BuyForm";
 
 const RootRouters = () => {
@@ -37,7 +39,10 @@ const RootRouters = () => {
       <Route path="/tablets/:modelId" element={<SingleProductPage />} />
       <Route path="/registration" element={<Registration />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/user" element={<User />} />
+      <Route path="/user" element={<User />}>
+        <Route path="/user/order-history" element={<UserOrderHistory />} />
+      </Route>
+      <Route path="/update-password" element={<UserUpdatePass />} />
       <Route path="/right" element={<Right />} />
       <Route path="/search" element={<Search />} />
       <Route path="/contacts" element={<Contacts />} />

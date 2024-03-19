@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import CardAccessories from "../../Components/Card/CardAccessories";
+import CardAccessories from "../../Components/CardAccessories/CardAccessories";
 
 import styles from "./AccessoriesPage.module.scss";
 

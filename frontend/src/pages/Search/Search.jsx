@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Card from "../../Components/Card/Card";
-import CardAccessories from "../../Components/Card/CardAccessories";
+import CardAccessories from "../../Components/CardAccessories/CardAccessories";
 import styles from "./Search.module.scss";
 
 const Search = () => {
