@@ -117,34 +117,34 @@ export const fetchChange = createAsyncThunk(
   }
 );
 
-export const featchClearFavor = createAsyncThunk(
-  "todos/featchClearFavor",
-  async function (user) {
-    try {
-      const token = localStorage.getItem("token");
-      if (token) {
-        const response = await fetch(`http://localhost:4000/api/wishlist`, {
-          method: `PUT`,
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-          body: JSON.stringify({ id: user._id, products: [] }),
-        });
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const data = await response.json();
-        return data.products;
-      }
-    } catch (error) {
-      console.warn("Error updating wishlist:", error);
-      throw error;
-    }
-  }
-);
+// export const featchClearFavor = createAsyncThunk(
+//   "todos/featchClearFavor",
+//   async function (user) {
+//     try {
+//       const token = localStorage.getItem("token");
+//       if (token) {
+//         const response = await fetch(`http://localhost:4000/api/wishlist`, {
+//           method: `PUT`,
+//           headers: {
+//             "Content-Type": "application/json",
+//             Authorization: token,
+//           },
+//           body: JSON.stringify({ id: user._id, products: [] }),
+//         });
+//
+//         if (!response.ok) {
+//           throw new Error("Network response was not ok");
+//         }
+//
+//         const data = await response.json();
+//         return data.products;
+//       }
+//     } catch (error) {
+//       console.warn("Error updating wishlist:", error);
+//       throw error;
+//     }
+//   }
+// );
 const currentLocalInitialState = localStorage.getItem("favorites");
 const parsedFavorites = currentLocalInitialState
   ? JSON.parse(currentLocalInitialState)
@@ -209,21 +209,21 @@ const favoriteSlice = createSlice({
       .addCase(fetchChange.rejected, (state, action) => {
         state.status = "rejected";
         state.error = action.error.message;
-      })
-      .addCase(featchClearFavor.pending, (state) => {
-        state.status = "loading";
-        state.error = null;
-      })
-      .addCase(featchClearFavor.fulfilled, (state, action) => {
-        state.status = "resolve";
-        if (action.payload?.products) {
-          state.favorites = action.payload?.products;
-        }
-      })
-      .addCase(featchClearFavor.rejected, (state, action) => {
-        state.status = "rejected";
-        state.error = action.error.message;
       });
+    // .addCase(featchClearFavor.pending, (state) => {
+    //   state.status = "loading";
+    //   state.error = null;
+    // })
+    // .addCase(featchClearFavor.fulfilled, (state, action) => {
+    //   state.status = "resolve";
+    //   if (action.payload?.products) {
+    //     state.favorites = action.payload?.products;
+    //   }
+    // })
+    // .addCase(featchClearFavor.rejected, (state, action) => {
+    //   state.status = "rejected";
+    //   state.error = action.error.message;
+    // });
   },
 });
 
