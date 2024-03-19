@@ -6,16 +6,10 @@ export const fetchTodos = createAsyncThunk(
     try {
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("user");
-
       const resultSlice = userId.slice(1, -1);
-      // console.log(`token111111111111111111111111111111`, token);
-      // console.log(`isAuthorized11111111111111111111111`, isAuthorized);
-      // console.log(`user1111111111111111111111111111111`, user);
       console.log(`token`, token);
       console.log(userId);
       if (token && resultSlice) {
-        //token && user._id
-        //  console.log(`fetchTodos ruseruser `, user)
         const response = await fetch(`http://localhost:4000/api/wishlist`, {
           method: "GET",
           headers: {
@@ -36,7 +30,6 @@ export const fetchTodos = createAsyncThunk(
         }
         let ret = data.products || [];
         console.log(`ret ret `, ret);
-        // localStorage.setItem("favorites", JSON.stringify(ret));
         return ret;
       }
     } catch (error) {
