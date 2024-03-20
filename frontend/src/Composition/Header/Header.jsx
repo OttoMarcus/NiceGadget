@@ -68,7 +68,8 @@ const Header = () => {
       scrollUp();
     }
   };
-
+  const favor = useSelector((state) => state.favorite?.favorites);
+  console.log(`favor header `, favor);
   const cartItems = useSelector((state) => state.cart.cartItems);
   const cartItemsQuantity = cartItems.reduce(
     (total, item) => total + item.cartQuantity,
@@ -216,8 +217,18 @@ const Header = () => {
               </Link>
             )}
             <Link className={styles.mainLinks} to="/favorites">
-              <FavoriteIcon some={false} />
+              <div className={styles.FavorWrapper}>
+                <FavoriteIcon some={false} />
+                <div
+                  className={styles.wrapperCount}
+                  style={{ display: favor.length > 0 ? "flex" : "none" }}
+                >
+                  <CounterIcon />
+                  <span className={styles.FavorQuantity}>{favor.length}</span>
+                </div>
+              </div>
             </Link>
+
             <Link className={styles.mainLinks} to="/cart">
               <div className={styles.cartIconWrapper}>
                 <CartIcon />
