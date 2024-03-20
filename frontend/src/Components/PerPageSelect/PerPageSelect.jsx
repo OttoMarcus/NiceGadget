@@ -127,7 +127,7 @@ Options:
 
 PerPageSelect.propTypes = {
   handlePerPageChange: PropTypes.func.isRequired,
-  cardsPerPageValue: PropTypes.string.isRequired,
+  cardsPerPageValue: PropTypes.number.isRequired,
 };
 
 export default PerPageSelect;

@@ -134,13 +134,17 @@ exports.getMobileProducts = async (req, res, next) => {
 
   try {
     const foundMobileProducts = await mobileProducts.find(mongooseQuery)
+      .sort({ available: -1 })
+      .sort(sort)
       .skip(startPage * perPage - perPage)
       .limit(perPage)
-      .sort({ available: -1 })
-      .sort(sort);
+      // .sort({ available: -1 })
+      // .sort(sort)
+    
+    const totalMatching = foundMobileProducts.length;
 
     const total = await mobileProducts.countDocuments(mongooseQuery);
-    const totalMatching = foundMobileProducts.length;
+    // const totalMatching = foundMobileProducts.length;
     const totalPages = Math.ceil(total / perPage);
 
     res.json({ data: foundMobileProducts, total, totalMatching, totalPages });
