@@ -4,6 +4,8 @@
 
 .paginationContainer {
   position: relative;
+  display: flex;
+  justify-content: center;
   // width: 248px;
   height: 32px;
   margin: 0 auto;
@@ -11,7 +13,7 @@
   // overflow: hidden;
 
   .prevPage {
-    position: absolute;
+    // position: absolute;
     width: 32px;
     height: 32px;
     margin-right: 12px;
@@ -19,7 +21,7 @@
   }
 
   .nextPage {
-    position: absolute;
+    // position: absolute;
     width: 32px;
     height: 32px;
     margin-left: 12px;

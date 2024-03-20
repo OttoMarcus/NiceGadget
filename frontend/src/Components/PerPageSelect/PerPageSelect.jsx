@@ -8,7 +8,7 @@ import styles from "./PerPageSelect.module.scss";
 const PerPageSelect = ({ handlePerPageChange, cardsPerPageValue }) => {
   const [perPageMenuIsOpen, setPerPageMenuIsOpen] = useState(false);
 
-  console.log(cardsPerPageValue);
+  // console.log(cardsPerPageValue);
 
   /*
 

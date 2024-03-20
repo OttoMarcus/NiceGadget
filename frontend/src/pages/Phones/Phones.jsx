@@ -82,8 +82,8 @@ const Phones = () => {
       })
       .then(({ data, totalPages, totalMatching, total }) => {
         setPhonesArr(data);
-        setTotalNumber(total);
-        setTotalPages(totalPages);
+        setTotalNumber(Number(total));
+        setTotalPages(Number(totalPages));
         setTotalMatching(totalMatching);
       })
       .catch((error) => {
@@ -109,8 +109,8 @@ const Phones = () => {
       })
       .then(({ data, totalPages, totalMatching, total }) => {
         setPhonesArr(data);
-        setTotalNumber(total);
-        setTotalPages(totalPages);
+        setTotalNumber(Number(total));
+        setTotalPages(Number(totalPages));
         setTotalMatching(totalMatching);
       })
       .catch((error) => {
@@ -138,15 +138,15 @@ const Phones = () => {
       })
       .then(({ data, totalPages, totalMatching, total }) => {
         setPhonesArr(data);
-        setTotalNumber(total);
-        setTotalPages(totalPages);
+        setTotalNumber(Number(total));
+        setTotalPages(Number(totalPages));
         setTotalMatching(totalMatching);
       })
       .catch((error) => {
         console.error("There was a problem with your fetch operation:", error);
       });
 
-    setCardsPerPageValue(newPerPageValue);
+    setCardsPerPageValue(Number(newPerPageValue));
   };
 
   const handlePageChange = async (e, page) => {
@@ -169,25 +169,31 @@ const Phones = () => {
       })
       .then(({ data, totalPages, totalMatching, total }) => {
         setPhonesArr(data);
-        setTotalNumber(total);
-        setTotalPages(totalPages);
+        setTotalNumber(Number(total));
+        setTotalPages(Number(totalPages));
         setTotalMatching(totalMatching);
       })
       .catch((error) => {
         console.error("There was a problem with your fetch operation:", error);
       });
 
-    setCurrentPage(page);
+    setCurrentPage(Number(page));
   };
 
   const handlePaginationArrowClick = async (e, currentPage, totalPages) => {
     // e.preventDefault()
+    await totalPages;
+    console.log(totalPages);
     let newPage;
     if (e.target.id === "prev") {
       newPage = currentPage - 1 === 0 ? currentPage : currentPage - 1;
     } else if (e.target.id === "next") {
+      console.log(currentPage + 1 > totalPages);
       newPage = currentPage + 1 > totalPages ? currentPage : currentPage + 1;
     }
+
+    console.log(newPage);
+    console.log(currentPage !== newPage);
 
     if (currentPage !== newPage) {
       const currentUrl = new URL(window.location);
@@ -207,8 +213,8 @@ const Phones = () => {
         })
         .then(({ data, totalPages, totalMatching, total }) => {
           setPhonesArr(data);
-          setTotalNumber(total);
-          setTotalPages(totalPages);
+          setTotalNumber(Number(total));
+          setTotalPages(Number(totalPages));
           setTotalMatching(totalMatching);
         })
         .catch((error) => {
@@ -218,7 +224,7 @@ const Phones = () => {
           );
         });
 
-      setCurrentPage(newPage);
+      setCurrentPage(Number(newPage));
     }
 
     // console.log(newPage);
@@ -271,6 +277,7 @@ const Phones = () => {
           ))}
       </div>
       <Pagination
+        key={totalPages}
         currentPage={currentPage}
         totalPages={totalPages}
         handlePageChange={handlePageChange}

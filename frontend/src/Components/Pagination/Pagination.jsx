@@ -19,7 +19,9 @@ const Pagination = ({
           <button
             id="prev"
             className={styles.prevPage}
-            onClick={(e) => handlePaginationArrowClick(e, currentPage)}
+            onClick={(e) =>
+              handlePaginationArrowClick(e, currentPage, totalPages)
+            }
           >
             prev
           </button>

@@ -8,7 +8,7 @@ import styles from "./Sort.module.scss";
 const Sort = ({ handleSortChange, sortValue }) => {
   const [sortMenuIsOpen, setSortMenuIsOpen] = useState(false);
 
-  console.log(sortValue);
+  // console.log(sortValue);
 
   /*
 
