@@ -24,6 +24,8 @@ function App() {
         },
       }).then((res) => res.json());
       dispatch(addUser(user));
+
+      dispatch(fetchCartItems());
     };
     const token = localStorage?.getItem("token");
     if (token) {
@@ -33,10 +35,6 @@ function App() {
     }
   }, [prevPathRef, dispatch]);
   //location.pathname, dispatch
-
-  useEffect(() => {
-    dispatch(fetchCartItems());
-  }, [dispatch]);
 
   useEffect(() => {
     const handleRouteChange = () => {
