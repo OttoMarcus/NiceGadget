@@ -5,14 +5,14 @@ import { useSelector } from "react-redux";
 import CardAccessories from "../../Components/CardAccessories/CardAccessories";
 
 const Favorites = () => {
-  const favor = useSelector((state) => state.favorite.favorites);
+  const favor = useSelector((state) => state.favorite?.favorites);
 
   return (
     <div className={Style.wrapper}>
       <div className={Style.wrapperTitle}>
         <h2>Favorites</h2>
       </div>
-      <div className={Style.favoritesOutLet}>
+      <div className={Style?.favoritesOutLet}>
         {favor.length !== 0 ? (
           favor.map((el) => {
             const screen = el.screen?.split(` `);

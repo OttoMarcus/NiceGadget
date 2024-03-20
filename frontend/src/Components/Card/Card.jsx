@@ -1,4 +1,5 @@
 import React from "react";
+
 import Favorite from "../Favorite/Favorite";
 import styles from "./Card.module.scss";
 import PropTypes from "prop-types";
@@ -20,7 +21,6 @@ const Card = (props) => {
     refModel,
     category,
   } = props;
-
   const dispatch = useDispatch();
   const favor = useSelector((state) => state.favorite.favorites);
   const some = favor.some((el) => id === el.id);
@@ -37,7 +37,9 @@ const Card = (props) => {
         <div className={styles.cardImg}>
           <img src={picture} alt="Card" />
         </div>
-        <div className={styles.model}>{name}</div>
+        <div className={styles.nameWrapper}>
+          <div className={styles.model}>{name}</div>
+        </div>
         <div className={styles.price}>${price}</div>
         <div className={styles.divider}></div>
         <ul className={styles.paramsGroup}>

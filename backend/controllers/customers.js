@@ -250,52 +250,99 @@ exports.editCustomerInfo = (req, res) => {
 };
 
 // Controller for editing customer password
-exports.updatePassword = (req, res) => {
+// exports.updatePassword = (req, res) => {
+//   // Check Validation
+//   const { errors, isValid } = validateRegistrationForm(req.body);
+//
+//   if (!isValid) {
+//     return res.status(400).json(errors);
+//   }
+//
+//   // find our user by ID
+//   Customer.findOne({ _id: req.user.id }, (err, customer) => {
+//     let oldPassword = req.body.password;
+//
+//     customer.comparePassword(oldPassword, function(err, isMatch) {
+//       if (!isMatch) {
+//         errors.password = "Password does not match";
+//         res.json(errors);
+//       } else {
+//         let newPassword = req.body.newPassword;
+//
+//         bcrypt.genSalt(10, (err, salt) => {
+//           bcrypt.hash(newPassword, salt, (err, hash) => {
+//             if (err) throw err;
+//             newPassword = hash;
+//             Customer.findOneAndUpdate(
+//               { _id: req.user.id },
+//               {
+//                 $set: {
+//                   password: newPassword,
+//                 },
+//               },
+//               { new: true },
+//             )
+//               .then(customer => {
+//                 res.json({
+//                   message: "Password successfully changed",
+//                   customer: customer,
+//                 });
+//               })
+//               .catch(err =>
+//                 res.status(400).json({
+//                   message: `Error happened on server: "${err}" `,
+//                 }),
+//               );
+//           });
+//         });
+//       }
+//     });
+//   });
+// };
+exports.updatePassword = async (req, res) => {
+  console.log(req.user);
   // Check Validation
   const { errors, isValid } = validateRegistrationForm(req.body);
+  console.log(`isValid - ${isValid}`);
 
   if (!isValid) {
     return res.status(400).json(errors);
   }
 
-  // find our user by ID
-  Customer.findOne({ _id: req.user.id }, (err, customer) => {
+  try {
+    const customer = await Customer.findOne({ _id: req.user.id });
+
     let oldPassword = req.body.password;
 
-    customer.comparePassword(oldPassword, function(err, isMatch) {
+    customer.comparePassword(oldPassword, async (err, isMatch) => {
+      console.log(`isMatch - ${isMatch}`);
       if (!isMatch) {
         errors.password = "Password does not match";
-        res.json(errors);
+        return res.json(errors);
       } else {
         let newPassword = req.body.newPassword;
+        try {
+          const salt = await bcrypt.genSalt(10);
+          newPassword = await bcrypt.hash(newPassword, salt);
 
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(newPassword, salt, (err, hash) => {
-            if (err) throw err;
-            newPassword = hash;
-            Customer.findOneAndUpdate(
-              { _id: req.user.id },
-              {
-                $set: {
-                  password: newPassword,
-                },
-              },
-              { new: true },
-            )
-              .then(customer => {
-                res.json({
-                  message: "Password successfully changed",
-                  customer: customer,
-                });
-              })
-              .catch(err =>
-                res.status(400).json({
-                  message: `Error happened on server: "${err}" `,
-                }),
-              );
+          const updatedCustomer = await Customer.findOneAndUpdate(
+            { _id: req.user.id },
+            { $set: { password: newPassword } },
+            { new: true }
+          );
+          res.json({
+            message: "Password successfully changed",
+            customer: updatedCustomer,
           });
-        });
+        } catch (hashError) {
+          throw hashError;
+        }
       }
     });
-  });
+  } catch (err) {
+    res.status(400).json({
+      message: `Error happened on server: "${err}" `,
+    });
+  }
 };
+

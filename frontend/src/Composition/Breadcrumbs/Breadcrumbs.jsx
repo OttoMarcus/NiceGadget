@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./Breadcrumbs.module.scss";
 import { Link, useLocation } from "react-router-dom";
-import Home from "../../Components/Icons/Home";
-import RightArrow from "../../Components/Icons/RightArrow";
+import HomeIcon from "../../Components/Icons/HomeIcon";
+import RightArrowIcon from "../../Components/Icons/RightArrowIcon";
 import { eachWordFirstLetterToUpperCase } from "../../helpers/capitalizeFirstLettersOfEachWordInSentence";
 import { capitalizeFirstLetterOfWord } from "../../helpers/capitalizeFirstLetterOfWord";
 
@@ -61,7 +61,7 @@ const Breadcrumbs = () => {
             <Link to={currentLink} className={styles.crumbGap}>
               {crumb}
             </Link>
-            <RightArrow />
+            <RightArrowIcon />
           </div>
         );
       }
@@ -73,9 +73,9 @@ const Breadcrumbs = () => {
         <div className={`${styles.breadcrumbs} ${styles.container}`}>
           <div className={styles.crumb}>
             <Link to={"/"} className={styles.crumbGap}>
-              <Home />
+              <HomeIcon />
             </Link>
-            <RightArrow />
+            <RightArrowIcon />
           </div>
           {crumbs}
         </div>

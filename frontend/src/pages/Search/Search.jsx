@@ -1,34 +1,63 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 import Card from "../../Components/Card/Card";
-
+import CardAccessories from "../../Components/CardAccessories/CardAccessories";
 import styles from "./Search.module.scss";
 
 const Search = () => {
   const [searchList, setSearchList] = useState({ data: [] });
+  const searchField = useSelector((state) => state.search.search);
+
+  const total = searchList.data.length;
 
   useEffect(() => {
-    searchResult();
-  }, []);
+    const searchResult = async () => {
+      try {
+        const [phonesResponse, tabletsResponse, accessoriesResponse] =
+          await Promise.all([
+            axios.get(`http://localhost:4000/api/phones?q=${searchField}`),
+            axios.get(`http://localhost:4000/api/tablets?q=${searchField}`),
+            axios.get(`http://localhost:4000/api/accessories?q=${searchField}`),
+          ]);
 
-  const searchResult = () => {
-    axios
-      .get(`http://localhost:4000/api/phones`)
-      .then((response) => {
-        setSearchList({ data: response.data.data });
-      })
-      .catch((error) => {
+        const phonesData = phonesResponse.data.data;
+        const tabletsData = tabletsResponse.data.data;
+        const accessoriesData = accessoriesResponse.data.data;
+
+        const combinedData = [
+          ...phonesData,
+          ...tabletsData,
+          ...accessoriesData,
+        ];
+
+        setSearchList({ data: combinedData });
+      } catch (error) {
         console.error("Fetching error:", error);
-      });
-  };
+      }
+    };
+
+    if (searchField.trim() !== "") {
+      searchResult();
+    }
+  }, [searchField]);
 
   return (
     <article className={styles.container}>
       <h1 className={styles.searchTitle}>Search result</h1>
-      <h3 className={styles.searchCategory}>category:</h3>
+      <h3 className={styles.searchCategory}>
+        Last search items: &quot;{searchField}&quot;
+      </h3>
+      <h3 className={styles.searchCategory}>total: {total}</h3>
       <div className={styles.resultWrapper}>
         {Array.isArray(searchList.data) &&
-          searchList.data.map((item) => <Card key={item.id} {...item} />)}
+          searchList.data.map((item) => {
+            if (item.category === "accessories") {
+              return <CardAccessories key={item.id} {...item} />;
+            }
+            return <Card key={item.id} {...item} />;
+          })}
+        {total === 0 && <h2 className={styles.nothingFound}>Nothing found</h2>}
       </div>
     </article>
   );

@@ -123,3 +123,9 @@
   justify-content: flex-end;
   // flex-wrap: wrap;
 }
+
+@mixin flex-kit($jcontent) {
+  display: flex;
+  justify-content: $jcontent;
+  align-items: center;
+}

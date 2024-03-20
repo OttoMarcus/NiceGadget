@@ -1,5 +1,5 @@
 import React from "react";
-import Heart from "../Icons/Heart";
+import HeartIcon from "../Icons/HeartIcon";
 import Style from "./Favorite.module.scss";
 import PropTypes from "prop-types";
 // import { useDispatch } from "react-redux";
@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 const Favorite = ({ click, some }) => {
   return (
     <div onClick={click} className={Style.favorite}>
-      <Heart some={some} />
+      <HeartIcon some={some} />
     </div>
   );
 };

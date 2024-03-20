@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./Footer.module.scss";
-import UpArrow from "../../Components/Icons/UpArrow";
+import UpArrowIcon from "../../Components/Icons/UpArrowIcon";
 import Logo from "../../Components/Icons/Logo";
-import Ok from "../../Components/Icons/Ok";
+import OkIcon from "../../Components/Icons/OkIcon";
 import scrollUp from "../../helpers/scrollUp";
 import { Link } from "react-router-dom";
 
@@ -13,7 +13,7 @@ const Footer = () => {
         <div className={styles.logo}>
           <Logo />
           <div className={styles.ok}>
-            <Ok />
+            <OkIcon />
           </div>
         </div>
         <ul className={styles.policy}>
@@ -32,7 +32,7 @@ const Footer = () => {
         <div className={styles.backTop}>
           <p>Back to top</p>
           <div onClick={scrollUp} className={styles.arrow}>
-            <UpArrow />
+            <UpArrowIcon />
           </div>
         </div>
       </div>

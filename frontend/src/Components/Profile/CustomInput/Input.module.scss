@@ -1,0 +1,11 @@
+@import "../../../styles/abstracts/mixins";
+
+.error {
+  color: #e36709ff;
+  padding: 6px;
+}
+
+.registration__sectionField {
+  padding-top: 20px;
+  font-family: "Mont Regular", sans-serif;
+}

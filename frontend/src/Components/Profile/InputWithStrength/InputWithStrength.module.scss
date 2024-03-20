@@ -1,0 +1,78 @@
+@import "../../../styles/abstracts/mixins";
+
+.weak {
+  background: red;
+  width: 30%;
+}
+
+.average {
+  background: #ffd000;
+  width: 50%;
+}
+
+.strong {
+  background: green;
+  width: 100%;
+}
+
+.error {
+  color: #e36709ff;
+  padding: 6px;
+}
+
+.registration__showHide {
+  display: flex;
+  position: relative;
+  align-items: center;
+  label {
+    width: 100%;
+  }
+  &__icon {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 60px;
+    right: 30px;
+    cursor: pointer;
+  }
+}
+
+.registration__sectionField {
+  padding-top: 20px;
+  font-family: "Mont Regular", sans-serif;
+}
+
+.registration__sectionInput {
+  width: 100%;
+  margin-top: 5px;
+  margin-right: 50px;
+  border: 1px solid #ede8e7;
+  padding: 15px;
+  font-family: "Mont Regular", sans-serif;
+}
+
+.passStrength {
+  display: flex;
+  align-items: center;
+  margin-top: 3px;
+}
+
+.strengthLabel {
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.strengthPercent {
+  flex: 1;
+  height: 5px;
+  border-radius: 10px;
+  display: block;
+  background: #eee;
+}
+
+.strengthPercent span {
+  display: block;
+  height: 100%;
+  transition: all 0.4s;
+  border-radius: 10px;
+}

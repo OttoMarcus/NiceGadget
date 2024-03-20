@@ -141,10 +141,6 @@ exports.decreaseCartProductQuantity = async (req, res, next) => {
 
     cart.products[productIndex].cartQuantity -= 1;
 
-    if (cart.products[productIndex].cartQuantity < 1) {
-      cart.products.splice(productIndex, 1); // Видаляємо продукт з кошика, якщо його кількість менше 1
-    }
-
     await cart.save();
     res.json(cart);
   } catch (error) {

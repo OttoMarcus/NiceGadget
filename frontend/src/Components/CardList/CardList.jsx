@@ -1,5 +1,5 @@
-import LeftArrow from "../Icons/LeftArrow";
-import RightArrow from "../Icons/RightArrow";
+import LeftArrowIcon from "../Icons/LeftArrowIcon";
+import RightArrowIcon from "../Icons/RightArrowIcon";
 import Card from "../Card/Card";
 import style from "./CardList.module.scss";
 import PropTypes from "prop-types";
@@ -33,10 +33,10 @@ const CardList = (props) => {
         <h2 className={style.title}>{title}</h2>
         <div className={style.btnGroup}>
           <div className={style.arrow} onClick={scrollLeft}>
-            <LeftArrow />
+            <LeftArrowIcon />
           </div>
           <div className={style.arrow} onClick={scrollRight}>
-            <RightArrow />
+            <RightArrowIcon />
           </div>
         </div>
       </div>
