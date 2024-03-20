@@ -4,19 +4,15 @@
 .button {
   @include flex-center;
   @include button;
+  flex-shrink: 0;
   height: 40px;
   width: 100%;
-  background-color: $ui-color-primary-accent;
   color: $ui-color-gray-white;
   border: none;
   margin-right: 8px;
 
   &:disabled {
     background-color: $ui-color-gray-surface-1;
-  }
-
-  &:hover {
-    background-color: $ui-color-primary-accent-hover;
   }
 
   &:active {

@@ -1,11 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styles from "./Cart.module.scss";
 import CartItem from "../CartItem/CartItem";
-import { Link } from "react-router-dom";
+import Button from "../Button/Button";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
+  const isAuthorized = useSelector((state) => state.user.isAuthorized);
+  const navigate = useNavigate();
 
   const calculateTotalItemPrice = (price, discount = 0, quantity) => {
     return Math.round(price * (1 - discount) * quantity);
@@ -22,6 +25,14 @@ const Cart = () => {
     (total, item) => total + item.cartQuantity,
     0
   );
+
+  const handleCheckout = () => {
+    if (isAuthorized) {
+      navigate("/buyform"); // Зареєстрований користувач
+    } else {
+      navigate("/login"); // Неавторизований користувач
+    }
+  };
 
   return (
     <div className={styles.cart}>
@@ -45,9 +56,13 @@ const Cart = () => {
               >{`Total for ${totalItemsQuantity} items`}</p>
             </div>
             <div className={styles.divider}></div>
-            <Link to="/buyform" className={styles.checkoutBtn}>
+            <Button
+              onClick={handleCheckout}
+              type="button"
+              className={styles.checkoutBtn}
+            >
               Checkout
-            </Link>
+            </Button>
           </div>
         </>
       )}

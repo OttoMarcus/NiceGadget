@@ -79,12 +79,9 @@
 }
 
 .checkoutBtn {
-  @include flex-center;
-  flex-shrink: 0;
-  width: 100%;
   height: 48px;
-  @include button;
-  color: white !important;
-  background-color: $ui-color-primary-accent;
-  text-align: center;
+
+  &:hover {
+    background-color: $ui-color-primary-accent-hover;
+  }
 }
