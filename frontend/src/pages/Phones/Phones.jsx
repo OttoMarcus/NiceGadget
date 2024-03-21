@@ -140,7 +140,7 @@ const Phones = () => {
       if (!res.ok) {
         throw new Error("Network response was not ok");
       }
-      const { data, totalPages, totalMatching, total } = await res.json();
+      const { data, totalPages, total } = await res.json();
       setPhonesArr(data);
       setTotalNumber(Number(total));
       setTotalPages(Number(totalPages));
