@@ -16,19 +16,22 @@ function App() {
   const prevPathRef = useRef(location.pathname);
 
   useEffect(() => {
-    const getUserOnLogin = async (token) => {
-      const user = await fetch(`http://localhost:4000/api/customers/customer`, {
-        method: "GET",
-        headers: {
-          Authorization: token,
-        },
-      }).then((res) => res.json());
-      dispatch(addUser(user));
-
-      dispatch(fetchCartItems());
-    };
     const token = localStorage?.getItem("token");
     if (token) {
+      const getUserOnLogin = async (token) => {
+        const user = await fetch(
+          `http://localhost:4000/api/customers/customer`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: token,
+            },
+          }
+        ).then((res) => res.json());
+        dispatch(addUser(user));
+
+        dispatch(fetchCartItems());
+      };
       getUserOnLogin(token);
     } else {
       dispatch(removeUser());

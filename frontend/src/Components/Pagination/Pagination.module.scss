@@ -1,0 +1,50 @@
+@import "../../styles/abstracts/variables";
+@import "../../styles/abstracts/mixins";
+@import "../../styles/global/base";
+
+.paginationContainer {
+  position: relative;
+  // display: flex;
+  // justify-content: center;
+  width: 184px;
+  height: 32px;
+  margin: 0 auto;
+  padding: 0px 16px;
+  box-sizing: border-box;
+  margin-top: 40px;
+  // overflow: hidden;
+
+  .prevPage {
+    position: absolute;
+    left: -32px;
+    width: 32px;
+    height: 32px;
+    // margin-right: 12px;
+    background-color: $ui-color-gray-selected-surface-2;
+  }
+
+  .nextPage {
+    position: absolute;
+    right: -32px;
+    width: 32px;
+    height: 32px;
+    // margin-left: 12px;
+    background-color: $ui-color-gray-selected-surface-2;
+  }
+
+  .pageNumber {
+    width: 32px;
+    height: 32px;
+    margin: 0px 4px;
+    color: $ui-color-gray-white;
+    background-color: $ui-color-gray-surface-1;
+  }
+
+  .pageNumberActive {
+    width: 32px;
+    height: 32px;
+    margin: 0px 4px;
+    color: $ui-color-gray-white;
+    background-color: $ui-color-primary-accent;
+  }
+}
