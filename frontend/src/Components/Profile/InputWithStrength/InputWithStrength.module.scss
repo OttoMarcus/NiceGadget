@@ -17,7 +17,7 @@
 
 .error {
   color: #e36709ff;
-  padding: 6px;
+  margin-left: 20px;
 }
 
 .registration__showHide {
@@ -27,7 +27,7 @@
   label {
     width: 100%;
   }
-  &__icon {
+  svg {
     width: 20px;
     height: 20px;
     position: absolute;
@@ -39,35 +39,48 @@
 
 .registration__sectionField {
   padding-top: 20px;
-  font-family: "Mont Regular", sans-serif;
+  font-family: $ui-font-family-regular;
 }
 
 .registration__sectionInput {
+  outline: none;
   width: 100%;
   margin-top: 5px;
   margin-right: 50px;
-  border: 1px solid #ede8e7;
+  border-radius: 25px;
+  border: 1px solid $ui-color-gray-elements;
   padding: 15px;
-  font-family: "Mont Regular", sans-serif;
+  background: #d1d1dc;
+  @include body-text;
+  &::placeholder {
+    color: $ui-color-gray-elements;
+  }
+  //&:focus {
+  //  background-color: $ui-color-gray-white;
+  //}
 }
 
 .passStrength {
+  height: 15px;
   display: flex;
   align-items: center;
-  margin-top: 3px;
+  margin-top: 2px;
 }
 
 .strengthLabel {
-  font-size: 12px;
+  font-size: 14px;
   margin-left: 10px;
+  margin-top: 5px;
 }
 
 .strengthPercent {
-  flex: 1;
+  //flex: 1;
   height: 5px;
+  width: 78%;
   border-radius: 10px;
   display: block;
   background: #eee;
+  margin-left: 20px;
 }
 
 .strengthPercent span {

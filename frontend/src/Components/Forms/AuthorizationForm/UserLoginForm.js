@@ -28,7 +28,7 @@ const UserLoginForm = () => {
   const onAuthRedirect = () => {
     if (localStorage.getItem("token")) {
       const prevPath = sessionStorage.getItem("prevPath");
-      console.log(prevPath);
+
       if (prevPath) {
         navigate(prevPath);
       } else {
@@ -65,7 +65,6 @@ const UserLoginForm = () => {
 
       // const result = await response.json();
       localStorage.setItem("token", response.token);
-      console.log(response.token);
 
       return response.token;
     } catch (error) {
@@ -90,7 +89,6 @@ const UserLoginForm = () => {
         }
       });
 
-      console.log(user);
       dispatch(addUser(user));
       return user;
     } catch (error) {

@@ -4,7 +4,6 @@
 .button {
   @include flex-center;
   @include button;
-  flex-shrink: 0;
   height: 40px;
   width: 100%;
   color: $ui-color-gray-white;

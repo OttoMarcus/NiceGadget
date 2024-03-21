@@ -5,7 +5,7 @@ import Input from "../CustomInput.js";
 import Button from "../../Button/Button.jsx";
 import styles from "./UserRegForm.module.scss";
 import { addUser } from "../../../store/user/userSlice.js";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
   synchronizeCartWithServer,
@@ -25,10 +25,9 @@ const UserRegForm = () => {
     setRegError("");
     // setCredentials({})
   }, []);
-  const user = useSelector((state) => state.user.user);
+  // const user = useSelector((state) => state.user.user);
   const createNewUser = async (userData) => {
     try {
-      console.log(userData);
       // setCredentials({loginOrEmail: userData.login, password: userData.password})
       const response = await fetch(`http://localhost:4000/api/customers`, {
         method: "POST",
@@ -39,9 +38,9 @@ const UserRegForm = () => {
       });
       if (response.ok) {
         setRegStatus("successful");
-        setTimeout(() => {
-          console.log(`user`, user);
-        }, 1000);
+        //setTimeout(() => {
+        //console.log(`user`, user);
+        //}, 1000);
         return await response.json();
       } else {
         setRegStatus("failed");
@@ -101,7 +100,6 @@ const UserRegForm = () => {
 
       // const result = await response.json();
       localStorage.setItem("token", response.token);
-      console.log(response.token);
 
       return response.token;
     } catch (error) {
@@ -134,7 +132,7 @@ const UserRegForm = () => {
   const onAuthRedirect = () => {
     if (localStorage.getItem("token")) {
       const prevPath = sessionStorage.getItem("prevPath");
-      console.log(prevPath);
+
       if (prevPath) {
         navigate(prevPath);
       } else {

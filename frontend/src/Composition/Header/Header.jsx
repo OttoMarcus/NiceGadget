@@ -68,6 +68,7 @@ const Header = () => {
       scrollUp();
     }
   };
+  const favor = useSelector((state) => state.favorite?.favorites);
 
   const cartItems = useSelector((state) => state.cart.cartItems);
   const cartItemsQuantity = cartItems.reduce(
@@ -207,7 +208,10 @@ const Header = () => {
             ) : (
               <Link
                 onClick={() => {
-                  sessionStorage.setItem("prevPath", location.pathname);
+                  const currentFullPath = window.location.href.split(
+                    window.location.origin
+                  )[1];
+                  sessionStorage.setItem("prevPath", currentFullPath);
                 }}
                 className={styles.mainLinks}
                 to="/login"
@@ -216,8 +220,18 @@ const Header = () => {
               </Link>
             )}
             <Link className={styles.mainLinks} to="/favorites">
-              <FavoriteIcon some={false} />
+              <div className={styles.FavorWrapper}>
+                <FavoriteIcon some={false} />
+                <div
+                  className={styles.wrapperCount}
+                  style={{ display: favor.length > 0 ? "flex" : "none" }}
+                >
+                  <CounterIcon />
+                  <span className={styles.FavorQuantity}>{favor.length}</span>
+                </div>
+              </div>
             </Link>
+
             <Link className={styles.mainLinks} to="/cart">
               <div className={styles.cartIconWrapper}>
                 <CartIcon />

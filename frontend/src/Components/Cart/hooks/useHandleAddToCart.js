@@ -1,13 +1,20 @@
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { addToCartLocal } from "../../../store/cart/cartSlice";
 import { addToCartServer } from "../../../API/cartAPI";
 import { fetchProductDetails } from "../../../API/fetchProductDetails";
 
 export const useHandleAddToCart = (isAuthorized) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleAddToCart = async (product, fetchDetailsUrl = null) => {
     let productDetails = {};
+
+    const currentFullPath = window.location.href.split(
+      window.location.origin
+    )[1];
+    sessionStorage.setItem("prevPath", currentFullPath);
 
     if (fetchDetailsUrl) {
       try {
@@ -26,6 +33,8 @@ export const useHandleAddToCart = (isAuthorized) => {
     } else {
       dispatch(addToCartLocal({ productToAdd: productDetails }));
     }
+
+    navigate("/cart");
   };
 
   return handleAddToCart;

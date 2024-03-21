@@ -13,11 +13,7 @@ const CartPage = () => {
 
   const handleBack = () => {
     const prevPath = sessionStorage.getItem("prevPath") || "/";
-    if (
-      prevPath === "/cart" ||
-      prevPath === "/login" ||
-      prevPath === "/registration"
-    ) {
+    if (["/cart", "/login", "/registration"].includes(prevPath)) {
       navigate("/");
     } else {
       navigate(prevPath);
