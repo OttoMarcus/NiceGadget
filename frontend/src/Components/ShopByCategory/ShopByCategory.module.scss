@@ -1,0 +1,72 @@
+@import "../../styles/abstracts/variables";
+@import "../../styles/abstracts/mixins";
+
+.wrapper {
+  @include flex-start;
+  flex-direction: column;
+  gap: 24px;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+}
+
+.header {
+  width: 100%;
+  height: 62px;
+  margin-bottom: 24px;
+}
+
+.categoryTitle {
+  @include mobile-h2;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    @include h2;
+  }
+}
+
+.categoryItem {
+  @include flex-start;
+  flex-direction: column;
+  width: 100%;
+
+  & > div {
+    width: 100%;
+    padding-top: 100%;
+    background-repeat: no-repeat;
+    background-size: 130%;
+    background-position: top 1.5rem left 2rem;
+  }
+
+  .subTitle {
+    @include h4;
+    margin: 24px 0 0;
+  }
+
+  & > p {
+    @include body-text;
+    color: $ui-color-gray-secondary;
+    font-weight: 600;
+    margin: 5px 0 32px;
+
+    @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.wallpaperPhone {
+  background-color: $ui-color-background-mobiles-section;
+  background-image: url("../../../public/MocPic/iphone4.png");
+}
+
+.wallpaperTablets {
+  background-color: $ui-color-background-tablets-section;
+  background-image: url("../../../public/MocPic/tablet.png");
+}
+
+.wallpaperAccessories {
+  background-color: $ui-color-background-accessories-section;
+  background-image: url("../../../public/MocPic/accessories.png");
+}

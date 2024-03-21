@@ -1,18 +1,44 @@
-//EXAMPLE!!!
+@import "../abstracts/variables";
+@import "fonts";
+@import "./reset";
+
+.App {
+  text-align: center;
+}
+
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  box-sizing: border-box;
+
+  .content-wrapper {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+body {
+  background-color: $ui-color-gray-black-background;
+  height: 100%;
+  margin: 0;
+  color: $ui-color-gray-white;
+  overflow-y: scroll;
+}
+
 .container {
-  max-width: $ui-breakpoint-xxl;
-  padding: 0 10px;
-  margin: 0 auto;
-  @media screen and (max-width: $ui-breakpoint-xl) {
-    max-width: $ui-breakpoint-lg;
+  padding: 16px;
+  width: 100%;
+  max-width: $ui-max-container-width;
+
+  /*-----------------  Tablet ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    padding: 24px;
   }
-  @media screen and (max-width: $ui-breakpoint-lg) {
-    max-width: $ui-breakpoint-md;
-  }
-  @media screen and (max-width: $ui-breakpoint-md) {
-    max-width: $ui-breakpoint-sm;
-  }
-  @media screen and (max-width: $ui-breakpoint-sm) {
-    max-width: 380px;
+  /*----------------- Desktop ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    padding: 32px;
   }
 }

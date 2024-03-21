@@ -9,7 +9,8 @@ const {
   addProductToWishlist,
   deleteWishlist,
   deleteProductFromWishlish,
-  getWishlist
+  getWishlist,
+    synchronizeWishlist
 } = require("../controllers/wishlist");
 
 // @route   POST /wishlist
@@ -17,7 +18,7 @@ const {
 // @access  Private
 router.post(
   "/",
-  passport.authenticate("jwt", { session: false }),
+   passport.authenticate("jwt", { session: false }),
   createWishlist
 );
 
@@ -25,19 +26,27 @@ router.post(
 // @desc    Update wishlist when adding / deleting products in wishlist
 // @access  Private
 router.put(
+    "/synchronize",
+     passport.authenticate("jwt", { session: false }),
+    synchronizeWishlist
+);
+
+
+router.put(
   "/",
-  passport.authenticate("jwt", { session: false }),
+   passport.authenticate("jwt", { session: false }),
   updateWishlist
 );
+
 
 // @route   PUT /wishlist/:productId
 // @desc    Add one product to wishlist
 // @access  Private
-router.put(
-  "/:productId",
-  passport.authenticate("jwt", { session: false }),
-  addProductToWishlist
-);
+// router.put(
+//   "/:productId",
+//   passport.authenticate("jwt", { session: false }),
+//   addProductToWishlist
+// );
 
 // @route   DELETE /wishlist
 // @desc    Delete wishlist
@@ -60,6 +69,8 @@ router.delete(
 // @route   GET /wishlist
 // @desc    Get wishlist for customer
 // @access  Private
-router.get("/", passport.authenticate("jwt", { session: false }), getWishlist);
+router.get("/",
+     passport.authenticate("jwt", { session: false }),
+    getWishlist);
 
 module.exports = router;

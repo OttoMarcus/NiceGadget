@@ -1,318 +1,263 @@
 const Cart = require('../models/Cart');
-const Product = require('../models/Product');
-const queryCreator = require('../commonHelpers/queryCreator');
+const MobileProducts = require('../models/MobileProduct');
+const TabletProducts = require('../models/TabletProduct');
+const AccessoriesProducts = require('../models/AccessoriesProducts');
+// const queryCreator = require('../commonHelpers/queryCreator');
 const _ = require('lodash');
 
-exports.createCart = (req, res, next) => {
-  Cart.findOne({ customerId: req.user.id }).then((cart) => {
-    if (cart) {
-      return res
-        .status(400)
-        .json({ message: `Cart for this customer is already exists` });
-    } else {
-      const initialQuery = _.cloneDeep(req.body);
-      initialQuery.customerId = req.user.id;
-
-      const newCart = new Cart(queryCreator(initialQuery));
-
-      newCart
-        .populate('products.product')
-        .populate('customerId')
-        .execPopulate();
-
-      newCart
-        .save()
-        .then((cart) => res.json(cart))
-        .catch((err) =>
-          res.status(400).json({
-            message: `Error happened on server: "${err}" `,
-          })
-        );
+exports.createCart = async (req, res, next) => {
+  try {
+    const existingCart = await Cart.findOne({ customerId: req.user._id });
+    if (existingCart) {
+      return res.status(400).json({ message: "Cart for this customer already exists." });
     }
-  });
+
+    if (!req.body.products || !Array.isArray(req.body.products) || req.body.products.length === 0) {
+      return res.status(400).json({ message: "Products are required to create a cart." });
+    }
+
+    const newCartData = {
+      customerId: req.user._id,
+      products: req.body.products
+    };
+
+    const newCart = new Cart(newCartData);
+    await newCart.save();
+
+    res.json(newCart);
+  } catch (err) {
+    res.status(500).json({ message: `Error happened on server: "${err}"` });
+  }
 };
 
-exports.updateCart = (req, res, next) => {
-  Cart.findOne({ customerId: req.user.id })
-    .then((cart) => {
-      if (!cart) {
-        const initialQuery = _.cloneDeep(req.body);
-        initialQuery.customerId = req.user.id;
-
-        const newCart = new Cart(queryCreator(initialQuery));
-
-        newCart
-          .populate('products.product')
-          .populate('customerId')
-          .execPopulate();
-
-        newCart
-          .save()
-          .then((cart) => res.json(cart))
-          .catch((err) =>
-            res.status(400).json({
-              message: `Error happened on server: "${err}" `,
-            })
-          );
-      } else {
-        const initialQuery = _.cloneDeep(req.body);
-        const updatedCart = queryCreator(initialQuery);
-
-        Cart.findOneAndUpdate(
-          { customerId: req.user.id },
-          { $set: updatedCart },
-          { new: true }
-        )
-          .populate('products.product')
-          .populate('customerId')
-          .then((cart) => res.json(cart))
-          .catch((err) =>
-            res.status(400).json({
-              message: `Error happened on server: "${err}" `,
-            })
-          );
-      }
-    })
-    .catch((err) =>
-      res.status(400).json({
-        message: `Error happened on server: "${err}" `,
-      })
-    );
+exports.updateCart = async (req, res, next) => {
+  
+  try {
+    const cart = await Cart.findOne({ customerId: req.user._id });
+    
+    if (!cart) {
+      const newCartData = {
+        customerId: req.user._id,
+        products: req.body.products || [] 
+      };
+      const newCart = new Cart(newCartData);
+      const savedCart = await newCart.save();
+      
+      return res.json(savedCart);
+    } else {
+      
+      cart.products = req.body.products || cart.products;
+      const updatedCart = await cart.save();
+      return res.json(updatedCart);
+    }
+  } catch (error) {
+    res.status(500).json({ message: `Error happened on server: "${error}"` });
+  }
 };
+
 
 exports.addProductToCart = async (req, res, next) => {
-  let productToAdd;
+  const { _id, category } = req.body;
+  const productModel = { 'phones': MobileProducts, 'tablets': TabletProducts, 'accessories': AccessoriesProducts }[category];
+
+
+  if (!productModel) {
+    return res.status(400).json({ message: "Invalid product category" });
+  }
 
   try {
-    productToAdd = await Product.findOne({ _id: req.params.productId });
+    const productToAdd = await productModel.findOne({ _id });
+    if (!productToAdd) {
+      return res.status(400).json({
+        message: `Product with _id "${_id}" does not exist in category "${category}"`,
+      });
+    }
+
+    let cart = await Cart.findOne({ customerId: req.user._id });
+    if (!cart) {
+      cart = new Cart({
+        customerId: req.user._id,
+        products: []
+      });
+    }
+
+    const productIndex = cart.products.findIndex(item => item.productId.equals(_id));
+
+    if (productIndex !== -1) {
+      cart.products[productIndex].cartQuantity += 1;
+    } else {
+      cart.products.push({
+        productId: _id,
+        customId: productToAdd.id,
+        ...productToAdd.toObject(),
+        cartQuantity: 1,
+      });
+    }
+
+    await cart.save();
+    res.json(cart);
   } catch (err) {
-    res.status(400).json({
-      message: `Error happened on server: "${err}" `,
-    });
-  }
-
-  if (!productToAdd) {
-    res.status(400).json({
-      message: `Product with _id (ObjectId) "${req.params.productId}" does not exist`,
-    });
-  } else {
-    Cart.findOne({ customerId: req.user.id })
-      .then((cart) => {
-        if (!cart) {
-          const cartData = {};
-          cartData.customerId = req.user.id;
-          cartData.products = [].concat({
-            product: req.params.productId,
-            cartQuantity: 1,
-          });
-
-          const newCart = new Cart(queryCreator(cartData));
-
-          newCart
-            .populate('products.product')
-            .populate('customerId')
-            .execPopulate();
-
-          newCart
-            .save()
-            .then((cart) => res.json(cart))
-            .catch((err) =>
-              res.status(400).json({
-                message: `Error happened on server: "${err}" `,
-              })
-            );
-        } else {
-          const cartData = {};
-
-          const isProductExistInCart = cart.products.some(
-            (item) => item.product.toString() === req.params.productId
-          );
-
-          if (isProductExistInCart) {
-            cartData.products = cart.products.map((item) => {
-              if (item.product.toString() === req.params.productId) {
-                item.cartQuantity += 1;
-              }
-
-              return item;
-            });
-          } else {
-            cartData.products = cart.products.concat({
-              product: req.params.productId,
-              cartQuantity: 1,
-            });
-          }
-
-          const updatedCart = queryCreator(cartData);
-
-          Cart.findOneAndUpdate(
-            { customerId: req.user.id },
-            { $set: updatedCart },
-            { new: true }
-          )
-            .populate('products.product')
-            .populate('customerId')
-            .then((cart) => res.json(cart))
-            .catch((err) =>
-              res.status(400).json({
-                message: `Error happened on server: "${err}" `,
-              })
-            );
-        }
-      })
-      .catch((err) =>
-        res.status(400).json({
-          message: `Error happened on server: "${err}" `,
-        })
-      );
+    res.status(500).json({ message: `Error happened on server: "${err}" ` });
   }
 };
+
+exports.increaseCartProductQuantity = async (req, res, next) => {
+  
+  try {
+    const cart = await Cart.findOne({ customerId: req.user._id });
+    
+    if (!cart) {
+      return res.status(404).json({ message: 'Cart does not exist.' });
+    }
+
+    const productIndex = cart.products.findIndex(product => product.productId.equals(req.params.productId));
+
+    if (productIndex === -1) {
+      return res.status(404).json({ message: 'Product not found in cart.' });
+    }
+
+    cart.products[productIndex].cartQuantity += 1;
+
+    await cart.save();
+    res.json(cart);
+  } catch (error) {
+    res.status(500).json({ message: `Error happened on server: "${error}"` });
+  }
+};
+
 
 exports.decreaseCartProductQuantity = async (req, res, next) => {
-  Cart.findOne({ customerId: req.user.id })
-    .then((cart) => {
-      if (!cart) {
-        res.status(400).json({ message: 'Cart does not exists' });
-      } else {
-        const cartData = {};
+  try {
+    const cart = await Cart.findOne({ customerId: req.user._id });
+    if (!cart) {
+      return res.status(404).json({ message: 'Cart does not exist.' });
+    }
 
-        const isProductExistInCart = cart.products.some(
-          (item) => item.product.toString() === req.params.productId
-        );
+    const productIndex = cart.products.findIndex(product => product.productId.equals(req.params.productId));
 
-        if (isProductExistInCart) {
-          cartData.products = cart.products.map((item) => {
-            if (item.product.toString() === req.params.productId) {
-              item.cartQuantity -= 1;
-            }
+    if (productIndex === -1) {
+      return res.status(404).json({ message: 'Product not found in cart.' });
+    }
 
-            return item;
-          });
+    cart.products[productIndex].cartQuantity -= 1;
 
-          cartData.products = cart.products.filter(
-            (item) => item.cartQuantity > 0
-          );
-        } else {
-          res.status(400).json({
-            message: 'Product ${} does not exists in cart to decrease quantity',
-          });
-        }
-
-        Cart.findOneAndUpdate(
-          { customerId: req.user.id },
-          { $set: cartData },
-          { new: true }
-        )
-          .populate('products.product')
-          .populate('customerId')
-          .then((cart) => res.json(cart))
-          .catch((err) =>
-            res.status(400).json({
-              message: `Error happened on server: "${err}" `,
-            })
-          );
-      }
-    })
-    .catch((err) =>
-      res.status(400).json({
-        message: `Error happened on server: "${err}" `,
-      })
-    );
+    await cart.save();
+    res.json(cart);
+  } catch (error) {
+    res.status(500).json({ message: `Error happened on server: "${error}"` });
+  }
 };
 
-exports.deleteCart = (req, res, next) => {
-  Cart.findOne({ customerId: req.user.id }).then(async (cart) => {
-    if (!cart) {
-      return res
-        .status(400)
-        .json({ message: `Cart for this customer is not found.` });
-    } else {
-      const cartToDelete = await Cart.findOne({ customerId: req.user.id });
 
-      Cart.deleteOne({ customerId: req.user.id })
-        .then((deletedCount) =>
-          res.status(200).json({
-            message: `Cart witn id "${cartToDelete._id}" is successfully deletes from DB `,
-          })
-        )
-        .catch((err) =>
-          res.status(400).json({
-            message: `Error happened on server: "${err}" `,
-          })
-        );
+exports.deleteCart = async (req, res, next) => {
+  try {
+    const result = await Cart.deleteOne({ customerId: req.user._id });
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: 'Cart not found or already deleted.' });
     }
-  });
+    res.status(200).json({ message: 'Cart successfully deleted.' });
+  } catch (error) {
+    res.status(500).json({ message: `Error happened on server: "${error}"` });
+  }
 };
 
 exports.deleteProductFromCart = async (req, res, next) => {
-  Cart.findOne({ customerId: req.user.id })
-    .then((cart) => {
-      if (!cart) {
-        res.status(400).json({ message: `Cart does not exist` });
+  try {
+    const cart = await Cart.findOne({ customerId: req.user._id });
+    if (!cart) {
+      return res.status(404).json({ message: `Cart does not exist.` });
+    }
+
+    const productsAfterRemoval = cart.products.filter(product => !product.productId.equals(req.params.productId));
+
+    if (productsAfterRemoval.length === 0) {
+      await Cart.deleteOne({ customerId: req.user._id });
+      return res.status(200).json({ message: 'Cart has been deleted.' });
+    } else if (productsAfterRemoval.length === cart.products.length) {
+      return res.status(404).json({ message: `Product with ID ${req.params.productId} not found in cart.` });
+    } else {
+      cart.products = productsAfterRemoval;
+      await cart.save();
+      res.json(cart);
+    }
+  } catch (error) {
+    res.status(500).json({ message: `Error happened on server: "${error}"` });
+  }
+};
+
+
+exports.getCart = async (req, res, next) => {
+  try {
+    const cart = await Cart.findOne({ customerId: req.user._id });
+    if (!cart) {
+      return res.json({customerId: req.user._id, products: []});
+    }
+    res.json(cart);
+  } catch (error) {
+    res.status(500).json({ message: `Error happened on server: "${error}"` });
+  }
+};
+
+exports.synchronizeCart = async (req, res, next) => {
+  const localProducts = req.body.products || [];
+  const customerId = req.user._id;
+
+  try {
+    let cart = await Cart.findOne({ customerId });
+    if (!cart) {
+      if (localProducts.length > 0) {
+        cart = new Cart({
+          customerId,
+          products: []
+        });
       } else {
-        if (
-          !cart.products.some(
-            (item) => item.product.toString() === req.params.productId
-          )
-        ) {
-          res.status(400).json({
-            message: `Product with _id "${req.params.productId}" is absent in cart.`,
-          });
-
-          return;
-        }
-
-        const cartData = {};
-        cartData.products = cart.products.filter(
-          (item) => item.product.toString() !== req.params.productId
-        );
-
-        const updatedCart = queryCreator(cartData);
-
-        if (cartData.products.length === 0) {
-          return Cart.deleteOne({ customerId: req.user.id })
-            .then((deletedCount) =>
-              res.status(200).json({
-                products: [],
-              })
-            )
-            .catch((err) =>
-              res.status(400).json({
-                message: `Error happened on server: "${err}" `,
-              })
-            );
-        }
-
-        Cart.findOneAndUpdate(
-          { customerId: req.user.id },
-          { $set: updatedCart },
-          { new: true }
-        )
-          .populate('products.product')
-          .populate('customerId')
-          .then((cart) => res.json(cart))
-          .catch((err) =>
-            res.status(400).json({
-              message: `Error happened on server: "${err}" `,
-            })
-          );
+        return res.json({ message: "No cart exists and no products provided for synchronization." });
       }
-    })
-    .catch((err) =>
-      res.status(400).json({
-        message: `Error happened on server: "${err}" `,
-      })
-    );
+    }
+
+    for (const localProduct of localProducts) {
+
+      const { productId, category } = localProduct;
+      const productModel = { 'phones': MobileProducts, 'tablets': TabletProducts, 'accessories': AccessoriesProducts }[category];
+
+      if (!productModel) {
+        console.error(`Invalid product category for product ID: ${productId}`);
+        continue;
+      }
+      
+      const productToAdd = await productModel.findOne({ _id: productId });
+      if (!productToAdd) {
+        console.error(`Product with ID ${productId} not found in category ${category}`);
+        continue;
+      }
+      
+      const productIndex = cart.products.findIndex(item => item.productId.equals(productId));
+      if (productIndex !== -1) {
+        // Update product quantity if product already exists in cart
+        cart.products[productIndex].cartQuantity = Math.max(cart.products[productIndex].cartQuantity, localProduct.cartQuantity);
+      } else {
+        // Add new product to cart
+        cart.products.push({
+          productId,
+          category,
+          customId: localProduct.id,
+          ...localProduct,
+          cartQuantity: localProduct.cartQuantity
+        });
+      }
+    }
+
+    if (cart.products.length > 0) {
+      await cart.save();
+      res.json(cart);
+    } else {
+      res.json({ message: "Cart is empty after synchronization." });
+    }
+  } catch (error) {
+    res.status(500).json({ message: `Error happened on server: "${error}"` });
+  }
 };
 
-exports.getCart = (req, res, next) => {
-  Cart.findOne({ customerId: req.user.id })
-    .populate('products.product')
-    .populate('customerId')
-    .then((cart) => res.json(cart))
-    .catch((err) =>
-      res.status(400).json({
-        message: `Error happened on server: "${err}" `,
-      })
-    );
-};
+
+
+

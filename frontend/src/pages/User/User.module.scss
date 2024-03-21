@@ -1,0 +1,230 @@
+@import "../../styles/abstracts/variables";
+@import "../../styles/abstracts/mixins";
+@import "../../styles/global/base";
+@import "../../styles/global/reset";
+
+.container {
+  width: 100%;
+}
+
+.unauthorizedWrapper {
+  @include flex-center;
+  flex-direction: column;
+
+  .unauthorizedWrapperTitle {
+    @include uppercase;
+    font-size: 24px;
+    color: $ui-color-red-badge-favorite;
+    letter-spacing: 3px;
+  }
+
+  .unauthorizedWrapperSubtitle {
+    @include small-text;
+    font-size: 20px;
+    padding-top: 40px;
+    letter-spacing: 2px;
+
+    .unauthorizedLogin {
+      color: #75767f;
+      text-transform: uppercase;
+      transition: $ui-transition-duration;
+
+      &:hover {
+        color: $ui-color-primary-accent-hover;
+      }
+    }
+
+    .unauthorizedSignup {
+      text-transform: uppercase;
+      transition: $ui-transition-duration;
+
+      &:hover {
+        color: $ui-color-primary-accent-hover;
+      }
+    }
+  }
+}
+
+.userContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media only screen and (min-device-width: 576px) {
+    align-items: inherit;
+  }
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0;
+    grid-row-gap: 0;
+  }
+}
+
+.sectionAvatar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border: 1px solid #3b3e4a;
+  width: 350px;
+  height: 150px;
+
+  grid-area: 1 / 1 / 2 / 2;
+
+  .avatarIcon {
+    @media (max-width: $ui-breakpoint-mobile-min) {
+      svg {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  }
+}
+
+.registration__sectionTitle {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 10px;
+
+  .registration__sectionTitleText {
+    @include h3;
+    color: $ui-color-primary-accent;
+    letter-spacing: 4px;
+
+    @media (max-width: $ui-breakpoint-mobile-min) {
+      @include small-text;
+      font-size: 24px;
+      letter-spacing: 4px;
+    }
+  }
+}
+
+.registration__sectionTitleName {
+  letter-spacing: 2px;
+  font-family: $ui-font-family-semibold;
+  font-weight: 700;
+  line-height: 1.25;
+  font-size: 20px;
+
+  @media (max-width: $ui-breakpoint-tablet-min) {
+    @include h4;
+    padding-top: 10px;
+  }
+  @media (max-width: $ui-breakpoint-mobile-min) {
+    @include mobile-h3;
+    padding-top: 5px;
+  }
+}
+
+.categoryUsers {
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @media only screen and (min-device-width: 576px) {
+    align-items: flex-end;
+  }
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    grid-area: 2 / 1 / 3 / 2;
+  }
+}
+
+.login__registrationSection {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0;
+  width: 290px;
+  border-bottom: 1px solid $ui-color-primary-accent-hover;
+
+  @media screen and (max-width: $ui-breakpoint-mobile-min) {
+    margin: 25px 0;
+    align-items: center;
+    border-bottom: 0;
+  }
+}
+
+.linkCategoryUsers {
+  height: 40px;
+  padding-bottom: 10px;
+  @include small-text;
+  font-size: 18px;
+  color: $ui-color-gray-white;
+  transition: $ui-transition-longer;
+  @media (max-width: $ui-breakpoint-tablet-min) {
+  }
+  @media (max-width: $ui-breakpoint-mobile-min) {
+    @include small-text;
+    font-size: 14px;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  &:hover {
+    transition: $ui-transition-longer;
+    color: $ui-color-primary-accent-hover;
+  }
+}
+
+.iconForListUser {
+  cursor: pointer;
+  margin-left: 15px;
+  fill: $ui-color-primary-accent;
+}
+
+.userInfoContainer {
+  border: 1px solid #3b3e4a;
+  grid-area: 1 / 2 / 3 / 3;
+}
+
+.userInformation {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.sectionTitle {
+  margin-top: 15px;
+
+  .dataTitle {
+    @include h4;
+    color: $ui-color-primary-accent;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+}
+
+.infoDataForm {
+  width: 300px;
+}
+
+.dataInput {
+  outline: none;
+  width: 100%;
+  margin-top: 5px;
+  margin-right: 50px;
+  border-radius: 25px;
+  border: 1px solid $ui-color-primary-accent;
+  padding: 15px;
+  background: #23262c;
+  @include body-text;
+
+  &::placeholder {
+    color: $ui-color-gray-elements;
+  }
+
+  &:disabled {
+    color: #ffffff;
+  }
+}

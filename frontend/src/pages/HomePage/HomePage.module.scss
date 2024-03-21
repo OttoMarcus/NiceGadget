@@ -1,0 +1,72 @@
+@import "../../styles/abstracts/variables";
+@import "../../styles/abstracts/mixins";
+@import "../../styles/global/base";
+
+.homePageSection {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 32px;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    margin-bottom: 26px;
+  }
+
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    margin-bottom: 16px;
+  }
+}
+
+.modalOverlay {
+  position: fixed;
+  right: 30px;
+  top: 250px;
+  overflow: hidden;
+  z-index: 15;
+}
+
+.help {
+  @include h4;
+}
+
+.helpIcon {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  right: 30px;
+  position: fixed;
+  cursor: pointer;
+  top: 720px;
+  z-index: 15;
+}
+
+.support {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.close {
+  color: white;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+}
+
+/*----------------------- welcome -------------------------*/
+.homePageTitle {
+  @include mobile-h1;
+  margin: 72px 0 24px;
+
+  /*-----------------  Tablet ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    margin: 80px 0 32px;
+    @include h1;
+  }
+  /*----------------- Desktop ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    margin: 120px 0 56px;
+    @include h1;
+  }
+}

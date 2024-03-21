@@ -1,0 +1,61 @@
+@import "../../styles/abstracts/variables";
+@import "../../styles/abstracts/mixins";
+@import "../../styles/global/base";
+
+* {
+  box-sizing: border-box;
+
+  &::before {
+    box-sizing: border-box;
+  }
+
+  &::after {
+    box-sizing: border-box;
+  }
+}
+
+a {
+  cursor: pointer;
+  text-decoration: unset;
+  color: $ui-color-gray-white;
+
+  &:last-child {
+    color: $ui-color-gray-secondary;
+  }
+}
+
+.breadcrumbs {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  align-items: center;
+  @include small-text;
+  color: $ui-color-gray-white;
+  margin: 46px auto 0;
+
+  /*-----------------  Tablet ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    margin-top: 40px;
+  }
+
+  /*----------------- Desktop ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    margin-top: 60px;
+  }
+}
+
+.crumb {
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+
+  .crumbGap {
+    margin-right: 8px;
+  }
+}
+
+.lastCrumb {
+  pointer-events: none;
+  cursor: default;
+  user-select: none;
+}
