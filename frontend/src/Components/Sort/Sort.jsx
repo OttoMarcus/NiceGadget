@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
-import DownArrowIcon from "../Icons/DownArrowIcon";
-import UpArrowIcon from "../Icons/UpArrowIcon";
+// import DownArrowIcon from "../Icons/DownArrowIcon";
+// import UpArrowIcon from "../Icons/UpArrowIcon";
 import styles from "./Sort.module.scss";
 
 const Sort =
   // React.memo(
   ({ handleSortChange, sortValue }) => {
-    const [sortMenuIsOpen, setSortMenuIsOpen] = useState(false);
+    // const [sortMenuIsOpen, setSortMenuIsOpen] = useState(false);
 
     // console.log(sortValue);
 
@@ -110,8 +110,8 @@ Options:
           value={options.find((option) => option.value === sortValue)}
           // defaultValue={sortValue}
           onChange={(selectedOption) => handleSortChange(selectedOption.value)}
-          onMenuOpen={() => setSortMenuIsOpen(true)}
-          onMenuClose={() => setSortMenuIsOpen(false)}
+          // onMenuOpen={() => setSortMenuIsOpen(true)}
+          // onMenuClose={() => setSortMenuIsOpen(false)}
           styles={customStyles}
         />
       </div>

@@ -114,8 +114,8 @@ Options:
           onChange={(selectedOption) =>
             handlePerPageChange(selectedOption.value)
           }
-          onMenuOpen={() => setPerPageMenuIsOpen(true)}
-          onMenuClose={() => setPerPageMenuIsOpen(false)}
+          // onMenuOpen={() => setPerPageMenuIsOpen(true)}
+          // onMenuClose={() => setPerPageMenuIsOpen(false)}
           styles={customStyles}
         />
       </div>

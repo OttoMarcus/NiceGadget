@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
 import Card from "../../Components/Card/Card";
 import Sort from "../../Components/Sort/Sort";
 import LeftArrowIcon from "../../Components/Icons/LeftArrowIcon";
@@ -18,7 +18,7 @@ const Phones = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const [totalNumber, setTotalNumber] = useState(0);
-  const [totalMatching, setTotalMatching] = useState(0);
+  // const [totalMatching, setTotalMatching] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
 
   const location = useLocation();
@@ -144,7 +144,7 @@ const Phones = () => {
       setPhonesArr(data);
       setTotalNumber(Number(total));
       setTotalPages(Number(totalPages));
-      setTotalMatching(totalMatching);
+      // setTotalMatching(totalMatching);
     } catch (error) {
       console.error("There was a problem with your fetch operation:", error);
     }
@@ -171,13 +171,13 @@ const Phones = () => {
     const currentUrl = new URL(window.location);
 
     currentUrl.searchParams.set("sort", sortValue);
-    setCardsPerPageValue(newPerPageValue);
     currentUrl.searchParams.set("perPage", newPerPageValue);
     const newCurrentPage = 1;
     // setCurrentPage(newCurrentPage)
     currentUrl.searchParams.set("startPage", newCurrentPage);
     window.history.pushState({}, "", currentUrl.toString());
 
+    setCurrentPage(newCurrentPage);
     setCardsPerPageValue(Number(newPerPageValue));
   };
 
