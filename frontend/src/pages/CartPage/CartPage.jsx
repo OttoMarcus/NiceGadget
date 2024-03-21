@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Cart from "../../Components/Cart/Cart";
 import styles from "./CartPage.module.scss";
-import LeftArrow from "../../Components/Icons/LeftArrow";
+import LeftArrowIcon from "../../Components/Icons/LeftArrowIcon";
 import { fetchCartItems } from "../../API/cartAPI";
 
 const CartPage = () => {
@@ -34,7 +34,7 @@ const CartPage = () => {
     <>
       <div className={styles.cartContainer}>
         <div className={styles.backBtnWrapper} onClick={handleBack}>
-          <LeftArrow />
+          <LeftArrowIcon />
           <span className={styles.backBtn}>Back</span>
         </div>
         <h1 className={styles.cartPageTitle}>Cart</h1>

@@ -3,17 +3,20 @@ import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../../store/user/userSlice";
 
-import LogOut from "../../Components/Icons/LogOut";
-import User from "../../Components/Icons/User";
-import Favorite from "../../Components/Icons/Heart";
-import Cart from "../../Components/Icons/Cart";
+import LogoutIcon from "../../Components/Icons/LogoutIcon";
+import UserIcon from "../../Components/Icons/UserIcon";
+import FavoriteIcon from "../../Components/Icons/HeartIcon";
+import CartIcon from "../../Components/Icons/CartIcon";
+import CounterIcon from "../../Components/Icons/CounterIcon";
 import Logo from "../../Components/Icons/Logo";
-import Ok from "../../Components/Icons/Ok";
+import OkIcon from "../../Components/Icons/OkIcon";
 import scrollUp from "../../helpers/scrollUp";
-import LogIn from "../../Components/Icons/LogIn";
+import LoginIcon from "../../Components/Icons/LoginIcon";
+import SearchForm from "../../Components/SearchForm/SearchForm";
+import { fetchCartItems } from "../../API/cartAPI";
 
 import styles from "./Header.module.scss";
-import SearchForm from "../../Components/SearchForm/SearchForm";
+import { SetFavor } from "../../store/favorites/favoriteSlice";
 
 const Header = () => {
   const [isBurgerActive, setIsBurgerActive] = useState(false);
@@ -32,7 +35,11 @@ const Header = () => {
 
   const logOutUser = () => {
     dispatch(removeUser());
+    dispatch(SetFavor([]));
+    localStorage.removeItem("user");
     localStorage.removeItem("token");
+
+    dispatch(fetchCartItems());
     // navigate("/login");
   };
 
@@ -61,6 +68,13 @@ const Header = () => {
       scrollUp();
     }
   };
+  const favor = useSelector((state) => state.favorite?.favorites);
+  console.log(`favor header `, favor);
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const cartItemsQuantity = cartItems.reduce(
+    (total, item) => total + item.cartQuantity,
+    0
+  );
 
   return (
     <header>
@@ -72,7 +86,7 @@ const Header = () => {
         >
           <Logo />
           <div className={styles.ok}>
-            <Ok />
+            <OkIcon />
           </div>
         </Link>
 
@@ -142,7 +156,7 @@ const Header = () => {
               Cart
             </Link>
 
-            <SearchForm />
+            <SearchForm toggleBurger={toggleBurgerActive} />
           </div>
 
           <div className={styles.auth}>
@@ -151,7 +165,7 @@ const Header = () => {
               className={styles.authChild}
               to="/user"
             >
-              <User fill={isAuthorized ? "white" : "#3b3e4a"} />
+              <UserIcon fill={isAuthorized ? "white" : "#3b3e4a"} />
             </Link>
             {isAuthorized ? (
               <Link
@@ -163,7 +177,7 @@ const Header = () => {
                 className={styles.authChild}
                 to="/"
               >
-                <LogOut />
+                <LogoutIcon />
               </Link>
             ) : (
               <Link
@@ -173,7 +187,7 @@ const Header = () => {
                 className={styles.authChild}
                 to="/login"
               >
-                <LogIn />
+                <LoginIcon />
               </Link>
             )}
           </div>
@@ -181,14 +195,14 @@ const Header = () => {
             {isAuthorized ? (
               <>
                 <Link onClick={logOutUser} className={styles.mainLinks} to="/">
-                  <LogOut />
+                  <LogoutIcon />
                 </Link>
                 <Link
                   onClick={handleAuthUser}
                   className={styles.mainLinks}
                   to="/user"
                 >
-                  <User />
+                  <UserIcon />
                 </Link>
               </>
             ) : (
@@ -199,14 +213,33 @@ const Header = () => {
                 className={styles.mainLinks}
                 to="/login"
               >
-                <LogIn />
+                <LoginIcon />
               </Link>
             )}
             <Link className={styles.mainLinks} to="/favorites">
-              <Favorite some={false} />
+              <div className={styles.FavorWrapper}>
+                <FavoriteIcon some={false} />
+                <div
+                  className={styles.wrapperCount}
+                  style={{ display: favor.length > 0 ? "flex" : "none" }}
+                >
+                  <CounterIcon />
+                  <span className={styles.FavorQuantity}>{favor.length}</span>
+                </div>
+              </div>
             </Link>
+
             <Link className={styles.mainLinks} to="/cart">
-              <Cart />
+              <div className={styles.cartIconWrapper}>
+                <CartIcon />
+                <div
+                  className={styles.cartCounterWrapper}
+                  style={{ display: cartItemsQuantity > 0 ? "flex" : "none" }}
+                >
+                  <CounterIcon />
+                  <span className={styles.cartBadge}>{cartItemsQuantity}</span>
+                </div>
+              </div>
             </Link>
           </div>
         </nav>

@@ -1,4 +1,5 @@
 import React from "react";
+
 import Favorite from "../Favorite/Favorite";
 import styles from "./Card.module.scss";
 import PropTypes from "prop-types";
@@ -20,7 +21,6 @@ const Card = (props) => {
     refModel,
     category,
   } = props;
-
   const dispatch = useDispatch();
   const favor = useSelector((state) => state.favorite.favorites);
   const some = favor.some((el) => id === el.id);

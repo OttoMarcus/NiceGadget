@@ -27,16 +27,9 @@
   flex-direction: column;
   gap: 20px;
   max-width: 100vw;
-}
 
-.cartItemsSection {
-  @include flex-start;
-  flex-direction: column;
-  gap: 16px;
-
-  & h3 {
-    @include h3;
-    color: $ui-color-gray-white;
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    margin-bottom: 80px;
   }
 }
 
@@ -47,11 +40,17 @@
   width: 100%;
   height: auto;
   padding: 24px;
+  margin-bottom: 56px;
   border: 1px solid $ui-color-gray-elements;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    margin-bottom: 64px;
+  }
 
   @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
     width: 368px;
     height: 226px;
+    margin-bottom: 0;
   }
 }
 
@@ -73,14 +72,16 @@
   color: $ui-color-gray-secondary;
 }
 
-.checkoutBtn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.divider {
+  height: 1px;
+  background-color: $ui-color-gray-elements;
   width: 100%;
+}
+
+.checkoutBtn {
   height: 48px;
-  @include button;
-  color: white !important;
-  background-color: $ui-color-primary-accent;
-  text-align: center;
+
+  &:hover {
+    background-color: $ui-color-primary-accent-hover;
+  }
 }

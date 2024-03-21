@@ -5,25 +5,27 @@ import { getSearchList } from "../../store/search/searchSlice";
 import SearchLogo from "../Icons/SearchLogo";
 
 import styles from "./SearchForm.module.scss";
+import PropTypes from "prop-types";
 
-const SearchForm = () => {
+const SearchForm = ({ toggleBurger }) => {
   const [showInput, setShowInput] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleShow = () => {
     setShowInput(true);
-    navigate("/search");
   };
   const handleBlur = () => {
     setShowInput(false);
   };
 
   const handleInputChange = (event) => {
+    navigate("/search");
     dispatch(getSearchList(event.target.value));
   };
 
   const handleSubmit = (event) => {
+    toggleBurger();
     event.preventDefault();
   };
 
@@ -33,7 +35,6 @@ const SearchForm = () => {
       onMouseOver={handleShow}
       onMouseOut={handleBlur}
       onBlur={handleBlur}
-      onFocus={handleShow}
       className={styles.searchForm}
     >
       <SearchLogo isActive={showInput} />
@@ -49,4 +50,7 @@ const SearchForm = () => {
   );
 };
 
+SearchForm.propTypes = {
+  toggleBurger: PropTypes.func,
+};
 export default SearchForm;

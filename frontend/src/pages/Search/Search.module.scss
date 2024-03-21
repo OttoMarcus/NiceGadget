@@ -27,7 +27,16 @@
   align-items: center;
   gap: 16px;
 
-  a {
-    @include flex-center;
+  //a {
+  //  @include flex-center;
+  //}
+}
+
+.nothingFound {
+  @include mobile-h3;
+  @include flex-center;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    @include h3;
   }
 }

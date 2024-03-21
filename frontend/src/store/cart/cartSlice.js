@@ -62,10 +62,6 @@ const cartSlice = createSlice({
       const index = state.cartItems.findIndex((item) => item.productId === _id);
       if (index !== -1) {
         state.cartItems[index].cartQuantity -= 1;
-        if (state.cartItems[index].cartQuantity > 0) {
-        } else {
-          state.cartItems.splice(index, 1);
-        }
       }
       saveCartToLocalStorage(state.cartItems);
     },

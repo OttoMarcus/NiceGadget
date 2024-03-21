@@ -153,7 +153,7 @@ const BuyForm = () => {
             <ErrorMessage name="paymentMethod" component="div" />
           </div>
           <Link to="/" className={styles.buttonSubmit}>
-            Buy
+            Place Order
           </Link>
         </Form>
       )}
