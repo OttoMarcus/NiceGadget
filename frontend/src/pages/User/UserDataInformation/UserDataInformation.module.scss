@@ -7,14 +7,12 @@
   width: 100%;
 }
 
-.changePassContainer {
-  display: flex;
+.sectionDataUser {
   width: 100%;
+  display: flex;
   justify-content: center;
-}
-
-.updatePassForm {
-  width: 400px;
+  flex-direction: column;
+  align-items: center;
 }
 
 .sectionTitle {
@@ -28,6 +26,10 @@
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-bottom: 25px;
+}
+
+.infoDataForm {
+  width: 400px;
 }
 
 .dataInput {
@@ -48,11 +50,6 @@
   &:focus {
     background-color: $ui-color-gray-white;
   }
-}
-
-.diffPassError {
-  margin: 6px 0 0 20px;
-  color: #e36709ff;
 }
 
 .updateDataBtnBlock {

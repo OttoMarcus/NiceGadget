@@ -2,10 +2,12 @@
 
 .error {
   color: #e36709ff;
-  padding: 6px;
+  margin-top: 6px;
+  margin-left: 20px;
 }
 
 .registration__sectionField {
+  margin-left: 15px;
   padding-top: 20px;
-  font-family: "Mont Regular", sans-serif;
+  font-family: $ui-font-family-regular;
 }
