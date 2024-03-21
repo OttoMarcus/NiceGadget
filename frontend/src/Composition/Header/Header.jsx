@@ -69,7 +69,7 @@ const Header = () => {
     }
   };
   const favor = useSelector((state) => state.favorite?.favorites);
-  console.log(`favor header `, favor);
+
   const cartItems = useSelector((state) => state.cart.cartItems);
   const cartItemsQuantity = cartItems.reduce(
     (total, item) => total + item.cartQuantity,
@@ -208,7 +208,10 @@ const Header = () => {
             ) : (
               <Link
                 onClick={() => {
-                  sessionStorage.setItem("prevPath", location.pathname);
+                  const currentFullPath = window.location.href.split(
+                    window.location.origin
+                  )[1];
+                  sessionStorage.setItem("prevPath", currentFullPath);
                 }}
                 className={styles.mainLinks}
                 to="/login"

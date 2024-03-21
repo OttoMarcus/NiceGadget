@@ -38,18 +38,20 @@ function App() {
 
   useEffect(() => {
     const handleRouteChange = () => {
-      const currentPath = location.pathname;
+      const currentFullPath = window.location.href.split(
+        window.location.origin
+      )[1];
       const prevPath = prevPathRef.current;
 
-      if (!["/login", "/registration"].includes(currentPath)) {
+      if (!["/login", "/registration", "/cart"].includes(location.pathname)) {
         sessionStorage.setItem("prevPath", prevPath);
       }
 
-      prevPathRef.current = currentPath;
+      prevPathRef.current = currentFullPath;
     };
 
     handleRouteChange();
-  }, [location.pathname]);
+  }, [location.pathname, location.search]);
 
   const user = useSelector((state) => state.user.user);
 
