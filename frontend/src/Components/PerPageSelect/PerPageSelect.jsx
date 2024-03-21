@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
-import DownArrowIcon from "../Icons/DownArrowIcon";
-import UpArrowIcon from "../Icons/UpArrowIcon";
+// import DownArrowIcon from "../Icons/DownArrowIcon";
+// import UpArrowIcon from "../Icons/UpArrowIcon";
 import styles from "./PerPageSelect.module.scss";
 
 const PerPageSelect =
   // React.memo(
   ({ handlePerPageChange, cardsPerPageValue }) => {
-    const [perPageMenuIsOpen, setPerPageMenuIsOpen] = useState(false);
+    // const [perPageMenuIsOpen, setPerPageMenuIsOpen] = useState(false);
 
     // console.log(cardsPerPageValue);
 
