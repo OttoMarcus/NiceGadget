@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 import { ErrorMessage, Field } from "formik";
-import { ReactComponent as ShowPassIcon } from "./imgPassword/show-pass.svg";
-import { ReactComponent as HidePassIcon } from "./imgPassword/hide-pass.svg";
 import PropTypes from "prop-types";
 import styles from "./InputWithStrength.module.scss";
+import ShowPassword from "../../Icons/ShowPasswordIcon";
+import HidePassword from "../../Icons/HidePasswordIcon";
 
 const InputWithStrength = ({
   label,
@@ -15,35 +15,52 @@ const InputWithStrength = ({
   ...props
 }) => {
   const [passShown, setPassShown] = useState(false);
-  const [percentBar, setPercentBar] = useState("");
   const passwordRef = useRef(null);
-  const [passLabel, setPassLabel] = useState("Strength");
+  const [passwordValue, setPasswordValue] = useState(""); // Додайте стан для значення поля пароля
 
-  const addClass = (className) => {
-    setPercentBar("");
-    if (className) {
-      setPercentBar(className);
-    }
-  };
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [progress, setProgress] = useState("");
+
   const togglePassword = () => {
     setPassShown(!passShown);
   };
 
-  const handlePassInput = (e) => {
-    const value = passwordRef.current?.value || "";
-    if (value.length === 0) {
-      setPassLabel("Strength");
-      addClass();
-    } else if (value.length <= 8) {
-      setPassLabel("Weak");
-      addClass(styles.weak);
-    } else if (value.length <= 11) {
-      setPassLabel("Not Bad");
-      addClass(styles.average);
-    } else {
-      setPassLabel("Strong");
-      addClass(styles.strong);
-    }
+  const handlePassInput = (passwordValue) => {
+    const strengthChecks = {
+      length: 0,
+      hasUpperCase: false,
+      hasLowerCase: false,
+      hasDigit: false,
+      hasSpecialChar: false,
+    };
+
+    strengthChecks.length = passwordValue.length >= 8 ? true : false;
+    strengthChecks.hasUpperCase = /[A-Z]+/.test(passwordValue);
+    strengthChecks.hasLowerCase = /[a-z]+/.test(passwordValue);
+    strengthChecks.hasDigit = /[0-9]+/.test(passwordValue);
+    strengthChecks.hasSpecialChar = /[^A-Za-z0-9]+/.test(passwordValue);
+
+    let verifiedList = Object.values(strengthChecks).filter((value) => value);
+
+    let strength =
+      verifiedList.length === 5
+        ? "Strong"
+        : verifiedList.length >= 2
+          ? "Medium"
+          : "Weak";
+
+    setPassword(passwordValue);
+    setProgress(`${(verifiedList.length / 5) * 100}%`);
+    setMessage(strength);
+    // console.log("verifiedList: ", `${(verifiedList.length / 5) * 100}%`);
+  };
+
+  const getActiveColor = (type) => {
+    if (type === "Strong") return "#8BC926";
+    if (type === "Medium") return "#FEBD01";
+    if (type === "Weak") return "#FF0054";
+    return "#FFFFFF";
   };
 
   return (
@@ -56,30 +73,46 @@ const InputWithStrength = ({
             type={passShown ? "text" : "password"}
             name={name}
             {...props}
+            value={passwordValue} // Додайте value
             className={styles.registration__sectionInput}
-            onBlur={handlePassInput}
+            onChange={(e) => {
+              const value = e.target.value;
+              setPasswordValue(value); // Оновіть стан значення поля пароля
+              handleChange(e);
+              handlePassInput(value);
+            }}
             placeholder={placeholder}
           />
-          <ErrorMessage className="error" name={name} component={"p"} />
           {passShown ? (
-            <HidePassIcon
-              className={styles.registration__showHide__icon}
-              onClick={togglePassword}
-            />
+            <div onClick={togglePassword}>
+              <HidePassword />
+            </div>
           ) : (
-            <ShowPassIcon
-              className={styles.registration__showHide__icon}
-              onClick={togglePassword}
-            />
+            <div onClick={togglePassword}>
+              <ShowPassword />
+            </div>
           )}
         </label>
       </div>
       <div className={styles.passStrength}>
         <div className={styles.strengthPercent}>
-          <span className={percentBar}></span>
+          <span
+            style={{
+              width: progress,
+              backgroundColor: getActiveColor(message),
+            }}
+          ></span>
         </div>
-        <span className={styles.strengthLabel}>{passLabel}</span>
+        {password.length !== 0 ? (
+          <p
+            className={styles.strengthLabel}
+            style={{ color: getActiveColor(message) }}
+          >
+            {message}
+          </p>
+        ) : null}
       </div>
+      <ErrorMessage className={styles.error} name={name} component={"p"} />
     </>
   );
 };
@@ -91,6 +124,10 @@ InputWithStrength.propTypes = {
   name: PropTypes.string,
   handleChange: PropTypes.func,
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+};
+
+InputWithStrength.defaultProps = {
+  handleChange: () => {}, // Додано значення за замовчуванням
 };
 
 export default InputWithStrength;

@@ -301,7 +301,7 @@ exports.editCustomerInfo = (req, res) => {
 // };
 exports.updatePassword = async (req, res) => {
   console.log(req.user);
-  // Check Validation
+  // Проверка валидации
   const { errors, isValid } = validateRegistrationForm(req.body);
   console.log(`isValid - ${isValid}`);
 
@@ -318,7 +318,7 @@ exports.updatePassword = async (req, res) => {
       console.log(`isMatch - ${isMatch}`);
       if (!isMatch) {
         errors.password = "Password does not match";
-        return res.json(errors);
+        return res.status(400).json(errors); // Возвращаем ошибку и статус 400
       } else {
         let newPassword = req.body.newPassword;
         try {
@@ -330,7 +330,7 @@ exports.updatePassword = async (req, res) => {
             { $set: { password: newPassword } },
             { new: true }
           );
-          res.json({
+          return res.json({  // Возвращаем успешный ответ и статус 200
             message: "Password successfully changed",
             customer: updatedCustomer,
           });
@@ -340,9 +340,10 @@ exports.updatePassword = async (req, res) => {
       }
     });
   } catch (err) {
-    res.status(400).json({
+    return res.status(400).json({
       message: `Error happened on server: "${err}" `,
     });
   }
 };
+
 

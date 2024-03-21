@@ -1,0 +1,49 @@
+@import "../../../styles/abstracts/mixins";
+
+.modalWrapper {
+  position: fixed;
+  z-index: 2;
+  bottom: 10px;
+  left: 50%;
+  width: 390px;
+  height: 150px;
+  padding: 20px;
+  border-radius: 8px;
+  transform: translate(-50%, 110%);
+  transition: transform 0.3s ease-in-out; /* Плавний перехід */
+  background-color: rgba(14, 14, 14, 0.97); /* Додаємо затемнення */
+}
+
+.modalWrapper.open {
+  transform: translate(-50%, 0%);
+}
+
+.modalContent {
+  height: 60px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+
+  .modalText {
+    @include small-text;
+    font-size: 16px;
+    letter-spacing: 2px;
+  }
+}
+
+.sectionContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modalCloseWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.containerFigure {
+  @include flex-center;
+}
