@@ -4,7 +4,7 @@ variables:
   RULES_CHANGES_PATH: "**/*"
   LIGHTHOUSE_HOME_PAGE_URL: "https://mern-b6d37.web.app/"
   LIGHTHOUSE_PHONES_PAGE_URL: "https://mern-b6d37.web.app/phones/"
-  LIGHTHOUSE_PRODUCT_PAGE_URL: "https://mern-b6d37.web.app/phones/iphone-15-pro-max?color=titanium%20grey&capacity=512/"
+  LIGHTHOUSE_PRODUCT_PAGE_URL: "https://mern-b6d37.web.app/phones/iphone-15-pro-max?color=titanium%20grey&capacity=512"
   LIGHTHOUSE_CART_PAGE_URL: "https://mern-b6d37.web.app/cart/"
   LIGHTHOUSE_FAVOURITES_PAGE_URL: "https://mern-b6d37.web.app/favorites/"
 stages:
