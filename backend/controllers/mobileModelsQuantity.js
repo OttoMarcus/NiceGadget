@@ -1,4 +1,4 @@
-const mobileModelsQuantity = require("../models/mobileModelQuantity");
+const mobileModelsQuantity = require("../models/MobileModelQuantity");
 const isValidMongoId = require("../validation/isValidMongoId");
 
 const uniqueRandom = require("unique-random");
