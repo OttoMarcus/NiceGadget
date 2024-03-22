@@ -19,15 +19,12 @@ function App() {
     const token = localStorage?.getItem("token");
     if (token) {
       const getUserOnLogin = async (token) => {
-        const user = await fetch(
-          `http://localhost:4000/api/customers/customer`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: token,
-            },
-          }
-        ).then((res) => res.json());
+        const user = await fetch(`/api/customers/customer`, {
+          method: "GET",
+          headers: {
+            Authorization: token,
+          },
+        }).then((res) => res.json());
         dispatch(addUser(user));
 
         dispatch(fetchCartItems());

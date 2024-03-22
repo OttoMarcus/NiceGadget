@@ -14,7 +14,7 @@ const Slider = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/api/advertising-sliders")
+      .get("/api/advertising-sliders")
       .then((response) => {
         setSliders(response.data.data);
       })

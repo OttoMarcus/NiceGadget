@@ -16,9 +16,9 @@ const Search = () => {
       try {
         const [phonesResponse, tabletsResponse, accessoriesResponse] =
           await Promise.all([
-            axios.get(`http://localhost:4000/api/phones?q=${searchField}`),
-            axios.get(`http://localhost:4000/api/tablets?q=${searchField}`),
-            axios.get(`http://localhost:4000/api/accessories?q=${searchField}`),
+            axios.get(`/api/phones?q=${searchField}`),
+            axios.get(`/api/tablets?q=${searchField}`),
+            axios.get(`/api/accessories?q=${searchField}`),
           ]);
 
         const phonesData = phonesResponse.data.data;

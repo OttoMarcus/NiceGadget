@@ -17,7 +17,7 @@ const Tablets = () => {
 
   const fetchTablets = () => {
     axios
-      .get(`http://localhost:4000/api/tablets`)
+      .get(`/api/tablets`)
       .then((response) => {
         setTabletsArr({ data: response.data.data });
       })

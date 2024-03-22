@@ -51,13 +51,9 @@ const UserUpdatePass = () => {
         password: valuesToSubmit.password,
         newPassword: valuesToSubmit.newPassword,
       };
-      sendAuthorizedRequest(
-        `http://localhost:4000/api/customers/password`,
-        "PUT",
-        {
-          body: JSON.stringify(requestBody),
-        }
-      )
+      sendAuthorizedRequest(`/api/customers/password`, "PUT", {
+        body: JSON.stringify(requestBody),
+      })
         .then((r) => {
           setSuccessfulMessage(true);
           setErr(false);

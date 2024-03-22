@@ -1,5 +1,5 @@
 // export const CreateFavorUser = async (user, products) => {
-//   const favorPost = await fetch(`http://localhost:4000/api/wishlist`, {
+//   const favorPost = await fetch(`/api/wishlist`, {
 //     method: `POST`,
 //     headers: {
 //       "Content-Type": "application/json",

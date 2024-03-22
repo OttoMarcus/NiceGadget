@@ -45,13 +45,9 @@ const UserDataInformation = () => {
         birthDate: values.birthday,
       };
 
-      await sendAuthorizedRequest(
-        `http://localhost:4000/api/customers`,
-        "PUT",
-        {
-          body: JSON.stringify(requestBody),
-        }
-      );
+      await sendAuthorizedRequest(`/api/customers`, "PUT", {
+        body: JSON.stringify(requestBody),
+      });
 
       dispatch(updateUser(requestBody));
       setResultMessage(true);
