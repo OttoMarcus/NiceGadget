@@ -9,7 +9,7 @@ export const fetchTodos = createAsyncThunk(
       const resultSlice = userId.slice(1, -1);
 
       if (token && resultSlice) {
-        const response = await fetch(`http://localhost:4000/api/wishlist`, {
+        const response = await fetch(`/api/wishlist`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -44,20 +44,17 @@ export const synchronizeFavor = createAsyncThunk(
       const resultSlice = userId.slice(1, -1);
       if (resultSlice && token) {
         const token = localStorage.getItem("token");
-        const response = await fetch(
-          `http://localhost:4000/api/wishlist/synchronize`,
-          {
-            method: `PUT`,
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: token,
-            },
-            body: JSON.stringify({
-              id: resultSlice,
-              products: JSON.parse(favor),
-            }),
-          }
-        );
+        const response = await fetch(`/api/wishlist/synchronize`, {
+          method: `PUT`,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+          body: JSON.stringify({
+            id: resultSlice,
+            products: JSON.parse(favor),
+          }),
+        });
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -81,7 +78,7 @@ export const fetchChange = createAsyncThunk(
     try {
       const token = localStorage.getItem("token");
       if (token) {
-        const response = await fetch(`http://localhost:4000/api/wishlist`, {
+        const response = await fetch(`/api/wishlist`, {
           method: `PUT`,
           headers: {
             "Content-Type": "application/json",
@@ -111,7 +108,7 @@ export const fetchChange = createAsyncThunk(
 //     try {
 //       const token = localStorage.getItem("token");
 //       if (token) {
-//         const response = await fetch(`http://localhost:4000/api/wishlist`, {
+//         const response = await fetch(`/api/wishlist`, {
 //           method: `PUT`,
 //           headers: {
 //             "Content-Type": "application/json",

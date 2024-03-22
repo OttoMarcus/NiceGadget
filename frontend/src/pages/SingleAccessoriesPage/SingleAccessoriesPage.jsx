@@ -24,7 +24,7 @@ const SingleAccessoriesPage = () => {
   const inCart = cartItems.some((item) => item.customId === activeAccessoryId);
 
   useEffect(() => {
-    fetch(`http://localhost:4000/api/accessories-models/${accessoryId}`)
+    fetch(`/api/accessories-models/${accessoryId}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -65,7 +65,7 @@ const SingleAccessoriesPage = () => {
                       productToAdd={null}
                       isAvailable={accessoryAvailable}
                       inCart={inCart}
-                      fetchDetailsUrl={`http://localhost:4000/api/accessories/byProductId/${activeAccessoryId}`}
+                      fetchDetailsUrl={`/api/accessories/byProductId/${activeAccessoryId}`}
                     />
 
                     <Favorite

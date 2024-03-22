@@ -7,7 +7,7 @@ export const useFetchModelData = (pathname, modelId, typeModel) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/api/${typeModel}-models/${modelId}/`)
+      .get(`/api/${typeModel}-models/${modelId}/`)
       .then((response) => {
         setModel(response.data);
       })

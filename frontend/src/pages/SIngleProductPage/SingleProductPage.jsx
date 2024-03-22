@@ -123,7 +123,7 @@ const SingleProductPage = () => {
                       productToAdd={null}
                       isAvailable={chosenCapacityObject?.available}
                       inCart={inCart}
-                      fetchDetailsUrl={`http://localhost:4000/api/${typeModel}/byProductId/${chosenCapacityObject?.productId}`}
+                      fetchDetailsUrl={`/api/${typeModel}/byProductId/${chosenCapacityObject?.productId}`}
                     />
 
                     <Favorite

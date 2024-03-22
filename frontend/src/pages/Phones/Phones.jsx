@@ -39,7 +39,7 @@ const Phones = () => {
 
   // useEffect(() => {
   //   fetch(
-  //     `http://localhost:4000/api/phones?sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
+  //     `/api/phones?sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
   //   )
   //     .then((res) => {
   //       if (!res.ok) {
@@ -93,14 +93,14 @@ const Phones = () => {
   //     // }
 
   //     // const fetchURL = sortParam
-  //     //   ? `http://localhost:4000/api/phones?sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
-  //     //   : `http://localhost:4000/api/phones?sort=${defaultSortValue}&perPage=${reqPerPage}&startPage=${currentPage}`;
+  //     //   ? `/api/phones?sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
+  //     //   : `/api/phones?sort=${defaultSortValue}&perPage=${reqPerPage}&startPage=${currentPage}`;
   //   }, [])
 
   // useEffect(() => {
 
   //   fetch(
-  //     `http://localhost:4000/api/phones?sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
+  //     `/api/phones?sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
   //   )
   //     .then((res) => {
   //       if (!res.ok) {
@@ -135,7 +135,7 @@ const Phones = () => {
   const fetchData = async (sortValue, cardsPerPageValue, currentPage) => {
     try {
       const res = await fetch(
-        `http://localhost:4000/api/phones?sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
+        `/api/phones?sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
       );
       if (!res.ok) {
         throw new Error("Network response was not ok");

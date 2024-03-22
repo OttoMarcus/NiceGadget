@@ -29,7 +29,7 @@ const UserRegForm = () => {
   const createNewUser = async (userData) => {
     try {
       // setCredentials({loginOrEmail: userData.login, password: userData.password})
-      const response = await fetch(`http://localhost:4000/api/customers`, {
+      const response = await fetch(`/api/customers`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -58,7 +58,7 @@ const UserRegForm = () => {
   // const loginUser = async (userCredentials) => {
   //   try {
   //     const response = await fetch(
-  //       `http://localhost:4000/api/customers/login`,
+  //       `/api/customers/login`,
   //       {
   //         method: "POST",
   //         headers: {
@@ -79,16 +79,13 @@ const UserRegForm = () => {
 
   const loginUser = async (userCredentials) => {
     try {
-      const response = await fetch(
-        `http://localhost:4000/api/customers/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userCredentials),
-        }
-      ).then((res) => {
+      const response = await fetch(`/api/customers/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userCredentials),
+      }).then((res) => {
         if (res.ok) {
           return res.json();
         } else {
@@ -108,7 +105,7 @@ const UserRegForm = () => {
   };
 
   const getUserOnLogin = async (token) => {
-    const user = await fetch(`http://localhost:4000/api/customers/customer`, {
+    const user = await fetch(`/api/customers/customer`, {
       method: "GET",
       headers: {
         Authorization: token,
