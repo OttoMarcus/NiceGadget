@@ -13,7 +13,7 @@ const Accessories = () => {
 
   const fetchAccessories = () => {
     axios
-      .get("http://localhost:4000/api/accessories")
+      .get("/api/accessories")
       .then((response) => {
         setAccessoriesArr({ data: response.data.data });
       })

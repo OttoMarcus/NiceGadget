@@ -14,7 +14,7 @@ const FAQchat = () => {
   useEffect(() => {
     // Получение данных FAQ с сервера
     axios
-      .get("http://localhost:4000/api/faq")
+      .get("/api/faq")
       .then((response) => {
         setFaqData(response.data);
       })

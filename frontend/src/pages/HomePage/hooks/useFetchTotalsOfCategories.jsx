@@ -8,7 +8,7 @@ const useFetchTotalsOfCategories = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/api/phones/total`)
+      .get(`/api/phones/total`)
       .then((response) => {
         setPhonesTotal(response.data.total);
       })
@@ -17,7 +17,7 @@ const useFetchTotalsOfCategories = () => {
       });
 
     axios
-      .get(`http://localhost:4000/api/tablets/total`)
+      .get(`/api/tablets/total`)
       .then((response) => {
         setTabletsTotal(response.data.total);
       })
@@ -29,7 +29,7 @@ const useFetchTotalsOfCategories = () => {
       });
 
     axios
-      .get(`http://localhost:4000/api/accessories/total`)
+      .get(`/api/accessories/total`)
       .then((response) => {
         setAccessoriesTotal(response.data.total);
       })

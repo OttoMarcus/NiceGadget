@@ -1,164 +1,148 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./User.module.scss";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import UserInfoIcon from "../../Components/Icons/UserInfoIcon";
+import UpdatePassIcon from "../../Components/Icons/UpdatePassIcon";
+import UserProfileIcon from "../../Components/Icons/UserProfileIcon";
 import Input from "../../Components/Profile/CustomInput/Input";
 import { Form, Formik } from "formik";
-import validationSchema from "../../Components/Forms/UserRegFrom/validationSchema";
-import { sendAuthorizedRequest } from "../../helpers/sendRequest";
-import ButtonProfile from "../../Components/Profile/ButtonProfile/ButtonProfile";
-import { ReactComponent as UserIcon } from "./UserImg/profile-user.svg";
-import { ReactComponent as ChangePass } from "./UserImg/change-password-icon.svg";
-import UpArrowIcon from "../../Components/Icons/UpArrowIcon";
-import RightArrowIcon from "../../Components/Icons/RightArrowIcon";
 
 const User = () => {
   const { user } = useSelector((state) => state.user);
-  const [resultMessage, setResultMessage] = useState(false);
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [isArrowTurnDownVisible, setIsArrowTurnDownVisible] = useState(true);
-
-  useEffect(() => {
-    const storedIsArrowTurnDownVisible = JSON.parse(
-      localStorage.getItem("isArrowTurnDownVisible")
+  if (!Object.keys(user).length) {
+    return (
+      <>
+        <div className={styles.container}>
+          <section className={styles.unauthorizedWrapper}>
+            <h3 className={styles.unauthorizedWrapperTitle}>
+              You are not authorized
+            </h3>
+            <span className={styles.unauthorizedWrapperSubtitle}>
+              Please,&nbsp;
+              <NavLink to="/login" className={styles.unauthorizedLogin}>
+                Login
+              </NavLink>{" "}
+              or&nbsp;
+              <Link to="/registration" className={styles.unauthorizedSignup}>
+                Signup
+              </Link>{" "}
+              to gain access
+            </span>
+          </section>
+        </div>
+      </>
     );
-    if (storedIsArrowTurnDownVisible !== null) {
-      setIsArrowTurnDownVisible(storedIsArrowTurnDownVisible);
-    }
-  }, []);
+  } else {
+    return (
+      <>
+        <section className={styles.container}>
+          <div className={styles.userContainer}>
+            <div className={styles.sectionAvatar}>
+              <div className={styles.avatarIcon}>
+                <UserProfileIcon />
+              </div>
+              <div className={styles.registration__sectionTitle}>
+                <p className={styles.registration__sectionTitleText}>
+                  WELCOME,
+                </p>
+                <p className={styles.registration__sectionTitleName}>
+                  {user?.firstName}&nbsp;!
+                </p>
+              </div>
+            </div>
 
-  const toggleSection = () => {
-    setIsOpen(!isOpen);
-    setIsArrowTurnDownVisible(!isOpen);
-  };
-
-  const handleSubmit = (values, { resetForm }) => {
-    const [firstName, lastName] = values.username.split(" ");
-    const requestBody = {
-      firstName: firstName,
-      lastName: lastName,
-      login: values.login,
-      email: values.email,
-      telephone: values.phoneNumber,
-      country: values.country,
-      homeAddress: values.homeAddress,
-    };
-
-    sendAuthorizedRequest(`http://localhost:4000/api/customers`, "PUT", {
-      body: JSON.stringify(requestBody),
-    }).then((r) => {
-      setResultMessage(true);
-    });
-  };
-
-  return (
-    <section className={styles.container}>
-      <div className={styles.sectionSubtitle}>
-        <UserIcon />
-        <h2 className={styles.registration__sectionTitle}>
-          Welcome, {user?.firstName}!
-        </h2>
-      </div>
-      <div className={styles.sectionUser}>
-        <div className={styles.sectionDataUser}>
-          <h3
-            className={styles.registration__sectionSubtitle}
-            onClick={toggleSection}
-          >
-            User profile information
-            {isArrowTurnDownVisible ? <UpArrowIcon /> : <RightArrowIcon />}
-          </h3>
-          {isOpen && (
-            <Formik
-              initialValues={{
-                login: user?.login || "",
-                username: `${user?.firstName} ${user?.lastName}` || "",
-                email: user?.email || "",
-                phoneNumber: user?.telephone || "",
-                country: user?.country || "",
-                homeAddress: user?.homeAddress || "",
-              }}
-              validationSchema={validationSchema}
-              onSubmit={handleSubmit}
-              enableReinitialize={true}
-            >
-              {({ errors, touched, handleChange, handleSubmit }) => (
-                <Form
-                  className={styles.registration__form}
-                  onSubmit={handleSubmit}
+            <section className={styles.categoryUsers}>
+              <div className={styles.login__registrationSection}>
+                <Link
+                  style={{ color: "#FFFFFF" }}
+                  to="/data-information"
+                  className={styles.linkCategoryUsers}
                 >
-                  {resultMessage ? (
-                    <p className={styles.login__registrationError}>
-                      Information successfully updated
-                    </p>
-                  ) : (
-                    <span></span>
-                  )}
-                  <Input
-                    className={styles.registration__sectionInput}
-                    name="username"
-                    placeholder="First and last name"
-                    label="Your full name"
-                    error={errors.username && touched.username}
-                  />
-                  <Input
-                    className={styles.registration__sectionInput}
-                    name="login"
-                    placeholder="Login"
-                    label="Your login"
-                    error={errors.login && touched.login}
-                  />
-                  <Input
-                    className={styles.registration__sectionInput}
-                    name="email"
-                    placeholder="example@gmail.com"
-                    label="Your Email"
-                    error={errors.email && touched.email}
-                  />
-                  <Input
-                    className={styles.registration__sectionInput}
-                    name="phoneNumber"
-                    placeholder="+380"
-                    label="Your phone number"
-                    error={errors.phone && touched.phone}
-                  />
-                  <Input
-                    className={styles.registration__sectionInput}
-                    name="country"
-                    placeholder="Ukraine"
-                    label="Your country"
-                  />
-                  <Input
-                    className={styles.registration__sectionInput}
-                    name="homeAddress"
-                    placeholder="Kyiv, Bandery street, 1"
-                    label="Your home address"
-                  />
-                  <div className={styles.login__sectionBtn}>
-                    <ButtonProfile
-                      type="submit"
-                      text="Update information"
-                      className={styles.section__btnCheckout}
+                  Editing profile information
+                </Link>
+                <UserInfoIcon className={styles.iconForListUser} />
+              </div>
+
+              <div className={styles.login__registrationSection}>
+                <Link
+                  style={{ color: "#FFFFFF" }}
+                  to="/update-password"
+                  className={styles.linkCategoryUsers}
+                >
+                  Change password&nbsp;
+                </Link>
+                <UpdatePassIcon className={styles.iconForListUser} />
+              </div>
+            </section>
+            <section className={styles.userInfoContainer}>
+              <div className={styles.userInformation}>
+                <div className={styles.sectionTitle}>
+                  <h2 className={styles.dataTitle}>Your profile information</h2>
+                </div>
+                <Formik
+                  initialValues={{
+                    login: user?.login || "",
+                    firstName: user?.firstName || "",
+                    lastName: user?.lastName || "",
+                    email: user?.email || "",
+                    phoneNumber: user?.telephone || "",
+                    birthday: user?.birthDate || "",
+                  }}
+                  onSubmit={(e) => e.preventDefault()}
+                >
+                  <Form className={styles.infoDataForm}>
+                    <Input
+                      disabled
+                      className={styles.dataInput}
+                      name="firstName"
+                      placeholder="First name"
+                      label="Your First name:"
                     />
-                  </div>
-                </Form>
-              )}
-            </Formik>
-          )}
-        </div>
-        <div className={styles.login__registrationSection}>
-          <Link
-            to="/update-password"
-            className={styles.login__registrationTitle}
-          >
-            Change password&nbsp;
-            <ChangePass className={styles.changePassIcon} />
-          </Link>
-        </div>
-      </div>
-    </section>
-  );
+                    <Input
+                      disabled
+                      className={styles.dataInput}
+                      name="lastName"
+                      placeholder="Last name"
+                      label="Your Last name:"
+                    />
+                    <Input
+                      disabled
+                      className={styles.dataInput}
+                      name="login"
+                      placeholder="Login"
+                      label="Your Login:"
+                    />
+                    <Input
+                      disabled
+                      className={styles.dataInput}
+                      name="email"
+                      placeholder="example@gmail.com"
+                      label="Your Email:"
+                    />
+                    <Input
+                      disabled
+                      className={styles.dataInput}
+                      name="phoneNumber"
+                      placeholder="+380"
+                      label="Your phone number:"
+                    />
+                    <Input
+                      disabled
+                      className={styles.dataInput}
+                      name="birthday"
+                      label="Your Birthday:"
+                    />
+                  </Form>
+                </Formik>
+              </div>
+            </section>
+          </div>
+        </section>
+      </>
+    );
+  }
 };
 
 export default User;

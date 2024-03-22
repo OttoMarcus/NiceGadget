@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
 import { useHandleAddToCart } from "../Cart/hooks/useHandleAddToCart";
 import PropTypes from "prop-types";
@@ -9,7 +8,6 @@ const CartButton = ({ productToAdd, fetchDetailsUrl, isAvailable, inCart }) => {
   const isAuthorized = useSelector((state) => state.user.isAuthorized);
   const backgroundColorBtn = isAvailable && !inCart ? "#905BFF" : "#323542";
   const handleAddToCart = useHandleAddToCart(isAuthorized);
-  const navigate = useNavigate();
 
   const handleClick = async (event) => {
     event.stopPropagation();
@@ -18,7 +16,6 @@ const CartButton = ({ productToAdd, fetchDetailsUrl, isAvailable, inCart }) => {
     if (!isAvailable) return;
 
     await handleAddToCart(productToAdd, fetchDetailsUrl);
-    navigate("/cart");
   };
 
   return (

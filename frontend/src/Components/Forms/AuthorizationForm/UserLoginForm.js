@@ -28,7 +28,7 @@ const UserLoginForm = () => {
   const onAuthRedirect = () => {
     if (localStorage.getItem("token")) {
       const prevPath = sessionStorage.getItem("prevPath");
-      console.log(prevPath);
+
       if (prevPath) {
         navigate(prevPath);
       } else {
@@ -44,16 +44,13 @@ const UserLoginForm = () => {
 
   const loginUser = async (userCredentials) => {
     try {
-      const response = await fetch(
-        `http://localhost:4000/api/customers/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userCredentials),
-        }
-      ).then((res) => {
+      const response = await fetch(`/api/customers/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userCredentials),
+      }).then((res) => {
         if (res.ok) {
           return res.json();
         } else {
@@ -65,7 +62,6 @@ const UserLoginForm = () => {
 
       // const result = await response.json();
       localStorage.setItem("token", response.token);
-      console.log(response.token);
 
       return response.token;
     } catch (error) {
@@ -77,7 +73,7 @@ const UserLoginForm = () => {
 
   const getUserOnLogin = async (token) => {
     try {
-      const user = await fetch(`http://localhost:4000/api/customers/customer`, {
+      const user = await fetch(`/api/customers/customer`, {
         method: "GET",
         headers: {
           Authorization: token,
@@ -90,7 +86,6 @@ const UserLoginForm = () => {
         }
       });
 
-      console.log(user);
       dispatch(addUser(user));
       return user;
     } catch (error) {

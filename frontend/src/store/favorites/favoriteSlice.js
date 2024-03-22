@@ -7,10 +7,9 @@ export const fetchTodos = createAsyncThunk(
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("user");
       const resultSlice = userId.slice(1, -1);
-      console.log(`token`, token);
-      console.log(userId);
+
       if (token && resultSlice) {
-        const response = await fetch(`http://localhost:4000/api/wishlist`, {
+        const response = await fetch(`/api/wishlist`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -20,16 +19,12 @@ export const fetchTodos = createAsyncThunk(
           },
         });
         const data = await response.json();
-        console.log(
-          `data fetchTodosfetchTodosfetchTodosfetchTodos`,
-          data.products
-        );
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         let ret = data.products || [];
-        console.log(`ret ret `, ret);
+
         return ret;
       }
     } catch (error) {
@@ -49,20 +44,17 @@ export const synchronizeFavor = createAsyncThunk(
       const resultSlice = userId.slice(1, -1);
       if (resultSlice && token) {
         const token = localStorage.getItem("token");
-        const response = await fetch(
-          `http://localhost:4000/api/wishlist/synchronize`,
-          {
-            method: `PUT`,
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: token,
-            },
-            body: JSON.stringify({
-              id: resultSlice,
-              products: JSON.parse(favor),
-            }),
-          }
-        );
+        const response = await fetch(`/api/wishlist/synchronize`, {
+          method: `PUT`,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+          body: JSON.stringify({
+            id: resultSlice,
+            products: JSON.parse(favor),
+          }),
+        });
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -70,8 +62,7 @@ export const synchronizeFavor = createAsyncThunk(
         localStorage.setItem(`favorites`, []);
 
         const data = await response.json();
-        console.log(`synchronizeFavor synchronizeFavor`, data);
-        // console.log(`data fetchChangefetchChangefetchChangefetchChange`, data);
+
         return data;
       }
     } catch (error) {
@@ -85,12 +76,9 @@ export const fetchChange = createAsyncThunk(
   "todos/fetchChange",
   async function ({ user, ...products }) {
     try {
-      // console.log(`cyka cyda dochla1`, products.favor);
       const token = localStorage.getItem("token");
       if (token) {
-        console.log(`change featchfeatchfeatchfeatchfeatch`, user);
-
-        const response = await fetch(`http://localhost:4000/api/wishlist`, {
+        const response = await fetch(`/api/wishlist`, {
           method: `PUT`,
           headers: {
             "Content-Type": "application/json",
@@ -98,16 +86,13 @@ export const fetchChange = createAsyncThunk(
           },
           body: JSON.stringify({ id: user._id, products: products.favor }),
         });
-        // console.log(`cyka cyda dochla`, user, products);
-        // console.log(`response.ok`, response.ok === 200);
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
 
         const data = await response.json();
-        console.log(`data vheng`, data);
-        // console.log(`data fetchChangefetchChangefetchChangefetchChange`, data);
+
         return data;
       }
     } catch (error) {
@@ -123,7 +108,7 @@ export const fetchChange = createAsyncThunk(
 //     try {
 //       const token = localStorage.getItem("token");
 //       if (token) {
-//         const response = await fetch(`http://localhost:4000/api/wishlist`, {
+//         const response = await fetch(`/api/wishlist`, {
 //           method: `PUT`,
 //           headers: {
 //             "Content-Type": "application/json",
@@ -190,7 +175,6 @@ const favoriteSlice = createSlice({
       .addCase(fetchTodos.fulfilled, (state, action) => {
         state.status = "resolve";
         if (action.payload) {
-          console.log(`cyka`, action.payload);
           state.favorites = action.payload;
         }
       })

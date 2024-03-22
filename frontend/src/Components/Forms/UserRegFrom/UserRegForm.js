@@ -5,7 +5,7 @@ import Input from "../CustomInput.js";
 import Button from "../../Button/Button.jsx";
 import styles from "./UserRegForm.module.scss";
 import { addUser } from "../../../store/user/userSlice.js";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
   synchronizeCartWithServer,
@@ -25,12 +25,11 @@ const UserRegForm = () => {
     setRegError("");
     // setCredentials({})
   }, []);
-  const user = useSelector((state) => state.user.user);
+  // const user = useSelector((state) => state.user.user);
   const createNewUser = async (userData) => {
     try {
-      console.log(userData);
       // setCredentials({loginOrEmail: userData.login, password: userData.password})
-      const response = await fetch(`http://localhost:4000/api/customers`, {
+      const response = await fetch(`/api/customers`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,9 +38,9 @@ const UserRegForm = () => {
       });
       if (response.ok) {
         setRegStatus("successful");
-        setTimeout(() => {
-          console.log(`user`, user);
-        }, 1000);
+        //setTimeout(() => {
+        //console.log(`user`, user);
+        //}, 1000);
         return await response.json();
       } else {
         setRegStatus("failed");
@@ -59,7 +58,7 @@ const UserRegForm = () => {
   // const loginUser = async (userCredentials) => {
   //   try {
   //     const response = await fetch(
-  //       `http://localhost:4000/api/customers/login`,
+  //       `/api/customers/login`,
   //       {
   //         method: "POST",
   //         headers: {
@@ -80,16 +79,13 @@ const UserRegForm = () => {
 
   const loginUser = async (userCredentials) => {
     try {
-      const response = await fetch(
-        `http://localhost:4000/api/customers/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userCredentials),
-        }
-      ).then((res) => {
+      const response = await fetch(`/api/customers/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userCredentials),
+      }).then((res) => {
         if (res.ok) {
           return res.json();
         } else {
@@ -101,7 +97,6 @@ const UserRegForm = () => {
 
       // const result = await response.json();
       localStorage.setItem("token", response.token);
-      console.log(response.token);
 
       return response.token;
     } catch (error) {
@@ -110,7 +105,7 @@ const UserRegForm = () => {
   };
 
   const getUserOnLogin = async (token) => {
-    const user = await fetch(`http://localhost:4000/api/customers/customer`, {
+    const user = await fetch(`/api/customers/customer`, {
       method: "GET",
       headers: {
         Authorization: token,
@@ -134,7 +129,7 @@ const UserRegForm = () => {
   const onAuthRedirect = () => {
     if (localStorage.getItem("token")) {
       const prevPath = sessionStorage.getItem("prevPath");
-      console.log(prevPath);
+
       if (prevPath) {
         navigate(prevPath);
       } else {

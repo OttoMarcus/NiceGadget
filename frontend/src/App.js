@@ -16,19 +16,19 @@ function App() {
   const prevPathRef = useRef(location.pathname);
 
   useEffect(() => {
-    const getUserOnLogin = async (token) => {
-      const user = await fetch(`http://localhost:4000/api/customers/customer`, {
-        method: "GET",
-        headers: {
-          Authorization: token,
-        },
-      }).then((res) => res.json());
-      dispatch(addUser(user));
-
-      dispatch(fetchCartItems());
-    };
     const token = localStorage?.getItem("token");
     if (token) {
+      const getUserOnLogin = async (token) => {
+        const user = await fetch(`/api/customers/customer`, {
+          method: "GET",
+          headers: {
+            Authorization: token,
+          },
+        }).then((res) => res.json());
+        dispatch(addUser(user));
+
+        dispatch(fetchCartItems());
+      };
       getUserOnLogin(token);
     } else {
       dispatch(removeUser());
@@ -38,18 +38,20 @@ function App() {
 
   useEffect(() => {
     const handleRouteChange = () => {
-      const currentPath = location.pathname;
+      const currentFullPath = window.location.href.split(
+        window.location.origin
+      )[1];
       const prevPath = prevPathRef.current;
 
-      if (!["/login", "/registration"].includes(currentPath)) {
+      if (!["/login", "/registration", "/cart"].includes(location.pathname)) {
         sessionStorage.setItem("prevPath", prevPath);
       }
 
-      prevPathRef.current = currentPath;
+      prevPathRef.current = currentFullPath;
     };
 
     handleRouteChange();
-  }, [location.pathname]);
+  }, [location.pathname, location.search]);
 
   const user = useSelector((state) => state.user.user);
 

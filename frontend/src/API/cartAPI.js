@@ -8,7 +8,7 @@ export const fetchCartItems = createAsyncThunk(
 
     if (isAuthorized && token) {
       try {
-        const response = await fetch("http://localhost:4000/api/cart", {
+        const response = await fetch("/api/cart", {
           method: "GET",
           headers: {
             Authorization: token,
@@ -36,7 +36,7 @@ export const addToCartServer = createAsyncThunk(
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(`http://localhost:4000/api/cart/${_id}`, {
+      const response = await fetch(`/api/cart/${_id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -62,17 +62,14 @@ export const incrementQuantityServer = createAsyncThunk(
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(
-        `http://localhost:4000/api/cart/increase/${productId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-          body: JSON.stringify({ productId }),
-        }
-      );
+      const response = await fetch(`/api/cart/increase/${productId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify({ productId }),
+      });
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -90,17 +87,14 @@ export const decrementQuantityServer = createAsyncThunk(
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(
-        `http://localhost:4000/api/cart/decrease/${productId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-          body: JSON.stringify({ productId }),
-        }
-      );
+      const response = await fetch(`/api/cart/decrease/${productId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify({ productId }),
+      });
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -118,15 +112,12 @@ export const removeFromCartServer = createAsyncThunk(
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(
-        `http://localhost:4000/api/cart/${productId}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const response = await fetch(`/api/cart/${productId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: token,
+        },
+      });
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -152,7 +143,7 @@ export const synchronizeCartWithServer = createAsyncThunk(
     const localCartItems = JSON.parse(localStorage.getItem("cart")) || [];
 
     try {
-      const response = await fetch("http://localhost:4000/api/cart/sync", {
+      const response = await fetch("/api/cart/sync", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

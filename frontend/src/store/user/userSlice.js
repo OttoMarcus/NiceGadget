@@ -21,8 +21,13 @@ const userSlice = createSlice({
       state.user = {};
       state.isAuthorized = false;
     },
+
+    updateUser: (state, action) => {
+      // Нова дія для оновлення інформації про користувача
+      state.user = action.payload;
+    },
   },
 });
 
-export const { addUser, removeUser } = userSlice.actions;
+export const { addUser, removeUser, updateUser } = userSlice.actions;
 export default userSlice.reducer;
