@@ -175,7 +175,7 @@ lighthouse:
     - cd frontend/
     - npm i -g lighthouse
   script:
-    - lighthouse --chrome-flags="--headless --no-sandbox" $LIGHTHOUSE_TEST_URL --output html --output-path ./report.html
+    - lighthouse --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" $LIGHTHOUSE_TEST_URL --output html --output-path ./report.html
   artifacts:
     paths:
       - frontend/report.html
