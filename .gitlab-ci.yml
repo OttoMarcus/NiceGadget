@@ -2,7 +2,11 @@ variables:
   SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
   GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
   RULES_CHANGES_PATH: "**/*"
-  LIGHTHOUSE_TEST_URL: "https://mern-b6d37.web.app/"
+  LIGHTHOUSE_HOME_PAGE_URL: "https://mern-b6d37.web.app/"
+  LIGHTHOUSE_PHONES_PAGE_URL: "https://mern-b6d37.web.app/phones/"
+  LIGHTHOUSE_PRODUCT_PAGE_URL: "https://mern-b6d37.web.app/phones/iphone-15-pro-max?color=titanium%20grey&capacity=512/"
+  LIGHTHOUSE_CART_PAGE_URL: "https://mern-b6d37.web.app/cart/"
+  LIGHTHOUSE_FAVOURITES_PAGE_URL: "https://mern-b6d37.web.app/favorites/"
 stages:
   - build
   - test
@@ -175,10 +179,18 @@ lighthouse:
     - cd frontend/
     - npm i -g lighthouse
   script:
-    - lighthouse --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" $LIGHTHOUSE_TEST_URL --output html --output-path ./report.html
+    - lighthouse --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" $LIGHTHOUSE_HOME_PAGE_URL --output html --output-path ./report_home.html
+    - lighthouse --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" $LIGHTHOUSE_PHONES_PAGE_URL --output html --output-path ./report_phones.html
+    - lighthouse --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" $LIGHTHOUSE_PRODUCT_PAGE_URL --output html --output-path ./report_product.html
+    - lighthouse --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" $LIGHTHOUSE_CART_PAGE_URL --output html --output-path ./report_cart.html
+    - lighthouse --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" $LIGHTHOUSE_FAVOURITES_PAGE_URL --output html --output-path ./report_favourites.html
   artifacts:
     paths:
-      - frontend/report.html
+      - frontend/report_home.html
+      - frontend/report_phones.html
+      - frontend/report_product.html
+      - frontend/report_cart.html
+      - frontend/report_favourites.html
     expire_in: 1 week
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
