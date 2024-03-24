@@ -19,7 +19,10 @@ const CardAccessories = (props) => {
   const inCart = cartItems.some((item) => item.productId === productToAdd._id);
 
   return (
-    <Link to={`/${category}/${name}?color=${color}`}>
+    <Link
+      to={`/${category}/${name}?color=${color}`}
+      className={styles.cardLink}
+    >
       <div className={styles.card}>
         <div className={styles.cardImg}>
           <img src={picture} alt="Card" />
