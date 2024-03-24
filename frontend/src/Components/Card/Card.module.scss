@@ -100,3 +100,9 @@
   align-items: center;
   text-align: center;
 }
+
+.cardLink {
+  cursor: pointer;
+  text-decoration: unset;
+  color: $ui-color-gray-white;
+}

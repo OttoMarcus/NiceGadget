@@ -2,19 +2,7 @@
 @import "../../styles/abstracts/mixins";
 @import "../../styles/global/base";
 
-* {
-  box-sizing: border-box;
-
-  &::before {
-    box-sizing: border-box;
-  }
-
-  &::after {
-    box-sizing: border-box;
-  }
-}
-
-a {
+.crumbLink {
   cursor: pointer;
   text-decoration: unset;
   color: $ui-color-gray-white;
