@@ -34,7 +34,7 @@ const tabletProducts = require('./routes/tabletProducts');
 const tabletModelQuantity = require('./routes/tabletModelsQuantity')
 const advertisingSlider = require('./routes/advertisingSlider')
 const faqchat = require('./routes/faqchat')
-
+const brandnew = require ('./routes/brandNews')
 
 const app = express();
 
@@ -85,6 +85,8 @@ app.use('/api/tablets', tabletProducts);
 app.use('/api/tablets-models-quantity', tabletModelQuantity);
 app.use('/api/advertising-sliders', advertisingSlider);
 app.use('/api/faq', faqchat);
+app.use('/api/brand-news', brandnew);
+
 
 
 

@@ -7,26 +7,9 @@ import FAQchat from "../../Components/FAQchat/FAQchat";
 import { useState } from "react";
 import Icon from "../../Components/FAQchat/Image/support.gif";
 import IconClose from "../../Components/FAQchat/Image/letter-x.gif";
+import BrandNews from "../../Components/BrandNews/BrandNews";
 
 const HomePage = () => {
-  const brandNewModels = {
-    id: "1234",
-    title: "Brand new models",
-    picture: "MocPic/iphone1.png",
-    refModel: {
-      modelId: "iphone-15-pro-max",
-      modelName: "iPhone15ProMax",
-    },
-    name: "Apple iPhone 15 Pro Max 512GB White",
-    capacity: "512",
-    color: "white",
-    price: 1575,
-    ram: "8",
-    brandNew: true,
-    screen: "6.7",
-    available: true,
-  };
-
   const hotPrices = {
     id: "5678",
     title: "Hot prices",
@@ -97,7 +80,7 @@ const HomePage = () => {
       </section>
 
       <section className={`${style.container} ${style.homePageSection}`}>
-        <CardList {...brandNewModels} />
+        <BrandNews />
       </section>
 
       <section className={`${style.container} ${style.homePageSection}`}>
