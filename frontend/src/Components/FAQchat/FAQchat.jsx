@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./FAQchat.module.scss";
-import Image from "./Image/background.png";
-import Instagram from "./Image/instagram.png";
-import Telegram from "./Image/telegram.png";
-import Gmail from "./Image/gmail.png";
-import Facebook from "./Image/facebook.png";
 
 const FAQchat = () => {
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [faqData, setFaqData] = useState([]);
 
   useEffect(() => {
-    // Получение данных FAQ с сервера
     axios
       .get("/api/faq")
       .then((response) => {
@@ -29,7 +23,11 @@ const FAQchat = () => {
 
   return (
     <div className={styles.chatWrapper}>
-      <img className={styles.backImg} src={Image} alt="back" />
+      <img
+        className={styles.backImg}
+        src="https://res.cloudinary.com/de71eui6p/image/upload/v1711375123/Slider/qqtf1vmuwdo46x9cvisv.webp"
+        alt="back"
+      />
       {faqData.map((item, index) => (
         <div key={index} className={styles.faqItem}>
           <div
@@ -54,26 +52,38 @@ const FAQchat = () => {
       <div className={styles.conctactbtn}>
         <div>
           <a href="https://t.me/nicegadgetstore">
-            <img className={styles.linkSocial} src={Telegram} alt="Telegram" />
+            <img
+              className={styles.linkSocial}
+              src="https://res.cloudinary.com/de71eui6p/image/upload/v1711375286/Slider/zwpnzpy4gdrardowloam.webp"
+              alt="Telegram"
+            />
           </a>
         </div>
         <div>
           <a href="https://www.instagram.com/n1cegadgetstore">
             <img
               className={styles.linkSocial}
-              src={Instagram}
+              src="https://res.cloudinary.com/de71eui6p/image/upload/v1711375285/Slider/iypblt7wvhyl9vjywwdr.webp"
               alt="Instagram"
             />
           </a>
         </div>
         <div>
           <a href="https://www.facebook.com/groups/258628787334330">
-            <img className={styles.linkSocial} src={Facebook} alt="Facebook" />
+            <img
+              className={styles.linkSocial}
+              src="https://res.cloudinary.com/de71eui6p/image/upload/v1711375284/Slider/ba2xqvptwh9cpu5ekzij.webp"
+              alt="Facebook"
+            />
           </a>
         </div>
         <div>
           <a href="mailto:testfrontendmail@gmail.com">
-            <img className={styles.linkSocial} src={Gmail} alt="Gmail" />
+            <img
+              className={styles.linkSocial}
+              src="https://res.cloudinary.com/de71eui6p/image/upload/v1711375285/Slider/xqxh0u9umai1oa91dgg8.webp"
+              alt="Gmail"
+            />
           </a>
         </div>
       </div>
@@ -81,4 +91,4 @@ const FAQchat = () => {
   );
 };
 
-export default FAQchat;
+export default React.memo(FAQchat);
