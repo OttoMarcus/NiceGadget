@@ -5,7 +5,6 @@ import RightArrowIcon from "../Icons/RightArrowIcon";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Star from "./Star/Star";
-import Recotypole from "./Recotypole/Recotypole";
 import Sakura from "./Sakura/Sakura";
 
 const Slider = () => {
@@ -78,7 +77,6 @@ const Slider = () => {
       case "type2":
         return (
           <div className={styles.sliderSecond}>
-            <Recotypole />
             <div className={styles.bannerWrapperSecond}>
               <div className={styles.infoWrapper}>
                 <h2 className={styles.titleSecond}>{slider.title}</h2>
@@ -95,13 +93,13 @@ const Slider = () => {
       case "type3":
         return (
           <div className={styles.sliderThird}>
-            <Sakura />
             <div className={styles.bannerWrapperSecond}>
               <div className={styles.infoWrapper}>
                 <h2 className={styles.titleThird}>{slider.title}</h2>
                 <Link to="/phones" className={styles.linkBtnThird}>
                   Buy
                 </Link>
+                <Sakura />
                 <p className={styles.subtitleThird}>
                   {sliders[currentIndex].subtitle}
                 </p>

@@ -56,8 +56,50 @@
     color: $ui-color-gray-white;
   }
 
+  .priceWrap {
+    width: 100%;
+    @include flex-between;
+    position: relative;
+  }
+
   .price {
+    @include h4;
+    color: $ui-color-gray-secondary;
+  }
+
+  .discountPrice {
     @include h3;
+  }
+}
+
+.percentDiscount {
+  @include button;
+  position: absolute;
+  z-index: 1;
+  top: -24px;
+  right: -15px;
+  color: $ui-color-gray-white;
+
+  &:before {
+    position: absolute;
+    z-index: -1;
+    content: "";
+    top: 41px;
+    left: -45px;
+    width: 65px;
+    height: 1px;
+    background-color: $ui-color-green;
+  }
+
+  &:after {
+    position: absolute;
+    z-index: -1;
+    content: "";
+    top: 0;
+    left: -16px;
+    width: 60px;
+    height: 22px;
+    background-color: $ui-color-green;
   }
 }
 
@@ -99,4 +141,10 @@
   display: flex;
   align-items: center;
   text-align: center;
+}
+
+.cardLink {
+  cursor: pointer;
+  text-decoration: unset;
+  color: $ui-color-gray-white;
 }

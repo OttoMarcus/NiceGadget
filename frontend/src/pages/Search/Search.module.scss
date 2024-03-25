@@ -26,10 +26,6 @@
   grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
   align-items: center;
   gap: 16px;
-
-  //a {
-  //  @include flex-center;
-  //}
 }
 
 .nothingFound {

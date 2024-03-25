@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import styles from "./CardAccessories.module.scss";
-import Favorite from "../Favorite/Favorite";
 import { useDispatch, useSelector } from "react-redux";
+
+import Favorite from "../Favorite/Favorite";
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
 import CartButton from "../CartButton/CartButton";
+
+import styles from "./CardAccessories.module.scss";
 
 const CardAccessories = (props) => {
   const { id, name, picture, price, color, size, weight, category } = props;
@@ -19,25 +21,30 @@ const CardAccessories = (props) => {
   const inCart = cartItems.some((item) => item.productId === productToAdd._id);
 
   return (
-    <Link to={`/${category}/${name}?color=${color}`}>
+    <Link
+      to={`/${category}/${name}?color=${color}`}
+      className={styles.cardLink}
+    >
       <div className={styles.card}>
         <div className={styles.cardImg}>
           <img src={picture} alt="Card" />
         </div>
-        <div className={styles.model}>{name}</div>
+        <div className={styles.nameWrapper}>
+          <div className={styles.model}>{name}</div>
+        </div>
         <div className={styles.price}>${price}</div>
         <div className={styles.divider}></div>
         <ul className={styles.paramsGroup}>
           <li>
-            <p>Size:</p>
+            <p>Size</p>
             <p>{size}</p>
           </li>
           <li>
-            <p>Color:</p>
+            <p>Color</p>
             <p>{color}</p>
           </li>
           <li>
-            <p>Weight:</p>
+            <p>Weight</p>
             <p>{weight}</p>
           </li>
         </ul>

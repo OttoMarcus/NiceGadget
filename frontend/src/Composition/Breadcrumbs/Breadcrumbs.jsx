@@ -49,16 +49,21 @@ const Breadcrumbs = () => {
       if (array.length - 1 === index) {
         return (
           <div key={crumb} className={`${styles.crumb} ${styles.lastCrumb}`}>
-            <Link to={currentLink}>
+            <Link to={currentLink} className={`${styles.crumbLink}`}>
               {crumb}{" "}
-              {queryParams.size !== 0 ? handleQueryParams(queryParams) : ""}
+              {queryParams.size !== 0 && array.length !== 1
+                ? handleQueryParams(queryParams)
+                : ""}
             </Link>
           </div>
         );
       } else {
         return (
           <div key={crumb} className={styles.crumb}>
-            <Link to={currentLink} className={styles.crumbGap}>
+            <Link
+              to={currentLink}
+              className={`${styles.crumbLink} ${styles.crumbGap}`}
+            >
               {crumb}
             </Link>
             <RightArrowIcon />
@@ -72,7 +77,7 @@ const Breadcrumbs = () => {
       {!isHomePage && (
         <div className={`${styles.breadcrumbs} ${styles.container}`}>
           <div className={styles.crumb}>
-            <Link to={"/"} className={styles.crumbGap}>
+            <Link to={"/"} className={`${styles.crumbLink} ${styles.crumbGap}`}>
               <HomeIcon />
             </Link>
             <RightArrowIcon />

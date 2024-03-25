@@ -70,3 +70,9 @@
   background-color: $ui-color-background-accessories-section;
   background-image: url("https://res.cloudinary.com/de71eui6p/image/upload/v1711135439/Cattegories/rqhpvenn0wxhjmppb93e.webp");
 }
+
+.categoryLink {
+  cursor: pointer;
+  text-decoration: unset;
+  color: $ui-color-gray-white;
+}
