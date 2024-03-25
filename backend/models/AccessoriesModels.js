@@ -17,7 +17,10 @@ const accessoriesModelSchema = new Schema({
         required: true,
         unique: true
     },
-
+    available: {
+        type: Boolean,
+        required: true
+    },
     colors: [
         {
             colorName: {

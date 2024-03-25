@@ -29,6 +29,7 @@ const mobileProducts = require('./routes/mobileProducts');
 const mobileModelsQuantity = require('./routes/mobileModelsQuantity')
 const accessoriesProduct = require('./routes/accessoriesProduct')
 const accessoriesModel = require('./routes/accessoriesModel')
+const accessoriesModelQuantity = require('./routes/accessoriesModelQuantity')
 const tabletModels = require('./routes/tabletModels');
 const tabletProducts = require('./routes/tabletProducts');
 const tabletModelQuantity = require('./routes/tabletModelsQuantity')
@@ -80,6 +81,7 @@ app.use('/api/phones', mobileProducts);
 app.use('/api/phones-models-quantity', mobileModelsQuantity);
 app.use('/api/accessories', accessoriesProduct);
 app.use('/api/accessories-models', accessoriesModel);
+app.use('/api/accessories-models-quantity', accessoriesModelQuantity);
 app.use('/api/tablets-models', tabletModels);
 app.use('/api/tablets', tabletProducts);
 app.use('/api/tablets-models-quantity', tabletModelQuantity);
