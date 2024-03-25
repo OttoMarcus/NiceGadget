@@ -2,17 +2,26 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
-import Favorite from "../Favorite/Favorite";
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
 import CartButton from "../CartButton/CartButton";
+import Favorite from "../Favorite/Favorite";
+import styles from "./Card.module.scss";
 
-import styles from "./CardAccessories.module.scss";
-
-const CardAccessories = (props) => {
-  const { id, name, picture, price, color, size, weight, category } = props;
+const Card = (props) => {
+  const {
+    id,
+    name,
+    picture,
+    price,
+    color,
+    screen,
+    capacity,
+    ram,
+    refModel,
+    category,
+    discount,
+  } = props;
   const dispatch = useDispatch();
-
   const favor = useSelector((state) => state.favorite.favorites);
   const some = favor.some((el) => id === el.id);
 
@@ -20,9 +29,17 @@ const CardAccessories = (props) => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const inCart = cartItems.some((item) => item.productId === productToAdd._id);
 
+  // discountPrice - ціна товару зі знижкою!!!
+  //   price - початкова ціна без знижки!
+
+  const discountedPrice = discount
+    ? Math.round(price - price * discount)
+    : price;
+  const percentDiscount = discount ? discount * 100 : 0;
+
   return (
     <Link
-      to={`/${category}/${name}?color=${color}`}
+      to={`/${category}/${refModel.modelId}?color=${color}&capacity=${capacity}`}
       className={styles.cardLink}
     >
       <div className={styles.card}>
@@ -32,20 +49,27 @@ const CardAccessories = (props) => {
         <div className={styles.nameWrapper}>
           <div className={styles.model}>{name}</div>
         </div>
-        <div className={styles.price}>${price}</div>
+        <div className={styles.priceWrap}>
+          <div className={styles.discountPrice}>${discountedPrice}</div>
+          {percentDiscount > 0 && (
+            <>
+              <div className={styles.price}>${price}</div>
+            </>
+          )}
+        </div>
         <div className={styles.divider}></div>
         <ul className={styles.paramsGroup}>
           <li>
-            <p>Size</p>
-            <p>{size}</p>
+            <p>Screen</p>
+            <p>{screen}</p>
           </li>
           <li>
-            <p>Color</p>
-            <p>{color}</p>
+            <p>Capacity</p>
+            <p>{capacity}</p>
           </li>
           <li>
-            <p>Weight</p>
-            <p>{weight}</p>
+            <p>RAM</p>
+            <p>{ram}</p>
           </li>
         </ul>
         <div className={styles.buttonWrapper}>
@@ -70,17 +94,27 @@ const CardAccessories = (props) => {
   );
 };
 
-CardAccessories.propTypes = {
-  _id: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+Card.propTypes = {
+  _id: PropTypes.string,
   picture: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  category: PropTypes.string,
   color: PropTypes.string.isRequired,
-  weight: PropTypes.string.isRequired,
-  size: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
   available: PropTypes.bool.isRequired,
+  id: PropTypes.string.isRequired,
+  screen: PropTypes.string.isRequired,
+  capacity: PropTypes.string.isRequired,
+  ram: PropTypes.string.isRequired,
+  refModel: PropTypes.shape({
+    modelId: PropTypes.string,
+    modelName: PropTypes.string,
+  }).isRequired,
+  discount: PropTypes.number,
 };
 
-export default CardAccessories;
+Card.defaultProps = {
+  discount: 0,
+};
+
+export default Card;

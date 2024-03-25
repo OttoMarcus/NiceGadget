@@ -1,8 +1,9 @@
 import LeftArrowIcon from "../Icons/LeftArrowIcon";
 import RightArrowIcon from "../Icons/RightArrowIcon";
 import React, { useState, useEffect, useRef } from "react";
-import style from "./BrandNews.module.scss";
-import Card from "../Card/Card";
+import styles from "./BrandNews.module.scss";
+import Card from "../Cards/Card";
+
 const BrandNew = () => {
   const containerRef = useRef(null);
   const [products, setProducts] = useState([]);
@@ -41,18 +42,18 @@ const BrandNew = () => {
 
   return (
     <>
-      <div className={style.header}>
-        <h2 className={style.title}>Brand New</h2>
-        <div className={style.btnGroup}>
-          <div className={style.arrow} onClick={scrollLeft}>
+      <div className={styles.header}>
+        <h2 className={styles.title}>Brand New</h2>
+        <div className={styles.btnGroup}>
+          <div className={styles.arrow} onClick={scrollLeft}>
             <LeftArrowIcon />
           </div>
-          <div className={style.arrow} onClick={scrollRight}>
+          <div className={styles.arrow} onClick={scrollRight}>
             <RightArrowIcon />
           </div>
         </div>
       </div>
-      <div className={style.cardsContainer} ref={containerRef}>
+      <div className={styles.cardsContainer} ref={containerRef}>
         {products.map((product) => (
           <Card key={product.id} {...product} />
         ))}

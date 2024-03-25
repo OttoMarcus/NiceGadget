@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Style from "./Order.module.scss";
+import styles from "./Order.module.scss";
 
 const Order = () => {
   return (
-    <div className={Style.testBox}>
-      <h1 className={Style.tittle}>This is Order Page </h1>
-      <Link className={Style.linksBtn} to="/">
+    <div className={styles.testBox}>
+      <h1 className={styles.tittle}>This is Order Page </h1>
+      <Link className={styles.linksBtn} to="/">
         Home
       </Link>
     </div>

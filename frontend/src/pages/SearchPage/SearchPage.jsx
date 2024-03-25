@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import Card from "../../Components/Card/Card";
-import CardAccessories from "../../Components/CardAccessories/CardAccessories";
-import styles from "./Search.module.scss";
+import Card from "../../Components/Cards/Card";
+import CardAccessories from "../../Components/Cards/CardAccessories";
+import styles from "./SearchPage.module.scss";
 
-const Search = () => {
+const SearchPage = () => {
   const [searchList, setSearchList] = useState({ data: [] });
   const searchField = useSelector((state) => state.search.search);
 
@@ -63,4 +63,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default SearchPage;

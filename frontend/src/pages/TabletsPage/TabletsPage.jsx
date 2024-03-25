@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Card from "../../Components/Card/Card";
+import Card from "../../Components/Cards/Card";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import styles from "./TabletsPage.module.scss";
 
-import styles from "../Tablets/Tablets.module.scss";
-
-const Tablets = () => {
+const TabletsPage = () => {
   const [tabletsArr, setTabletsArr] = useState({ data: [] });
 
   const location = useLocation();
@@ -43,4 +42,4 @@ const Tablets = () => {
   );
 };
 
-export default Tablets;
+export default TabletsPage;

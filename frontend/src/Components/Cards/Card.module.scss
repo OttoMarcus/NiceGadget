@@ -2,74 +2,73 @@
 @import "../../styles/abstracts/variables";
 
 .card {
-  display: flex;
+  @include flex-start;
   flex-direction: column;
-  align-items: flex-start;
   width: 100%;
-  min-width: 220px;
-  max-width: 287px;
+  min-width: 212px;
+  max-width: 288px;
+  min-height: 440px;
+  max-height: 512px;
   padding: 32px;
   gap: 8px;
   background-color: $ui-color-gray-surface-1;
+}
 
-  .imageWrapper {
-    background-color: $ui-color-gray-black-background;
+.cardImg {
+  @include flex-center;
+  width: 100%;
+  aspect-ratio: 3/4;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+
+  & > img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
   }
 
-  .cardImg {
-    @include flex-center;
-    width: 100%;
-    aspect-ratio: 3/4;
-    box-sizing: border-box;
-    position: relative;
-    overflow: hidden;
-    user-select: none;
-
-    & > img {
-      max-width: 100%;
-      max-height: 100%;
-      width: auto;
-      height: auto;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-    }
-
-    & > .innerImg {
-      max-width: 90%;
-      max-height: 90%;
-    }
+  & > .innerImg {
+    max-width: 90%;
+    max-height: 90%;
   }
+}
 
-  .nameWrapper {
-    @include flex-center;
-    justify-content: flex-start;
-    height: 60px;
-    width: 100%;
-    box-sizing: border-box;
-  }
+.nameWrapper {
+  @include flex-start;
+  height: 60px;
+  width: 100%;
+  box-sizing: border-box;
+}
 
-  .model {
-    @include body-text;
-    color: $ui-color-gray-white;
-  }
+.model {
+  @include body-text;
+  color: $ui-color-gray-white;
+}
 
-  .priceWrap {
-    width: 100%;
-    @include flex-between;
-    position: relative;
-  }
+.priceWrap {
+  width: 100%;
+  @include flex-start;
+}
 
-  .price {
-    @include h4;
-    color: $ui-color-gray-secondary;
-  }
+.price {
+  color: $ui-color-gray-secondary;
+  @include h3;
+  font-weight: 400;
+  font-family: $ui-font-family-regular;
+  margin-left: 8px;
+  text-decoration-line: line-through;
+}
 
-  .discountPrice {
-    @include h3;
-  }
+.discountPrice {
+  @include h3;
 }
 
 .percentDiscount {
