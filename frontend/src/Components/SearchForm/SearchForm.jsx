@@ -9,14 +9,22 @@ import PropTypes from "prop-types";
 
 const SearchForm = ({ toggleBurger }) => {
   const [showInput, setShowInput] = useState(false);
+  const [clicked, setClicked] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const toggleClick = () => {
+    setClicked(!clicked);
+  };
 
   const handleShow = () => {
     setShowInput(true);
   };
   const handleBlur = () => {
-    setShowInput(false);
+    if (!clicked) {
+      setShowInput(false);
+    }
+    setClicked(false);
   };
 
   const handleInputChange = (event) => {
@@ -34,7 +42,7 @@ const SearchForm = ({ toggleBurger }) => {
       onSubmit={handleSubmit}
       onMouseOver={handleShow}
       onMouseOut={handleBlur}
-      onBlur={handleBlur}
+      onClick={toggleClick}
       className={styles.searchForm}
     >
       <SearchLogo isActive={showInput} />
