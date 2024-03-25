@@ -1,12 +1,13 @@
 import React from "react";
-
-import Favorite from "../Favorite/Favorite";
-import styles from "./Card.module.scss";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
 import CartButton from "../CartButton/CartButton";
+import Favorite from "../Favorite/Favorite";
+
+import styles from "./Card.module.scss";
 
 const Card = (props) => {
   const {
@@ -20,6 +21,7 @@ const Card = (props) => {
     ram,
     refModel,
     category,
+    discount,
   } = props;
   const dispatch = useDispatch();
   const favor = useSelector((state) => state.favorite.favorites);
@@ -28,6 +30,14 @@ const Card = (props) => {
   const productToAdd = { ...props };
   const cartItems = useSelector((state) => state.cart.cartItems);
   const inCart = cartItems.some((item) => item.productId === productToAdd._id);
+
+  // discountPrice - ціна товару зі знижкою!!!
+  //   price - початкова ціна без знижки!
+
+  const discountedPrice = discount
+    ? Math.round(price - price * discount)
+    : price;
+  const percentDiscount = discount ? discount * 100 : 0;
 
   return (
     <Link
@@ -41,7 +51,15 @@ const Card = (props) => {
         <div className={styles.nameWrapper}>
           <div className={styles.model}>{name}</div>
         </div>
-        <div className={styles.price}>${price}</div>
+        <div className={styles.priceWrap}>
+          <div className={styles.discountPrice}>${discountedPrice}</div>
+          {percentDiscount > 0 && (
+            <>
+              <div className={styles.percentDiscount}>-{percentDiscount}%</div>
+              <div className={styles.price}>${price}</div>
+            </>
+          )}
+        </div>
         <div className={styles.divider}></div>
         <ul className={styles.paramsGroup}>
           <li>
@@ -87,10 +105,10 @@ Card.propTypes = {
   category: PropTypes.string,
   color: PropTypes.string.isRequired,
   available: PropTypes.bool.isRequired,
-
   id: PropTypes.string,
   screen: PropTypes.string,
   capacity: PropTypes.string,
+  discount: PropTypes.number,
   ram: PropTypes.string,
   brandNew: PropTypes.bool,
   refModel: PropTypes.shape({
