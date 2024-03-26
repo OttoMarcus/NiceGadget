@@ -124,6 +124,7 @@ const SingleProductPage = () => {
                       isAvailable={chosenCapacityObject?.available}
                       inCart={inCart}
                       fetchDetailsUrl={`/api/${typeModel}/byProductId/${chosenCapacityObject?.productId}`}
+                      heightBtn="48px"
                     />
 
                     <Favorite
@@ -151,6 +152,7 @@ const SingleProductPage = () => {
                         );
                       }}
                       some={some}
+                      size="48px"
                     />
                   </div>
                   <div>

@@ -4,7 +4,7 @@ exports[`Button tests matches snapshot 1`] = `
 <DocumentFragment>
   <button
     class="button"
-    style="background-color: rgb(144, 91, 255);"
+    style="background-color: rgb(144, 91, 255); height: 40px; cursor: pointer;"
   >
     Click me
   </button>

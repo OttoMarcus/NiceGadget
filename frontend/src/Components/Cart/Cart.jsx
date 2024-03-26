@@ -60,6 +60,7 @@ const Cart = () => {
               onClick={handleCheckout}
               type="button"
               className={styles.checkoutBtn}
+              height="48px"
             >
               Checkout
             </Button>

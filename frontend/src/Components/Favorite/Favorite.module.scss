@@ -3,10 +3,9 @@
 
 .favorite {
   @include flex-center;
-  width: auto;
-  height: 40px;
   padding: 0 10px;
   background-color: $ui-color-gray-selected-surface-2;
+  cursor: pointer;
 
   &:hover {
     background-color: $ui-color-gray-icons-placeholders;

@@ -66,6 +66,7 @@ const SingleAccessoriesPage = () => {
                       isAvailable={accessoryAvailable}
                       inCart={inCart}
                       fetchDetailsUrl={`/api/accessories/byProductId/${activeAccessoryId}`}
+                      heightBtn="48px"
                     />
 
                     <Favorite
@@ -85,6 +86,7 @@ const SingleAccessoriesPage = () => {
                         )
                       }
                       some={some}
+                      size="48px"
                     />
                   </div>
                   <div>
