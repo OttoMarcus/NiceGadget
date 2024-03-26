@@ -19,7 +19,7 @@ import SearchPage from "../pages/SearchPage/SearchPage";
 import UserUpdatePass from "../pages/User/UserUpdatePass/UserUpdatePass";
 import BuyForm from "../Components/BuyForm/BuyForm";
 import UserDataInformation from "../pages/User/UserDataInformation/UserDataInformation";
-
+import Orders from "../pages/OrdersPage/Orders";
 const RootRouters = () => {
   return (
     <Routes>
@@ -45,6 +45,7 @@ const RootRouters = () => {
       <Route path="/right" element={<Right />} />
       <Route path="/search" element={<SearchPage />} />
       <Route path="/contacts" element={<Contacts />} />
+      <Route path="/orders" element={<Orders />} />
       <Route path="*" element={<WrongRoute />} />
     </Routes>
   );

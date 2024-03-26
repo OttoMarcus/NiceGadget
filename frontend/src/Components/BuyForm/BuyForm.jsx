@@ -51,6 +51,7 @@ const paymentOptions = [
 const BuyForm = () => {
   const handleSubmit = async () => {
     // Handle form submission
+    console.log(`handleSubmit`);
   };
 
   return (

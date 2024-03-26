@@ -47,14 +47,16 @@ router.delete(
 // @route   GET /orders
 // @desc    Get all orders
 // @access  Private
-router.get("/", passport.authenticate("jwt", { session: false }), getOrders);
+router.get("/",
+    // passport.authenticate("jwt", { session: false }),
+    getOrders);
 
 // @route   GET /orders/:orderNo
 // @desc    Get one order by orderNo
 // @access  Private
 router.get(
   "/:orderNo",
-  passport.authenticate("jwt", { session: false }),
+  // passport.authenticate("jwt", { session: false }),
   getOrder
 );
 
