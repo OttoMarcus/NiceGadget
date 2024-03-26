@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Button from "../Button/Button";
-import { useHandleAddToCart } from "../Cart/hooks/useHandleAddToCart";
+import Button from "../../Button/Button";
+import { useHandleAddToCart } from "../hooks/useHandleAddToCart";
 import PropTypes from "prop-types";
 
 const CartButton = ({

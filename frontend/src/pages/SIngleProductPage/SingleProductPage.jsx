@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
 import { useFetchModelData } from "./hooks/useFetchModelData";
 import { useSelectedColorData } from "./hooks/useSelectedColorData";
-import CartButton from "../../Components/CartButton/CartButton";
+import CartButton from "../../Components/Cart/CartButton/CartButton";
 
 const SingleProductPage = () => {
   const dispatch = useDispatch();

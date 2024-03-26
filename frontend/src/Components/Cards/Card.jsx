@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
-import CartButton from "../CartButton/CartButton";
+import CartButton from "../Cart/CartButton/CartButton";
 import Favorite from "../Favorite/Favorite";
 import styles from "./Card.module.scss";
 

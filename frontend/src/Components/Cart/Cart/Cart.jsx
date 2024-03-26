@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styles from "./Cart.module.scss";
 import CartItem from "../CartItem/CartItem";
-import Button from "../Button/Button";
+import Button from "../../Button/Button";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);

@@ -153,8 +153,11 @@ a {
 }
 
 .priceCheck {
-  color: $ui-color-gray-secondary;
+  font-family: $ui-font-family-regular;
   font-size: $ui-font-size-h3;
+  font-weight: 400;
+  line-height: 1;
+  color: $ui-color-gray-secondary;
   text-decoration: line-through;
 }
 

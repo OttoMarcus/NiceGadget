@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Cart from "../../Components/Cart/Cart";
+import Cart from "../../Components/Cart/Cart/Cart";
 import styles from "./CartPage.module.scss";
 import LeftArrowIcon from "../../Components/Icons/LeftArrowIcon";
 import { fetchCartItems } from "../../API/cartAPI";

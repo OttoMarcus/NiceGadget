@@ -7,7 +7,7 @@ import TechSpecs from "../../Components/ProductTechSpecs/ProductTechSpecs";
 import ProductAbout from "../../Components/ProductAbout/ProductAbout";
 import { useDispatch, useSelector } from "react-redux";
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
-import CartButton from "../../Components/CartButton/CartButton";
+import CartButton from "../../Components/Cart/CartButton/CartButton";
 
 const SingleAccessoriesPage = () => {
   const dispatch = useDispatch();

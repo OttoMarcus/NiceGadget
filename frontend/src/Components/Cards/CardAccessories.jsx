@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Favorite from "../Favorite/Favorite";
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
-import CartButton from "../CartButton/CartButton";
+import CartButton from "../Cart/CartButton/CartButton";
 import styles from "./Card.module.scss";
 
 const CardAccessories = (props) => {
@@ -40,7 +40,6 @@ const CardAccessories = (props) => {
           <div className={styles.discountPrice}>${discountedPrice}</div>
           {percentDiscount > 0 && (
             <>
-              {/* <div className={styles.percentDiscount}>-{percentDiscount}%</div> */}
               <div className={styles.price}>${price}</div>
             </>
           )}

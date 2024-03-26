@@ -1,5 +1,5 @@
-@import "../../styles/abstracts/mixins";
-@import "../../styles/abstracts/variables";
+@import "../../../styles/abstracts/mixins";
+@import "../../../styles/abstracts/variables";
 
 .cartItem {
   @include flex-start;
@@ -17,7 +17,6 @@
     @include flex-between;
     flex-direction: row;
     min-width: 544px;
-    // gap: 24px;
   }
   /*----------------- Desktop ---------------------*/
   @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
@@ -112,10 +111,38 @@
   color: $ui-color-gray-white;
 }
 
+.priceWrapper {
+  position: relative;
+  @include flex-kit(flex-start);
+  gap: 8px;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0;
+  }
+}
+
 .totalItemPrice {
   @include flex-kit(flex-end);
   width: 80px;
   gap: 8px;
-  @include h2;
+  @include h3;
   color: $ui-color-gray-white;
+}
+
+.originalPrice {
+  font-family: $ui-font-family-regular;
+  font-size: $ui-font-size-h3;
+  font-weight: 400;
+  line-height: 1;
+  color: $ui-color-gray-secondary;
+  text-decoration: line-through;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    position: absolute;
+    bottom: -50%;
+    right: 0;
+    font-size: $ui-font-size-h4;
+  }
 }

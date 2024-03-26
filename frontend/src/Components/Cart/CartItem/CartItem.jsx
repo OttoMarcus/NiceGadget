@@ -1,21 +1,21 @@
 import React from "react";
 import styles from "./CartItem.module.scss";
 import { Link } from "react-router-dom";
-import DeleteIcon from "../Icons/CloseIcon";
-import MinusIcon from "../Icons/MinusIcon";
-import PlusIcon from "../Icons/PlusIcon";
+import DeleteIcon from "../../Icons/CloseIcon";
+import MinusIcon from "../../Icons/MinusIcon";
+import PlusIcon from "../../Icons/PlusIcon";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import {
   incrementQuantityLocal,
   decrementQuantityLocal,
   removeFromCartLocal,
-} from "../../store/cart/cartSlice";
+} from "../../../store/cart/cartSlice";
 import {
   incrementQuantityServer,
   decrementQuantityServer,
   removeFromCartServer,
-} from "../../API/cartAPI";
+} from "../../../API/cartAPI";
 
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
@@ -30,6 +30,8 @@ const CartItem = ({ item }) => {
     item.discount,
     item.cartQuantity
   );
+
+  const originalPrice = item.price * item.cartQuantity;
 
   const getPath = () => {
     switch (item.category) {
@@ -95,7 +97,12 @@ const CartItem = ({ item }) => {
             <PlusIcon />
           </button>
         </div>
-        <h2 className={styles.totalItemPrice}>{`$${totalItemPrice}`}</h2>
+        <div className={styles.priceWrapper}>
+          <h3 className={styles.totalItemPrice}>{`$${totalItemPrice}`}</h3>
+          {(item.discount ?? 0) !== 0 && (
+            <div className={styles.originalPrice}>{`$${originalPrice}`}</div>
+          )}
+        </div>
       </div>
     </div>
   );
