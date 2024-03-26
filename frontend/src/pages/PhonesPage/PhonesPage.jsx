@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import axios from "axios";
-import Card from "../../Components/Card/Card";
+import Card from "../../Components/Cards/Card";
 import Sort from "../../Components/Sort/Sort";
 import LeftArrowIcon from "../../Components/Icons/LeftArrowIcon";
 import RightArrowIcon from "../../Components/Icons/RightArrowIcon";
@@ -8,9 +8,9 @@ import PerPageSelect from "../../Components/PerPageSelect/PerPageSelect";
 import ReactPaginate from "react-paginate";
 // import Pagination from "../../Components/Pagination/Pagination";
 import { useLocation } from "react-router-dom";
-import styles from "./Phones.module.scss";
+import styles from "./PhonesPage.module.scss";
 
-const Phones = () => {
+const PhonesPage = () => {
   const [phonesArr, setPhonesArr] = useState();
 
   const [sortValue, setSortValue] = useState("-brandNew");
@@ -275,4 +275,4 @@ const Phones = () => {
   );
 };
 
-export default Phones;
+export default PhonesPage;

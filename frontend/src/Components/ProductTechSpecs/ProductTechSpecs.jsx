@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./ProductTechSpecs.module.scss";
+
 const TechSpecs = ({ techSpecs, capacity }) => {
   return (
     <div>
