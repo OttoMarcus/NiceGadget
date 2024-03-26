@@ -9,7 +9,7 @@ import { addUser, removeUser } from "./store/user/userSlice";
 import { useLocation } from "react-router-dom";
 import { fetchCartItems } from "./API/cartAPI";
 import { fetchTodos, fetchChange } from "./store/favorites/favoriteSlice";
-// import { orderGet } from "./store/orders/order";
+import { orderGet } from "./store/orders/order";
 
 function App() {
   const dispatch = useDispatch();
@@ -75,9 +75,9 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [favor, dispatch]);
 
-  // useEffect(()=>{
-  //   dispatch(orderGet())
-  // },[])
+  useEffect(() => {
+    dispatch(orderGet());
+  }, [dispatch]);
   return (
     <div className="app-wrapper">
       <Header />

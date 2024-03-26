@@ -24,7 +24,7 @@ export const fetchTodos = createAsyncThunk(
           throw new Error("Network response was not ok");
         }
         let ret = data.products || [];
-        console.log(`fetchTodos`, ret);
+
         return ret;
       }
     } catch (error) {
@@ -77,18 +77,16 @@ export const fetchChange = createAsyncThunk(
   async function ({ user, ...products }) {
     try {
       const token = localStorage.getItem("token");
-      const userId = localStorage.getItem("user");
-      const resultSlice = userId.slice(1, -1);
-      if (token && resultSlice) {
+      if (token) {
         const response = await fetch(`/api/wishlist`, {
           method: `PUT`,
           headers: {
             "Content-Type": "application/json",
             Authorization: token,
           },
-          body: JSON.stringify({ id: resultSlice, products: products.favor }),
+          body: JSON.stringify({ id: user._id, products: products.favor }),
         });
-        console.log(response.ok);
+
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -99,7 +97,7 @@ export const fetchChange = createAsyncThunk(
       }
     } catch (error) {
       console.warn("Error updating wishlist:", error);
-      throw error;
+      throw error; // Перебрасываем ошибку, чтобы ее можно было обработать в UI
     }
   }
 );

@@ -16,7 +16,7 @@ export const orderGet = createAsyncThunk("orderGet", async function () {
         },
       });
       const data = await response.json();
-      // console.log(`orderGET`, data);
+      console.log(`orderGET`, data);
       // data.forEach(({products}) => {
       //     console.log(products)
       // })
