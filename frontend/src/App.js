@@ -56,25 +56,24 @@ function App() {
 
   const user = useSelector((state) => state.user.user);
 
-  // const isAuthorized = useSelector((state) => state.user.isAuthorized);
+  const isAuthorized = useSelector((state) => state.user.isAuthorized);
   const token = localStorage?.getItem("token");
   const favor = useSelector((state) => state.favorite.favorites);
   useEffect(() => {
-    token && dispatch(fetchTodos());
-  }, [dispatch, token]);
+    token &&
+      setTimeout(() => {
+        dispatch(fetchTodos(user, isAuthorized));
+      }, 100);
+  }, [dispatch, token, user, isAuthorized]);
 
   useEffect(() => {
     const effect = () => {
-      token &&
-        favor &&
-        setTimeout(() => {
-          dispatch(fetchChange({ user, favor }));
-        }, 100);
+      token && dispatch(fetchChange({ user, favor }));
       !token && localStorage.setItem("favorites", JSON.stringify(favor));
     };
     effect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [favor, dispatch, token]);
+  }, [favor, dispatch]);
 
   // useEffect(()=>{
   //   dispatch(orderGet())
