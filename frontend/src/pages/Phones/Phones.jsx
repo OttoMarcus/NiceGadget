@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 // import axios from "axios";
 import Card from "../../Components/Card/Card";
 import Sort from "../../Components/Sort/Sort";
+import Filter from "../../Components/Filter/Filter";
 import LeftArrowIcon from "../../Components/Icons/LeftArrowIcon";
 import RightArrowIcon from "../../Components/Icons/RightArrowIcon";
 import PerPageSelect from "../../Components/PerPageSelect/PerPageSelect";
@@ -9,6 +10,7 @@ import ReactPaginate from "react-paginate";
 // import Pagination from "../../Components/Pagination/Pagination";
 import { useLocation } from "react-router-dom";
 import styles from "./Phones.module.scss";
+import ReactFilters from "../../Components/Filter/Filter-react-filter";
 
 const Phones = () => {
   const [phonesArr, setPhonesArr] = useState();
@@ -195,6 +197,26 @@ const Phones = () => {
     setCurrentPage(Number(newPage));
   };
 
+  const handleFilter = async (queryParams) => {
+    // const queryString = new URLSearchParams(filters).toString();
+
+    try {
+      const res = await fetch(
+        `/api/phones?${queryParams}&sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
+      );
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const { data, totalPages, total } = await res.json();
+      setPhonesArr(data);
+      setTotalNumber(Number(total));
+      setTotalPages(Number(totalPages));
+      // setTotalMatching(totalMatching);
+    } catch (error) {
+      console.error("There was a problem with your fetch operation:", error);
+    }
+  };
+
   // const handlePaginationArrowClick = async (e, currentPage, totalPages) => {
   //   // e.preventDefault()
   //   await totalPages;
@@ -236,6 +258,28 @@ const Phones = () => {
       <h3 className={styles.subtitle}>{totalNumber} models</h3>
 
       <div className={styles.selectsContainer}>
+        {/* <ReactFilters
+          isAdaptive={true}
+          filters={filters}
+          filterData={filterData}
+          values={values}
+          errors={errors}
+          appliedFilters={appliedFilters}
+          canReset={canReset}
+          setValues={setValues}
+          applyFilters={applyFilters}
+          handleReset={handleReset}
+          typeKey={typeKey}
+          labelKey={labelKey}
+          hintKey={hintKey}
+          filtersBlockComponent={filtersBlockComponent}
+          wrapperId={wrapperId}
+          toggleButtonId={toggleButtonId}
+          renderToggleButton={renderToggleButton}
+          renderResetButton={renderResetButton}
+          renderApplyButton={renderApplyButton}
+        /> */}
+        <Filter onFilterChange={handleFilter} />
         <Sort handleSortChange={handleSortChange} sortValue={sortValue} />
         <PerPageSelect
           handlePerPageChange={handlePerPageChange}
