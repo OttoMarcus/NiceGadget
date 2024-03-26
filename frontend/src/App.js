@@ -9,7 +9,7 @@ import { addUser, removeUser } from "./store/user/userSlice";
 import { useLocation } from "react-router-dom";
 import { fetchCartItems } from "./API/cartAPI";
 import { fetchTodos, fetchChange } from "./store/favorites/favoriteSlice";
-import { orderGet } from "./store/orders/order";
+// import { orderGet } from "./store/orders/order";
 
 function App() {
   const dispatch = useDispatch();
@@ -56,7 +56,7 @@ function App() {
 
   const user = useSelector((state) => state.user.user);
 
-  const isAuthorized = useSelector((state) => state.user.isAuthorized);
+  // const isAuthorized = useSelector((state) => state.user.isAuthorized);
   const token = localStorage?.getItem("token");
   const favor = useSelector((state) => state.favorite.favorites);
   useEffect(() => {

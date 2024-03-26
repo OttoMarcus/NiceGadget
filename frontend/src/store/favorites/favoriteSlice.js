@@ -78,7 +78,6 @@ export const fetchChange = createAsyncThunk(
     try {
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("user");
-      const favor = localStorage.getItem("favorites") || [];
       const resultSlice = userId.slice(1, -1);
       if (token && resultSlice) {
         const response = await fetch(`/api/wishlist`, {
