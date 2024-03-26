@@ -31,3 +31,7 @@ module.exports = function filterParser(filtersQueryString) {
     mongooseQuery
   );
 };
+
+// const string = "hotPrices=false&inStock=false&minPrice=&maxPrice=&modelName=iPhone%2013&modelName=iPhone%2014&capacity=&color=&ram=&screen="
+// const mongooseQ = filterParser(string)
+// console.log(mongooseQ);

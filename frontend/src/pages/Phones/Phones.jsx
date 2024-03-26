@@ -197,12 +197,17 @@ const Phones = () => {
     setCurrentPage(Number(newPage));
   };
 
-  const handleFilter = async (queryParams) => {
+  const handleFilter = async (queryString) => {
     // const queryString = new URLSearchParams(filters).toString();
+    const extendedQueryString = `&sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`;
+    const newPath = `${window.location.pathname}?${queryString}${extendedQueryString}`;
+    console.log(newPath);
+    window.history.pushState({ path: newPath }, "", newPath);
 
     try {
       const res = await fetch(
-        `/api/phones?${queryParams}&sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
+        // `/api/phones?${queryString}&sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
+        newPath
       );
       if (!res.ok) {
         throw new Error("Network response was not ok");
@@ -279,7 +284,7 @@ const Phones = () => {
           renderResetButton={renderResetButton}
           renderApplyButton={renderApplyButton}
         /> */}
-        <Filter onFilterChange={handleFilter} />
+        <Filter handleFilter={handleFilter} />
         <Sort handleSortChange={handleSortChange} sortValue={sortValue} />
         <PerPageSelect
           handlePerPageChange={handlePerPageChange}

@@ -118,6 +118,9 @@ exports.getMobileProducts = async (req, res, next) => {
   // console.log(req.query);
 
   const mongooseQuery = filterParser(req.query);
+  // const string = "hotPrices=false&inStock=false&minPrice=&maxPrice=&modelName=iPhone%2013&modelName=iPhone%2014&capacity=&color=&ram=&screen="
+  // const mongooseQuery = filterParser(string)
+  // console.log('mongooseQuery is: ' ,mongooseQuery);
   const perPage = Number(req.query.perPage);
   const startPage = Number(req.query.startPage);
 
