@@ -5,9 +5,14 @@ import PropTypes from "prop-types";
 // import { useDispatch } from "react-redux";
 // import { toggleFavorite } from "../../store/favorites/favoriteSlice";
 
-const Favorite = ({ click, some }) => {
+const Favorite = ({ click, some, size }) => {
+  const buttonStyle = {
+    height: size,
+    width: size,
+  };
+
   return (
-    <div onClick={click} className={styles.favorite}>
+    <div onClick={click} className={styles.favorite} style={buttonStyle}>
       <HeartIcon some={some} />
     </div>
   );
@@ -16,6 +21,11 @@ const Favorite = ({ click, some }) => {
 Favorite.propTypes = {
   click: PropTypes.func.isRequired,
   some: PropTypes.bool.isRequired,
+  size: PropTypes.string,
+};
+
+Favorite.defaultProps = {
+  size: "40px",
 };
 
 export default Favorite;
