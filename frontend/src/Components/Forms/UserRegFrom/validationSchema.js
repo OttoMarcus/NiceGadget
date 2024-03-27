@@ -11,7 +11,7 @@ const validationSchema = object({
     .required("First name is required"),
   lastName: string("Last name must be a string")
     .min(2, "Last name is too short")
-    .max(35, "Last name is too long")
+    .max(25, "Last name is too long")
     .matches(
       /^([A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s]*)$/gi,
       "Last name can only contain Latin letters."
