@@ -2,12 +2,17 @@ import React, { useEffect, useState } from "react";
 import Twitter from "../../Components/Icons/Twitter";
 import Facebook from "../../Components/Icons/Facebook";
 import Instagram from "../../Components/Icons/Instagram";
-
 import styles from "./Contacts.module.scss";
+import MapContent from "../../Components/MapContent/MapContent";
 
 const Contacts = () => {
   const [activeTab, setActiveTab] = useState();
   const [isHovered, setIsHovered] = useState(false);
+
+  // const currentDate = new Date();
+  // const options = { weekday: 'long' };
+  // const currentDayName = currentDate.toLocaleDateString('en-US', options);
+  // console.log(currentDayName);
 
   useEffect(() => {
     setActiveTab("kyiv");
@@ -64,15 +69,15 @@ const Contacts = () => {
               <b>Maidan Nezalezhnosti, 1</b>
               <p>ZIP, 02000</p>
               <div className={styles.hours}>
-                <p>Hours:</p>
-                <ul className={styles.columns}>
-                  <li>Monday 10 AM–10 PM</li>
-                  <li>Tuesday 10 AM–10 PM</li>
-                  <li>Wednesday 10 AM–10 PM</li>
-                  <li>Thursday 10 AM–10 PM</li>
-                  <li>Friday 10 AM–10 PM</li>
-                  <li>Saturday 10 AM–10 PM</li>
-                  <li>Sunday 10 AM–10 PM</li>
+                <p>Open Hours:</p>
+                <ul>
+                  <li>Monday 10 AM – 10 PM</li>
+                  <li>Tuesday 10 AM – 10 PM</li>
+                  <li>Wednesday 10 AM – 10 PM</li>
+                  <li>Thursday 10 AM – 10 PM</li>
+                  <li>Friday 10 AM – 10 PM</li>
+                  <li>Saturday 10 AM – 10 PM</li>
+                  <li>Sunday 10 AM – 10 PM</li>
                 </ul>
               </div>
             </div>
@@ -84,15 +89,15 @@ const Contacts = () => {
               <b>Soborna Square, 14</b>
               <p>ZIP, 79000</p>
               <div className={styles.hours}>
-                <p>Hours:</p>
-                <ul className={styles.columns}>
-                  <li>Monday 10 AM– 8 PM</li>
-                  <li>Tuesday 10 AM– 8 PM</li>
-                  <li>Wednesday 10 AM– 8 PM</li>
-                  <li>Thursday 10 AM– 8 PM</li>
-                  <li>Friday 10 AM– 8 PM</li>
-                  <li>Saturday 10 AM– 8 PM</li>
-                  <li>Sunday 10 AM– 8 PM</li>
+                <p>Open Hours:</p>
+                <ul>
+                  <li>Monday 10 AM – 8 PM</li>
+                  <li>Tuesday 10 AM – 8 PM</li>
+                  <li>Wednesday 10 AM – 8 PM</li>
+                  <li>Thursday 10 AM – 8 PM</li>
+                  <li>Friday 10 AM – 8 PM</li>
+                  <li>Saturday 10 AM – 8 PM</li>
+                  <li>Sunday 10 AM – 8 PM</li>
                 </ul>
               </div>
             </div>
@@ -104,15 +109,15 @@ const Contacts = () => {
               <b>Hryhoriia Skovorody, 2а</b>
               <p>ZIP, 61000</p>
               <div className={styles.hours}>
-                <p>Hours:</p>
-                <ul className={styles.columns}>
-                  <li>Monday 10 AM–9 PM</li>
-                  <li>Tuesday 10 AM–9 PM</li>
-                  <li>Wednesday 10 AM–9 PM</li>
-                  <li>Thursday 10 AM–9 PM</li>
-                  <li>Friday 10 AM–9 PM</li>
-                  <li>Saturday 10 AM–9 PM</li>
-                  <li>Sunday 10 AM–9 PM</li>
+                <p>Open Hours:</p>
+                <ul>
+                  <li>Monday 10 AM – 9 PM</li>
+                  <li>Tuesday 10 AM – 9 PM</li>
+                  <li>Wednesday 10 AM – 9 PM</li>
+                  <li>Thursday 10 AM – 9 PM</li>
+                  <li>Friday 10 AM – 9 PM</li>
+                  <li>Saturday 10 AM – 9 PM</li>
+                  <li>Sunday 10 AM – 9 PM</li>
                 </ul>
               </div>
             </div>
@@ -120,20 +125,22 @@ const Contacts = () => {
         </li>
 
         <li className={`${styles.contactItem} ${styles.map}`}>
-          {/*<LocatorPage />*/}
+          <div className={styles.mapWrapper}>
+            <MapContent activeTab={activeTab} />
+            <div className={styles.frameTablet}></div>
+          </div>
         </li>
       </ul>
+
       <ul className={`${styles.socialWrapper} ${styles.container}`}>
         <li className={styles.connection}>
           <p>Support:</p>
-          <a href="mailto:nicegadgets.support@tune.com">
-            <p className={styles.connectionItem}>
-              nicegadgets.support@tune.com
-            </p>
+          <a href="mailto:nicegadgets@tune.com">
+            <p className={styles.connectionItem}>nicegadgets@tune.com</p>
           </a>
         </li>
         <li className={styles.connection}>
-          <p>Phones:</p>
+          <p>HotLine:</p>
           <p
             onMouseOver={handleHovered}
             className={
@@ -142,12 +149,12 @@ const Contacts = () => {
                 : styles.connectionItem
             }
           >
-            (044) 371 1137
+            8 (800) 371 1137
           </p>
         </li>
 
         <li className={styles.connection}>
-          <h3 className={styles.connection}>FOLLOW US ON SOCIAL MEDIA</h3>
+          <h3>FOLLOW US ON SOCIAL MEDIA</h3>
 
           <div
             className={`${styles.socialIcon} ${styles.twitterIcon}`}
