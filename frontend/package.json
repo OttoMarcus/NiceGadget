@@ -30,7 +30,7 @@
     "test": "react-scripts test",
     "test:ci": "npm run test -- --testResultsProcessor=\"jest-junit\" --watchAll=false --ci --coverage",
     "eject": "react-scripts eject",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org forando --project eshop ./build && sentry-cli sourcemaps upload --org forando --project eshop ./build",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org nice-gadgets --project final-project-web-shop ./build && sentry-cli sourcemaps upload --org nice-gadgets --project final-project-web-shop ./build",
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "prepare": "cd .. && husky frontend/.husky"
   },

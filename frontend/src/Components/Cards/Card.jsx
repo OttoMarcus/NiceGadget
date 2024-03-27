@@ -72,6 +72,13 @@ const Card = (props) => {
             <p>{ram}</p>
           </li>
         </ul>
+        <button
+          onClick={() => {
+            throw new Error("Break");
+          }}
+        >
+          Break the world
+        </button>
         <div className={styles.buttonWrapper}>
           <CartButton
             productToAdd={productToAdd}
