@@ -15,7 +15,7 @@
 }
 
 .slider {
-  background-image: url("https://s1.1zoom.me/big0/615/315870-blackangel.jpg");
+  background-image: url("https://res.cloudinary.com/de71eui6p/image/upload/v1711365711/Slider/eqpgikec5ajjgoe54gxo.webp");
   font-family: "Audiowide", sans-serif;
   background-position: center;
   background-size: cover;
@@ -202,9 +202,9 @@
   border-radius: 50px 50px 0 0;
   -webkit-border-radius: 50px 50px 0 0;
   -moz-border-radius: 50px 50px 0 0;
-  box-shadow: 0 0 34px -4px rgba(94, 94, 94, 0.52);
-  -webkit-box-shadow: 0 0 34px -4px rgba(94, 94, 94, 0.52);
-  -moz-box-shadow: 0 0 34px -4px rgba(94, 94, 94, 0.52);
+  box-shadow: 0 0 38px 15px rgba(0, 0, 0, 0.76) inset;
+  -webkit-box-shadow: 0 0 38px 15px rgba(0, 0, 0, 0.76) inset;
+  -moz-box-shadow: 0 0 38px 15px rgba(0, 0, 0, 0.76) inset;
 }
 
 @media screen and (min-width: 880px) and (max-width: 1200px) {
@@ -236,9 +236,9 @@
   border-radius: 0 0 50px 50px;
   -webkit-border-radius: 0 0 50px 50px;
   -moz-border-radius: 0 0 50px 50px;
-  box-shadow: 0 0 18px -2px rgba(94, 94, 94, 0.52);
-  -webkit-box-shadow: 0 0 14px -2px rgba(94, 94, 94, 0.52);
-  -moz-box-shadow: 0 0 18px -2px rgba(94, 94, 94, 0.52);
+  box-shadow: 0 0 38px 15px rgba(0, 0, 0, 0.76) inset;
+  -webkit-box-shadow: 0 0 38px 15px rgba(0, 0, 0, 0.76) inset;
+  -moz-box-shadow: 0 0 38px 15px rgba(0, 0, 0, 0.76) inset;
   width: 250px;
   height: 50px;
   display: flex;
@@ -311,7 +311,7 @@
 //_____________________SecondSliderStyle_____________________//
 
 .sliderSecond {
-  background-image: url("https://disgustingmen.com/wp-content/uploads/2016/01/bas.jpg");
+  background-image: url("https://res.cloudinary.com/de71eui6p/image/upload/v1711371349/Slider/jcwjr3pq9raz2duu5dcp.jpg");
   background-position: center;
   background-size: cover;
   display: flex;
@@ -416,9 +416,6 @@
   border-radius: 50px 50px 0 0;
   -webkit-border-radius: 50px 50px 0 0;
   -moz-border-radius: 50px 50px 0 0;
-  box-shadow: 0 0 34px -4px rgba(94, 94, 94, 0.52);
-  -webkit-box-shadow: 0 0 34px -4px rgba(94, 94, 94, 0.52);
-  -moz-box-shadow: 0 0 34px -4px rgba(94, 94, 94, 0.52);
 }
 
 @media screen and (min-width: 880px) and (max-width: 1200px) {
@@ -460,9 +457,6 @@
   border-radius: 0 0 50px 50px;
   -webkit-border-radius: 0 0 50px 50px;
   -moz-border-radius: 0 0 50px 50px;
-  box-shadow: 0 0 18px -2px rgba(94, 94, 94, 0.52);
-  -webkit-box-shadow: 0 0 14px -2px rgba(94, 94, 94, 0.52);
-  -moz-box-shadow: 0 0 18px -2px rgba(94, 94, 94, 0.52);
   font-size: 25px;
   width: 250px;
   height: 80px;
@@ -493,7 +487,7 @@
 //_____________________ThirdSliderStyle_____________________//
 
 .sliderThird {
-  background-image: url("https://backiee.com/static/wpdb/wallpapers/v2/1000x563/369161.jpg");
+  background-image: url("https://res.cloudinary.com/de71eui6p/image/upload/v1711365712/Slider/fokecobxv6mhjkbvrxvm.webp");
   font-family: "Nuku", sans-serif;
   background-position: center;
   background-size: cover;
@@ -597,6 +591,7 @@
   box-shadow: 0 0 11px 8px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: 0 0 11px 8px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 0 0 11px 8px rgba(0, 0, 0, 0.75);
+  z-index: 2;
 }
 
 @media screen and (min-width: 880px) and (max-width: 1200px) {

@@ -29,12 +29,13 @@ const mobileProducts = require('./routes/mobileProducts');
 const mobileModelsQuantity = require('./routes/mobileModelsQuantity')
 const accessoriesProduct = require('./routes/accessoriesProduct')
 const accessoriesModel = require('./routes/accessoriesModel')
+const accessoriesModelQuantity = require('./routes/accessoriesModelQuantity')
 const tabletModels = require('./routes/tabletModels');
 const tabletProducts = require('./routes/tabletProducts');
 const tabletModelQuantity = require('./routes/tabletModelsQuantity')
 const advertisingSlider = require('./routes/advertisingSlider')
 const faqchat = require('./routes/faqchat')
-
+const brandnew = require ('./routes/brandNews')
 
 const app = express();
 
@@ -80,11 +81,14 @@ app.use('/api/phones', mobileProducts);
 app.use('/api/phones-models-quantity', mobileModelsQuantity);
 app.use('/api/accessories', accessoriesProduct);
 app.use('/api/accessories-models', accessoriesModel);
+app.use('/api/accessories-models-quantity', accessoriesModelQuantity);
 app.use('/api/tablets-models', tabletModels);
 app.use('/api/tablets', tabletProducts);
 app.use('/api/tablets-models-quantity', tabletModelQuantity);
 app.use('/api/advertising-sliders', advertisingSlider);
 app.use('/api/faq', faqchat);
+app.use('/api/brand-news', brandnew);
+
 
 
 
