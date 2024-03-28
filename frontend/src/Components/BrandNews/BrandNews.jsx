@@ -11,9 +11,9 @@ const BrandNew = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/phones");
+        const response = await fetch("/api/phones?brandNew=true");
         const data = await response.json();
-        setProducts(data.data.filter((product) => product.brandNew === true));
+        setProducts(data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
