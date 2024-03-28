@@ -23,12 +23,14 @@ const Slider = () => {
   }, []);
 
   const prevSlide = () => {
-    const newIndex = currentIndex === 0 ? sliders.length - 1 : currentIndex - 1;
+    const newIndex =
+      currentIndex === 0 ? sliders?.length - 1 : currentIndex - 1;
     setCurrentIndex(newIndex);
   };
 
   const nextSlide = useCallback(() => {
-    const newIndex = currentIndex === sliders.length - 1 ? 0 : currentIndex + 1;
+    const newIndex =
+      currentIndex === sliders?.length - 1 ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   }, [currentIndex, sliders]);
 
