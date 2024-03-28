@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import queryString from "query-string";
+// import queryString from "query-string";
 import styles from "./Filter.module.scss";
 import PropTypes from "prop-types";
 
@@ -10,7 +10,7 @@ const Filter = ({ handleFilter }) => {
     available: false,
     minPrice: "",
     maxPrice: "",
-    modelName: ["iPhone 13", "iPhone 14"],
+    modelName: [],
     capacity: [],
     color: [],
     ram: [],
@@ -22,13 +22,6 @@ const Filter = ({ handleFilter }) => {
 
   // const queryString = new URLSearchParams(filters).toString();
   // console.log(queryString);
-
-  // console.log(filters);
-  //   const queryString = Object.keys(filters)
-  //   .filter(key => filters[key] !== "")
-  //   .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(filters[key]))
-  //   .join("&");
-  //   console.log(queryString);
 
   // function useQueryParams(initialState, queryParams) {
   //   const location = useLocation();
@@ -57,50 +50,35 @@ const Filter = ({ handleFilter }) => {
   const handleGroupCheckboxChange = (e) => {
     console.log(filters[e.target.name].includes(e.target.value));
     const { name, checked, value } = e.target;
-    console.log(name);
-    console.log(value);
-    console.log(checked);
+    // console.log(name);
+    // console.log(value);
+    // console.log(checked);
     // console.log(name);
 
     let groupValues = filters[name];
     console.log("groupValues: ", groupValues);
-    // console.log(groupValues);
-    // console.log(typeof groupValues);
+
     if (checked) {
       if (!groupValues.includes(value)) {
         groupValues.push(value);
       }
-      // groupValues = new Set([...groupValues])
-      // groupValues.push(value); // Добавляем значение в массив, если чекбокс отмечен
       console.log("groupValues after push: ", groupValues);
     } else {
       groupValues = groupValues.filter((item) => item !== value);
       console.log(groupValues); // Удаляем значение из массива, если чекбокс снят
     }
 
-    // let updatedModelLine = [...filters[name]]; // Создаем копию массива modelLine
-
-    // if (checked) {
-    //   updatedModelLine.push(value); // Добавляем значение в массив, если чекбокс отмечен
-    //   console.log(updatedModelLine);
-    // } else {
-    //   updatedModelLine = updatedModelLine.filter((item) => item !== value);
-    //   console.log(updatedModelLine); // Удаляем значение из массива, если чекбокс снят
-    // }
     const newFilters = { ...filters, [name]: groupValues };
 
     console.log(newFilters);
     setFilters(newFilters);
-    //   const queryString = Object.keys(newFilters)
-    //   .filter(key => newFilters[key] !== "")
-    //   .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(newFilters[key]))
-    //   .join("&");
+
     // console.log(queryString);
     // const newPath = `${window.location.pathname}?${queryString}`;
     // console.log(newPath);
     // window.history.pushState({ path: newPath }, '', newPath)
 
-    // setFilters({ ...filters, [name]: updatedModelLine }); // Обновляем состояние filters
+    // setFilters({ ...filters, [name]: updatedModelLine });
   };
 
   // useEffect(() => {
@@ -131,37 +109,31 @@ const Filter = ({ handleFilter }) => {
 
   const applyFilters = (filter) => {
     // const queryParams = new URLSearchParams();
-    let nonEmptyFilters = Object.fromEntries(
-      Object.entries(filters).filter(
-        (value) => value !== "" && value.length !== 0
-      )
-    );
+    const nonEmptyFilters = Object.keys(filters).reduce((result, key) => {
+      if (
+        filters[key] !== "" &&
+        filters[key].length !== 0 &&
+        filters[key] !== false
+      ) {
+        result[key] = filters[key];
+      }
+      return result;
+    }, {});
+
     console.log(nonEmptyFilters);
 
-    // let queryString = Object.keys(filters)
-    //   .filter(key => filters[key] !== "")
-    //   .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(filters[key]))
-    // .join("&");
+    const queryString = new URLSearchParams(nonEmptyFilters).toString();
 
-    // let queryString = Object.entries(filters)
-    // .filter(key => filters[key] !== "")
-    // .map((key) => key = filters[key])
-    // .join("&");
+    // const query = queryString.stringify(nonEmptyFilters);
+    // console.log("queryString to URL:", query);
 
-    // console.log(queryString);
-    // console.log(decodeURI(queryString));
-    // =====================================================================
-    // console.log('queryString after filter' , queryString);
-
-    // const queryString = new URLSearchParams(nonEmptyFilters).toString()
-    const query = queryString.stringify(nonEmptyFilters);
-    console.log("queryString to URL:", query);
+    console.log("queryString to URL:", queryString);
 
     // const newPath = `${window.location.pathname}?${queryString}`;
     // console.log(newPath);
     // window.history.pushState({ path: newPath }, '', newPath)
 
-    handleFilter(query);
+    handleFilter(queryString);
   };
 
   const handleInputChange = (e) => {

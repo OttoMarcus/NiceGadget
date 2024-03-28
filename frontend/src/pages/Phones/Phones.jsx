@@ -10,7 +10,7 @@ import ReactPaginate from "react-paginate";
 // import Pagination from "../../Components/Pagination/Pagination";
 import { useLocation } from "react-router-dom";
 import styles from "./Phones.module.scss";
-import ReactFilters from "../../Components/Filter/Filter-react-filter";
+// import ReactFilters from "../../Components/Filter/Filter-react-filter";
 
 const Phones = () => {
   const [phonesArr, setPhonesArr] = useState();
@@ -199,15 +199,18 @@ const Phones = () => {
 
   const handleFilter = async (queryString) => {
     // const queryString = new URLSearchParams(filters).toString();
-    const extendedQueryString = `&sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`;
-    const newPath = `${window.location.pathname}?${queryString}${extendedQueryString}`;
-    console.log(newPath);
-    window.history.pushState({ path: newPath }, "", newPath);
+
+    // const extendedQueryString = `&sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`;
+    // const newPath = `${window.location.pathname}?${queryString}${extendedQueryString}`;
+    // console.log(newPath);
+    // window.history.pushState({ path: newPath }, "", newPath);
 
     try {
       const res = await fetch(
-        // `/api/phones?${queryString}&sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
-        newPath
+        `/api/phones?${queryString}&sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
+        // newPath
+        // 'http://localhost:4000/api/phones?modelName=iPhone%2015%20Pro%20Max&perPage=8&startPage=1'
+        // 'http://localhost:4000/api/phones?color=white&perPage=8&startPage=1'
       );
       if (!res.ok) {
         throw new Error("Network response was not ok");
