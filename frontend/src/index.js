@@ -6,11 +6,10 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { store } from "./store/store";
-import ErrorBoundary from "./Components/ErrorBoundary/ErrorBoundary";
 
 if (process.env.NODE_ENV === "production") {
   Sentry.init({
-    dsn: "https://950d44eda1016b8c5f5deec47ea28a7e@o4506733876281344.ingest.sentry.io/4506733878378496",
+    dsn: "https://a5c786c0ccf11c33b0c7444b04e3cf49@o4506984373682176.ingest.us.sentry.io/4506984377614336",
     integrations: [
       Sentry.browserTracingIntegration(),
       Sentry.replayIntegration({
@@ -30,7 +29,7 @@ if (process.env.NODE_ENV === "production") {
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <ErrorBoundary>
+  <Sentry.ErrorBoundary fallback={<p>An error has occurred</p>}>
     <React.StrictMode>
       <Provider store={store}>
         <BrowserRouter>
@@ -38,7 +37,7 @@ root.render(
         </BrowserRouter>
       </Provider>
     </React.StrictMode>
-  </ErrorBoundary>
+  </Sentry.ErrorBoundary>
 );
 
 // If you want to start measuring performance in your app, pass a function

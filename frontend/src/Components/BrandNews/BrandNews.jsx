@@ -11,7 +11,7 @@ const BrandNew = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:4000/api/brand-news");
+        const response = await fetch("/api/phones?brandNew=true");
         const data = await response.json();
         setProducts(data.data);
       } catch (error) {
