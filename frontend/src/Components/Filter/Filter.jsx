@@ -4,18 +4,20 @@ import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./Filter.module.scss";
 import PropTypes from "prop-types";
 
-const Filter = ({ handleFilter }) => {
-  const [filters, setFilters] = useState({
-    discount: false,
-    available: false,
-    minPrice: "",
-    maxPrice: "",
-    modelName: [],
-    capacity: [],
-    color: [],
-    ram: [],
-    screen: [],
-  });
+// handleFilter, filters, setFilters
+
+const Filter = ({ handleFilter, filters, setFilters }) => {
+  // const [filters, setFilters] = useState({
+  //   discount: false,
+  //   available: false,
+  //   minPrice: "",
+  //   maxPrice: "",
+  //   modelName: [],
+  //   capacity: [],
+  //   color: [],
+  //   ram: [],
+  //   screen: [],
+  // });
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -55,8 +57,9 @@ const Filter = ({ handleFilter }) => {
     // console.log(checked);
     // console.log(name);
 
+    //Defining the array of values of filter group
     let groupValues = filters[name];
-    console.log("groupValues: ", groupValues);
+    console.log("array of filter group val before changed: ", groupValues);
 
     if (checked) {
       if (!groupValues.includes(value)) {
@@ -65,12 +68,12 @@ const Filter = ({ handleFilter }) => {
       console.log("groupValues after push: ", groupValues);
     } else {
       groupValues = groupValues.filter((item) => item !== value);
-      console.log(groupValues); // Удаляем значение из массива, если чекбокс снят
+      console.log("the array of values of filter group is: ", groupValues); // Удаляем значение из массива, если чекбокс снят
     }
 
     const newFilters = { ...filters, [name]: groupValues };
 
-    console.log(newFilters);
+    console.log("value of state filters after group change: ", newFilters);
     setFilters(newFilters);
 
     // console.log(queryString);
@@ -286,7 +289,19 @@ const Filter = ({ handleFilter }) => {
 };
 
 Filter.propTypes = {
-  handleFilter: PropTypes.func.isRequired,
+  handleFilter: PropTypes.func.isRequired, // Функция для обработки фильтров
+  filters: PropTypes.shape({
+    discount: PropTypes.bool.isRequired, // Флаг для скидок
+    available: PropTypes.bool.isRequired, // Флаг для доступности
+    minPrice: PropTypes.string.isRequired, // Минимальная цена
+    maxPrice: PropTypes.string.isRequired, // Максимальная цена
+    modelName: PropTypes.arrayOf(PropTypes.string).isRequired, // Массив названий моделей
+    capacity: PropTypes.arrayOf(PropTypes.string).isRequired, // Массив вместимостей
+    color: PropTypes.arrayOf(PropTypes.string).isRequired, // Массив цветов
+    ram: PropTypes.arrayOf(PropTypes.string).isRequired, // Массив оперативной памяти
+    screen: PropTypes.arrayOf(PropTypes.string).isRequired, // Массив диагоналей экрана
+  }),
+  setFilters: PropTypes.func.isRequired, // Функция для установки фильтров
 };
 
 export default Filter;

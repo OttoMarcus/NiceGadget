@@ -15,6 +15,18 @@ import styles from "./Phones.module.scss";
 const Phones = () => {
   const [phonesArr, setPhonesArr] = useState();
 
+  const [filters, setFilters] = useState({
+    discount: false,
+    available: false,
+    minPrice: "",
+    maxPrice: "",
+    modelName: [],
+    capacity: [],
+    color: [],
+    ram: [],
+    screen: [],
+  });
+  const [filterQueryString, setFilterQueryString] = useState(null);
   const [sortValue, setSortValue] = useState("-brandNew");
   const [cardsPerPageValue, setCardsPerPageValue] = useState(8);
   const [currentPage, setCurrentPage] = useState(1);
@@ -123,8 +135,11 @@ const Phones = () => {
 
   // [sortValue, cardsPerPageValue, currentPage]
 
+  //parse values FROM url query params TO states
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
+
+    // const filterQuery =
     const sort = urlParams.get("sort");
     const perPage = urlParams.get("perPage");
     const startPage = urlParams.get("startPage");
@@ -134,10 +149,60 @@ const Phones = () => {
     setCurrentPage(startPage ? Number(startPage) : 1);
   }, []);
 
-  const fetchData = async (sortValue, cardsPerPageValue, currentPage) => {
+  //Converting state filters to url query string
+  useEffect(() => {
+    // const filtersToQuery = (filters) => {
+    const nonEmptyFilters = Object.keys(filters).reduce((result, key) => {
+      if (
+        filters[key] !== "" &&
+        filters[key].length !== 0 &&
+        filters[key] !== false
+      ) {
+        // console.log('result[key] is: ', result[key]);
+        // console.log('filters[key] is: ', filters[key]);
+        result[key] = filters[key];
+      }
+      return result;
+    }, {});
+    console.log("nonEmptyFilters after reduce: ", nonEmptyFilters);
+    // }
+
+    // console.log(Object.keys(nonEmptyFilters).length);
+    let queryString;
+    // console.log(nonEmptyFilters);
+    if (Object.keys(nonEmptyFilters).length === 0) {
+      return;
+    } else {
+      queryString = new URLSearchParams(nonEmptyFilters).toString();
+    }
+
+    // queryString = new URLSearchParams(nonEmptyFilters).toString();
+    // return queryString
+    // }
+    // const filtersQueryValue = filtersToQuery(filters)
+    // setFilterQueryString(filtersQueryValue)
+
+    console.log("queryString before set state", queryString);
+    setFilterQueryString(queryString);
+  }, [filters]);
+
+  // Base request
+  const fetchData = async (
+    filterQueryString,
+    sortValue,
+    cardsPerPageValue,
+    currentPage
+  ) => {
+    console.log("filterQuery state in fetchData: ", Boolean(filterQueryString));
+
+    let fetchURL = filterQueryString
+      ? `/api/phones?${filterQueryString}sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
+      : `/api/phones?sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`;
+
     try {
       const res = await fetch(
-        `/api/phones?sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
+        // `/api/phones?sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
+        fetchURL
       );
       if (!res.ok) {
         throw new Error("Network response was not ok");
@@ -152,9 +217,10 @@ const Phones = () => {
     }
   };
 
+  // Sending requests on query params changing
   useEffect(() => {
-    fetchData(sortValue, cardsPerPageValue, currentPage);
-  }, [sortValue, cardsPerPageValue, currentPage]);
+    fetchData(filterQueryString, sortValue, cardsPerPageValue, currentPage);
+  }, [filterQueryString, sortValue, cardsPerPageValue, currentPage]);
 
   const handleSortChange = async (newSortValue) => {
     const currentUrl = new URL(window.location);
@@ -197,32 +263,30 @@ const Phones = () => {
     setCurrentPage(Number(newPage));
   };
 
-  const handleFilter = async (queryString) => {
+  const handleFilter = async () => {
     // const queryString = new URLSearchParams(filters).toString();
-
     // const extendedQueryString = `&sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`;
     // const newPath = `${window.location.pathname}?${queryString}${extendedQueryString}`;
     // console.log(newPath);
     // window.history.pushState({ path: newPath }, "", newPath);
-
-    try {
-      const res = await fetch(
-        `/api/phones?${queryString}&sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
-        // newPath
-        // 'http://localhost:4000/api/phones?modelName=iPhone%2015%20Pro%20Max&perPage=8&startPage=1'
-        // 'http://localhost:4000/api/phones?color=white&perPage=8&startPage=1'
-      );
-      if (!res.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const { data, totalPages, total } = await res.json();
-      setPhonesArr(data);
-      setTotalNumber(Number(total));
-      setTotalPages(Number(totalPages));
-      // setTotalMatching(totalMatching);
-    } catch (error) {
-      console.error("There was a problem with your fetch operation:", error);
-    }
+    // try {
+    //   const res = await fetch(
+    //     `/api/phones?${queryString}&sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
+    //     // newPath
+    //     // 'http://localhost:4000/api/phones?modelName=iPhone%2015%20Pro%20Max&perPage=8&startPage=1'
+    //     // 'http://localhost:4000/api/phones?color=white&perPage=8&startPage=1'
+    //   );
+    //   if (!res.ok) {
+    //     throw new Error("Network response was not ok");
+    //   }
+    //   const { data, totalPages, total } = await res.json();
+    //   setPhonesArr(data);
+    //   setTotalNumber(Number(total));
+    //   setTotalPages(Number(totalPages));
+    //   // setTotalMatching(totalMatching);
+    // } catch (error) {
+    //   console.error("There was a problem with your fetch operation:", error);
+    // }
   };
 
   // const handlePaginationArrowClick = async (e, currentPage, totalPages) => {
@@ -287,7 +351,11 @@ const Phones = () => {
           renderResetButton={renderResetButton}
           renderApplyButton={renderApplyButton}
         /> */}
-        <Filter handleFilter={handleFilter} />
+        <Filter
+          handleFilter={handleFilter}
+          filters={filters}
+          setFilters={setFilters}
+        />
         <Sort handleSortChange={handleSortChange} sortValue={sortValue} />
         <PerPageSelect
           handlePerPageChange={handlePerPageChange}
