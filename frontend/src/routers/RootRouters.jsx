@@ -17,7 +17,7 @@ import Contacts from "../pages/Contacts/Contacts";
 import User from "../pages/User/User";
 import SearchPage from "../pages/SearchPage/SearchPage";
 import UserUpdatePass from "../pages/User/UserUpdatePass/UserUpdatePass";
-import BuyForm from "../Components/BuyForm/BuyForm";
+import CheckoutPage from "../pages/CheckoutPage/CheckoutPage";
 import UserDataInformation from "../pages/User/UserDataInformation/UserDataInformation";
 
 const RootRouters = () => {
@@ -31,7 +31,7 @@ const RootRouters = () => {
         element={<SingleAccessoriesPage />}
       />
       <Route path="/phones" element={<PhonesPage />} />
-      <Route path="/buyform" element={<BuyForm />} />
+      <Route path="/checkout" element={<CheckoutPage />} />
       <Route path="/phones/:modelId" element={<SingleProductPage />} />
       <Route path="/favorites" element={<FavoritesPage />} />
       <Route path="/cart" element={<CartPage />} />

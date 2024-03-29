@@ -10,6 +10,7 @@ const Button = ({
   height,
   disabled,
   type,
+  fontSize,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -18,6 +19,7 @@ const Button = ({
       isHovered && !disabled ? hoverBackgroundColor : backgroundColor,
     height,
     cursor: disabled ? "default" : "pointer",
+    fontSize,
   };
 
   return (
@@ -43,14 +45,17 @@ Button.propTypes = {
   hoverBackgroundColor: PropTypes.string,
   height: PropTypes.string,
   disabled: PropTypes.bool,
+  fontSize: PropTypes.string,
 };
 
 Button.defaultProps = {
+  type: "button",
   onClick: () => {},
   backgroundColor: "#905BFF",
   hoverBackgroundColor: "#a378ff",
   height: "40px",
   disabled: false,
+  fontSize: "14px",
 };
 
 export default Button;

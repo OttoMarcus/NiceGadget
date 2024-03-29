@@ -20,6 +20,7 @@ const Card = (props) => {
     refModel,
     category,
     discount,
+    cartBtnFontSize,
   } = props;
   const dispatch = useDispatch();
   const favor = useSelector((state) => state.favorite.favorites);
@@ -78,6 +79,7 @@ const Card = (props) => {
             isAvailable={productToAdd?.available}
             inCart={inCart}
             fetchDetailsUrl={null}
+            fontSize={cartBtnFontSize}
           />
 
           <Favorite
@@ -111,10 +113,12 @@ Card.propTypes = {
     modelName: PropTypes.string,
   }).isRequired,
   discount: PropTypes.number,
+  cartBtnFontSize: PropTypes.string,
 };
 
 Card.defaultProps = {
   discount: 0,
+  cartBtnFontSize: "14px",
 };
 
 export default Card;

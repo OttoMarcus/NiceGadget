@@ -10,6 +10,7 @@ const CartButton = ({
   isAvailable,
   inCart,
   heightBtn,
+  fontSize,
 }) => {
   const isAuthorized = useSelector((state) => state.user.isAuthorized);
   const backgroundColorBtn = isAvailable && !inCart ? "#905BFF" : "#323542";
@@ -31,7 +32,8 @@ const CartButton = ({
       backgroundColor={backgroundColorBtn}
       hoverBackgroundColor={hoverBackgroundColorBtn}
       height={heightBtn}
-      disabled={!isAvailable}
+      disabled={!isAvailable || inCart}
+      fontSize={fontSize}
     >
       {isAvailable ? (inCart ? "Added to Cart" : "Add to Cart") : "Notify Me"}
     </Button>
@@ -44,12 +46,14 @@ CartButton.propTypes = {
   isAvailable: PropTypes.bool.isRequired,
   inCart: PropTypes.bool.isRequired,
   heightBtn: PropTypes.string,
+  fontSize: PropTypes.string,
 };
 
 CartButton.defaultProps = {
   productToAdd: null,
   fetchDetailsUrl: null,
   heightBtn: "40px",
+  fontSize: "14px",
 };
 
 export default CartButton;

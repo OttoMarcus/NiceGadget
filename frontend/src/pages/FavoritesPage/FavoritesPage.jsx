@@ -65,7 +65,11 @@ const FavoritesPage = () => {
               }
             })
           ) : (
-            <p className={styles.emptyMessage}>You didn&#39;t choose nothing</p>
+            <div className={styles.emptyMessageWrapper}>
+              <p className={styles.emptyMessage}>
+                You didn&#39;t choose nothing
+              </p>
+            </div>
           )}
         </div>
       </>
