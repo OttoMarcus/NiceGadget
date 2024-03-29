@@ -40,7 +40,7 @@ const Card = (props) => {
 
   return (
     <Link
-      to={`/${category}/${refModel.modelId}?color=${color}&capacity=${capacity}`}
+      to={`/${category}/${refModel?.modelId}?color=${color}&capacity=${capacity}`}
       className={styles.cardLink}
     >
       <div className={styles.card}>

@@ -13,6 +13,7 @@ import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
 import { useFetchModelData } from "./hooks/useFetchModelData";
 import { useSelectedColorData } from "./hooks/useSelectedColorData";
 import CartButton from "../../Components/Cart/CartButton/CartButton";
+import BuyTogether from "../../Components/BuyTogether/BuyTogether";
 
 const SingleProductPage = () => {
   const dispatch = useDispatch();
@@ -55,7 +56,9 @@ const SingleProductPage = () => {
           <div className={styles.content}>
             <div className={styles.imagesAndCustomizationWrapper}>
               <div className={styles.outerImagesWrapper}>
-                <SelectableImageGallery images={selectedColorData.pictures} />
+                {selectedColorData && selectedColorData.pictures && (
+                  <SelectableImageGallery images={selectedColorData.pictures} />
+                )}
               </div>
               <div className={styles.outerCustomizationWrapper}>
                 <div className={styles.productCustomizationWrapper}>
@@ -185,6 +188,16 @@ const SingleProductPage = () => {
                 <h3 className={styles.techSpecsHeader}>Tech specs</h3>
                 <TechSpecs techSpecs={model?.techSpecs} capacity={capacity} />
               </div>
+            </div>
+
+            <div className={styles.buyTogetherSection}>
+              {/*<div className={styles.randomAccessories}>*/}
+              {/*  {Array.isArray(model?.accessories) && model?.accessories.map((accessory) => (*/}
+              {/*    <CardAccessories key={accessory.id} {...accessory} />*/}
+              {/*  ))}*/}
+              {/*</div>*/}
+
+              <BuyTogether />
             </div>
           </div>
         </div>
