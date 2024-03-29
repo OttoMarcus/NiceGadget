@@ -135,7 +135,7 @@ const Phones = () => {
 
   // [sortValue, cardsPerPageValue, currentPage]
 
-  //parse values FROM url query params TO states
+  //Parse values FROM url query params TO states
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
 
@@ -150,41 +150,39 @@ const Phones = () => {
   }, []);
 
   //Converting state filters to url query string
-  useEffect(() => {
-    // const filtersToQuery = (filters) => {
-    const nonEmptyFilters = Object.keys(filters).reduce((result, key) => {
-      if (
-        filters[key] !== "" &&
-        filters[key].length !== 0 &&
-        filters[key] !== false
-      ) {
-        // console.log('result[key] is: ', result[key]);
-        // console.log('filters[key] is: ', filters[key]);
-        result[key] = filters[key];
-      }
-      return result;
-    }, {});
-    console.log("nonEmptyFilters after reduce: ", nonEmptyFilters);
-    // }
+  // useEffect(() => {
+  //   const nonEmptyFilters = Object.keys(filters).reduce((result, key) => {
+  //     if (
+  //       filters[key] !== "" &&
+  //       filters[key].length !== 0 &&
+  //       filters[key] !== false
+  //     ) {
+  //       result[key] = filters[key];
+  //     }
+  //     return result;
+  //   }, {});
+  //   console.log("nonEmptyFilters after reduce: ", nonEmptyFilters);
 
-    // console.log(Object.keys(nonEmptyFilters).length);
-    let queryString;
-    // console.log(nonEmptyFilters);
-    if (Object.keys(nonEmptyFilters).length === 0) {
-      return;
-    } else {
-      queryString = new URLSearchParams(nonEmptyFilters).toString();
-    }
+  //   let queryString;
 
-    // queryString = new URLSearchParams(nonEmptyFilters).toString();
-    // return queryString
-    // }
-    // const filtersQueryValue = filtersToQuery(filters)
-    // setFilterQueryString(filtersQueryValue)
+  //   if (Object.keys(nonEmptyFilters).length === 0) {
+  //     setFilterQueryString(null)
+  //     // return;
+  //   } else {
+  //     queryString = new URLSearchParams(nonEmptyFilters).toString();
+  //     console.log("queryString before set state", queryString);
+  //     setFilterQueryString(queryString)
+  //   }
 
-    console.log("queryString before set state", queryString);
-    setFilterQueryString(queryString);
-  }, [filters]);
+  //   // queryString = new URLSearchParams(nonEmptyFilters).toString();
+  //   // return queryString
+  //   // }
+  //   // const filtersQueryValue = filtersToQuery(filters)
+  //   // setFilterQueryString(filtersQueryValue)
+
+  //   // console.log("queryString before set state", queryString);
+  //   // setFilterQueryString(queryString);
+  // }, [filters]);
 
   // Base request
   const fetchData = async (
@@ -194,9 +192,11 @@ const Phones = () => {
     currentPage
   ) => {
     console.log("filterQuery state in fetchData: ", Boolean(filterQueryString));
+    console.log("filterQueryString in fetchData: ", filterQueryString);
+    console.log("currentPage in fetchData: ", currentPage);
 
     let fetchURL = filterQueryString
-      ? `/api/phones?${filterQueryString}sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
+      ? `/api/phones?${filterQueryString}&sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
       : `/api/phones?sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`;
 
     try {
@@ -220,7 +220,7 @@ const Phones = () => {
   // Sending requests on query params changing
   useEffect(() => {
     fetchData(filterQueryString, sortValue, cardsPerPageValue, currentPage);
-  }, [filterQueryString, sortValue, cardsPerPageValue, currentPage]);
+  }, [sortValue, cardsPerPageValue, currentPage]);
 
   const handleSortChange = async (newSortValue) => {
     const currentUrl = new URL(window.location);
@@ -264,29 +264,58 @@ const Phones = () => {
   };
 
   const handleFilter = async () => {
-    // const queryString = new URLSearchParams(filters).toString();
-    // const extendedQueryString = `&sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`;
-    // const newPath = `${window.location.pathname}?${queryString}${extendedQueryString}`;
-    // console.log(newPath);
-    // window.history.pushState({ path: newPath }, "", newPath);
-    // try {
-    //   const res = await fetch(
-    //     `/api/phones?${queryString}&sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
-    //     // newPath
-    //     // 'http://localhost:4000/api/phones?modelName=iPhone%2015%20Pro%20Max&perPage=8&startPage=1'
-    //     // 'http://localhost:4000/api/phones?color=white&perPage=8&startPage=1'
-    //   );
-    //   if (!res.ok) {
-    //     throw new Error("Network response was not ok");
-    //   }
-    //   const { data, totalPages, total } = await res.json();
-    //   setPhonesArr(data);
-    //   setTotalNumber(Number(total));
-    //   setTotalPages(Number(totalPages));
-    //   // setTotalMatching(totalMatching);
-    // } catch (error) {
-    //   console.error("There was a problem with your fetch operation:", error);
-    // }
+    console.log("currentPage in handleFilter: ", currentPage);
+
+    const nonEmptyFilters = Object.keys(filters).reduce((result, key) => {
+      if (
+        filters[key] !== "" &&
+        filters[key].length !== 0 &&
+        filters[key] !== false
+      ) {
+        result[key] = filters[key];
+      }
+      return result;
+    }, {});
+    console.log("nonEmptyFilters after reduce: ", nonEmptyFilters);
+
+    let queryString;
+
+    if (Object.keys(nonEmptyFilters).length === 0) {
+      queryString = null;
+      setFilterQueryString(queryString);
+      // return;
+    } else {
+      queryString = new URLSearchParams(nonEmptyFilters).toString();
+      console.log("queryString before set state", queryString);
+      setFilterQueryString(queryString);
+    }
+
+    const firstPage = 1;
+    setCurrentPage(firstPage);
+
+    await fetchData(queryString, sortValue, cardsPerPageValue, firstPage);
+  };
+
+  const clearFilters = async () => {
+    const initialFiltersValues = {
+      discount: false,
+      available: false,
+      minPrice: "",
+      maxPrice: "",
+      modelName: [],
+      capacity: [],
+      color: [],
+      ram: [],
+      screen: [],
+    };
+
+    setFilters(initialFiltersValues);
+    setFilterQueryString(null);
+
+    const firstPage = 1;
+    setCurrentPage(firstPage);
+
+    await fetchData(null, sortValue, cardsPerPageValue, firstPage);
   };
 
   // const handlePaginationArrowClick = async (e, currentPage, totalPages) => {
@@ -355,6 +384,7 @@ const Phones = () => {
           handleFilter={handleFilter}
           filters={filters}
           setFilters={setFilters}
+          clearFilters={clearFilters}
         />
         <Sort handleSortChange={handleSortChange} sortValue={sortValue} />
         <PerPageSelect
@@ -389,6 +419,7 @@ const Phones = () => {
           pageClassName={styles.paginationItem}
           activeClassName={styles.active}
           pageLinkClassName={styles.paginationItemLink}
+          forcePage={currentPage - 1}
         />
       )}
     </article>

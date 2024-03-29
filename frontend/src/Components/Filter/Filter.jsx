@@ -4,9 +4,17 @@ import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./Filter.module.scss";
 import PropTypes from "prop-types";
 
-// handleFilter, filters, setFilters
+/*
+TO DO:
+1. Set default min-max price
+2. Parse values from URL to filter states
+3. Add filter groups hide and reveal on group header click
+4. Add accordeon logic
+5. Input range?
+6. Clear button - done
+*/
 
-const Filter = ({ handleFilter, filters, setFilters }) => {
+const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
   // const [filters, setFilters] = useState({
   //   discount: false,
   //   available: false,
@@ -110,34 +118,48 @@ const Filter = ({ handleFilter, filters, setFilters }) => {
   //   }
   // }, [location.search]);
 
-  const applyFilters = (filter) => {
+  const applyFilters = async (filter) => {
     // const queryParams = new URLSearchParams();
-    const nonEmptyFilters = Object.keys(filters).reduce((result, key) => {
-      if (
-        filters[key] !== "" &&
-        filters[key].length !== 0 &&
-        filters[key] !== false
-      ) {
-        result[key] = filters[key];
-      }
-      return result;
-    }, {});
 
-    console.log(nonEmptyFilters);
+    // const nonEmptyFilters = Object.keys(filters).reduce((result, key) => {
+    //   if (
+    //     filters[key] !== "" &&
+    //     filters[key].length !== 0 &&
+    //     filters[key] !== false
+    //   ) {
+    //     result[key] = filters[key];
+    //   }
+    //   return result;
+    // }, {});
 
-    const queryString = new URLSearchParams(nonEmptyFilters).toString();
+    // console.log('nonEmptyFilters only: ' ,nonEmptyFilters);
 
-    // const query = queryString.stringify(nonEmptyFilters);
-    // console.log("queryString to URL:", query);
+    // const queryString = new URLSearchParams(nonEmptyFilters).toString();
 
-    console.log("queryString to URL:", queryString);
+    // console.log("queryString to URL:", queryString);
 
     // const newPath = `${window.location.pathname}?${queryString}`;
     // console.log(newPath);
     // window.history.pushState({ path: newPath }, '', newPath)
 
-    handleFilter(queryString);
+    // handleFilter(queryString);
+    await handleFilter();
   };
+
+  // const clearFilters = () => {
+  //   const initialFiltersValues = {
+  //     discount: false,
+  //     available: false,
+  //     minPrice: "",
+  //     maxPrice: "",
+  //     modelName: [],
+  //     capacity: [],
+  //     color: [],
+  //     ram: [],
+  //     screen: [],
+  //   }
+  //   setFilters(initialFiltersValues)
+  // }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -146,7 +168,7 @@ const Filter = ({ handleFilter, filters, setFilters }) => {
 
   const handleCheckboxChange = (e) => {
     const { name, checked, value } = e.target;
-    setFilters({ ...filters, [name]: value });
+    setFilters({ ...filters, [name]: checked });
   };
 
   // const handleSelectChange = (e) => {
@@ -223,11 +245,51 @@ const Filter = ({ handleFilter, filters, setFilters }) => {
           <input
             type="checkbox"
             name="modelName"
+            value="iPhone 14 Pro"
+            checked={filters.modelName.includes("iPhone 14 Pro")}
+            onChange={(e) => handleGroupCheckboxChange(e)}
+          />
+          iPhone 14 Pro
+        </label>
+        <label htmlFor="modelName">
+          <input
+            type="checkbox"
+            name="modelName"
+            value="iPhone 14 Pro Max"
+            checked={filters.modelName.includes("iPhone 14 Pro Max")}
+            onChange={(e) => handleGroupCheckboxChange(e)}
+          />
+          iPhone 14 Pro Max
+        </label>
+        <label htmlFor="modelName">
+          <input
+            type="checkbox"
+            name="modelName"
             value="iPhone 15"
             checked={filters.modelName.includes("iPhone 15")}
             onChange={(e) => handleGroupCheckboxChange(e)}
           />
           iPhone 15
+        </label>
+        <label htmlFor="modelName">
+          <input
+            type="checkbox"
+            name="modelName"
+            value="iPhone 15 Pro"
+            checked={filters.modelName.includes("iPhone 15 Pro")}
+            onChange={(e) => handleGroupCheckboxChange(e)}
+          />
+          iPhone 15 Pro
+        </label>
+        <label htmlFor="modelName">
+          <input
+            type="checkbox"
+            name="modelName"
+            value="iPhone 15 Pro Max"
+            checked={filters.modelName.includes("iPhone 15 Pro Max")}
+            onChange={(e) => handleGroupCheckboxChange(e)}
+          />
+          iPhone 15 Pro Max
         </label>
       </div>
 
@@ -284,24 +346,26 @@ const Filter = ({ handleFilter, filters, setFilters }) => {
       </select> */}
 
       <button onClick={applyFilters}>Apply</button>
+      <button onClick={clearFilters}>Clear</button>
     </div>
   );
 };
 
 Filter.propTypes = {
-  handleFilter: PropTypes.func.isRequired, // Функция для обработки фильтров
+  handleFilter: PropTypes.func.isRequired,
   filters: PropTypes.shape({
-    discount: PropTypes.bool.isRequired, // Флаг для скидок
-    available: PropTypes.bool.isRequired, // Флаг для доступности
-    minPrice: PropTypes.string.isRequired, // Минимальная цена
-    maxPrice: PropTypes.string.isRequired, // Максимальная цена
-    modelName: PropTypes.arrayOf(PropTypes.string).isRequired, // Массив названий моделей
-    capacity: PropTypes.arrayOf(PropTypes.string).isRequired, // Массив вместимостей
-    color: PropTypes.arrayOf(PropTypes.string).isRequired, // Массив цветов
-    ram: PropTypes.arrayOf(PropTypes.string).isRequired, // Массив оперативной памяти
-    screen: PropTypes.arrayOf(PropTypes.string).isRequired, // Массив диагоналей экрана
+    discount: PropTypes.bool.isRequired,
+    available: PropTypes.bool.isRequired,
+    minPrice: PropTypes.string.isRequired,
+    maxPrice: PropTypes.string.isRequired,
+    modelName: PropTypes.arrayOf(PropTypes.string).isRequired,
+    capacity: PropTypes.arrayOf(PropTypes.string).isRequired,
+    color: PropTypes.arrayOf(PropTypes.string).isRequired,
+    ram: PropTypes.arrayOf(PropTypes.string).isRequired,
+    screen: PropTypes.arrayOf(PropTypes.string).isRequired,
   }),
-  setFilters: PropTypes.func.isRequired, // Функция для установки фильтров
+  setFilters: PropTypes.func.isRequired,
+  clearFilters: PropTypes.func.isRequired,
 };
 
 export default Filter;

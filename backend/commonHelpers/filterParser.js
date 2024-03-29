@@ -7,8 +7,8 @@ module.exports = function filterParser(filtersQueryString) {
 
   if (filtersQueryString.minPrice || filtersQueryString.maxPrice) {
     mongooseQuery.price = {
-      $gte: Number(filtersQueryString.minPrice),
-      $lte: Number(filtersQueryString.maxPrice)
+      $gte: Number(filtersQueryString.minPrice) || 0,
+      $lte: Number(filtersQueryString.maxPrice) || 2500
     };
   }
 
