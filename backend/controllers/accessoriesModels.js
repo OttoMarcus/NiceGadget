@@ -119,6 +119,7 @@ exports.getAccessoryModels = async (req, res, next) => {
 // };
 exports.getAccessoryModelById = (req, res, next) => {
     const { name } = req.params;
+    
     accessoriesModels.findOne({ name: name })
         .then(accessoryModel => {
 
@@ -129,6 +130,8 @@ exports.getAccessoryModelById = (req, res, next) => {
                 });
             }
             res.json(accessoryModel);
+
+            console.log("accessoryModel ", accessoryModel);
         })
         .catch(err =>
             res.status(400).json({
