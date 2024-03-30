@@ -1,0 +1,61 @@
+@import "../../styles/abstracts/variables";
+@import "../../styles/abstracts/mixins";
+@import "../../styles/global/base";
+
+.headTittle {
+  @include h1;
+}
+
+.containerOrder {
+  display: flex;
+  justify-content: space-between;
+}
+
+.product {
+  padding: 20px;
+  border: 1px solid #75767f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.img {
+  height: 170px;
+  width: 150px;
+}
+
+.subInfoWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.subInfoSecond {
+  font-family: $ui-font-family-semibold;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0;
+  color: #75767f;
+}
+
+.infoWrapper {
+  gap: 30px;
+}
+
+.subInfoFirst {
+  font-family: $ui-font-family-semibold;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.subInfo {
+  @include h4;
+  color: #75767f;
+}
+
+.info {
+  @include h4;
+}

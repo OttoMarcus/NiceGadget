@@ -19,6 +19,7 @@ import SearchPage from "../pages/SearchPage/SearchPage";
 import UserUpdatePass from "../pages/User/UserUpdatePass/UserUpdatePass";
 import CheckoutPage from "../pages/CheckoutPage/CheckoutPage";
 import UserDataInformation from "../pages/User/UserDataInformation/UserDataInformation";
+import Orders from "../pages/Orders/Orders";
 
 const RootRouters = () => {
   return (
@@ -30,6 +31,7 @@ const RootRouters = () => {
         path="/accessories/:accessoryId"
         element={<SingleAccessoriesPage />}
       />
+      <Route path="/orders" element={<Orders />} />
       <Route path="/phones" element={<PhonesPage />} />
       <Route path="/checkout" element={<CheckoutPage />} />
       <Route path="/phones/:modelId" element={<SingleProductPage />} />
