@@ -11,6 +11,7 @@ import {
   synchronizeCartWithServer,
   fetchCartItems,
 } from "../../../API/cartAPI.js";
+import { synchronizeFavor } from "../../../store/favorites/favoriteSlice";
 
 const UserRegForm = () => {
   const [regStatus, setRegStatus] = useState("");
@@ -154,6 +155,7 @@ const UserRegForm = () => {
     await getUserOnLogin(token);
     dispatch(synchronizeCartWithServer());
     dispatch(fetchCartItems());
+    dispatch(synchronizeFavor());
     onAuthRedirect();
 
     // return user

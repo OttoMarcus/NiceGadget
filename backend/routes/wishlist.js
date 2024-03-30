@@ -27,7 +27,7 @@ router.post(
 // @access  Private
 router.put(
     "/synchronize",
-     passport.authenticate("jwt", { session: false }),
+      passport.authenticate("jwt", { session: false }),
     synchronizeWishlist
 );
 

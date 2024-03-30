@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
+import { fetchGetOne } from "../../store/favorites/favoriteSlice";
 import CartButton from "../Cart/CartButton/CartButton";
 import Favorite from "../Favorite/Favorite";
 import styles from "./Card.module.scss";
@@ -22,6 +22,7 @@ const Card = (props) => {
     discount,
     cartBtnFontSize,
   } = props;
+
   const dispatch = useDispatch();
   const favor = useSelector((state) => state.favorite.favorites);
   const some = favor.some((el) => id === el.id);
@@ -86,7 +87,8 @@ const Card = (props) => {
             click={(event) => {
               event.stopPropagation();
               event.preventDefault();
-              dispatch(Tooglefavorites(props));
+              // dispatch(Tooglefavorites(props));
+              dispatch(fetchGetOne(`/api/${category}/byProductId/${id}`));
             }}
             some={some}
           />
