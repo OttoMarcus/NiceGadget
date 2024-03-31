@@ -8,36 +8,13 @@ const queryCreator = require("../commonHelpers/queryCreator");
 const filterParser = require("../commonHelpers/filterParser");
 const _ = require("lodash");
 const TabletModel = require("../models/TabletModel");
+const TabletModelQuantity = require("../models/TabletModelQuantity");
 
-// exports.addImages = (req, res, next) => {
-//   if (req.files.length > 0) {
-//     res.json({
-//       message: "Photos are received"
-//     });
-//   } else {
-//     res.json({
-//       message:
-//         "Something wrong with receiving photos at server. Please, check the path folder"
-//     });
-//   }
-// };
 
 exports.addTabletProduct = (req, res, next) => {
   const tabletProductFields = _.cloneDeep(req.body);
 
   tabletProductFields.itemNo = rand();
-
-  // try {
-  //   tabletProductFields.name = tabletProductFields.name
-  //     .toLowerCase()
-  //     .trim()
-  //     .replace(/\s\s+/g, " ");
-  //
-  // } catch (err) {
-  //   res.status(400).json({
-  //     message: `Error happened on server: "${err}" `
-  //   });
-  // }
 
   const updatedTabletProduct = queryCreator(tabletProductFields);
 
@@ -119,6 +96,44 @@ exports.getTabletProducts = async (req, res, next) => {
     const total = await tabletProducts.countDocuments(mongooseQuery);
 
     res.json({ data: foundTabletProducts, total });
+  } catch (err) {
+    res.status(400).json({
+      message: `Error happened on server: "${err}" `,
+    });
+  }
+};
+
+exports.getAdminTabletProducts = async (req, res, next) => {
+  const mongooseQuery = filterParser(req.query);
+  const perPage = Number(req.query.perPage);
+  const startPage = Number(req.query.startPage);
+  const sort = req.query.sort;
+  const q = typeof req.query.q === "string" ? req.query.q.trim() : null;
+
+  if (q) {
+    mongooseQuery.name = {
+      $regex: new RegExp(q, "i"),
+    };
+  }
+
+  try {
+    const foundTabletProducts = await tabletProducts.find(mongooseQuery)
+      .skip(startPage * perPage - perPage)
+      .limit(perPage)
+      .sort(sort)
+      .limit(perPage)
+
+    const productIds = foundTabletProducts.map(product => product.id);
+    const quantities = await TabletModelQuantity.find({ productId: { $in: productIds } });
+
+    const productsWithQuantity = foundTabletProducts.map(product => {
+      const quantityData = quantities.find(qty => qty.productId === product.id);
+      const quantity = quantityData ? quantityData.quantity : 0;
+      return { ...product.toObject(), quantity };
+    });
+
+
+    res.json({ data: productsWithQuantity });
   } catch (err) {
     res.status(400).json({
       message: `Error happened on server: "${err}" `,

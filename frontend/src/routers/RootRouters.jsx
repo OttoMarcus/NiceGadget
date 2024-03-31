@@ -19,6 +19,7 @@ import SearchPage from "../pages/SearchPage/SearchPage";
 import UserUpdatePass from "../pages/User/UserUpdatePass/UserUpdatePass";
 import CheckoutPage from "../pages/CheckoutPage/CheckoutPage";
 import UserDataInformation from "../pages/User/UserDataInformation/UserDataInformation";
+import AdminPage from "../pages/AdminPage/AdminPage";
 
 const RootRouters = () => {
   return (
@@ -40,6 +41,7 @@ const RootRouters = () => {
       <Route path="/registration" element={<Registration />} />
       <Route path="/login" element={<Login />} />
       <Route path="/user" element={<User />} />
+      <Route path="/admin" element={<AdminPage />} />
       <Route path="/data-information" element={<UserDataInformation />} />
       <Route path="/update-password" element={<UserUpdatePass />} />
       <Route path="/right" element={<Right />} />

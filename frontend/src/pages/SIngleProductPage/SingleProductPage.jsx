@@ -132,25 +132,6 @@ const SingleProductPage = () => {
                     <Favorite
                       click={() => {
                         dispatch(
-                          // Tooglefavorites({
-                          //   id: chosenCapacityObject?.productId,
-                          //   capacity: capacity,
-                          //   color: color,
-                          //   name: model?.name,
-                          //   picture: selectedColorData?.pictures[0]?.link,
-                          //   price: chosenCapacityObject?.price,
-                          //   available: chosenCapacityObject?.available,
-                          //   discount: chosenCapacityObject?.discount
-                          //     ? chosenCapacityObject?.discount
-                          //     : "no discount",
-                          //   refModel: {
-                          //     modelId: modelId,
-                          //     modelName: model?.name,
-                          //   },
-                          //   category: typeModel,
-                          //   ram: model?.techSpecs[3]?.specDescription,
-                          //   screen: model?.techSpecs[0]?.specDescription,
-                          // })
                           fetchGetOne(
                             `/api/${typeModel}/byProductId/${chosenCapacityObject?.productId}`
                           )
@@ -193,12 +174,6 @@ const SingleProductPage = () => {
             </div>
 
             <div className={styles.buyTogetherSection}>
-              {/*<div className={styles.randomAccessories}>*/}
-              {/*  {Array.isArray(model?.accessories) && model?.accessories.map((accessory) => (*/}
-              {/*    <CardAccessories key={accessory.id} {...accessory} />*/}
-              {/*  ))}*/}
-              {/*</div>*/}
-
               <BuyTogether />
             </div>
           </div>
