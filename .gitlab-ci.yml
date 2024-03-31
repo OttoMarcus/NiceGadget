@@ -52,6 +52,7 @@ frontend-build:
   image: node:latest
   script:
     - cd frontend/
+    - cp $FIREBASE_ENV ./.env
     - npm install
     - npm run build
   artifacts:
@@ -157,7 +158,7 @@ deploy-to-firebase:
   image: node:latest
   script:
     - cd frontend/
-    - cp $FIREBASE_ENV ./.env
+#    - cp $FIREBASE_ENV ./.env
     - npm install
     - npm i -g firebase-tools
     - cat "$FIREBASE_JSON" > ./firebase.json
