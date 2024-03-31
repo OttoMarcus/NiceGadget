@@ -55,7 +55,7 @@ const BrandNew = () => {
       </div>
       <div className={styles.cardsContainer} ref={containerRef}>
         {products.map((product) => (
-          <Card key={product.id} {...product} />
+          <Card key={product.id} cartBtnFontSize="12px" {...product} />
         ))}
       </div>
     </>

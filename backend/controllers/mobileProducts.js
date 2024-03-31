@@ -9,6 +9,7 @@ const filterParser = require("../commonHelpers/filterParser");
 const _ = require("lodash");
 const MobileModel = require("../models/MobileModel");
 const MobileProduct = require("../models/MobileProduct");
+const MobileModelQuantity = require("../models/MobileModelQuantity");
 
 // exports.addImages = (req, res, next) => {
 //   if (req.files.length > 0) {
@@ -114,16 +115,10 @@ exports.updateMobileProduct = (req, res, next) => {
 
 exports.getMobileProducts = async (req, res, next) => {
 
-  // console.log('req.query in mobileProducts is');
-  // console.log(req.query);
-
   const mongooseQuery = filterParser(req.query);
   const perPage = Number(req.query.perPage);
   const startPage = Number(req.query.startPage);
-
   const sort = req.query.sort;
-  // console.log('sort is:');
-  // console.log(sort);
   const q = typeof req.query.q === "string" ? req.query.q.trim() : null;
 
   if (q) {
@@ -138,13 +133,11 @@ exports.getMobileProducts = async (req, res, next) => {
       .sort(sort)
       .skip(startPage * perPage - perPage)
       .limit(perPage)
-      // .sort({ available: -1 })
-      // .sort(sort)
-    
+
+
     const totalMatching = foundMobileProducts.length;
 
     const total = await mobileProducts.countDocuments(mongooseQuery);
-    // const totalMatching = foundMobileProducts.length;
     const totalPages = Math.ceil(total / perPage);
 
     res.json({ data: foundMobileProducts, total, totalMatching, totalPages });
@@ -155,8 +148,12 @@ exports.getMobileProducts = async (req, res, next) => {
   }
 };
 
-exports.getMobileProductsTotal = async (req, res, next) => {
+exports.getAdminMobileProducts = async (req, res, next) => {
+
   const mongooseQuery = filterParser(req.query);
+  const perPage = Number(req.query.perPage);
+  const startPage = Number(req.query.startPage);
+  const sort = req.query.sort;
   const q = typeof req.query.q === "string" ? req.query.q.trim() : null;
 
   if (q) {
@@ -166,9 +163,25 @@ exports.getMobileProductsTotal = async (req, res, next) => {
   }
 
   try {
-    const total = await mobileProducts.countDocuments(mongooseQuery);
+    const foundMobileProducts = await mobileProducts.find(mongooseQuery)
+      .sort({ available: -1 })
+      .sort(sort)
+      .skip(startPage * perPage - perPage)
+      .limit(perPage)
 
-    res.json({ data: foundMobileProducts, total });
+
+    const productIds = foundMobileProducts.map(product => product.id);
+    const quantities = await MobileModelQuantity.find({ productId: { $in: productIds } });
+
+    // Combine quantities with products
+    const productsWithQuantity = foundMobileProducts.map(product => {
+      const quantityData = quantities.find(qty => qty.productId === product.id);
+      const quantity = quantityData ? quantityData.quantity : 0;
+      return { ...product.toObject(), quantity };
+    });
+
+
+    res.json({ data: productsWithQuantity });
   } catch (err) {
     res.status(400).json({
       message: `Error happened on server: "${err}" `,

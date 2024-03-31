@@ -2,6 +2,12 @@ const Cart = require('../models/Cart');
 const MobileProducts = require('../models/MobileProduct');
 const TabletProducts = require('../models/TabletProduct');
 const AccessoriesProducts = require('../models/AccessoriesProducts');
+const MobileModelQuantity = require("../models/MobileModelQuantity");
+const TabletModelQuantity = require("../models/TabletModelQuantity");
+const AccessoriesModelQuantity = require("../models/AccessoriesModelQuantity");
+const MobileModel = require('../models/MobileModel'); 
+const TabletModel = require('../models/TabletModel');
+const AccessoriesModel = require('../models/AccessoriesModels');
 // const queryCreator = require('../commonHelpers/queryCreator');
 const _ = require('lodash');
 
@@ -258,6 +264,120 @@ exports.synchronizeCart = async (req, res, next) => {
   }
 };
 
+exports.validateCartItems = async (req, res) => {
+  try {
+    const cartItems = req.body;
 
+    let validationResult = [];
+
+    for (const item of cartItems) {
+      let productQuantityData;
+
+      
+      switch (item.category) {
+        case "phones":
+          productQuantityData = await MobileModelQuantity.findOne({ productId: item.customId });
+          break;
+        case "tablets":
+          productQuantityData = await TabletModelQuantity.findOne({ productId: item.customId  });
+          break;
+        case "accessories":
+          productQuantityData = await AccessoriesModelQuantity.findOne({ productId: item.customId  });
+          break;
+        default:
+          continue;
+      }
+
+
+      if (!productQuantityData || productQuantityData.quantity < item.cartQuantity) {
+        validationResult.push({
+          customId: item.customId,
+          availableQuantity: productQuantityData ? productQuantityData.quantity : 0,
+          requiredQuantity: item.cartQuantity,
+          available: productQuantityData && productQuantityData.quantity >= item.cartQuantity
+        });
+      } else {
+        validationResult = validationResult.filter(result => result.customId !== item.customId);
+      }
+    }
+
+
+    if (validationResult.length > 0) {
+      return res.status(200).json({ errors: validationResult, allProductsAvailable: false });
+    } else {
+      return res.status(200).json({ message: "All products are available and sufficient.", allProductsAvailable: true });
+    }
+  } catch (error) {
+    res.status(500).json({ message: `Error happened on server: "${error}"` });
+  }
+};
+
+exports.updateProductQuantities = async (req, res) => {
+
+  const { cartItems } = req.body;
+
+  console.log(cartItems);
+  
+  if (!Array.isArray(cartItems)) {
+    return res.status(400).send('cartItems має бути масивом');
+}
+  
+  try {
+    for (const item of cartItems) {
+      const { category, customId, cartQuantity } = item;
+      let modelQuantity, productModel, groupedProductModel;
+
+      switch (category) {
+        case "phones":
+          modelQuantity = MobileModelQuantity;
+          productModel = MobileProducts;
+          groupedProductModel = MobileModel;
+          break;
+        case "tablets":
+          modelQuantity = TabletModelQuantity;
+          productModel = TabletProducts;
+          groupedProductModel = TabletModel;
+          break;
+        case "accessories":
+          modelQuantity = AccessoriesModelQuantity;
+          productModel = AccessoriesProducts;
+          groupedProductModel = AccessoriesModel;
+          break;
+        default:
+          console.error(`Unknown category: ${category}`);
+          continue;
+      }
+
+      const productQuantityData = await modelQuantity.findOne({ productId: customId });
+      if (productQuantityData) {
+        productQuantityData.quantity -= cartQuantity;
+
+        if (productQuantityData.quantity <= 0) {
+          productQuantityData.quantity = 0;
+          await productQuantityData.save();
+
+          await productModel.findOneAndUpdate({ id: customId }, { available: false });
+
+          if (category !== "accessories") {
+            await groupedProductModel.updateMany(
+              { "colors.capacities.productId": customId },
+              { "$set": { "colors.$[].capacities.$[cap].available": false } },
+              { "arrayFilters": [{ "cap.productId": customId }] }
+            );
+          } else {
+            await groupedProductModel.findOneAndUpdate({ id: customId }, { available: false });
+          }
+        } else {
+          await productQuantityData.save();
+        }
+      } else {
+        console.error(`Product quantity data not found for ${customId} in category ${category}`);
+      }
+    }
+  } catch (error) {
+    console.error(`Error updating product quantities: ${error}`);
+    throw error; 
+  }
+};
 
 

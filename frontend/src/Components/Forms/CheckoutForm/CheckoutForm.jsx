@@ -1,30 +1,41 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import styles from "./BuyForm.module.scss";
+import styles from "./CheckoutForm.module.scss";
 import Cash from "./icons/cash.png";
 import Visa from "./icons/visa.png";
 import Paypal from "./icons/paypal.png";
 import MasterCard from "./icons/mastercard.png";
+import Button from "../../Button/Button";
+import {
+  deleteCartServer,
+  updateProductQuantities,
+} from "../../../API/cartAPI";
+import { deleteCartLocal } from "../../../store/cart/cartSlice";
 
 const initialValues = {
-  fullName: "",
+  firstName: "",
+  lastName: "",
   address: "",
-  mobilePhone: "",
+  phoneNumber: "",
   deliveryMethod: "",
   paymentMethod: "",
 };
 
 const validate = (values) => {
   const errors = {};
-  if (!values.fullName) {
-    errors.fullName = "Full Name is required";
+  if (!values.firstName) {
+    errors.firstName = "First Name is required";
+  }
+  if (!values.lastName) {
+    errors.lastName = "Last Name is required";
   }
   if (!values.address) {
     errors.address = "Address is required";
   }
-  if (!values.mobilePhone) {
-    errors.mobilePhone = "Mobile Phone is required";
+  if (!values.phoneNumber) {
+    errors.phoneNumber = "Phone Number is required";
   }
   if (!values.deliveryMethod) {
     errors.deliveryMethod = "Delivery Method is required";
@@ -48,9 +59,23 @@ const paymentOptions = [
   { name: "Cash", icon: Cash },
 ];
 
-const BuyForm = () => {
-  const handleSubmit = async () => {
-    // Handle form submission
+const CheckoutForm = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isAuthorized = useSelector((state) => state.user.isAuthorized);
+  const cartItems = useSelector((state) => state.cart.cartItems);
+
+  const handleSubmit = async (values, { setSubmitting }) => {
+    if (isAuthorized) {
+      dispatch(updateProductQuantities(cartItems));
+      dispatch(deleteCartServer());
+    } else {
+      dispatch(updateProductQuantities(cartItems));
+      dispatch(deleteCartLocal());
+    }
+
+    navigate("/");
+    setSubmitting(false);
   };
 
   return (
@@ -59,16 +84,28 @@ const BuyForm = () => {
       validate={validate}
       onSubmit={handleSubmit}
     >
-      {() => (
+      {({ isSubmitting, errors }) => (
         <Form className={styles.form}>
           <h2 className={styles.buyTittle}>Last step to buy</h2>
           <div className={styles.labelWrapper}>
-            <label htmlFor="fullName" className={styles.labelTitle}>
-              Full Name
+            <label htmlFor="firstName" className={styles.labelTitle}>
+              First Name
             </label>
-            <Field type="text" name="fullName" className={styles.inputField} />
+            <Field type="text" name="firstName" className={styles.inputField} />
             <ErrorMessage
-              name="fullName"
+              name="firstName"
+              component="div"
+              className={styles.errorMsg}
+            />
+          </div>
+
+          <div className={styles.labelWrapper}>
+            <label htmlFor="lastName" className={styles.labelTitle}>
+              Last Name
+            </label>
+            <Field type="text" name="lastName" className={styles.inputField} />
+            <ErrorMessage
+              name="lastName"
               component="div"
               className={styles.errorMsg}
             />
@@ -87,16 +124,16 @@ const BuyForm = () => {
           </div>
 
           <div className={styles.labelWrapper}>
-            <label htmlFor="mobilePhone" className={styles.labelTitle}>
-              Mobile Phone
+            <label htmlFor="phoneNumber" className={styles.labelTitle}>
+              Phone Number
             </label>
             <Field
               type="text"
-              name="mobilePhone"
+              name="phoneNumber"
               className={styles.inputField}
             />
             <ErrorMessage
-              name="mobilePhone"
+              name="phoneNumber"
               component="div"
               className={styles.errorMsg}
             />
@@ -152,13 +189,16 @@ const BuyForm = () => {
             </div>
             <ErrorMessage name="paymentMethod" component="div" />
           </div>
-          <Link to="/" className={styles.buttonSubmit}>
+          <Button
+            type="submit"
+            disabled={isSubmitting || Object.keys(errors).length !== 0}
+          >
             Place Order
-          </Link>
+          </Button>
         </Form>
       )}
     </Formik>
   );
 };
 
-export default BuyForm;
+export default CheckoutForm;

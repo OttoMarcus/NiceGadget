@@ -27,14 +27,14 @@ const MapContent = ({ activeTab }) => {
   };
 
   return (
-    <APIProvider apiKey={"AIzaSyC7ULlf1GEIxZBvF-jmUAyK5XtoJPiNQZM"}>
+    <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
       <Map
         center={position(activeTab)}
         className={styles.mapContainer}
         defaultZoom={14}
         gestureHandling={"greedy"}
         disableDefaultUI={true}
-        mapId={"54a738337e73d795"}
+        mapId={process.env.REACT_APP_NEXT_MAP_ID}
       >
         <AdvancedMarker
           position={position(activeTab)}

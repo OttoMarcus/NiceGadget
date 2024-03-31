@@ -1,0 +1,59 @@
+@import "../../../styles/abstracts/variables";
+
+.paginationBar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.paginationContainer {
+  display: flex;
+  list-style-type: none;
+
+  .paginationItem {
+    padding: 0 12px;
+    height: 32px;
+    text-align: center;
+    margin: auto 4px;
+    color: $ui-color-gray-white;
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    letter-spacing: 0.01071em;
+    border-radius: 50%;
+    border: 1px solid $ui-color-gray-white;
+    line-height: 1.43;
+    font-size: 13px;
+    min-width: 32px;
+    user-select: none;
+
+    &.dots {
+      border: none;
+    }
+
+    &.dots:hover {
+      background-color: transparent;
+      cursor: default;
+    }
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.8);
+      cursor: pointer;
+      color: $ui-color-gray-black-background;
+    }
+
+    &.selected {
+      background-color: $ui-color-gray-white;
+      color: $ui-color-gray-black-background;
+    }
+
+    &.disabled {
+      pointer-events: none;
+      background-color: $ui-color-gray-icons-placeholders;
+      &:hover {
+        background-color: transparent;
+        cursor: default;
+      }
+    }
+  }
+}

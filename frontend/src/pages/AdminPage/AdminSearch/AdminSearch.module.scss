@@ -1,0 +1,29 @@
+@import "../../../styles/abstracts/variables";
+
+.inputWrapper {
+  background-color: $ui-color-gray-white;
+  width: 40%;
+  overflow: hidden;
+  height: 2.5rem;
+  border: none;
+  border-radius: 10px;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+}
+
+.searchInput {
+  background-color: transparent;
+  border: none;
+  height: 100%;
+  font-size: 1.25rem;
+  width: 100%;
+  margin-left: 8px;
+
+  &:focus {
+    outline: none;
+  }
+}

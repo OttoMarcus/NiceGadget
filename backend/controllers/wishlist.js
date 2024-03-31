@@ -275,13 +275,9 @@ exports.deleteWishlist = (req, res, next) => {
 };
 
 exports.getWishlist = (req, res, next) => {
-    console.log(`response getWishlist`, req.headers);
-    // console.log(`response user`, req.user.id);
-
     Wishlist.findOne({id: req.headers.id})
     // Wishlist.findOne({id: req.user.id})
         .then((wishlist) => {
-            console.log(`wishlist getWishlist` ,wishlist )
             res.json(wishlist)})
         .catch((err) => res.status(400).json({
             message: `Error happened on server: "${err}" `,
@@ -294,8 +290,11 @@ exports.synchronizeWishlist = async (req, res, next) => {
     const userId = req.body.id;
     try {
 
+
        let wishlist = await Wishlist.findOne({ id: userId });
+
        if (!wishlist) {
+
            if (localProducts.length > 0) {
                wishlist = new Wishlist({
                    id: userId,
@@ -305,8 +304,7 @@ exports.synchronizeWishlist = async (req, res, next) => {
                return res.json({ message: "No wishlist exists and no products provided for synchronization." });
            }
        }
-console.log( `wishlist products`,wishlist.products)
-        console.log( `localProducts localProducts`,localProducts)
+
 
         const allProducts = [...wishlist.products, ...localProducts];
          let idSet = new Set();
@@ -318,11 +316,10 @@ console.log( `wishlist products`,wishlist.products)
                  uniqueObjects.push(obj);
              }
          });
-console.log(`uniqueObjects`, uniqueObjects)
+
          wishlist.products = uniqueObjects;
          if (wishlist.products.length > 0) {
              await wishlist.save();
-             console.log(`должно сохранить `)
              return res.json(wishlist);
          } else {
 

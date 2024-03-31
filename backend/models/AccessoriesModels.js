@@ -13,7 +13,7 @@ const accessoriesModelSchema = new Schema({
         unique: true
     },
     price: {
-        type: String,
+        type: Number,
         required: true,
         unique: true
     },
@@ -61,6 +61,11 @@ const accessoriesModelSchema = new Schema({
             required: true
         }
     }],
+    category: {
+        type: String,
+        required: true
+    },
+
 
 });
 

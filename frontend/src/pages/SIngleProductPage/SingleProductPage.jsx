@@ -9,10 +9,11 @@ import TechSpecs from "../../Components/ProductTechSpecs/ProductTechSpecs";
 import Favorite from "../../Components/Favorite/Favorite";
 import { capitalizeFirstLetterOfWord } from "../../helpers/capitalizeFirstLetterOfWord";
 import { useDispatch, useSelector } from "react-redux";
-import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
+import { fetchGetOne } from "../../store/favorites/favoriteSlice";
 import { useFetchModelData } from "./hooks/useFetchModelData";
 import { useSelectedColorData } from "./hooks/useSelectedColorData";
 import CartButton from "../../Components/Cart/CartButton/CartButton";
+import BuyTogether from "../../Components/BuyTogether/BuyTogether";
 
 const SingleProductPage = () => {
   const dispatch = useDispatch();
@@ -55,7 +56,9 @@ const SingleProductPage = () => {
           <div className={styles.content}>
             <div className={styles.imagesAndCustomizationWrapper}>
               <div className={styles.outerImagesWrapper}>
-                <SelectableImageGallery images={selectedColorData.pictures} />
+                {selectedColorData && selectedColorData.pictures && (
+                  <SelectableImageGallery images={selectedColorData.pictures} />
+                )}
               </div>
               <div className={styles.outerCustomizationWrapper}>
                 <div className={styles.productCustomizationWrapper}>
@@ -126,29 +129,12 @@ const SingleProductPage = () => {
                       fetchDetailsUrl={`/api/${typeModel}/byProductId/${chosenCapacityObject?.productId}`}
                       heightBtn="48px"
                     />
-
                     <Favorite
                       click={() => {
                         dispatch(
-                          Tooglefavorites({
-                            id: chosenCapacityObject?.productId,
-                            capacity: capacity,
-                            color: color,
-                            name: model?.name,
-                            picture: selectedColorData?.pictures[0]?.link,
-                            price: chosenCapacityObject?.price,
-                            available: chosenCapacityObject?.available,
-                            discount: chosenCapacityObject?.discount
-                              ? chosenCapacityObject?.discount
-                              : "no discount",
-                            refModel: {
-                              modelId: modelId,
-                              modelName: model?.name,
-                            },
-                            category: typeModel,
-                            ram: model?.techSpecs[3]?.specDescription,
-                            screen: model?.techSpecs[0]?.specDescription,
-                          })
+                          fetchGetOne(
+                            `/api/${typeModel}/byProductId/${chosenCapacityObject?.productId}`
+                          )
                         );
                       }}
                       some={some}
@@ -185,6 +171,10 @@ const SingleProductPage = () => {
                 <h3 className={styles.techSpecsHeader}>Tech specs</h3>
                 <TechSpecs techSpecs={model?.techSpecs} capacity={capacity} />
               </div>
+            </div>
+
+            <div className={styles.buyTogetherSection}>
+              <BuyTogether />
             </div>
           </div>
         </div>

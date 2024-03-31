@@ -1,14 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import styles from "./Cart.module.scss";
 import CartItem from "../CartItem/CartItem";
-import Button from "../../Button/Button";
+import CheckoutButton from "../CheckoutButton/CheckoutButton";
+import CheckoutModal from "../CheckoutModal/CheckoutModal";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const isAuthorized = useSelector((state) => state.user.isAuthorized);
-  const navigate = useNavigate();
 
   const calculateTotalItemPrice = (price, discount = 0, quantity) => {
     return Math.round(price * (1 - discount) * quantity);
@@ -26,13 +24,22 @@ const Cart = () => {
     0
   );
 
-  const handleCheckout = () => {
-    if (isAuthorized) {
-      navigate("/buyform"); // Зареєстрований користувач
-    } else {
-      navigate("/login"); // Неавторизований користувач
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [validationResults, setValidationResults] = useState([]);
+
+  const validationResultsWithDetails = validationResults.map(
+    (validationResult) => {
+      const product = cartItems.find(
+        (item) => item.customId === validationResult.customId
+      );
+
+      return {
+        ...validationResult,
+        name: product ? product.name : "Невідомий продукт",
+        cartQuantity: product ? product.cartQuantity : 0,
+      };
     }
-  };
+  );
 
   return (
     <div className={styles.cart}>
@@ -56,14 +63,16 @@ const Cart = () => {
               >{`Total for ${totalItemsQuantity} items`}</p>
             </div>
             <div className={styles.divider}></div>
-            <Button
-              onClick={handleCheckout}
-              type="button"
-              className={styles.checkoutBtn}
-              height="48px"
-            >
-              Checkout
-            </Button>
+            <CheckoutButton
+              setModalOpen={setIsModalOpen}
+              setValidationResults={setValidationResults}
+            />
+            {isModalOpen && (
+              <CheckoutModal
+                close={() => setIsModalOpen(false)}
+                validationResults={validationResultsWithDetails}
+              />
+            )}
           </div>
         </>
       )}

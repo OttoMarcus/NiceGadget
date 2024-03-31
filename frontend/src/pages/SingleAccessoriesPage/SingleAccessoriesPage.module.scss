@@ -163,7 +163,8 @@ a {
 
 .buttonsWrapper {
   width: 100%;
-  display: flex;
+  @include flex-center;
+  gap: 8px;
   text-align: center;
   margin-bottom: 32px;
 }
