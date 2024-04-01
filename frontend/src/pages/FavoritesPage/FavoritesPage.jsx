@@ -42,6 +42,7 @@ const FavoritesPage = () => {
                     <Card
                       key={el?.id}
                       id={el.id}
+                      _id={el._id}
                       picture={el.picture}
                       name={el.name}
                       price={el.price}

@@ -6,7 +6,7 @@ import Favorite from "../../Components/Favorite/Favorite";
 import TechSpecs from "../../Components/ProductTechSpecs/ProductTechSpecs";
 import ProductAbout from "../../Components/ProductAbout/ProductAbout";
 import { useDispatch, useSelector } from "react-redux";
-import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
+import { fetchGetOne } from "../../store/favorites/favoriteSlice";
 import CartButton from "../../Components/Cart/CartButton/CartButton";
 
 const SingleAccessoriesPage = () => {
@@ -73,17 +73,9 @@ const SingleAccessoriesPage = () => {
                     <Favorite
                       click={() =>
                         dispatch(
-                          Tooglefavorites({
-                            id: accessories.id,
-                            name: accessories.name,
-                            color: accessories.colors[0].colorName,
-                            price: accessories.price,
-                            picture: accessories.colors[0].pictures[0].link,
-                            size: accessories?.size,
-                            weight: accessories?.weight,
-                            category: accessories?.category,
-                            available: accessoryAvailable,
-                          })
+                          fetchGetOne(
+                            `/api/accessories/byProductId/${activeAccessoryId}`
+                          )
                         )
                       }
                       some={some}
