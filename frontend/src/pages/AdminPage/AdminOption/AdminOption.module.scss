@@ -26,12 +26,15 @@
   @include body-text;
   padding: 8px;
   color: $ui-color-gray-white;
+  cursor: pointer;
 }
 
 .selectedOption {
+  transition: 0.5s;
   padding-left: 16px;
-  border-left: 16px solid $ui-color-gray-white;
+  border-left: 16px solid $ui-color-primary-accent;
   color: $ui-color-gray-white;
+  background-color: #323542ff;
   pointer-events: none;
 }
 

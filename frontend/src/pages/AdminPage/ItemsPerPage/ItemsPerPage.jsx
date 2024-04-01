@@ -1,33 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import styles from "./ItemsPerPage.module.scss";
+import Select from "react-select";
+import selectCustomStyles from "./selectCustomStyles";
 
-const options = [6, 12, 24];
+const options = [
+  { value: 6, label: "6" },
+  { value: 12, label: "12" },
+  { value: 24, label: "24" },
+];
+
 const ItemsPerPage = ({ onChange, value }) => {
-  const [showList, setShowList] = useState(false);
-
   return (
-    <div className={styles.perPageWrapper}>
-      <p
-        onClick={() => setShowList((prev) => !prev)}
-        className={`${!showList ? "" : styles.hidden}`}
-      >
-        {value}
-      </p>
-      <ul>
-        {options.map((option, index) => (
-          <li
-            key={index}
-            onClick={() => {
-              onChange(option);
-              setShowList((prev) => !prev);
-            }}
-            className={`${option === value ? "selected" : ""} ${showList ? "" : styles.hidden}`}
-          >
-            {option}
-          </li>
-        ))}
-      </ul>
+    <div>
+      <Select
+        options={options}
+        styles={selectCustomStyles}
+        value={options.find((opt) => opt.value === value)}
+        onChange={(selectedOption) => onChange(selectedOption.value)}
+      />
     </div>
   );
 };
