@@ -3,9 +3,15 @@ const router = express.Router();
 const passport = require("passport");
 const multer = require("multer"); // multer for parsing multipart form data (files)
 const fse = require("fs-extra");
+const { addMobileProduct, updateMobileProduct } = require("../controllers/salePoints");
 
 //Import controllers
-const { getMobileProducts } = require("../controllers/hotPrices");
+const {
+  getSalePoint,
+  addSalePoint,
+  updateSalePoint,
+  deleteSalePoint
+} = require("../controllers/salePoints");
 
 // Configurations for multer
 const storage = multer.diskStorage({
@@ -43,6 +49,15 @@ const upload = multer({
   fileFilter: fileFilter
 });
 
-router.get("/", getMobileProducts);
+router.get("/", getSalePoint);
+router.post("/", passport.authenticate("jwt-admin", { session: false }),
+  addSalePoint
+);
+// router.put("/:id", passport.authenticate("jwt-admin", { session: false }),
+//   updateSalePoint
+// );
+// router.delete("/:id", passport.authenticate("jwt-admin", { session: false }),
+//  deleteSalePoint
+// );
 
 module.exports = router;

@@ -2,21 +2,33 @@ import React, { useEffect, useState } from "react";
 import Twitter from "../../Components/Icons/Twitter";
 import Facebook from "../../Components/Icons/Facebook";
 import Instagram from "../../Components/Icons/Instagram";
-import styles from "./Contacts.module.scss";
 import MapContent from "../../Components/MapContent/MapContent";
+import Social from "./Social/Social";
+import CityTab from "./LocationAddress/CityTab";
+import AddressInfo from "./LocationAddress/AddressInfo";
+import axios from "axios";
+import styles from "./Contacts.module.scss";
 
 const Contacts = () => {
   const [activeTab, setActiveTab] = useState();
   const [isHovered, setIsHovered] = useState(false);
-
-  // const currentDate = new Date();
-  // const options = { weekday: 'long' };
-  // const currentDayName = currentDate.toLocaleDateString('en-US', options);
-  // console.log(currentDayName);
+  const [salePoints, setSalePoints] = useState([]);
 
   useEffect(() => {
-    setActiveTab("kyiv");
+    setActiveTab("Kyiv");
+    fetchData();
   }, []);
+
+  const fetchData = () => {
+    axios
+      .get("/api/sale-points")
+      .then((response) => {
+        setSalePoints(response.data);
+      })
+      .catch((error) => {
+        console.error("Error by getting addresses:", error);
+      });
+  };
 
   const handleTabClick = (addressId) => {
     setActiveTab(addressId);
@@ -35,95 +47,28 @@ const Contacts = () => {
       <ul className={`${styles.contactsWrapper} ${styles.container}`}>
         <li className={`${styles.contactItem} ${styles.hour}`}>
           <h3 className={styles.address}>Address</h3>
-          <ul className={styles.cityTitle}>
-            <li
-              onClick={() => handleTabClick("kyiv")}
-              className={`${styles.city} ${activeTab === "kyiv" && styles.activeCity}`}
-              data-address-id="kyiv"
-            >
-              Kyiv
-            </li>
-
-            <li
-              onClick={() => handleTabClick("lviv")}
-              className={`${styles.city} ${activeTab === "lviv" && styles.activeCity}`}
-              data-address-id="lviv"
-            >
-              Lviv
-            </li>
-
-            <li
-              onClick={() => handleTabClick("kharkiv")}
-              className={`${styles.city} ${activeTab === "kharkiv" && styles.activeCity}`}
-              data-address-id="kharkiv"
-            >
-              Kharkiv
-            </li>
-          </ul>
-
+          <div className={styles.cityTitle}>
+            {salePoints.map((point) => (
+              <CityTab
+                key={point._id}
+                cityName={point.cityName} // Припускаю, що у вас є властивість cityName в об'єкті даних про адресу
+                address={point.address}
+                activeTab={activeTab}
+                handleTabClick={handleTabClick}
+              />
+            ))}
+          </div>
           <div className={styles.addressWrap}>
-            <div
-              id="kyiv"
-              className={`${styles.addressId} ${activeTab === "kyiv" && styles.activeAddress}`}
-            >
-              <b>Maidan Nezalezhnosti, 1</b>
-              <p>ZIP, 02000</p>
-              <div className={styles.hours}>
-                <p>Open Hours:</p>
-                <ul>
-                  <li>Monday 10 AM – 10 PM</li>
-                  <li>Tuesday 10 AM – 10 PM</li>
-                  <li>Wednesday 10 AM – 10 PM</li>
-                  <li>Thursday 10 AM – 10 PM</li>
-                  <li>Friday 10 AM – 10 PM</li>
-                  <li>Saturday 10 AM – 10 PM</li>
-                  <li>Sunday 10 AM – 10 PM</li>
-                </ul>
-              </div>
-            </div>
-
-            <div
-              id="lviv"
-              className={`${styles.addressId} ${activeTab === "lviv" && styles.activeAddress}`}
-            >
-              <b>Soborna Square, 14</b>
-              <p>ZIP, 79000</p>
-              <div className={styles.hours}>
-                <p>Open Hours:</p>
-                <ul>
-                  <li>Monday 10 AM – 8 PM</li>
-                  <li>Tuesday 10 AM – 8 PM</li>
-                  <li>Wednesday 10 AM – 8 PM</li>
-                  <li>Thursday 10 AM – 8 PM</li>
-                  <li>Friday 10 AM – 8 PM</li>
-                  <li>Saturday 10 AM – 8 PM</li>
-                  <li>Sunday 10 AM – 8 PM</li>
-                </ul>
-              </div>
-            </div>
-
-            <div
-              id="kharkiv"
-              className={`${styles.addressId} ${activeTab === "kharkiv" && styles.activeAddress}`}
-            >
-              <b>Hryhoriia Skovorody, 2а</b>
-              <p>ZIP, 61000</p>
-              <div className={styles.hours}>
-                <p>Open Hours:</p>
-                <ul>
-                  <li>Monday 10 AM – 9 PM</li>
-                  <li>Tuesday 10 AM – 9 PM</li>
-                  <li>Wednesday 10 AM – 9 PM</li>
-                  <li>Thursday 10 AM – 9 PM</li>
-                  <li>Friday 10 AM – 9 PM</li>
-                  <li>Saturday 10 AM – 9 PM</li>
-                  <li>Sunday 10 AM – 9 PM</li>
-                </ul>
-              </div>
-            </div>
+            {salePoints.map((point) => (
+              <AddressInfo
+                key={point._id}
+                cityName={point.cityName}
+                address={point.address}
+                activeTab={activeTab}
+              />
+            ))}
           </div>
         </li>
-
         <li className={`${styles.contactItem} ${styles.map}`}>
           <div className={styles.mapWrapper}>
             <MapContent activeTab={activeTab} />
@@ -131,7 +76,6 @@ const Contacts = () => {
           </div>
         </li>
       </ul>
-
       <ul className={`${styles.socialWrapper} ${styles.container}`}>
         <li className={styles.connection}>
           <p>Support:</p>
@@ -156,50 +100,35 @@ const Contacts = () => {
         <li className={styles.connection}>
           <h3>FOLLOW US ON SOCIAL MEDIA</h3>
 
-          <div
-            className={`${styles.socialIcon} ${styles.twitterIcon}`}
-            title="Twitter"
+          <a
+            href="https://t.me/nicegadgetstore"
+            target="_blank"
+            rel="noreferrer"
           >
-            <div className={styles.socialIconBloom}></div>
-            <div>
-              <div className={styles.socialIconSparkleLine}></div>
-              <div className={styles.socialIconSparkleLine}></div>
-              <div className={styles.socialIconSparkleLine}></div>
-              <div className={styles.socialIconSparkleLine}></div>
-              <div className={styles.socialIconSparkleLine}></div>
-            </div>
-            <Twitter />
-          </div>
+            <Social style={styles.twitterIcon}>
+              <Twitter />
+            </Social>
+          </a>
 
-          <div
-            className={`${styles.socialIcon} ${styles.facebookIcon}`}
-            title="Facebook"
+          <a
+            href="https://www.facebook.com/groups/258628787334330"
+            target="_blank"
+            rel="noreferrer"
           >
-            <div className={styles.socialIconBloom}></div>
-            <div>
-              <div className={styles.socialIconSparkleLine}></div>
-              <div className={styles.socialIconSparkleLine}></div>
-              <div className={styles.socialIconSparkleLine}></div>
-              <div className={styles.socialIconSparkleLine}></div>
-              <div className={styles.socialIconSparkleLine}></div>
-            </div>
-            <Facebook />
-          </div>
+            <Social style={styles.facebookIcon}>
+              <Facebook />
+            </Social>
+          </a>
 
-          <div
-            className={`${styles.socialIcon} ${styles.instagramIcon}`}
-            title="Instagram"
+          <a
+            href="https://www.instagram.com/n1cegadgetstore"
+            target="_blank"
+            rel="noreferrer"
           >
-            <div className={styles.socialIconBloom}></div>
-            <div>
-              <div className={styles.socialIconSparkleLine}></div>
-              <div className={styles.socialIconSparkleLine}></div>
-              <div className={styles.socialIconSparkleLine}></div>
-              <div className={styles.socialIconSparkleLine}></div>
-              <div className={styles.socialIconSparkleLine}></div>
-            </div>
-            <Instagram />
-          </div>
+            <Social style={styles.instagramIcon}>
+              <Instagram />
+            </Social>
+          </a>
         </li>
       </ul>
     </div>

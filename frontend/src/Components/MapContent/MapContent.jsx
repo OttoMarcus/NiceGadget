@@ -15,11 +15,11 @@ const MapContent = ({ activeTab }) => {
   const [info, setInfo] = useState(false);
   const position = (activeTab) => {
     switch (activeTab) {
-      case "kyiv":
+      case "Kyiv":
         return { lat: 50.450702369063926, lng: 30.523146950852503 };
-      case "lviv":
+      case "Lviv":
         return { lat: 49.8386205833624, lng: 24.03400493901791 };
-      case "kharkiv":
+      case "Kharkiv":
         return { lat: 49.99193802948051, lng: 36.23430932553278 };
       default:
         return { lat: 50.4501, lng: 30.5234 };
@@ -52,7 +52,7 @@ const MapContent = ({ activeTab }) => {
             onCloseClick={() => setInfo(false)}
           >
             <b style={{ color: "rebeccapurple" }}>
-              Hello, I am NiceGadgets Shop. The Best phones are only here!
+              Hello, I am NiceGadgets Shop. You can find us here!
             </b>
           </InfoWindow>
         )}
