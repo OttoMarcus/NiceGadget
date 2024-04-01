@@ -33,6 +33,7 @@ const FavoritesPage = () => {
                       color={el.color}
                       category={el.category}
                       available={el.available}
+                      discount={el.discount}
                     />
                   </div>
                 );
@@ -53,6 +54,7 @@ const FavoritesPage = () => {
                       color={el.color}
                       category={el.category}
                       available={el.available}
+                      discount={el.discount}
                     />
                   </div>
                 );
