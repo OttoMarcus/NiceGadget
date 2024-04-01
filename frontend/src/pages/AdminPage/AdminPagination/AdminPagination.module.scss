@@ -21,12 +21,11 @@
     box-sizing: border-box;
     align-items: center;
     letter-spacing: 0.01071em;
-    border-radius: 50%;
-    border: 1px solid $ui-color-gray-white;
     line-height: 1.43;
     font-size: 13px;
     min-width: 32px;
     user-select: none;
+    background-color: $ui-color-gray-surface-1;
 
     &.dots {
       border: none;
@@ -37,14 +36,18 @@
       cursor: default;
     }
     &:hover {
-      background-color: rgba(255, 255, 255, 0.8);
-      cursor: pointer;
-      color: $ui-color-gray-black-background;
+      background-color: $ui-color-gray-elements;
+      color: $ui-color-gray-white;
     }
 
+    &.active {
+      background-color: $ui-color-primary-accent;
+      color: $ui-color-gray-white;
+      font-weight: bold;
+    }
     &.selected {
-      background-color: $ui-color-gray-white;
-      color: $ui-color-gray-black-background;
+      background-color: $ui-color-primary-accent;
+      color: $ui-color-gray-white;
     }
 
     &.disabled {

@@ -11,21 +11,28 @@
 
 .inputField {
   width: 60%;
+  height: 30px;
+  background-color: #323542ff;
+  color: white;
+  margin: 5px;
 }
 
 .adjustQuantityWrapper {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   margin-bottom: 8px;
   margin-top: 8px;
 }
 
 .plusMinus {
-  padding: 8px;
   text-align: center;
-  border: 1px solid $ui-color-gray-white;
-  border-radius: 25%;
+  color: $ui-color-gray-white;
+  border: none;
+  width: 15%;
+  background-color: #905bff;
+  height: 30px;
+  @include button;
 }
 
 .updateButton {

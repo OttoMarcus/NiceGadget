@@ -147,6 +147,10 @@ exports.decreaseCartProductQuantity = async (req, res, next) => {
 
     cart.products[productIndex].cartQuantity -= 1;
 
+    if (cart.products[productIndex].cartQuantity < 1) {
+      cart.products.splice(productIndex, 1);
+    }
+
     await cart.save();
     res.json(cart);
   } catch (error) {

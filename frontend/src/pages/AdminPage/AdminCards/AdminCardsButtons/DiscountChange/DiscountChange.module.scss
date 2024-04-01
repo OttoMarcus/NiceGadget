@@ -19,10 +19,15 @@
 
 .inputField {
   width: 90%;
+  height: 30px;
+  background-color: #323542ff;
+  color: white;
+  margin: 5px;
 }
 
 .percentage {
   display: inline-block;
+  @include h4;
 }
 
 .updateButton {
