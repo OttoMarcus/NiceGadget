@@ -199,6 +199,10 @@ const Phones = () => {
     setFilters(initialFiltersValues);
     setFilterQueryString(null);
     setCurrentPage(1);
+
+    const newPath = `${window.location.pathname}?${filterQueryString ? filterQueryString + "&" : ""}sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=1`;
+    console.log(newPath);
+    window.history.pushState({}, "", newPath);
     // await fetchData(null, sortValue, cardsPerPageValue, firstPage);
   };
 
