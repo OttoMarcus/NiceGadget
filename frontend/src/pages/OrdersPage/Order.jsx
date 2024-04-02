@@ -7,7 +7,6 @@ const Order = ({
   canceled,
   customerId,
   data,
-  date,
   deliveryAddress,
   email,
   letterSubject,
@@ -117,7 +116,7 @@ const Order = ({
 Order.propTypes = {
   _id: PropTypes.string.isRequired,
   canceled: PropTypes.bool.isRequired,
-  customerId: PropTypes.object,
+  customerId: PropTypes.any,
   data: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   deliveryAddress: PropTypes.string.isRequired,

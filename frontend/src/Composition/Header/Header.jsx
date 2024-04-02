@@ -13,10 +13,12 @@ import OkIcon from "../../Components/Icons/OkIcon";
 import scrollUp from "../../helpers/scrollUp";
 import LoginIcon from "../../Components/Icons/LoginIcon";
 import SearchForm from "../../Components/SearchForm/SearchForm";
+import OrderIcon from "../../Components/Icons/OrderIcon";
 import { fetchCartItems } from "../../API/cartAPI";
 
 import styles from "./Header.module.scss";
 import { SetFavor } from "../../store/favorites/favoriteSlice";
+import { SetOrder } from "../../store/orders/OrderNew";
 
 const Header = () => {
   const [isBurgerActive, setIsBurgerActive] = useState(false);
@@ -29,16 +31,17 @@ const Header = () => {
   const location = useLocation();
   // const loggedInUser = useSelector((state) => state.user.user);
   const isAuthorized = useSelector((state) => state.user.isAuthorized);
-
+  const order = useSelector((state) => state.OrderNew.orders);
   // const isUserLoggedIn = Object?.keys(loggedInUser).length === 0 ? false : true;
   // console.log(isUserLoggedIn);
 
   const logOutUser = () => {
     dispatch(removeUser());
     dispatch(SetFavor([]));
+    dispatch(SetOrder([]));
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-
+    localStorage.removeItem("orders");
     dispatch(fetchCartItems());
     // navigate("/login");
   };
@@ -219,6 +222,21 @@ const Header = () => {
                 <LoginIcon />
               </Link>
             )}
+            {order.length > 0 && (
+              <Link className={styles.mainLinks} to="/orders">
+                <div className={styles.FavorWrapper}>
+                  <OrderIcon />
+                  <div
+                    className={styles.wrapperCount}
+                    style={{ display: order.length > 0 ? "flex" : "none" }}
+                  >
+                    <CounterIcon />
+                    <span className={styles.FavorQuantity}>{order.length}</span>
+                  </div>
+                </div>
+              </Link>
+            )}
+
             <Link className={styles.mainLinks} to="/favorites">
               <div className={styles.FavorWrapper}>
                 <FavoriteIcon some={false} />
