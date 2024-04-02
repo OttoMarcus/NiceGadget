@@ -115,4 +115,5 @@
 
 .selectedImg {
   border: 1px solid $ui-color-gray-white;
+  pointer-events: none;
 }
