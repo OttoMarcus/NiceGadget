@@ -1,7 +1,7 @@
 import LeftArrowIcon from "../Icons/LeftArrowIcon";
 import RightArrowIcon from "../Icons/RightArrowIcon";
-import Card from "../Card/Card";
-import style from "./CardList.module.scss";
+import Card from "../Cards/Card";
+import styles from "./CardList.module.scss";
 import PropTypes from "prop-types";
 import React, { useRef } from "react";
 
@@ -29,18 +29,18 @@ const CardList = (props) => {
 
   return (
     <>
-      <div className={style.header}>
-        <h2 className={style.title}>{title}</h2>
-        <div className={style.btnGroup}>
-          <div className={style.arrow} onClick={scrollLeft}>
+      <div className={styles.header}>
+        <h2 className={styles.title}>{title}</h2>
+        <div className={styles.btnGroup}>
+          <div className={styles.arrow} onClick={scrollLeft}>
             <LeftArrowIcon />
           </div>
-          <div className={style.arrow} onClick={scrollRight}>
+          <div className={styles.arrow} onClick={scrollRight}>
             <RightArrowIcon />
           </div>
         </div>
       </div>
-      <div className={style.cardsContainer} ref={containerRef}>
+      <div className={styles.cardsContainer} ref={containerRef}>
         <Card {...cardParams} />
         <Card {...cardParams} />
         <Card {...cardParams} />

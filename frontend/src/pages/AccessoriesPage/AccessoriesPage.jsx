@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import CardAccessories from "../../Components/CardAccessories/CardAccessories";
+import CardAccessories from "../../Components/Cards/CardAccessories";
 
 import styles from "./AccessoriesPage.module.scss";
 
@@ -23,17 +23,19 @@ const Accessories = () => {
   };
 
   return (
-    <article className={styles.container}>
-      <h1 className={styles.accessoriesTitle}>Accessories</h1>
-      <h3 className={styles.subtitle}>models</h3>
+    <div className={styles.container}>
+      <>
+        <h1 className={styles.accessoriesTitle}>Accessories</h1>
+        <h3 className={styles.subtitle}>models</h3>
 
-      <div className={styles.resultWrapper}>
-        {Array.isArray(accessoriesArr.data) &&
-          accessoriesArr.data.map((item) => (
-            <CardAccessories key={item.id} {...item} />
-          ))}
-      </div>
-    </article>
+        <div className={styles.resultWrapper}>
+          {Array.isArray(accessoriesArr.data) &&
+            accessoriesArr.data.map((item) => (
+              <CardAccessories key={item.id} {...item} />
+            ))}
+        </div>
+      </>
+    </div>
   );
 };
 

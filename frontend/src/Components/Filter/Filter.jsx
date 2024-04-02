@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 // import { useNavigate, useLocation } from "react-router-dom";
-import FilterButtonIcon from "../Icons/svg/FilterButtonIcon";
-import ClearFiltersIcon from "../Icons/svg/ClearFiltersIcon";
+import FilterButtonIcon from "../Icons/FilterButtonIcon";
+import ClearFiltersIcon from "../Icons/ClearFiltersIcon";
 // import queryString from "query-string";
 import styles from "./Filter.module.scss";
 import PropTypes from "prop-types";
-import CloseFilterIcon from "../Icons/svg/CloseFilterIcon";
+import CloseFilterIcon from "../Icons/CloseFilterIcon";
 
 /*
 TO DO:

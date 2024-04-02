@@ -1,0 +1,149 @@
+@import "../../styles/abstracts/variables";
+@import "../../styles/abstracts/mixins";
+@import "../../styles/global/base";
+
+.phonesTitle {
+  @include mobile-h1;
+  color: $ui-color-gray-white;
+  margin-bottom: 8px;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    @include h1;
+    margin-bottom: 24px;
+  }
+}
+
+.subtitle {
+  @include uppercase;
+  color: $ui-color-gray-icons-placeholders;
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+.selectsContainer {
+  display: flex;
+  margin-bottom: 20px;
+  gap: 16px;
+}
+
+.resultWrapper {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+  align-items: center;
+  gap: 16px;
+
+  a {
+    @include flex-center;
+  }
+}
+
+// .pagination{
+//   display: flex;
+//   width: 248px;
+//   height: 32px;
+//   margin: 0 auto;
+//   padding: 0px 16px;
+//   box-sizing: border-box;
+//   margin-top: 40px;
+//   // overflow: hidden;
+// }
+
+// .pageNumber {
+//   width: 32px;
+//   height: 32px;
+//   margin: 0px 4px;
+//   color: $ui-color-gray-white;
+//   background-color: $ui-color-gray-surface-1;
+// }
+
+// .pageNumberActive {
+//   width: 32px;
+//   height: 32px;
+//   margin: 0px 4px;
+//   color: $ui-color-gray-white;
+//   background-color: $ui-color-primary-accent;
+// }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 32px;
+  list-style: none;
+  margin: 0 auto;
+  margin-top: 40px;
+  padding: 0;
+
+  .paginationItem {
+    @include flex-center;
+    width: 32px;
+    height: 32px;
+    margin: 0px 4px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    background-color: $ui-color-gray-surface-1;
+
+    .paginationItemLink {
+      @include body-text;
+      color: $ui-color-gray-white;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      align-content: center;
+      cursor: pointer;
+    }
+
+    transition:
+      background-color 0.3s,
+      color 0.3s;
+
+    &:hover {
+      background-color: $ui-color-gray-elements;
+      color: $ui-color-gray-white;
+    }
+
+    &.active {
+      background-color: $ui-color-primary-accent;
+      color: $ui-color-gray-white;
+      font-weight: bold;
+    }
+
+    /* Стили для неактивных страниц */
+    &.inactive {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .break {
+      width: 32px;
+      height: 32px;
+      padding: 9px 12px;
+      margin: 0px 4px;
+      background-color: $ui-color-gray-surface-1;
+      color: $ui-color-gray-white;
+      font-size: 14px;
+
+      &:hover {
+        background-color: $ui-color-gray-elements;
+        color: $ui-color-gray-white;
+      }
+
+      &.active {
+        background-color: $ui-color-primary-accent;
+        color: $ui-color-gray-white;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .nextPageLink,
+  .nextPageLink {
+    width: 32px;
+    height: 32px;
+    margin: 0px 4px;
+    padding: 8px;
+    background-color: $ui-color-gray-surface-1;
+    fill: red;
+  }
+}

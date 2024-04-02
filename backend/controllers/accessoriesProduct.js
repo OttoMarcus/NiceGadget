@@ -5,6 +5,9 @@ const rand = uniqueRandom(0, 999999);
 const queryCreator = require("../commonHelpers/queryCreator");
 const filterParser = require("../commonHelpers/filterParser");
 const _ = require("lodash");
+const AccessoriesModelQuantity = require("../models/AccessoriesModelQuantity");
+
+
 
 exports.addAccessoryProduct = (req, res, next) => {
     const accessoryProductFields = _.cloneDeep(req.body);
@@ -67,6 +70,7 @@ exports.getAccessoryProducts = async (req, res, next) => {
     const startPage = Number(req.query.startPage);
     const sort = req.query.sort;
     const q = typeof req.query.q === "string" ? req.query.q.trim() : null;
+
     if (q) {
         mongooseQuery.name = {
             $regex: new RegExp(q, "i")
@@ -81,6 +85,47 @@ exports.getAccessoryProducts = async (req, res, next) => {
         const total = await accessoriesProducts.countDocuments(mongooseQuery);
 
         res.json({ data: foundAccessoryProducts, total });
+    } catch (err) {
+        res.status(400).json({
+            message: `Error happened on server: "${err}" `
+        });
+    }
+};
+
+exports.getAdminAccessoryProducts = async (req, res, next) => {
+    const mongooseQuery = filterParser(req.query);
+    const perPage = Number(req.query.perPage);
+    const startPage = Number(req.query.startPage);
+    const sort = req.query.sort;
+    const q = typeof req.query.q === "string" ? req.query.q.trim() : null;
+
+    if (q) {
+        mongooseQuery.name = {
+            $regex: new RegExp(q, "i")
+        };
+    }
+
+    try {
+        const foundAccessoryProducts = await accessoriesProducts.find(mongooseQuery)
+          .sort({ available: -1 })
+          .sort(sort)
+          .skip(startPage * perPage - perPage)
+          .limit(perPage);
+
+        const productNames = foundAccessoryProducts.map(product => product.name);
+        console.log(productNames);
+        const quantities = await AccessoriesModelQuantity.find({ productName: { $in: productNames } });
+        console.log(quantities);
+
+        const productsWithQuantity = foundAccessoryProducts.map(product => {
+        const quantityData = quantities.find(qty => qty.productName === product.name);
+        const quantity = quantityData ? quantityData.quantity : 0;
+        return { ...product.toObject(), quantity };
+      });
+
+
+
+        res.json({ data: productsWithQuantity });
     } catch (err) {
         res.status(400).json({
             message: `Error happened on server: "${err}" `
@@ -108,30 +153,6 @@ exports.getAccessoryProductsTotal = async (req, res, next) => {
     });
   }
 };
-
-// exports.getAccessoryProductById = (req, res, next) => {
-//     const { id } = req.params;
-//     if (!isValidMongoId(id)) {
-//         return res.status(400).json({
-//             message: `Accessory product with id "${id}" is not valid`
-//         });
-//     }
-//     accessoriesProducts.findById(id)
-//         .then(accessoryProduct => {
-//             if (!accessoryProduct) {
-//                 res.status(400).json({
-//                     message: `Accessory product with id ${id} is not found`
-//                 });
-//             } else {
-//                 res.json(accessoryProduct);
-//             }
-//         })
-//         .catch(err =>
-//             res.status(400).json({
-//                 message: `Error happened on server: "${err}" `
-//             })
-//         );
-// };
 
 exports.getAccessoryProductById = (req, res, next) => {
     const { id } = req.params;

@@ -1,0 +1,81 @@
+@import "../../../styles/abstracts/variables";
+@import "../../../styles/abstracts/mixins";
+@import "../../../styles/global/base";
+
+.form {
+  margin-bottom: 50px;
+  @include flex-start;
+  flex-direction: column;
+  text-align: center;
+  gap: 10px;
+  width: 800px;
+  min-height: 700px;
+}
+
+.buyTittle {
+  @include h2;
+  padding: 10px;
+  color: $ui-color-gray-white;
+}
+
+.labelWrapper {
+  @include flex-start;
+  flex-direction: column;
+  min-height: 90px;
+}
+
+.labelTitle {
+  @include body-text;
+  margin-bottom: 8px;
+  color: $ui-color-gray-white;
+}
+
+.inputField {
+  height: 40px;
+  width: 400px;
+  padding: 10px;
+  @include body-text;
+  color: $ui-color-gray-white;
+  background-color: $ui-color-gray-selected-surface-2;
+  border: 1px solid $ui-color-gray-selected-surface-2;
+
+  &:focus {
+    border: 3px solid $ui-color-primary-accent;
+  }
+}
+
+.options {
+  @include flex-start;
+  @include body-text;
+}
+
+.errorMsg {
+  display: block;
+  padding-top: 5px;
+  @include small-text;
+  color: $ui-color-red-badge-favorite;
+}
+
+.radioLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  width: 50px;
+  height: 30px;
+  gap: 10px;
+}
+
+.buttonSubmit {
+  margin: 20px;
+  width: 180px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid white;
+  color: white !important;
+}
+
+.buttonSubmit:hover {
+  background-color: white;
+  color: black !important;
+}

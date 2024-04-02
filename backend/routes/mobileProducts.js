@@ -9,6 +9,7 @@ const {
   addMobileProduct,
   updateMobileProduct,
   getMobileProducts,
+  getAdminMobileProducts,
   getMobileProductById,
   getMobileProductsTotal,
   getMobileProductByCustomId,
@@ -82,6 +83,8 @@ router.put(
 // @desc    GET existing mobileProducts
 // @access  Public
 router.get("/", getMobileProducts);
+
+router.get("/admin", getAdminMobileProducts);
 
 router.get("/total", getMobileProductsTotal);
 
