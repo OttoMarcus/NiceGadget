@@ -33,6 +33,34 @@ export const fetchTodos = createAsyncThunk(
     }
   }
 );
+export const fetchGetOne = createAsyncThunk(
+  "todos/fetchGetOne",
+  async function (link) {
+    try {
+      //const token = localStorage.getItem("token");
+      //const userId = localStorage.getItem("user");
+      //const resultSlice = userId.slice(1, -1);
+
+      const response = await fetch(link, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          // id: user._id,
+        },
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      return data;
+    } catch (error) {
+      console.warn("Error fetching wishlist:", error);
+      throw error;
+    }
+  }
+);
 
 export const synchronizeFavor = createAsyncThunk(
   "todos/synchronizeFavor",
@@ -42,6 +70,7 @@ export const synchronizeFavor = createAsyncThunk(
       const userId = localStorage.getItem("user");
       const favor = localStorage.getItem("favorites") || [];
       const resultSlice = userId.slice(1, -1);
+
       if (resultSlice && token) {
         const token = localStorage.getItem("token");
         const response = await fetch(`/api/wishlist/synchronize`, {
@@ -62,7 +91,6 @@ export const synchronizeFavor = createAsyncThunk(
         localStorage.setItem(`favorites`, []);
 
         const data = await response.json();
-
         return data;
       }
     } catch (error) {
@@ -193,6 +221,25 @@ const favoriteSlice = createSlice({
       .addCase(fetchChange.rejected, (state, action) => {
         state.status = "rejected";
         state.error = action.error.message;
+      })
+      .addCase(fetchGetOne.fulfilled, (state, action) => {
+        state.status = "resolve";
+        // Добавление полученных данных в список избранного
+        // state.favorites.push(action.payload);
+
+        let approve = false;
+        state.favorites.filter((el) => {
+          if (el.id === action.payload.id) {
+            approve = true;
+            return true;
+          }
+          return false;
+        });
+        !approve
+          ? state.favorites.push(action.payload)
+          : (state.favorites = state.favorites.filter(
+              (el) => el.id !== action.payload.id
+            ));
       });
     // .addCase(featchClearFavor.pending, (state) => {
     //   state.status = "loading";

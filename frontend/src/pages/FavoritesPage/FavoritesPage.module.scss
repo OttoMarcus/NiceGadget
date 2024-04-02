@@ -40,6 +40,10 @@
   }
 }
 
+.emptyMessageWrapper {
+  grid-column: 1 / -1;
+}
+
 .emptyMessage {
   width: 100%;
   @include h4;

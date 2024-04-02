@@ -4,12 +4,22 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Favorite from "../Favorite/Favorite";
 import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
-import CartButton from "../CartButton/CartButton";
+import CartButton from "../Cart/CartButton/CartButton";
 import styles from "./Card.module.scss";
 
 const CardAccessories = (props) => {
-  const { id, name, picture, price, color, size, weight, category, discount } =
-    props;
+  const {
+    id,
+    name,
+    picture,
+    price,
+    color,
+    size,
+    weight,
+    category,
+    discount,
+    cartBtnFontSize,
+  } = props;
   const dispatch = useDispatch();
 
   const favor = useSelector((state) => state.favorite.favorites);
@@ -40,7 +50,6 @@ const CardAccessories = (props) => {
           <div className={styles.discountPrice}>${discountedPrice}</div>
           {percentDiscount > 0 && (
             <>
-              {/* <div className={styles.percentDiscount}>-{percentDiscount}%</div> */}
               <div className={styles.price}>${price}</div>
             </>
           )}
@@ -66,6 +75,7 @@ const CardAccessories = (props) => {
             isAvailable={productToAdd?.available}
             inCart={inCart}
             fetchDetailsUrl={null}
+            fontSize={cartBtnFontSize}
           />
 
           <Favorite
@@ -83,7 +93,7 @@ const CardAccessories = (props) => {
 };
 
 CardAccessories.propTypes = {
-  _id: PropTypes.string.isRequired,
+  _id: PropTypes.string,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
@@ -94,10 +104,12 @@ CardAccessories.propTypes = {
   category: PropTypes.string.isRequired,
   available: PropTypes.bool.isRequired,
   discount: PropTypes.number,
+  cartBtnFontSize: PropTypes.string,
 };
 
 CardAccessories.defaultProps = {
   discount: 0,
+  cartBtnFontSize: "14px",
 };
 
 export default CardAccessories;

@@ -12,6 +12,7 @@ const {
     getAccessoryProductById,
     getAccessoryProductsTotal,
     getAccessoryProductByCustomId,
+    getAdminAccessoryProducts,
 } = require("../controllers/accessoriesProduct");
 
 
@@ -74,6 +75,8 @@ router.put(
 // @desc    GET existing accessory products
 // @access  Public
 router.get("/", getAccessoryProducts);
+
+router.get("/admin", getAdminAccessoryProducts);
 
 router.get("/total", getAccessoryProductsTotal);
 

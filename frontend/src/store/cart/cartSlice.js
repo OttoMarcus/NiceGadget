@@ -6,12 +6,15 @@ import {
   decrementQuantityServer,
   removeFromCartServer,
   synchronizeCartWithServer,
+  validateCartItems,
+  deleteCartServer,
 } from "../../API/cartAPI";
 
 const currentLocalInitialState = JSON.parse(localStorage.getItem("cart"));
 
 const initialState = {
   cartItems: currentLocalInitialState || [],
+  validationResults: [],
   status: "idle",
   error: null,
 };
@@ -64,6 +67,10 @@ const cartSlice = createSlice({
         state.cartItems[index].cartQuantity -= 1;
       }
       saveCartToLocalStorage(state.cartItems);
+    },
+    deleteCartLocal: (state) => {
+      state.cartItems = [];
+      localStorage.removeItem("cart");
     },
   },
   extraReducers: (builder) => {
@@ -136,6 +143,12 @@ const cartSlice = createSlice({
       .addCase(synchronizeCartWithServer.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+      .addCase(validateCartItems.fulfilled, (state, action) => {
+        state.validationResults = action.payload.errors;
+      })
+      .addCase(deleteCartServer.fulfilled, (state) => {
+        state.cartItems = [];
       });
   },
 });
@@ -145,6 +158,7 @@ export const {
   removeFromCartLocal,
   incrementQuantityLocal,
   decrementQuantityLocal,
+  deleteCartLocal,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

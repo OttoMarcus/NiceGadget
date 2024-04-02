@@ -12,6 +12,7 @@ const {
   getTabletProductById,
   getTabletProductsTotal,
   getTabletProductByCustomId,
+  getAdminTabletProducts,
 } = require("../controllers/tabletProducts");
 
 // Configurations for multer
@@ -82,6 +83,8 @@ router.put(
 // @desc    GET existing tabletProducts
 // @access  Public
 router.get("/", getTabletProducts);
+
+router.get("/admin", getAdminTabletProducts);
 
 router.get("/total", getTabletProductsTotal);
 

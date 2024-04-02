@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Tooglefavorites } from "../../store/favorites/favoriteSlice";
-import CartButton from "../CartButton/CartButton";
+import { fetchGetOne } from "../../store/favorites/favoriteSlice";
+import CartButton from "../Cart/CartButton/CartButton";
 import Favorite from "../Favorite/Favorite";
 import styles from "./Card.module.scss";
 
@@ -20,7 +20,9 @@ const Card = (props) => {
     refModel,
     category,
     discount,
+    cartBtnFontSize,
   } = props;
+
   const dispatch = useDispatch();
   const favor = useSelector((state) => state.favorite.favorites);
   const some = favor.some((el) => id === el.id);
@@ -39,7 +41,7 @@ const Card = (props) => {
 
   return (
     <Link
-      to={`/${category}/${refModel.modelId}?color=${color}&capacity=${capacity}`}
+      to={`/${category}/${refModel?.modelId}?color=${color}&capacity=${capacity}`}
       className={styles.cardLink}
     >
       <div className={styles.card}>
@@ -78,13 +80,15 @@ const Card = (props) => {
             isAvailable={productToAdd?.available}
             inCart={inCart}
             fetchDetailsUrl={null}
+            fontSize={cartBtnFontSize}
           />
 
           <Favorite
             click={(event) => {
               event.stopPropagation();
               event.preventDefault();
-              dispatch(Tooglefavorites(props));
+              // dispatch(Tooglefavorites(props));
+              dispatch(fetchGetOne(`/api/${category}/byProductId/${id}`));
             }}
             some={some}
           />
@@ -111,10 +115,12 @@ Card.propTypes = {
     modelName: PropTypes.string,
   }).isRequired,
   discount: PropTypes.number,
+  cartBtnFontSize: PropTypes.string,
 };
 
 Card.defaultProps = {
   discount: 0,
+  cartBtnFontSize: "14px",
 };
 
 export default Card;

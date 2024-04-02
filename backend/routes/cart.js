@@ -13,6 +13,8 @@ const {
   deleteProductFromCart,
   getCart,
   synchronizeCart,
+  validateCartItems,
+  updateProductQuantities
 } = require("../controllers/cart");
 
 // @route   PUT /cart/synchronize
@@ -105,5 +107,22 @@ router.get(
   passport.authenticate("jwt", { session: false }), 
   getCart
 );
+
+// @route   POST /cart/validate
+// @desc    Validate cart items for availability and quantity
+// @access  Public
+router.post(
+  "/validate", 
+  validateCartItems
+);
+
+// @route   POST /cart/updateQuantities
+// @desc    Update product quantities after purchase
+// @access  Public
+router.post(
+  '/updateQuantities', 
+  updateProductQuantities
+);
+
 
 module.exports = router;

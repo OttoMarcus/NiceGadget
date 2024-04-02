@@ -33,6 +33,7 @@ const FavoritesPage = () => {
                       color={el.color}
                       category={el.category}
                       available={el.available}
+                      discount={el.discount}
                     />
                   </div>
                 );
@@ -42,6 +43,7 @@ const FavoritesPage = () => {
                     <Card
                       key={el?.id}
                       id={el.id}
+                      _id={el._id}
                       picture={el.picture}
                       name={el.name}
                       price={el.price}
@@ -52,6 +54,7 @@ const FavoritesPage = () => {
                       color={el.color}
                       category={el.category}
                       available={el.available}
+                      discount={el.discount}
                     />
                   </div>
                 );
@@ -65,7 +68,11 @@ const FavoritesPage = () => {
               }
             })
           ) : (
-            <p className={styles.emptyMessage}>You didn&#39;t choose nothing</p>
+            <div className={styles.emptyMessageWrapper}>
+              <p className={styles.emptyMessage}>
+                You didn&#39;t choose nothing
+              </p>
+            </div>
           )}
         </div>
       </>
