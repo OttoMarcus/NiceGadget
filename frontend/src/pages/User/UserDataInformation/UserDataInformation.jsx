@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../UserDataInformation/UserDataInformation.module.scss";
 import { Form, Formik } from "formik";
-import validationSchema from "../../../Components/Forms/UserRegFrom/validationSchema";
+import validationSchema from "../../../Components/Forms/RegistrationForm/validationSchema";
 import ModalStatusInfo from "../../../Components/Profile/ModalStatusInfo/ModalStatusInfo";
 import CheckMarkIcon from "../../../Components/Icons/CheckMarkIcon";
 import Input from "../../../Components/Profile/CustomInput/Input";
@@ -13,6 +13,7 @@ import LeftArrowIcon from "../../../Components/Icons/LeftArrowIcon";
 import { useNavigate } from "react-router-dom";
 import { updateUser } from "../../../store/user/userSlice";
 import CrossErrorIcon from "../../../Components/Icons/CrossErrorIcon";
+
 const UserDataInformation = () => {
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();

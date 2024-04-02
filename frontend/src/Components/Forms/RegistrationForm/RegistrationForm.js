@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Form } from "formik";
 import validationSchema from "./validationSchema.js";
-import Input from "../CustomInput.js";
+import Input from "../CustomInput/CustomInput.js";
 import Button from "../../Button/Button.jsx";
-import styles from "./UserRegForm.module.scss";
+import styles from "./RegistrationForm.module.scss";
 import { addUser } from "../../../store/user/userSlice.js";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,9 +11,9 @@ import {
   synchronizeCartWithServer,
   fetchCartItems,
 } from "../../../API/cartAPI.js";
-import { synchronizeFavor } from "../../../store/favorites/favoriteSlice";
+import { synchronizeFavor } from "../../../store/favorites/favoriteSlice.js";
 
-const UserRegForm = () => {
+const RegistrationForm = () => {
   const [regStatus, setRegStatus] = useState("");
   const [regError, setRegError] = useState("");
   // const [credentials, setCredentials] = useState({})
@@ -260,4 +260,4 @@ const UserRegForm = () => {
   );
 };
 
-export default UserRegForm;
+export default RegistrationForm;

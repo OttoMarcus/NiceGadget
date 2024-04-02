@@ -6,8 +6,8 @@ import PhonesPage from "../pages/PhonesPage/PhonesPage";
 import FavoritesPage from "../pages/FavoritesPage/FavoritesPage";
 import TabletsPage from "../pages/TabletsPage/TabletsPage";
 import CartPage from "../pages/CartPage/CartPage";
-import Login from "../pages/LogIn/Login";
-import Registration from "../pages/Registration/Registration";
+import LoginPage from "../pages/LoginPage/LoginPage";
+import RegistrationPage from "../pages/RegistrationPage/RegistrationPage";
 import HomePage from "../pages/HomePage/HomePage";
 import WrongRoute from "../pages/WrongRoutePage/WrongRoute";
 import SingleProductPage from "../pages/SIngleProductPage/SingleProductPage";
@@ -38,8 +38,8 @@ const RootRouters = () => {
       <Route path="/cart" element={<CartPage />} />
       <Route path="/tablets" element={<TabletsPage />} />
       <Route path="/tablets/:modelId" element={<SingleProductPage />} />
-      <Route path="/registration" element={<Registration />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/registration" element={<RegistrationPage />} />
+      <Route path="/login" element={<LoginPage />} />
       <Route path="/user" element={<User />} />
       <Route path="/admin" element={<AdminPage />} />
       <Route path="/data-information" element={<UserDataInformation />} />

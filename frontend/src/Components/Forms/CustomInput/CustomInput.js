@@ -1,6 +1,6 @@
 import React from "react";
 import { useField } from "formik";
-import styles from "../Forms/CustomInput.module.scss";
+import styles from "./CustomInput.module.scss";
 import PropTypes from "prop-types";
 
 const Input = (props) => {

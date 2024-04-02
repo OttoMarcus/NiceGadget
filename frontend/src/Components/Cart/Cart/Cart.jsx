@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styles from "./Cart.module.scss";
 import CartItem from "../CartItem/CartItem";
-import CheckoutButton from "../CheckoutButton/CheckoutButton";
-import CheckoutModal from "../CheckoutModal/CheckoutModal";
+import CheckoutButton from "../../Checkout/CheckoutButton/CheckoutButton";
+import CheckoutModal from "../../Checkout/CheckoutModal/CheckoutModal";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
