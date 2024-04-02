@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import axios from "axios";
-import Card from "../../Components/Card/Card";
+import Card from "../../Components/Cards/Card";
 import Sort from "../../Components/Sort/Sort";
 import Filter from "../../Components/Filter/Filter";
 import LeftArrowIcon from "../../Components/Icons/LeftArrowIcon";
@@ -8,7 +8,7 @@ import RightArrowIcon from "../../Components/Icons/RightArrowIcon";
 import PerPageSelect from "../../Components/PerPageSelect/PerPageSelect";
 import ReactPaginate from "react-paginate";
 import { useLocation } from "react-router-dom";
-import styles from "./Phones.module.scss";
+import styles from "./PhonesPage.module.scss";
 
 const Phones = () => {
   const [phonesArr, setPhonesArr] = useState();
@@ -36,7 +36,7 @@ const Phones = () => {
   const location = useLocation();
   const typeModel = location.pathname.slice(1);
 
-  //Parse values FROM url query params TO states
+  //Parse values FROM url query params TO states on page first load
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
 
@@ -73,10 +73,12 @@ const Phones = () => {
       ...prevFilters,
       ...filterParams,
     }));
+    setFilterQueryString(new URLSearchParams(filterParams).toString());
     setSortValue(sort ? sort : "-brandNew");
     setCardsPerPageValue(perPage ? Number(perPage) : 8);
     setCurrentPage(startPage ? Number(startPage) : 1);
-  }, [filters]);
+  }, []);
+  // filters
 
   // http://localhost:3000/phones?modelName=iPhone+13&sort=price&perPage=16&startPage=2
 
@@ -169,15 +171,18 @@ const Phones = () => {
 
     if (Object.keys(nonEmptyFilters).length === 0) {
       queryString = null;
-      setFilterQueryString(queryString);
+      // setFilterQueryString(queryString);
     } else {
       queryString = new URLSearchParams(nonEmptyFilters).toString();
       console.log("queryString before set state", queryString);
-      setFilterQueryString(queryString);
+      // setFilterQueryString(queryString);
     }
+
+    setFilterQueryString(queryString);
     setCurrentPage(1);
 
     const newPath = `${window.location.pathname}?${queryString ? queryString + "&" : ""}sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=1`;
+    // const newPath = `${window.location.pathname}?${filterQueryString? filterQueryString + "&" : ""}sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=1`;
     console.log(newPath);
     window.history.pushState({}, "", newPath);
     // await fetchData(queryString, sortValue, cardsPerPageValue, firstPage);
@@ -200,7 +205,7 @@ const Phones = () => {
     setFilterQueryString(null);
     setCurrentPage(1);
 
-    const newPath = `${window.location.pathname}?${filterQueryString ? filterQueryString + "&" : ""}sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=1`;
+    const newPath = `${window.location.pathname}?sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=1`;
     console.log(newPath);
     window.history.pushState({}, "", newPath);
     // await fetchData(null, sortValue, cardsPerPageValue, firstPage);
