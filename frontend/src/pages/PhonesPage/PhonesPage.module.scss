@@ -77,19 +77,21 @@
 
   .paginationItem {
     @include flex-center;
-    // display: flex;
-    // align-items: center;
     width: 32px;
     height: 32px;
     margin: 0px 4px;
     cursor: pointer;
     border: 1px solid transparent;
-    padding: 9px 12px;
     background-color: $ui-color-gray-surface-1;
 
     .paginationItemLink {
       @include body-text;
       color: $ui-color-gray-white;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      align-content: center;
+      cursor: pointer;
     }
 
     transition:
@@ -119,8 +121,8 @@
       padding: 9px 12px;
       margin: 0px 4px;
       background-color: $ui-color-gray-surface-1;
-      color: $ui-color-gray-white; /* Цвет текста */
-      font-size: 14px; /* Размер шрифта */
+      color: $ui-color-gray-white;
+      font-size: 14px;
 
       &:hover {
         background-color: $ui-color-gray-elements;

@@ -1,0 +1,194 @@
+@import "../../styles/abstracts/variables";
+@import "../../styles/abstracts/mixins";
+@import "../../styles/global/base";
+
+.filterWrapper {
+  position: relative;
+  align-self: flex-end;
+}
+
+.filterButton {
+  // align-self: flex-end;
+  // width: 200px;
+  // height: 40px;
+  @include flex-center;
+  @include button;
+  height: 40px;
+  width: 200px;
+  color: $ui-color-gray-white;
+  background-color: $ui-color-primary-accent;
+  border: none;
+  cursor: pointer;
+  // margin-right: 8px;
+
+  &:hover {
+    background-color: $ui-color-primary-accent-hover;
+  }
+
+  &:active {
+    background-color: $ui-color-gray-selected-surface-2;
+  }
+}
+
+.filterContainer {
+  top: 120%;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  // height: 600px;
+  border: 1px solid $ui-color-primary-accent;
+  // overflow-y: scroll;
+  // background-color: $ui-color-gray-selected-surface-2;
+  background-color: $ui-color-gray-surface-1;
+  padding: 10px;
+  z-index: 3;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.checkboxLabel {
+  position: relative;
+  display: inline-block;
+
+  font-family: Mont;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 21px;
+  background-color: $ui-color-gray-surface-1;
+  color: #75767f;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0px 18px;
+
+  &:hover {
+    background: var(--Gray-Surface-2, #323542);
+    color: $ui-color-gray-white;
+  }
+
+  // & input:checked{
+  //   color: white;
+  // }
+}
+
+.checkboxLabel input:checked + .checkmark + .labelText {
+  color: $ui-color-gray-white; /* Цвет текста при выбранном чекбоксе */
+}
+
+.checkboxLabel input {
+  opacity: 0;
+  position: absolute;
+}
+
+.checkmark {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  height: 14px;
+  width: 14px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+}
+
+.checkboxLabel input:checked + .checkmark {
+  background-color: $ui-color-primary-accent;
+}
+
+.checkboxLabel input:checked + .checkmark:after {
+  content: "";
+  position: absolute;
+  display: block;
+  left: 4px;
+  top: 0px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.filterGroupHeader {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 21px;
+  // background: var(--Gray-Black, #0f1121);
+  background-color: $ui-color-gray-surface-1;
+  color: $ui-color-gray-white;
+  font-family: Mont;
+  cursor: pointer;
+}
+
+.priceFilter {
+  // width: 100%;
+  display: flex;
+  // justify-content: space-between;
+  gap: 5px;
+  // overflow: hidden;
+}
+
+.priceInput {
+  width: 48%;
+  // height: 30px;
+  background-color: $ui-color-gray-selected-surface-2;
+  color: $ui-color-gray-white;
+  outline: none;
+  box-shadow: none;
+  border: 1px solid transparent;
+
+  &:focus {
+    border-color: $ui-color-primary-accent;
+  }
+}
+
+.checkboxLabel {
+  font-size: 14px;
+  font-family: Mont;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 21px;
+  // background: var(--Gray-Black, #0f1121);
+  background-color: $ui-color-gray-surface-1;
+  color: #75767f;
+  font-size: 14px;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--Gray-Surface-2, #323542);
+    color: #f1f2f9;
+  }
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.filterButtonsContainer {
+  // position: fixed;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.filterActionButton {
+  @include flex-center;
+  @include button;
+  height: 30px;
+  width: 100%;
+  color: $ui-color-gray-white;
+  background-color: $ui-color-primary-accent;
+  border: none;
+  margin-right: 8px;
+
+  &:hover {
+    background-color: $ui-color-primary-accent-hover;
+  }
+
+  &:active {
+    background-color: $ui-color-gray-selected-surface-2;
+  }
+}
