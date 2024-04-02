@@ -20,6 +20,7 @@ import UserUpdatePass from "../pages/User/UserUpdatePass/UserUpdatePass";
 import CheckoutPage from "../pages/CheckoutPage/CheckoutPage";
 import UserDataInformation from "../pages/User/UserDataInformation/UserDataInformation";
 import AdminPage from "../pages/AdminPage/AdminPage";
+import Orders from "../pages/OrdersPage/Orders";
 
 const RootRouters = () => {
   return (
@@ -47,6 +48,7 @@ const RootRouters = () => {
       <Route path="/right" element={<Right />} />
       <Route path="/search" element={<SearchPage />} />
       <Route path="/contacts" element={<Contacts />} />
+      <Route path="/orders" element={<Orders />} />
       <Route path="*" element={<WrongRoute />} />
     </Routes>
   );

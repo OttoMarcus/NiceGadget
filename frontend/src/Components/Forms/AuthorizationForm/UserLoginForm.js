@@ -12,6 +12,7 @@ import {
   fetchCartItems,
 } from "../../../API/cartAPI.js";
 import { synchronizeFavor } from "../../../store/favorites/favoriteSlice";
+import { orderGetNew, synchronizeOrder } from "../../../store/orders/OrderNew";
 
 const UserLoginForm = () => {
   const [regStatus, setRegStatus] = useState("");
@@ -108,7 +109,10 @@ const UserLoginForm = () => {
       dispatch(synchronizeCartWithServer());
       dispatch(fetchCartItems());
       dispatch(synchronizeFavor());
+      dispatch(synchronizeOrder());
+      dispatch(orderGetNew());
       // dispatch(fetchTodos());
+      localStorage.removeItem("orders");
     } else {
       return;
     }

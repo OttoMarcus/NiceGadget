@@ -12,6 +12,7 @@ import {
   fetchCartItems,
 } from "../../../API/cartAPI.js";
 import { synchronizeFavor } from "../../../store/favorites/favoriteSlice";
+import { orderGetNew, synchronizeOrder } from "../../../store/orders/OrderNew";
 
 const UserRegForm = () => {
   const [regStatus, setRegStatus] = useState("");
@@ -156,6 +157,10 @@ const UserRegForm = () => {
     dispatch(synchronizeCartWithServer());
     dispatch(fetchCartItems());
     dispatch(synchronizeFavor());
+    dispatch(synchronizeFavor());
+    dispatch(synchronizeOrder());
+    dispatch(orderGetNew());
+    localStorage.removeItem("orders");
     onAuthRedirect();
 
     // return user

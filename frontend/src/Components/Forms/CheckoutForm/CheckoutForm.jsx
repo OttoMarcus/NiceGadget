@@ -13,6 +13,7 @@ import {
   updateProductQuantities,
 } from "../../../API/cartAPI";
 import { deleteCartLocal } from "../../../store/cart/cartSlice";
+import { orderAddNew, orderAddNewUnAvt } from "../../../store/orders/OrderNew";
 
 const initialValues = {
   firstName: "",
@@ -65,7 +66,63 @@ const CheckoutForm = () => {
   const isAuthorized = useSelector((state) => state.user.isAuthorized);
   const cartItems = useSelector((state) => state.cart.cartItems);
 
+  const cart = useSelector((state) => state.cart.cartItems);
+  let totalSum = 0;
+  const user = useSelector((state) => state.user.user);
+  const calculateTotalItemPrice = (price, discount = 0, quantity) => {
+    return Math.round(price * (1 - discount) * quantity);
+  };
+  const totalCartPrice = cart.reduce(
+    (total, item) =>
+      total +
+      calculateTotalItemPrice(item.price, item.discount, item.cartQuantity),
+    0
+  );
   const handleSubmit = async (values, { setSubmitting }) => {
+    const token = localStorage.getItem("token") || null;
+    const userId = localStorage.getItem("user") || null;
+    const resultSlice = userId?.slice(1, -1);
+    const currentDate = new Date();
+
+    !token &&
+      dispatch(
+        orderAddNewUnAvt({
+          products: cart,
+          deliveryAddress: values.address,
+          shipping: {
+            method: values.paymentMethod,
+          },
+          totalSum: totalCartPrice,
+          email: user?.email || `test`,
+          canceled: false,
+          mobile: values.phoneNumber,
+          letterSubject: ` `,
+          status: "Pending",
+          data: currentDate,
+        })
+      );
+
+    token &&
+      resultSlice &&
+      dispatch(
+        orderAddNew({
+          customerId: resultSlice,
+          products: cart,
+          deliveryAddress: values.address,
+          shipping: {
+            method: values.paymentMethod,
+          },
+          totalSum: totalCartPrice,
+          email: user.email,
+          canceled: false,
+          mobile: values.phoneNumber,
+          letterSubject: ` `,
+          status: "Pending",
+          data: currentDate,
+        })
+      );
+
+    // Необходимо определить переменную isAuthorized
     if (isAuthorized) {
       dispatch(updateProductQuantities(cartItems));
       dispatch(deleteCartServer());
