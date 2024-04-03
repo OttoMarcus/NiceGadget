@@ -26,7 +26,7 @@ const Phones = () => {
   });
   const [filterQueryString, setFilterQueryString] = useState(null);
   const [sortValue, setSortValue] = useState("-brandNew");
-  const [cardsPerPageValue, setCardsPerPageValue] = useState(8);
+  const [cardsPerPageValue, setCardsPerPageValue] = useState("8");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalNumber, setTotalNumber] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
@@ -77,7 +77,7 @@ const Phones = () => {
     setSortValue(sort ? sort : "-brandNew");
     setCardsPerPageValue(perPage ? Number(perPage) : 8);
     setCurrentPage(startPage ? Number(startPage) : 1);
-  }, [filters]);
+  }, []);
 
   // http://localhost:3000/phones?modelName=iPhone+13&sort=price&perPage=16&startPage=2
 
@@ -216,13 +216,16 @@ const Phones = () => {
       <h3 className={styles.subtitle}>{totalNumber} models</h3>
 
       <div className={styles.selectsContainer}>
-        <Filter
-          handleFilter={handleFilter}
-          filters={filters}
-          setFilters={setFilters}
-          clearFilters={clearFilters}
-        />
-        <Sort handleSortChange={handleSortChange} sortValue={sortValue} />
+        <div className={styles.btnWrapper}>
+          <Filter
+            handleFilter={handleFilter}
+            filters={filters}
+            setFilters={setFilters}
+            clearFilters={clearFilters}
+          />
+          <Sort handleSortChange={handleSortChange} sortValue={sortValue} />
+        </div>
+
         <PerPageSelect
           handlePerPageChange={handlePerPageChange}
           cardsPerPageValue={cardsPerPageValue}

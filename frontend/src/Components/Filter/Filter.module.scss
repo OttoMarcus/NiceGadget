@@ -7,19 +7,21 @@
   align-self: flex-end;
 }
 
+.columnWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .filterButton {
-  // align-self: flex-end;
-  // width: 200px;
-  // height: 40px;
   @include flex-center;
   @include button;
   height: 40px;
-  width: 200px;
+  width: 160px;
   color: $ui-color-gray-white;
   background-color: $ui-color-primary-accent;
   border: none;
   cursor: pointer;
-  // margin-right: 8px;
+  margin-bottom: 8px;
 
   &:hover {
     background-color: $ui-color-primary-accent-hover;
@@ -28,21 +30,43 @@
   &:active {
     background-color: $ui-color-gray-selected-surface-2;
   }
+  /*-----------------  Tablet ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    width: 200px;
+    margin-bottom: 0;
+  }
+
+  /*----------------- Desktop ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(
+      -100%
+    ); /* Начальное положение окна за пределами контейнера слева */
+  }
+  to {
+    transform: translateX(0); /* Конечное положение окна внутри контейнера */
+  }
 }
 
 .filterContainer {
-  top: 120%;
-  position: absolute;
+  left: 0;
+  top: 0;
+  position: fixed;
   display: flex;
   flex-direction: column;
-  width: 200px;
-  // height: 600px;
-  border: 1px solid $ui-color-primary-accent;
-  // overflow-y: scroll;
-  // background-color: $ui-color-gray-selected-surface-2;
+  width: 100%;
+  max-width: 320px;
+  animation: slideIn 0.5s forwards; /* Применяем анимацию slideIn с продолжительностью 1 секунда */
   background-color: $ui-color-gray-surface-1;
   padding: 10px;
-  z-index: 3;
+  z-index: 30;
+  transition: all 0.3s ease-in-out 0s;
+
+  box-shadow: 2px 0 6px #33333342;
 
   &.hidden {
     display: none;
@@ -58,7 +82,7 @@
   font-weight: 600;
   line-height: 21px;
   background-color: $ui-color-gray-surface-1;
-  color: #75767f;
+  color: white;
   font-size: 14px;
   cursor: pointer;
   padding: 0px 18px;
@@ -110,11 +134,12 @@
 }
 
 .filterGroupHeader {
-  font-size: 14px;
+  font-size: 16px;
+  border-left: 5px solid #905bff;
   font-style: normal;
+  padding-left: 15px;
   font-weight: 600;
   line-height: 21px;
-  // background: var(--Gray-Black, #0f1121);
   background-color: $ui-color-gray-surface-1;
   color: $ui-color-gray-white;
   font-family: Mont;
@@ -147,12 +172,13 @@
   font-size: 14px;
   font-family: Mont;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 21px;
-  // background: var(--Gray-Black, #0f1121);
+  text-transform: capitalize;
+
   background-color: $ui-color-gray-surface-1;
-  color: #75767f;
-  font-size: 14px;
+  color: white;
+
   cursor: pointer;
 
   &:hover {

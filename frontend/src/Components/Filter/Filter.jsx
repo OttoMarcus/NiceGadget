@@ -56,6 +56,10 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
 
   // useEffect будет срабатывать при изменении query параметров
 
+  const handleCloseFilter = () => {
+    setIsFilterVisible(false);
+  };
+
   const handleGroupCheckboxChange = (e) => {
     console.log(filters[e.target.name].includes(e.target.value));
     const { name, checked, value } = e.target;
@@ -116,6 +120,12 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
       <div
         className={`${styles.filterContainer} ${isFilterVisible ? styles.visible : styles.hidden}`}
       >
+        <button
+          onClick={handleCloseFilter}
+          className={styles.filterActionButton}
+        >
+          Close
+        </button>
         <label className={styles.checkboxLabel} htmlFor="hotPrices">
           <input
             id="hotPrices"
@@ -514,8 +524,8 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
           </div>
         </div>
 
-        <div>
-          <h3>RAM</h3>
+        <div className={styles.columnWrapper}>
+          <h3 className={styles.filterGroupHeader}>RAM</h3>
           <label htmlFor="6GB" className={styles.checkboxLabel}>
             <input
               id="6GB"
@@ -543,8 +553,8 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
           </label>
         </div>
 
-        <div>
-          <h3>Screen</h3>
+        <div className={styles.columnWrapper}>
+          <h3 className={styles.filterGroupHeader}>Screen</h3>
           <label htmlFor="6.1" className={styles.checkboxLabel}>
             <input
               id="6.1"
