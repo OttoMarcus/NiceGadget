@@ -15,6 +15,7 @@ import {
 import { deleteCartLocal } from "../../../store/cart/cartSlice";
 import CustomInputCheckout from "../CustomInputCheckout/CustomInputCheckout";
 import validationSchema from "./validationSchema";
+import { orderAddNew, orderAddNewUnAvt } from "../../../store/orders/OrderNew";
 
 const deliveryOptions = [
   { label: "OnePost", value: "OnePost" },
@@ -59,7 +60,66 @@ const CheckoutForm = () => {
   const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.cartItems);
 
+  const cart = useSelector((state) => state.cart.cartItems);
+  const user = useSelector((state) => state.user.user);
+  const calculateTotalItemPrice = (price, discount = 0, quantity) => {
+    return Math.round(price * (1 - discount) * quantity);
+  };
+  const totalCartPrice = cart.reduce(
+    (total, item) =>
+      total +
+      calculateTotalItemPrice(item.price, item.discount, item.cartQuantity),
+    0
+  );
+
   const onSubmit = async (values, actions) => {
+    const token = localStorage.getItem("token") || null;
+    const userId = localStorage.getItem("user") || null;
+    const resultSlice = userId?.slice(1, -1);
+    const currentDate = new Date();
+    console.log(`1234`);
+    !token &&
+      dispatch(
+        orderAddNewUnAvt({
+          products: cart,
+          userFirstName: values.firstName,
+          userLastName: values.lastName,
+          deliveryAddress: values.deliveryAddress,
+          shipping: {
+            method: values.paymentMethod,
+          },
+          totalSum: totalCartPrice,
+          email: values.email,
+          canceled: false,
+          mobile: values.phoneNumber,
+          letterSubject: ` `,
+          status: "Pending",
+          data: currentDate,
+        })
+      );
+
+    token &&
+      resultSlice &&
+      dispatch(
+        orderAddNew({
+          customerId: resultSlice,
+          products: cart,
+          userFirstName: values.firstName,
+          userLastName: values.lastName,
+          deliveryAddress: values.deliveryAddress,
+          shipping: {
+            method: values.paymentMethod,
+          },
+          totalSum: totalCartPrice,
+          email: user.email,
+          canceled: false,
+          mobile: values.phoneNumber,
+          letterSubject: ` `,
+          status: "Pending",
+          data: currentDate,
+        })
+      );
+
     if (isAuthorized) {
       dispatch(updateProductQuantities(cartItems));
       dispatch(deleteCartServer());
@@ -68,7 +128,7 @@ const CheckoutForm = () => {
       dispatch(deleteCartLocal());
     }
 
-    navigate("/");
+    navigate("/orders");
   };
 
   return (
