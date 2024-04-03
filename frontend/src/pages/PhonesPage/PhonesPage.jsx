@@ -77,7 +77,8 @@ const Phones = () => {
     setSortValue(sort ? sort : "-brandNew");
     setCardsPerPageValue(perPage ? Number(perPage) : 8);
     setCurrentPage(startPage ? Number(startPage) : 1);
-  }, [filters]);
+  }, []);
+  // filters
 
   // http://localhost:3000/phones?modelName=iPhone+13&sort=price&perPage=16&startPage=2
 

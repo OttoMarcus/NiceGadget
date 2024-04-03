@@ -14,17 +14,6 @@ const PerPageSelect =
 
     /*
 
-FILTER
-
-Simple Options: New, In Stock, HotPrice(?)
-
-Options: 
-- Price (Input Min - Input Max)
-- Model line (14, 14Pro, 15, 15Pro, ... )
-- Capacity (64Gb, 128Gb, 256Gb, 512Gb)
-- RAM (2, 4, 8)
-- Color
-- Screen width (input range OR list of values)
 
 ==================================================
 
