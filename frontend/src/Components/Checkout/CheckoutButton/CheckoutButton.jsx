@@ -3,9 +3,9 @@ import Button from "../../Button/Button";
 import { useValidateCartAndNavigate } from "../hooks/useValidateCartAndNavigate";
 import PropTypes from "prop-types";
 
-const CheckoutButton = ({ setModalOpen, setValidationResults }) => {
+const CheckoutButton = ({ toggleModal, setValidationResults }) => {
   const validateAndNavigate = useValidateCartAndNavigate(
-    setModalOpen,
+    toggleModal,
     setValidationResults
   );
 
@@ -17,12 +17,12 @@ const CheckoutButton = ({ setModalOpen, setValidationResults }) => {
 };
 
 CheckoutButton.propTypes = {
-  setModalOpen: PropTypes.func,
+  toggleModal: PropTypes.func,
   setValidationResults: PropTypes.func,
 };
 
 CheckoutButton.defaultProps = {
-  setModalOpen: () => {},
+  toggleModal: () => {},
   setValidationResults: () => {},
 };
 

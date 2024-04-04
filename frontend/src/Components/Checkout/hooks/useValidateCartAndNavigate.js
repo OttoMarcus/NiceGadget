@@ -4,29 +4,53 @@ import { useNavigate } from "react-router-dom";
 import { validateCartItems } from "../../../API/cartAPI";
 
 export const useValidateCartAndNavigate = (
-  setModalOpen,
-  setValidationResults
+  toggleModal,
+  setValidationResults,
+  successRedirectPath = "/checkout",
+  onSuccess
 ) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
 
-  const handleCheckout = useCallback(async () => {
-    try {
-      const validationResults = await dispatch(
-        validateCartItems(cartItems)
-      ).unwrap();
+  const handleCheckout = useCallback(
+    async (values) => {
+      try {
+        if (!cartItems.length) {
+          toggleModal(true);
+          setValidationResults([{ isEmpty: true }]);
+          return;
+        }
 
-      if (validationResults.allProductsAvailable) {
-        navigate("/checkout");
-      } else {
-        setModalOpen(true);
-        setValidationResults(validationResults.errors || []);
+        const validationResults = await dispatch(
+          validateCartItems(cartItems)
+        ).unwrap();
+
+        if (validationResults.allProductsAvailable) {
+          if (onSuccess) {
+            onSuccess(values);
+            navigate(successRedirectPath);
+          } else {
+            navigate(successRedirectPath);
+          }
+        } else {
+          toggleModal(true);
+          setValidationResults(validationResults.errors || []);
+        }
+      } catch (error) {
+        console.error("Validation error:", error);
       }
-    } catch (error) {
-      console.error("Помилка валідації:", error);
-    }
-  }, [navigate, dispatch, cartItems, setModalOpen, setValidationResults]);
+    },
+    [
+      navigate,
+      dispatch,
+      cartItems,
+      toggleModal,
+      setValidationResults,
+      successRedirectPath,
+      onSuccess,
+    ]
+  );
 
   return handleCheckout;
 };
