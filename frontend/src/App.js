@@ -77,6 +77,7 @@ function App() {
   }, [favor, dispatch]);
   useEffect(() => {
     !token && localStorage.setItem("orders", JSON.stringify(order));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, order]);
   useEffect(() => {
     token && dispatch(orderGetNew());
