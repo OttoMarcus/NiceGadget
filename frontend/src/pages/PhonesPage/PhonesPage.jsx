@@ -228,7 +228,7 @@ const Phones = () => {
 
         <PerPageSelect
           handlePerPageChange={handlePerPageChange}
-          cardsPerPageValue={cardsPerPageValue}
+          cardsPerPageValue={Number(cardsPerPageValue)}
         />
       </div>
 
