@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 // import { useNavigate, useLocation } from "react-router-dom";
-import { Accordion, AccordionItem } from "@szhsin/react-accordion";
+// import { Accordion, AccordionItem } from "@szhsin/react-accordion";
 import FilterButtonIcon from "../Icons/FilterButtonIcon";
 import ClearFiltersIcon from "../Icons/ClearFiltersIcon";
-import DownArrowIcon from "../Icons/DownArrowIcon";
-import UpArrowIcon from "../Icons/UpArrowIcon";
+// import DownArrowIcon from "../Icons/DownArrowIcon";
+// import UpArrowIcon from "../Icons/UpArrowIcon";
 
 // import queryString from "query-string";
 import styles from "./Filter.module.scss";
@@ -53,6 +53,26 @@ OutsideClickHandler.propTypes = {
 const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [activeId, setActiveId] = useState();
+  // const [serverFilters, setServerFilters] = useState()
+
+  // useEffect(() => {
+  //   try {
+  //     fetch(
+  //     'http://localhost:4000/api/phones-filters'
+  //     )
+  //     .then((res) => {
+  //       if (!res.ok) {
+  //         throw new Error("Network response was not ok");
+  //       } else {
+  //         return res.json()
+  //       }
+  //     })
+  //     .then(data => setServerFilters(data))
+  //     // .then(data => setServerFilters(data))
+  //   } catch (error) {
+  //       console.error("There was a problem with your fetch operation:", error);
+  //   }
+  // },[])
 
   const toggleAccordion = (value) => {
     setActiveId(activeId === value ? null : value);
@@ -152,7 +172,7 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
                 <div className={styles.priceFilter} id="price">
                   {/* Min Price: */}
                   <input
-                    type="text"
+                    type="number"
                     name="minPrice"
                     value={filters.minPrice}
                     onChange={handleInputChange}
@@ -162,7 +182,7 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
                   {/* <label> */}
                   {/* Max Price: */}
                   <input
-                    type="text"
+                    type="number"
                     name="maxPrice"
                     value={filters.maxPrice}
                     onChange={handleInputChange}
