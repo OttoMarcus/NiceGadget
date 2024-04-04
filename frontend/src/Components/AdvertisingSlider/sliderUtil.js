@@ -4,7 +4,6 @@ import styles from "./Slider.module.scss";
 
 export const renderSliderContent = ({
   slider,
-  currentIndex,
   styles,
   SliderAsset,
   Link,

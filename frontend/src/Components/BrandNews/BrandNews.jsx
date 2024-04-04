@@ -56,4 +56,4 @@ const BrandNew = () => {
   );
 };
 
-export default BrandNew;
+export default React.memo(BrandNew);
