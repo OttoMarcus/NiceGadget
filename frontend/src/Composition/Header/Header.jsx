@@ -13,7 +13,7 @@ import OkIcon from "../../Components/Icons/OkIcon";
 import scrollUp from "../../helpers/scrollUp";
 import LoginIcon from "../../Components/Icons/LoginIcon";
 import SearchForm from "../../Components/SearchForm/SearchForm";
-import OrderIcon from "../../Components/Icons/OrderIcon";
+// import OrderIcon from "../../Components/Icons/OrderIcon";
 
 import { fetchCartItems } from "../../API/cartAPI";
 
@@ -32,7 +32,6 @@ const Header = () => {
   const location = useLocation();
   // const loggedInUser = useSelector((state) => state.user.user);
   const isAuthorized = useSelector((state) => state.user.isAuthorized);
-  const order = useSelector((state) => state.OrderNew.orders);
 
   // const isUserLoggedIn = Object?.keys(loggedInUser).length === 0 ? false : true;
   // console.log(isUserLoggedIn);
@@ -222,20 +221,6 @@ const Header = () => {
                 to="/login"
               >
                 <LoginIcon />
-              </Link>
-            )}
-            {order.length > 0 && (
-              <Link className={styles.mainLinks} to="/orders">
-                <div className={styles.FavorWrapper}>
-                  <OrderIcon />
-                  <div
-                    className={styles.wrapperCount}
-                    style={{ display: order.length > 0 ? "flex" : "none" }}
-                  >
-                    <CounterIcon />
-                    <span className={styles.FavorQuantity}>{order.length}</span>
-                  </div>
-                </div>
               </Link>
             )}
             <Link className={styles.mainLinks} to="/favorites">

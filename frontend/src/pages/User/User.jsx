@@ -7,10 +7,12 @@ import UpdatePassIcon from "../../Components/Icons/UpdatePassIcon";
 import UserProfileIcon from "../../Components/Icons/UserProfileIcon";
 import Input from "../../Components/Profile/CustomInput/Input";
 import { Form, Formik } from "formik";
+import OrderIcon from "../../Components/Icons/OrderIcon";
+import CounterIcon from "../../Components/Icons/CounterIcon";
 
 const User = () => {
   const { user } = useSelector((state) => state.user);
-
+  const order = useSelector((state) => state.OrderNew.orders);
   if (!Object.keys(user).length) {
     return (
       <>
@@ -75,6 +77,26 @@ const User = () => {
                 </Link>
                 <UpdatePassIcon className={styles.iconForListUser} />
               </div>
+
+              <Link
+                className={`${styles.login__registrationSection}`}
+                to="/orders"
+              >
+                {/*{className={styles.mainLinks} }*/}
+                <div>
+                  <h2 className={styles.linkCategoryUsers}>Orders</h2>
+                </div>
+                <div className={styles.FavorWrapper}>
+                  <OrderIcon />
+                  <div
+                    className={styles.wrapperCount}
+                    style={{ display: order.length > 0 ? "flex" : "none" }}
+                  >
+                    <CounterIcon />
+                    <span className={styles.FavorQuantity}>{order.length}</span>
+                  </div>
+                </div>
+              </Link>
             </section>
             <section className={styles.userInfoContainer}>
               <div className={styles.userInformation}>
