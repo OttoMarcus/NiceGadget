@@ -37,6 +37,7 @@ const Phones = () => {
   const typeModel = location.pathname.slice(1);
 
   //Parse values FROM url query params TO states on page first load
+
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
 
@@ -77,6 +78,7 @@ const Phones = () => {
     setSortValue(sort ? sort : "-brandNew");
     setCardsPerPageValue(perPage ? Number(perPage) : 8);
     setCurrentPage(startPage ? Number(startPage) : 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // http://localhost:3000/phones?modelName=iPhone+13&sort=price&perPage=16&startPage=2
