@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../../store/user/userSlice";
-
+import { fetchCartItems } from "../../API/cartAPI";
+import { SetFavor } from "../../store/favorites/favoriteSlice";
+import { SetOrder } from "../../store/orders/OrderNew";
 import LogoutIcon from "../../Components/Icons/LogoutIcon";
 import UserIcon from "../../Components/Icons/UserIcon";
 import FavoriteIcon from "../../Components/Icons/HeartIcon";
@@ -15,26 +17,14 @@ import LoginIcon from "../../Components/Icons/LoginIcon";
 import SearchForm from "../../Components/SearchForm/SearchForm";
 // import OrderIcon from "../../Components/Icons/OrderIcon";
 
-import { fetchCartItems } from "../../API/cartAPI";
-
 import styles from "./Header.module.scss";
-import { SetFavor } from "../../store/favorites/favoriteSlice";
-import { SetOrder } from "../../store/orders/OrderNew";
 
 const Header = () => {
   const [isBurgerActive, setIsBurgerActive] = useState(false);
-  // const [isAuthorized, setIsAuthorized] = useState(false);
-
   const active = null;
-
-  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-  // const loggedInUser = useSelector((state) => state.user.user);
   const isAuthorized = useSelector((state) => state.user.isAuthorized);
-
-  // const isUserLoggedIn = Object?.keys(loggedInUser).length === 0 ? false : true;
-  // console.log(isUserLoggedIn);
 
   const logOutUser = () => {
     dispatch(removeUser());
@@ -44,7 +34,6 @@ const Header = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("orders");
     dispatch(fetchCartItems());
-    // navigate("/login");
   };
 
   const handleAuthUser = (event) => {

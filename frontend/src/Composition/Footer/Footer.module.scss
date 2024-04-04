@@ -59,6 +59,11 @@
     a {
       @include uppercase;
       color: $ui-color-gray-white;
+      transition: $ui-transition;
+
+      &:hover {
+        color: $ui-color-gray-secondary;
+      }
     }
   }
 

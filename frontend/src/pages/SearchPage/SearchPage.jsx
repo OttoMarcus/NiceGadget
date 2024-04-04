@@ -3,16 +3,18 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import Card from "../../Components/Cards/Card";
 import CardAccessories from "../../Components/Cards/CardAccessories";
+import debounce from "lodash/debounce";
+
 import styles from "./SearchPage.module.scss";
 
 const SearchPage = () => {
   const [searchList, setSearchList] = useState({ data: [] });
   const searchField = useSelector((state) => state.search.search);
-
+  const [delayedSearchResult, setDelayedSearchResult] = useState(null);
   const total = searchList.data.length;
 
   useEffect(() => {
-    const searchResult = async () => {
+    const fetchSearchResult = async () => {
       try {
         const [phonesResponse, tabletsResponse, accessoriesResponse] =
           await Promise.all([
@@ -38,9 +40,20 @@ const SearchPage = () => {
     };
 
     if (searchField.trim() !== "") {
-      searchResult();
+      const delayedSearch = debounce(() => {
+        fetchSearchResult();
+      }, 1000);
+      setDelayedSearchResult(delayedSearch);
     }
   }, [searchField]);
+
+  useEffect(() => {
+    if (delayedSearchResult) {
+      return () => {
+        delayedSearchResult.cancel();
+      };
+    }
+  }, [delayedSearchResult]);
 
   return (
     <article className={styles.container}>

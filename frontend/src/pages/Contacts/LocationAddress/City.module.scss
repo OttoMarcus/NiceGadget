@@ -6,6 +6,12 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   transition: $ui-transition;
+
+  &:hover {
+    background-image: linear-gradient(0deg, #f1f2f9, #a378ff);
+    //-webkit-text-fill-color: $ui-color-gray-white;
+    cursor: pointer;
+  }
 }
 
 .city::after {
