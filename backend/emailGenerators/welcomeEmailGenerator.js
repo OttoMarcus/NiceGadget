@@ -1,61 +1,90 @@
 module.exports.createWelcomeEmailHtml = (customerFirstName, customerLastName , login) => {
   return `
-   <!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to Nice Gadgets!</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      margin: 0;
-      padding: 0;
-      background-color: #f5f5f5;
-    }
-    .container {
-      max-width: 600px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    h1 {
-      color: #333;
-    }
-    p {
-      color: #666;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Nice Gadgets!</title>
+    <link rel="stylesheet" href="emailWelcome.css">
+
 </head>
 <body>
-  <div class="container">
+<div class="container">
     <h1>Welcome to Nice Gadgets!</h1>
-    <p>Dear ${customerFirstName} ${customerLastName},</p>
-    
-    <p>We're delighted to have you as part of our tech-savvy community. Thank you for choosing Nice Gadgets as your go-to destination for all things Apple.</p>
+    <img src="https://res.cloudinary.com/de71eui6p/image/upload/v1712393815/sxhtepbcyn1msl7vptct.webp" alt="logo">
+    <p>Hello ${customerFirstName} ${customerLastName},</p>
+
+    <p>
+        Welcome aboard to NiceGadgets Store! We're thrilled to have you join our community of tech enthusiasts and
+        gadget aficionados.
+        <span>Your registration has been successfully completed</span> ,
+        and we're excited to start this journey with you. Here's a quick overview of what you can expect
+    </p>
 
     <p>Your account has been successfully created with the following details:</p>
     <ul>
-      <li>First Name: ${customerFirstName}</li>
-      <li>Last Name: ${customerLastName}</li>
-      <li>Login: ${login}</li>
+        <li>Login: ${login}</li>
+        <li>First Name: ${customerFirstName}</li>
+        <li>Last Name: ${customerLastName}</li>
     </ul>
 
-    <p>You can now log in to your Nice Gadgets account using your username and the password you provided during registration.</p>
-
-    <p>Explore our website to discover the latest Apple tablets, phones, and accessories that will elevate your tech experience.</p>
-
-    <p>If you have any questions about our products or need assistance, our dedicated support team is here to help. We're committed to providing you with excellent service and top-notch gadgets.</p>
-
-    <p>Thank you for choosing Nice Gadgets. We look forward to bringing you the latest and greatest in Apple technology!</p>
-
     <p>Best regards,<br>Nice Gadgets Team</p>
-  </div>
+    <p>Social media:</p>
+    <div class="social">
+        <div >
+            <a
+                    href="https://t.me/nicegadgetstore"
+                    target="_blank"
+                    rel="noreferrer"
+            >
+                <img
+                        src="https://res.cloudinary.com/de71eui6p/image/upload/v1711375286/Slider/zwpnzpy4gdrardowloam.webp"
+                        alt="Telegram"
+                />
+            </a>
+        </div>
+        <div>
+            <a
+                    href="https://www.instagram.com/n1cegadgetstore"
+                    target="_blank"
+                    rel="noreferrer"
+            >
+                <img
+                        src="https://res.cloudinary.com/de71eui6p/image/upload/v1711375285/Slider/iypblt7wvhyl9vjywwdr.webp"
+                        alt="Instagram"
+                />
+            </a>
+        </div>
+        <div>
+            <a
+                    href="https://www.facebook.com/groups/258628787334330"
+                    target="_blank"
+                    rel="noreferrer"
+            >
+                <img
+                        src="https://res.cloudinary.com/de71eui6p/image/upload/v1711375284/Slider/ba2xqvptwh9cpu5ekzij.webp"
+                        alt="Facebook"
+                />
+            </a>
+        </div>
+        <div>
+            <a
+                    href="mailto:testfrontendmail@gmail.com"
+                    target="_blank"
+                    rel="noreferrer"
+            >
+                <img
+                        src="https://res.cloudinary.com/de71eui6p/image/upload/v1711375285/Slider/xqxh0u9umai1oa91dgg8.webp"
+                        alt="Gmail"
+                />
+            </a>
+        </div>
+    </div>
+</div>
 </body>
 </html>
+
 
   `;
 };
