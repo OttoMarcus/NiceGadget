@@ -29,7 +29,6 @@
 }
 
 .inputError {
-  display: block;
   padding-top: 3px;
   @include error-text;
   color: $ui-color-red-badge-favorite;

@@ -69,11 +69,15 @@ const CheckoutForm = () => {
 
   useEffect(() => {
     if (isAuthorized && userData) {
+      const formattedPhoneNumber = userData.telephone
+        ? userData.telephone.replace("+380", "")
+        : "";
+
       setInitialValues((currentValues) => ({
         ...currentValues,
         firstName: userData.firstName || "",
         lastName: userData.lastName || "",
-        phoneNumber: userData.telephone || "",
+        phoneNumber: formattedPhoneNumber,
         email: userData.email || "",
       }));
     }

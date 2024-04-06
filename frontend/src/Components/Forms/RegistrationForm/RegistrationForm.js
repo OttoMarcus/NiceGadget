@@ -173,7 +173,7 @@ const RegistrationForm = () => {
     login: "",
     password: "",
     gender: "",
-    birthDate: "2000-01-01",
+    birthDate: "2008-01-01",
   };
 
   return (
@@ -189,19 +189,19 @@ const RegistrationForm = () => {
             <Input
               type="text"
               name="firstName"
-              label="First name"
-              placeholder="First name"
+              label="First Name"
+              placeholder="First Name"
             />
             <Input
               type="text"
               name="lastName"
-              label="Last name"
-              placeholder="Last name"
+              label="Last Name"
+              placeholder="Last Name"
             />
             <Input
               type="tel"
               name="telephone"
-              label="Phone number"
+              label="Phone Number"
               placeholder="+38(0XX)-XXX-XX-XX"
             />
             <Input
@@ -220,36 +220,37 @@ const RegistrationForm = () => {
             <Input type="date" name="birthDate" label="Birth Date" />
             <div className={styles.genderContainer}>
               <p className={styles.genderTitle}>Gender</p>
-              <input
-                className={styles.genderOption}
-                type="radio"
-                name="gender"
-                value="male"
-              />
-              <label htmlFor="gender" className={styles.inputLabel}>
-                Male
-              </label>
-              <input
-                className={styles.genderOption}
-                type="radio"
-                name="gender"
-                value="female"
-              />
-              <label htmlFor="gender" className={styles.inputLabel}>
-                Female
-              </label>
+              <div role="group" className={styles.optionsGroup}>
+                <input
+                  className={styles.genderOption}
+                  type="radio"
+                  name="gender"
+                  value="male"
+                />
+                <label htmlFor="gender" className={styles.inputLabel}>
+                  Male
+                </label>
+                <input
+                  className={styles.genderOption}
+                  type="radio"
+                  name="gender"
+                  value="female"
+                />
+                <label htmlFor="gender" className={styles.inputLabel}>
+                  Female
+                </label>
+              </div>
             </div>
             <div className={styles.submitContainer}>
-              {/* <button type="submit" disabled={!isValid} className={styles.submitBtn}>
-                Register
-              </button> */}
-              <Button type="submit" disabled={!isValid}>
-                Register
-              </Button>
+              <div className={styles.btnWrapper}>
+                <Button type="submit" disabled={!isValid}>
+                  Register
+                </Button>
+              </div>
               <p className={styles.alternateAction}>
                 <span className={styles.or}>or </span>
                 <Link className={styles.loginLink} to="/login">
-                  LOG IN
+                  Log In
                 </Link>
               </p>
             </div>

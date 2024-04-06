@@ -133,7 +133,7 @@ const LoginForm = () => {
             <Input
               type="text"
               name="loginOrEmail"
-              label="Login or email"
+              label="Login or Email"
               placeholder="Enter you login or email"
             />
             {/* <Input type="email" name="email" label="Email" placeholder="Email" />
@@ -148,13 +148,15 @@ const LoginForm = () => {
               {/* <button type="submit" disabled={!isValid} className={styles.submitBtn}>
                 Log In
               </button> */}
-              <Button type="submit" disabled={!isValid}>
-                Log In
-              </Button>
+              <div className={styles.btnWrapper}>
+                <Button type="submit" disabled={!isValid}>
+                  Log In
+                </Button>
+              </div>
               <p className={styles.alternateAction}>
                 <span className={styles.or}>or </span>
                 <Link to="/registration" className={styles.registerLink}>
-                  REGISTER
+                  Register
                 </Link>
               </p>
             </div>

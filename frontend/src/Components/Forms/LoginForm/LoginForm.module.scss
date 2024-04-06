@@ -2,23 +2,27 @@
 @import "../../../styles/abstracts/mixins";
 
 .loginForm {
-  position: relative;
-  display: flex;
+  margin-bottom: 50px;
+  @include flex-kit(flex-start);
   flex-direction: column;
-  justify-content: center;
-  padding: 30px 30px 60px 30px;
-  height: 435px;
-  min-width: 400px;
-  width: 20%;
-  // min-width: 310px;
-  border: 1px solid $ui-color-gray-elements;
-  background-color: $ui-color-gray-surface-1;
+  text-align: center;
+  gap: 5px;
+  width: 260px;
+  min-height: 435px;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    width: 400px;
+  }
 }
 
 .formHeader {
-  @include h2;
-  text-align: center;
-  margin-bottom: 20px;
+  @include mobile-h2;
+  padding: 10px;
+  color: $ui-color-gray-white;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    @include h2;
+  }
 }
 
 // .loginBtn{
@@ -31,14 +35,21 @@
   margin-top: 10px;
 }
 
+.btnWrapper {
+  width: 200px;
+  margin-bottom: 20px;
+}
+
 .alternateAction {
-  margin: 10px 0px;
   text-align: center;
+
   .or {
-    font-size: $ui-font-size-buttons;
+    @include body-text;
+    color: $ui-color-gray-white;
   }
+
   .registerLink {
-    font-size: $ui-font-size-buttons;
+    @include body-text;
     color: $ui-color-gray-white;
     text-decoration: underline;
   }

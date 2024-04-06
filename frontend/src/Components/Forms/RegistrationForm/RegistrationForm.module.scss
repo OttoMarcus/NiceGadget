@@ -2,84 +2,94 @@
 @import "../../../styles/abstracts/mixins";
 
 .regForm {
-  position: relative;
-  display: flex;
+  margin-bottom: 50px;
+  @include flex-center;
   flex-direction: column;
-  justify-content: center;
-  padding: 30px 30px 60px 30px;
-  margin-bottom: 30px;
-  width: 450px;
-  border: 1px solid $ui-color-gray-elements;
-  background-color: $ui-color-gray-surface-1;
+  text-align: center;
+  gap: 5px;
+  width: 260px;
+  min-height: 700px;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    width: 400px;
+  }
 }
 
 .formHeader {
-  @include h2;
-  text-align: center;
-  margin-bottom: 20px;
+  @include mobile-h2;
+  padding: 10px;
+  color: $ui-color-gray-white;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    @include h2;
+  }
 }
 
 .genderContainer {
-  margin-bottom: 20px;
-
-  .genderTitle {
-    @include body-text;
-    margin-bottom: 5px;
-  }
-
-  .genderOption {
-    height: 15px;
-    width: 15px;
-    margin-right: 5px;
-  }
-
-  .inputLabel {
-    @include body-text;
-    margin-right: 15px;
-  }
+  @include flex-start;
+  flex-direction: column;
+  width: 100%;
+  height: 60px;
 }
 
-// .submitBtn {
-//   margin: 0 auto;
-//   padding: 5px 15px;
-//   color: black;
-//   border-color: black;
-//   border-radius: 5px;
-//   background-color: white;
-// }
+.genderTitle {
+  margin-bottom: 5px;
+  @include body-text;
+  color: $ui-color-gray-white;
+}
+
+.optionsGroup {
+  @include flex-start;
+  gap: 8px;
+  width: 100%;
+}
+
+.genderOption {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+}
+
+.inputLabel {
+  @include flex-center;
+  @include body-text;
+  height: 25px;
+  gap: 10px;
+  color: $ui-color-gray-white;
+  text-align: center;
+  cursor: pointer;
+}
+
+.btnWrapper {
+  width: 200px;
+  margin-bottom: 20px;
+}
 
 .alternateAction {
-  margin: 10px 0px;
   text-align: center;
+
   .or {
-    font-size: $ui-font-size-buttons;
+    @include body-text;
+    color: $ui-color-gray-white;
   }
+
   .loginLink {
-    font-size: $ui-font-size-buttons;
+    @include body-text;
     color: $ui-color-gray-white;
     text-decoration: underline;
   }
 }
 
 .submitStatus {
-  position: absolute;
-  bottom: 45px;
-  right: 50%;
-  transform: translateX(50%);
-  font-family: $ui-font-family-bold;
-  font-size: $ui-font-size-body-text;
-  text-align: center;
-  color: red;
+  text-align: start !important;
+  padding-top: 3px;
+  @include error-text;
+  color: $ui-color-red-badge-favorite;
 }
 
 .submitError {
-  position: absolute;
-  width: 100%;
-  bottom: 25px;
-  right: 50%;
-  transform: translateX(50%);
-  font-family: $ui-font-family-bold;
-  font-size: $ui-font-size-body-text;
-  text-align: center;
-  color: red;
+  text-align: start !important;
+  padding-top: 3px;
+  @include error-text;
+  color: $ui-color-red-badge-favorite;
 }

@@ -16,7 +16,7 @@ const CustomInputCheckout = ({ label, as: Component = "input", ...props }) => {
         <PatternFormat
           {...field}
           {...props}
-          format="+### (##) ###-##-##"
+          format="+380 (##) ###-##-##"
           allowEmptyFormatting={true}
           mask="_"
           onValueChange={(values) => {

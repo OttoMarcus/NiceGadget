@@ -2,34 +2,36 @@
 @import "../../../styles/abstracts/mixins";
 
 .inputWrapper {
-  position: relative;
-  display: flex;
+  @include flex-start;
   flex-direction: column;
-  min-height: 80px;
-  // padding-bottom: 25px;
-  margin-bottom: 15px;
-  // box-sizing: border-box;
+  min-height: 70px;
+  width: 100%;
 }
 
 .inputLabel {
+  @include flex-start;
+  margin-bottom: 3px;
   @include body-text;
+  color: $ui-color-gray-white;
 }
 
 .inputField {
+  height: 30px;
   width: 100%;
-  min-width: 280px;
-  font-size: $ui-font-size-body-text;
-  padding: 7px;
+  padding: 3px 10px;
+  @include body-text;
+  color: $ui-color-gray-white;
+  background-color: $ui-color-gray-selected-surface-2;
+  border: 1px solid $ui-color-gray-selected-surface-2;
+
+  &:focus {
+    outline: 1px solid $ui-color-primary-accent;
+  }
 }
 
 .inputErrMsg {
-  font-family: $ui-font-family-regular;
-  font-size: $ui-font-size-body-text;
-  position: absolute;
-  top: 60px;
-  color: red;
-}
-
-.hidden {
-  visibility: hidden;
+  text-align: start;
+  padding-top: 3px;
+  @include error-text;
+  color: $ui-color-red-badge-favorite;
 }
