@@ -12,13 +12,13 @@ import HomePage from "../pages/HomePage/HomePage";
 import WrongRoute from "../pages/WrongRoutePage/WrongRoute";
 import SingleProductPage from "../pages/SIngleProductPage/SingleProductPage";
 import SingleAccessoriesPage from "../pages/SingleAccessoriesPage/SingleAccessoriesPage";
-import Right from "../pages/Right/Right";
-import Contacts from "../pages/Contacts/Contacts";
-import User from "../pages/User/User";
+import RightsPage from "../pages/RightsPage/RightsPage";
+import ContactsPage from "../pages/ContactsPage/ContactsPage";
+import UserPage from "../pages/UserPage/UserPage";
 import SearchPage from "../pages/SearchPage/SearchPage";
-import UserUpdatePass from "../pages/User/UserUpdatePass/UserUpdatePass";
+import UserUpdatePass from "../pages/UserPage/UserUpdatePass/UserUpdatePass";
 import CheckoutPage from "../pages/CheckoutPage/CheckoutPage";
-import UserDataInformation from "../pages/User/UserDataInformation/UserDataInformation";
+import UserDataInformation from "../pages/UserPage/UserDataInformation/UserDataInformation";
 import AdminPage from "../pages/AdminPage/AdminPage";
 import Orders from "../pages/OrdersPage/Orders";
 const RootRouters = () => {
@@ -40,13 +40,13 @@ const RootRouters = () => {
       <Route path="/tablets/:modelId" element={<SingleProductPage />} />
       <Route path="/registration" element={<RegistrationPage />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/user" element={<User />} />
+      <Route path="/user" element={<UserPage />} />
       <Route path="/admin" element={<AdminPage />} />
       <Route path="/data-information" element={<UserDataInformation />} />
       <Route path="/update-password" element={<UserUpdatePass />} />
-      <Route path="/right" element={<Right />} />
+      <Route path="/right" element={<RightsPage />} />
       <Route path="/search" element={<SearchPage />} />
-      <Route path="/contacts" element={<Contacts />} />
+      <Route path="/contacts" element={<ContactsPage />} />
       <Route path="/orders" element={<Orders />} />
       <Route path="*" element={<WrongRoute />} />
     </Routes>

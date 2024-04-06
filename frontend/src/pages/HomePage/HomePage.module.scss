@@ -5,30 +5,32 @@
 .homePageSection {
   width: 100%;
   box-sizing: border-box;
-  margin-bottom: 32px;
+  margin-bottom: 56px;
 
   @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
-    margin-bottom: 26px;
+    margin-bottom: 64px;
   }
 
   @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
-    margin-bottom: 16px;
+    margin-bottom: 80px;
   }
 }
 
 /*----------------------- welcome -------------------------*/
 .homePageTitle {
   @include mobile-h1;
-  margin: 72px 0 24px;
+  padding: 24px 0;
+  margin-top: 48px;
 
   /*-----------------  Tablet ---------------------*/
   @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
-    margin: 80px 0 32px;
     @include h1;
+    padding: 32px 0;
   }
   /*----------------- Desktop ---------------------*/
   @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
-    margin: 120px 0 56px;
     @include h1;
+    padding: 56px 0;
+    margin-top: 64px;
   }
 }

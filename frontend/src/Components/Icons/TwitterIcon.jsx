@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "../../pages/Contacts/Contacts.module.scss";
+import styles from "../../pages/ContactsPage/ContactsPage.module.scss";
 
-const Twitter = () => {
+const TwitterIcon = () => {
   return (
     <svg
       className={styles.socialIconShape}
@@ -13,4 +13,4 @@ const Twitter = () => {
   );
 };
 
-export default Twitter;
+export default TwitterIcon;

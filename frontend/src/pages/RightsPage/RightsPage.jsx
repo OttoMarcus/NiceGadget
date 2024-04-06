@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "./Right.module.scss";
+import styles from "./RightsPage.module.scss";
 
-const Right = () => {
+const RightsPage = () => {
   return (
     <article className={styles.container}>
       <h1 className={styles.rightTitle}>Customer Rights Policy</h1>
@@ -78,4 +78,4 @@ const Right = () => {
   );
 };
 
-export default Right;
+export default RightsPage;

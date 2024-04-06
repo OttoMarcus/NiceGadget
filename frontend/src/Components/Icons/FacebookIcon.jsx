@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "../../pages/Contacts/Contacts.module.scss";
+import styles from "../../pages/ContactsPage/ContactsPage.module.scss";
 
-const Facebook = () => {
+const FacebookIcon = () => {
   return (
     <svg
       className={styles.socialIconShape}
@@ -13,4 +13,4 @@ const Facebook = () => {
   );
 };
 
-export default Facebook;
+export default FacebookIcon;

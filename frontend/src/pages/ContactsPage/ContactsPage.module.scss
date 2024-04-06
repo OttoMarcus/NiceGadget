@@ -34,12 +34,16 @@
 .contactTitle {
   @include flex-center;
   @include mobile-h1;
-  margin: 50px auto;
+  margin-bottom: 24px;
 
   @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
     @include flex-start;
     @include h1;
-    margin: 80px auto;
+    margin-bottom: 32px;
+  }
+
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    margin-bottom: 56px;
   }
 }
 

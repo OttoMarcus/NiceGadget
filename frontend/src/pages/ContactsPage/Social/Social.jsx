@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../Contacts.module.scss";
+import styles from "../ContactsPage.module.scss";
 
 import PropTypes from "prop-types";
 

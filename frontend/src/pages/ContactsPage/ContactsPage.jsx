@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Twitter from "../../Components/Icons/Twitter";
-import Facebook from "../../Components/Icons/Facebook";
-import Instagram from "../../Components/Icons/Instagram";
+import TwitterIcon from "../../Components/Icons/TwitterIcon";
+import FacebookIcon from "../../Components/Icons/FacebookIcon";
+import InstagramIcon from "../../Components/Icons/InstagramIcon";
 import MapContent from "../../Components/MapContent/MapContent";
 import Social from "./Social/Social";
 import CityTab from "./LocationAddress/CityTab";
 import AddressInfo from "./LocationAddress/AddressInfo";
 import axios from "axios";
-import styles from "./Contacts.module.scss";
+import styles from "./ContactsPage.module.scss";
 
-const Contacts = () => {
+const ContactsPage = () => {
   const [activeTab, setActiveTab] = useState();
   const [isHovered, setIsHovered] = useState(false);
   const [salePoints, setSalePoints] = useState([]);
@@ -39,11 +39,9 @@ const Contacts = () => {
   };
 
   return (
-    <div className={styles.contentWrapper}>
+    <div className={styles.container}>
       <div className={styles.backgroundImg}></div>
-      <h1 className={`${styles.contactTitle} ${styles.container}`}>
-        Contact Us
-      </h1>
+      <h1 className={styles.contactTitle}>Contact Us</h1>
       <ul className={`${styles.contactsWrapper} ${styles.container}`}>
         <li className={`${styles.contactItem} ${styles.hour}`}>
           <h3 className={styles.address}>Address</h3>
@@ -106,7 +104,7 @@ const Contacts = () => {
             rel="noreferrer"
           >
             <Social style={styles.twitterIcon}>
-              <Twitter />
+              <TwitterIcon />
             </Social>
           </a>
 
@@ -116,7 +114,7 @@ const Contacts = () => {
             rel="noreferrer"
           >
             <Social style={styles.facebookIcon}>
-              <Facebook />
+              <FacebookIcon />
             </Social>
           </a>
 
@@ -126,7 +124,7 @@ const Contacts = () => {
             rel="noreferrer"
           >
             <Social style={styles.instagramIcon}>
-              <Instagram />
+              <InstagramIcon />
             </Social>
           </a>
         </li>
@@ -135,4 +133,4 @@ const Contacts = () => {
   );
 };
 
-export default Contacts;
+export default ContactsPage;

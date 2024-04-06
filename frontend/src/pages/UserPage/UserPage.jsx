@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./User.module.scss";
+import styles from "./UserPage.module.scss";
 import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import UserInfoIcon from "../../Components/Icons/UserInfoIcon";
@@ -10,7 +10,7 @@ import { Form, Formik } from "formik";
 import OrderIcon from "../../Components/Icons/OrderIcon";
 import CounterIcon from "../../Components/Icons/CounterIcon";
 
-const User = () => {
+const UserPage = () => {
   const { user } = useSelector((state) => state.user);
   const order = useSelector((state) => state.OrderNew.orders);
   if (!Object.keys(user).length) {
@@ -167,4 +167,4 @@ const User = () => {
   }
 };
 
-export default User;
+export default UserPage;
