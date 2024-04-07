@@ -7,14 +7,6 @@
   align-self: flex-end;
 }
 
-// .backdrop{
-//   position: absolute;
-//   min-width: 100vw;
-//   min-height: 100vh;
-//   background-color: #323542;
-//   opacity: 0.5;
-// }
-
 .filterButton {
   // align-self: flex-end;
   // width: 200px;
@@ -64,6 +56,9 @@
 
 .filterGroupHeader {
   @include uppercase;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   // font-size: 16px;
   // font-style: normal;
@@ -89,10 +84,17 @@
 .priceFilter {
   // width: 100%;
   display: flex;
+  flex-direction: column;
   // justify-content: space-between;
-  gap: 5px;
-  padding: 8px 10px;
+  gap: 20px;
+  padding: 20px;
   // overflow: hidden;
+}
+
+.minMaxInputs {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .priceInput {
@@ -110,11 +112,25 @@
   }
 }
 
+// .sliderContainer{
+
+// }
+
 .checkboxGroup {
   display: flex;
   flex-direction: column;
-  padding: 5px 5px;
+  padding: 10px 5px;
+  gap: 10px;
   // margin-bottom: 10px;
+
+  & li {
+    width: 100%;
+
+    &:hover {
+      background: var(--Gray-Surface-2, #323542);
+      color: $ui-color-gray-white;
+    }
+  }
 }
 
 .checkboxLabel {
@@ -223,3 +239,86 @@
     background-color: $ui-color-gray-selected-surface-2;
   }
 }
+
+.sliderContainer {
+  padding: 10px 13px;
+  overflow: hidden;
+
+  .track {
+    background-color: $ui-color-primary-accent;
+  }
+
+  /* Стили для рельсов слайдера */
+  .rail {
+    background-color: $ui-color-gray-white;
+  }
+
+  /* Стили для ползунков слайдера */
+  .handle {
+    width: 20px;
+    height: 20px;
+    margin-top: -8px;
+    background-color: #007bff;
+    border: none;
+    box-shadow: none;
+  }
+
+  /* Стили для точек на слайдере */
+  .dot {
+    background-color: #007bff;
+  }
+
+  /* Стили для активных точек на слайдере */
+  .active-dot {
+    background-color: #007bff;
+  }
+}
+
+// .sliderContainer {
+//   .rc-slider {
+//      height: 10px;
+//      .rc-slider-track {
+//        background-color: $ui-color-primary-accent;
+//      }
+//      .rc-slider-handle {
+//        border-color: #007bff;
+//        height: 20px;
+//        width: 20px;
+//        margin-left: -10px;
+//        margin-top: -5px;
+//        background-color: #007bff;
+//      }
+//      .rc-slider-rail {
+//        background-color: #e9ecef;
+//      }
+//   }
+//  }
+
+// .sliderContainer .rcSlider {
+//   margin: 10px 0;
+// }
+
+// .sliderContainer .rcSliderHandle {
+//   width: 20px;
+//   height: 20px;
+//   margin-top: -8px;
+//   // background-color: #007bff;
+//   border: none;
+//   box-shadow: none;
+// }
+
+// .slider-container .rc-slider-handle:focus {
+//   box-shadow: none;
+// }
+
+// .sliderContainer .rcSliderTrack {
+//   background-color: $ui-color-primary-accent;
+// }
+
+// .slider-container .rc-slider-rail {
+//   background-color: $ui-color-gray-white;
+// }
+
+//  .rc-slider-mark-text {
+//   color: #999;
+// }

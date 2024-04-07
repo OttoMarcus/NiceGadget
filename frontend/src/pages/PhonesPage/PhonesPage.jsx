@@ -17,8 +17,8 @@ const Phones = () => {
   const [filters, setFilters] = useState({
     discount: false,
     available: false,
-    minPrice: "",
-    maxPrice: "",
+    minPrice: 0,
+    maxPrice: 0,
     modelName: [],
     capacity: [],
     color: [],
@@ -37,25 +37,30 @@ const Phones = () => {
   const location = useLocation();
   const typeModel = location.pathname.slice(1);
 
-  //Parse values FROM url query params TO states on page first load
+  //Parse values FROM url query params TO states 'filters', 'perPageValue', 'currentPage' and 'filterQueryString', on page first load
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = new URLSearchParams(window.location.search); //take search params from URL
 
-    const queryParams = Object.fromEntries(urlParams.entries());
+    const queryParams = Object.fromEntries(urlParams.entries()); // make an object from keys and values of search params
 
     const filterParams = Object.keys(filters).reduce((acc, key) => {
+      // compare current 'filter' state and object from search params
       if (queryParams[key]) {
-        const decodedValue = decodeURIComponent(queryParams[key]);
+        const decodedValue = decodeURIComponent(queryParams[key]); //decode value of every search params to compare them
         if (Array.isArray(filters[key])) {
+          //  in case 'filter' state key is array (any key/filter type with multiple selection)
           if (decodedValue.includes(",")) {
-            acc[key] = decodedValue.split(",");
+            // check if query params has more than 1 value
+            acc[key] = decodedValue.split(","); // write the splitted (converted to array) value into appropriate filter state
           } else {
-            acc[key] = [decodedValue];
+            acc[key] = [decodedValue]; // in case 'filter' state [key] is array but query param has only 1 value for it
           }
         } else if (decodedValue === "true" || decodedValue === "false") {
-          acc[key] = Boolean(decodedValue);
+          // case for writing down the value into the 'filter' state as a Boolean, not as a String
+          // console.log('boolean key is: ' ,key);
+          acc[key] = JSON.parse(decodedValue);
         } else {
-          acc[key] = decodedValue;
+          acc[key] = Number(decodedValue); // case for any other key which value is not an array or boolean
         }
       }
       return acc;
@@ -70,14 +75,22 @@ const Phones = () => {
     const startPage = urlParams.get("startPage");
     console.log("startPage: ", startPage);
 
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      ...filterParams,
-    }));
+    // setFilters(prevFilters => {
+    //   const updatedFilters = { ...prevFilters };
+    //   Object.keys(filterParams).forEach(key => {
+    //     if (filterParams[key] !== undefined) {
+    //       updatedFilters[key] = filterParams[key];
+    //     }
+    //   });
+    //   return updatedFilters;
+    // });
+
+    setFilters({ ...filters, ...filterParams });
     setFilterQueryString(new URLSearchParams(filterParams).toString());
     setSortValue(sort ? sort : "-brandNew");
     setCardsPerPageValue(perPage ? Number(perPage) : 8);
     setCurrentPage(startPage ? Number(startPage) : 1);
+    // eslint-disable-next-line
   }, []);
   // filters
 
@@ -156,16 +169,23 @@ const Phones = () => {
   };
 
   const handleFilter = async () => {
-    const nonEmptyFilters = Object.keys(filters).reduce((result, key) => {
-      if (
-        filters[key] !== "" &&
-        filters[key].length !== 0 &&
-        filters[key] !== false
-      ) {
-        result[key] = filters[key];
-      }
-      return result;
-    }, {});
+    //define a variable to get filters with values, not to send to server empty values
+    console.log(filters);
+
+    const nonEmptyFilters = Object.entries(filters).reduce(
+      (acc, [key, value]) => {
+        if (
+          value !== false &&
+          value !== "" &&
+          (Array.isArray(value) ? value.length !== 0 : true)
+        ) {
+          acc[key] = value;
+        }
+        return acc;
+      },
+      {}
+    );
+
     console.log("nonEmptyFilters after reduce: ", nonEmptyFilters);
 
     let queryString;

@@ -1,8 +1,8 @@
 const Filter = require("../models/MobileFilter");
 const queryCreator = require("../commonHelpers/queryCreator");
 const MobileFilter = require("../models/MobileFilter");
-const MobileProduct = require("../models/MobileProduct"); // Подставьте вашу модель продукта
-const MobileModel = require("../models/MobileModel"); // Подставьте вашу модель модели телефона
+const MobileProduct = require("../models/MobileProduct");
+const MobileModel = require("../models/MobileModel"); 
 const _ = require("lodash");
 
 exports.addMobileFilter = (req, res, next) => {
@@ -107,7 +107,8 @@ exports.getMobileFilters = async (req, res, next) => {
       }
     ]);
 
-    const modelNames = await MobileModel.distinct("name");
+    const modelNames = await MobileProduct.distinct("refModel.modelName");
+    console.log('modelNames in filters: ' ,modelNames);
     const colors = await MobileProduct.distinct("color");
     const capacities = await MobileProduct.distinct("capacity");
     const RAMs = await MobileProduct.distinct("ram");
@@ -115,10 +116,12 @@ exports.getMobileFilters = async (req, res, next) => {
 
     const filters = {
       price: { minPrice: minMaxPrice[0].minPrice, maxPrice: minMaxPrice[0].maxPrice },
+      // minPrice: minMaxPrice[0].minPrice,
+      // maxPrice: minMaxPrice[0].maxPrice,
       modelName: modelNames,
       color: colors,
       capacity: capacities,
-      RAM: RAMs,
+      ram: RAMs,
       screen: screens
     };
 

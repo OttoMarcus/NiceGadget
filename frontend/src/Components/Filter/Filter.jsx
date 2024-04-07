@@ -13,18 +13,11 @@ import CloseFilterIcon from "../Icons/CloseFilterIcon";
 
 /*
 TO DO:
-1. Set default min-max price
-2. Parse values from URL to filter states - done
-3. Add filter groups hide and reveal on group header click - done
-4. Add accordeon logic
-5. Input range?
-6. Clear button - done
-7. Display number of items found
-8. Display numer of items per each option?
+1. Set default min-max price?
 9. Fix position of buttons, add scroll for filters.
 10. Add MEMO
-11. Close filters on backdrop click
-12. Add URL change on clear filters (remove filters)
+11. Fix filter close on Filter button click
+
 */
 const OutsideClickHandler = ({ children, onOutsideClick }) => {
   const wrapperRef = useRef(null);

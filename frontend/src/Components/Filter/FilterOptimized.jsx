@@ -1,41 +1,69 @@
 import React, { useState, useEffect, useRef } from "react";
-// import { Accordion, AccordionItem } from "@szhsin/react-accordion";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
+// import debounce from 'lodash/debounce';
+
 import FilterButtonIcon from "../Icons/FilterButtonIcon";
+import CloseFilterIcon from "../Icons/CloseFilterIcon";
 import ClearFiltersIcon from "../Icons/ClearFiltersIcon";
 import DownArrowIcon from "../Icons/DownArrowIcon";
 import UpArrowIcon from "../Icons/UpArrowIcon";
-import styles from "./Filter.module.scss";
+import styles from "./FilterOptimized.module.scss";
 import PropTypes from "prop-types";
-import CloseFilterIcon from "../Icons/CloseFilterIcon";
 
-const OutsideClickHandler = ({ children, onOutsideClick }) => {
-  const wrapperRef = useRef(null);
+/*
+TO DO:
+9. Fix position of buttons, add scroll for filters.
+10. Add MEMO
+12. Preloader?
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-        onOutsideClick();
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
+STYLE:
+1. Забрати з label виділення при ховері (накладення виділення)
+2. Посунути кнопки Застовувати та Очистити фільтр.
+3. Додати вертикальну мітку біля заголовка при наведенні та в актив стані.
+4. Збільшити висоту інпутів для ціни.
+5. Прибрати стрілочки +- в іпнутах.
+6. Вирівняти цифри в інпутах по горизонталі.
+7. Додати "$" та "від - до".
+8. Виділити іншим кольором іконку та/або текст для очистки фільтра
+9. ЗАКРІПИТИ КНОПКИ ФІЛЬТРА ВНИЗУ БЛОКА
+10. Мобільні стилі!!!
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [onOutsideClick]);
+НЕ ФІЛЬТРИ:
+1. Іконки "стрілок" на селекти
+2. Іконки "ока" на логін-реєстрацію
+*/
 
-  return <div ref={wrapperRef}>{children}</div>;
-};
+// const OutsideClickHandler = ({ children, onOutsideClick }) => {
+//   const wrapperRef = useRef(null);
 
-OutsideClickHandler.propTypes = {
-  children: PropTypes.any,
-  onOutsideClick: PropTypes.func,
-};
+//   useEffect(() => {
+//     const handleClickOutside = (event) => {
+//       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+//         onOutsideClick();
+//       }
+//     };
+//     document.addEventListener("mousedown", handleClickOutside);
+
+//     return () => {
+//       document.removeEventListener("mousedown", handleClickOutside);
+//     };
+//   }, [onOutsideClick]);
+
+//   return <div ref={wrapperRef}>{children}</div>;
+// };
+
+// OutsideClickHandler.propTypes = {
+//   children: PropTypes.any,
+//   onOutsideClick: PropTypes.func,
+// };
 
 const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [activeSection, setActiveSection] = useState(null);
   const [serverFilters, setServerFilters] = useState(null);
+
+  const wrapperRef = useRef(null);
 
   useEffect(() => {
     // Fetch data from server
@@ -48,30 +76,60 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         setServerFilters(data);
       } catch (error) {
         console.error("There was a problem with your fetch operation:", error);
       }
     }
     fetchData();
+    // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        setIsFilterVisible(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isFilterVisible]);
+
   const toggleFilterVisibility = () => {
-    setIsFilterVisible(!isFilterVisible);
+    // console.log('toggleFilterVisibility action!');
+    setIsFilterVisible((prevState) => !prevState);
+    // setIsFilterVisible(!isFilterVisible);
   };
 
   const toggleSection = (section) => {
     setActiveSection(activeSection === section ? null : section);
   };
 
-  const handleClose = () => {
-    setIsFilterVisible(false);
+  const handleGroupCheckboxChange = (e) => {
+    const { name, checked, value } = e.target;
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: checked
+        ? [...prevFilters[name], value]
+        : prevFilters[name].filter((item) => item !== value),
+    }));
   };
 
   const handleInputChange = (e) => {
+    // const debouncedHandleInputChange = debounce((name, value) => {
+    //   setFilters(prevFilters => ({ ...prevFilters, [name]: parseInt(value) }));
+    // }, 200);
     const { name, value } = e.target;
-    setFilters({ ...filters, [name]: value });
+    // debouncedHandleInputChange(name, value)
+    setFilters({ ...filters, [name]: parseInt(value) });
+  };
+
+  const handleSliderChange = (value) => {
+    setFilters({ ...filters, minPrice: value[0], maxPrice: value[1] });
   };
 
   const handleCheckboxChange = (e) => {
@@ -79,135 +137,179 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
     setFilters({ ...filters, [name]: checked });
   };
 
-  //   const handleGroupCheckboxChange = (e) => {
-  //     console.log(filters[e.target.name].includes(e.target.value));
-  //     const { name, checked, value } = e.target;
-
-  //     //Defining the array of values of filter group
-  //     let groupValues = filters[name];
-  //     console.log("array of filter group val before changed: ", groupValues);
-
-  //     if (checked) {
-  //       if (!groupValues.includes(value)) {
-  //         groupValues.push(value);
-  //       }
-  //       console.log("groupValues after push: ", groupValues);
-  //     } else {
-  //       groupValues = groupValues.filter((item) => item !== value);
-  //       console.log("the array of values of filter group is: ", groupValues);
-  //     }
-
-  //     const newFilters = { ...filters, [name]: groupValues };
-
-  //     console.log("value of state filters after group change: ", newFilters);
-  //     setFilters(newFilters);
-  //   };
-
   const applyFilters = async () => {
     await handleFilter();
     setIsFilterVisible(false);
   };
 
   return (
-    <div className={styles.filterWrapper}>
-      <h2 className={styles.filterButton} onClick={toggleFilterVisibility}>
+    <div ref={wrapperRef} className={styles.filterWrapper}>
+      <h2
+        className={styles.filterButton}
+        onClick={() => {
+          if (filters.minPrice === 0 && filters.maxPrice === 0) {
+            setFilters({
+              ...filters,
+              minPrice: serverFilters.price.minPrice,
+              maxPrice: serverFilters.price.maxPrice,
+            });
+          }
+          toggleFilterVisibility();
+        }}
+      >
         {isFilterVisible ? <CloseFilterIcon /> : <FilterButtonIcon />} Filters
       </h2>
       {isFilterVisible && (
-        <OutsideClickHandler onOutsideClick={handleClose}>
-          <div
-            className={`${styles.filterContainer} ${isFilterVisible ? styles.visible : styles.hidden}`}
-          >
-            {serverFilters &&
-              Object.keys(serverFilters).map((key) => (
-                <div key={key} className={styles.filterGroupContainer}>
-                  <h3
-                    className={styles.filterGroupHeader}
-                    onClick={() => toggleSection(key)}
-                  >
-                    {key}
-                    {activeSection === key ? (
-                      <UpArrowIcon />
+        <div
+          className={`${styles.filterContainer} `}
+          // ${isFilterVisible ? styles.visible : styles.hidden}
+        >
+          <div className={styles.checkboxGroup}>
+            <label className={styles.checkboxLabel} htmlFor="hotPrices">
+              <input
+                id="hotPrices"
+                type="checkbox"
+                name="discount"
+                checked={filters.discount}
+                onChange={handleCheckboxChange}
+              />
+              <span className={styles.checkmark}></span>
+              <span className={styles.labelText}>Hot prices only</span>
+            </label>
+            <label className={styles.checkboxLabel} htmlFor="inStock">
+              <input
+                id="inStock"
+                type="checkbox"
+                name="available"
+                checked={filters.available}
+                onChange={handleCheckboxChange}
+              />
+              <span className={styles.checkmark}></span>
+              <span className={styles.labelText}>In stock only</span>
+            </label>
+          </div>
+          {serverFilters &&
+            Object.keys(serverFilters).map((key) => (
+              <div key={key} className={styles.filterGroupContainer}>
+                <h3
+                  className={styles.filterGroupHeader}
+                  onClick={() => toggleSection(key)}
+                >
+                  {key}
+                  {activeSection === key ? <UpArrowIcon /> : <DownArrowIcon />}
+                </h3>
+                {activeSection === key && (
+                  <div className={styles.filterContent}>
+                    {Array.isArray(serverFilters[key]) ? (
+                      <ul className={styles.checkboxGroup}>
+                        {serverFilters[key].map((item) => (
+                          <li key={item}>
+                            <label className={styles.checkboxLabel}>
+                              <input
+                                type="checkbox"
+                                name={key}
+                                value={item}
+                                checked={filters[key].includes(item)}
+                                onChange={handleGroupCheckboxChange}
+                              />
+                              <span className={styles.checkmark}></span>
+                              <span className={styles.labelText}>
+                                {key === "capacity" || key === "ram"
+                                  ? `${item} GB`
+                                  : `${item}`}
+                              </span>
+                            </label>
+                          </li>
+                        ))}
+                      </ul>
                     ) : (
-                      <DownArrowIcon />
-                    )}
-                  </h3>
-                  {activeSection === key && (
-                    <div className={styles.filterContent}>
-                      {Array.isArray(serverFilters[key]) ? (
-                        <ul>
-                          {serverFilters[key].map((item) => (
-                            <li key={item}>
-                              {console.log(item)}
-                              <label className={styles.checkboxLabel}>
-                                <input
-                                  type="checkbox"
-                                  name={key}
-                                  value={item}
-                                  // checked={filters[key].includes(item)}
-                                  onChange={handleCheckboxChange}
-                                />
-                                <span className={styles.checkmark}></span>
-                                <span className={styles.labelText}>
-                                  {key === "capacity" || key === "RAM"
-                                    ? `${item} GB`
-                                    : `${item}`}
-                                </span>
-                              </label>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <div className={styles.priceFilter}>
+                      <div className={styles.priceFilter}>
+                        <div className={styles.minMaxInputs}>
+                          {/* { console.log('key in price block: ' ,key)} */}
                           <input
                             type="number"
                             name="minPrice"
-                            value={
-                              serverFilters[key].minPrice || filters?.minPrice
-                            }
+                            min={serverFilters[key].minPrice}
+                            max={serverFilters[key].maxPrice}
+                            // value={filters?.minPrice || serverFilters[key].minPrice}
+                            value={filters?.minPrice}
                             onChange={handleInputChange}
+                            // onBlur={handleInputChange}
                             className={styles.priceInput}
                           />
                           <span>-</span>
                           <input
                             type="number"
                             name="maxPrice"
-                            value={
-                              serverFilters[key].maxPrice || filters?.maxPrice
-                            }
-                            onChange={handleInputChange}
-                            className={styles.priceInput}
-                          />
-                          <input
-                            type="range"
                             min={serverFilters[key].minPrice}
                             max={serverFilters[key].maxPrice}
-                            value={filters[key]?.maxPrice}
+                            // value={filters?.maxPrice || serverFilters[key].maxPrice}
+                            value={filters?.maxPrice}
                             onChange={handleInputChange}
+                            // onBlur={handleInputChange}
+                            className={styles.priceInput}
                           />
                         </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              ))}
-            <div className={styles.filterButtonsContainer}>
-              <button
-                onClick={applyFilters}
-                className={styles.filterActionButton}
-              >
-                Apply
-              </button>
-              <button
-                onClick={clearFilters}
-                className={styles.filterActionButton}
-              >
-                <ClearFiltersIcon /> Clear
-              </button>
-            </div>
+                        <div className={styles.sliderContainer}>
+                          <Slider
+                            range
+                            min={serverFilters[key].minPrice}
+                            max={serverFilters[key].maxPrice}
+                            step={10}
+                            allowCross={false}
+                            pushable={true}
+                            // draggableTrack={true}
+                            minDistance={10}
+                            value={[filters.minPrice, filters.maxPrice]}
+                            onChange={handleSliderChange}
+                            styles={{
+                              track: {
+                                backgroundColor: "#905bff",
+                                height: 5,
+                              },
+                              rail: {
+                                backgroundColor: "#f1f2f9",
+                                borderRadius: 10,
+                                height: 5,
+                              },
+                              handle: {
+                                // borderColor: 'red',
+                                opacity: 1,
+                                height: 15,
+                                width: 15,
+                                marginLeft: 0,
+                                marginTop: -5,
+                                backgroundColor: "#3b3e4a",
+                              },
+                            }}
+                            // dotStyle={{ background: styles.dot }} // Передача стиля точек
+                            // activeDotStyle={{ background: styles.activeDot }} // Передача стиля активных точек
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
+          <div className={styles.filterButtonsContainer}>
+            <button
+              onClick={applyFilters}
+              className={styles.filterActionButton}
+            >
+              Apply
+            </button>
+            <button
+              onClick={clearFilters}
+              className={styles.filterActionButton}
+            >
+              <ClearFiltersIcon /> Clear
+            </button>
           </div>
-        </OutsideClickHandler>
+        </div>
+        // </OutsideClickHandler>
       )}
+      {/* </OutsideClickHandler> */}
     </div>
   );
 };
@@ -219,8 +321,8 @@ Filter.propTypes = {
   filters: PropTypes.shape({
     discount: PropTypes.bool.isRequired,
     available: PropTypes.bool.isRequired,
-    minPrice: PropTypes.string.isRequired,
-    maxPrice: PropTypes.string.isRequired,
+    minPrice: PropTypes.any.isRequired,
+    maxPrice: PropTypes.any.isRequired,
     modelName: PropTypes.arrayOf(PropTypes.string).isRequired,
     capacity: PropTypes.arrayOf(PropTypes.string).isRequired,
     color: PropTypes.arrayOf(PropTypes.string).isRequired,
