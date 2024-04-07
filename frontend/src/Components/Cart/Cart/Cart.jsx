@@ -30,7 +30,7 @@ const Cart = () => {
   return (
     <div className={styles.cart}>
       {cartItems.length === 0 && (
-        <p className={styles.emptyMessage}>Your cart is empty</p>
+        <p className={styles.emptyMessage}>Your Cart is empty</p>
       )}
 
       {cartItems.length > 0 && (

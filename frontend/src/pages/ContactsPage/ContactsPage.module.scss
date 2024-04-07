@@ -51,7 +51,6 @@
   @include flex-center;
   flex-direction: column;
   gap: 36px;
-  padding: 16px;
   margin: 0 auto;
   height: auto;
 
@@ -67,13 +66,17 @@
   height: 100%;
   flex-direction: column;
   margin: 0 auto;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    justify-content: flex-start;
+  }
 }
 
 .hour {
   width: 100%;
   min-width: 270px;
   max-width: 30%;
-  padding: 24px;
+  padding: 0 24px;
   backdrop-filter: blur(7px);
 }
 
