@@ -61,14 +61,9 @@ const Phones = () => {
       return acc;
     }, {});
 
-    console.log(filterParams);
-
     const sort = urlParams.get("sort");
-    console.log("sort: ", sort);
     const perPage = urlParams.get("perPage");
-    console.log("perPage: ", perPage);
     const startPage = urlParams.get("startPage");
-    console.log("startPage: ", startPage);
 
     setFilters((prevFilters) => ({
       ...prevFilters,

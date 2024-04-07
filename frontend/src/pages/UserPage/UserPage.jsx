@@ -5,14 +5,15 @@ import { Link, NavLink } from "react-router-dom";
 import UserInfoIcon from "../../Components/Icons/UserInfoIcon";
 import UpdatePassIcon from "../../Components/Icons/UpdatePassIcon";
 import UserProfileIcon from "../../Components/Icons/UserProfileIcon";
-import Input from "../../Components/Profile/CustomInput/Input";
 import { Form, Formik } from "formik";
 import OrderIcon from "../../Components/Icons/OrderIcon";
 import CounterIcon from "../../Components/Icons/CounterIcon";
+import CustomInputCheckout from "../../Components/Forms/CustomInputCheckout/CustomInputCheckout";
 
 const UserPage = () => {
   const { user } = useSelector((state) => state.user);
   const order = useSelector((state) => state.OrderNew.orders);
+
   if (!Object.keys(user).length) {
     return (
       <>
@@ -21,7 +22,7 @@ const UserPage = () => {
             <h3 className={styles.unauthorizedWrapperTitle}>
               You are not authorized
             </h3>
-            <span className={styles.unauthorizedWrapperSubtitle}>
+            <div className={styles.unauthorizedWrapperSubtitle}>
               Please,&nbsp;
               <NavLink to="/login" className={styles.unauthorizedLogin}>
                 Login
@@ -31,7 +32,7 @@ const UserPage = () => {
                 Signup
               </Link>{" "}
               to gain access
-            </span>
+            </div>
           </section>
         </div>
       </>
@@ -41,7 +42,7 @@ const UserPage = () => {
       <>
         <section className={styles.container}>
           <div className={styles.userContainer}>
-            <div className={styles.sectionAvatar}>
+            <section className={styles.sectionAvatar}>
               <div className={styles.avatarIcon}>
                 <UserProfileIcon />
               </div>
@@ -53,23 +54,21 @@ const UserPage = () => {
                   {user?.firstName}&nbsp;!
                 </p>
               </div>
-            </div>
+            </section>
 
             <section className={styles.categoryUsers}>
               <div className={styles.login__registrationSection}>
                 <Link
-                  style={{ color: "#FFFFFF" }}
-                  to="/data-information"
+                  to="/update-information"
                   className={styles.linkCategoryUsers}
                 >
-                  Editing profile information
+                  Edit profile information
                 </Link>
                 <UserInfoIcon className={styles.iconForListUser} />
               </div>
 
               <div className={styles.login__registrationSection}>
                 <Link
-                  style={{ color: "#FFFFFF" }}
                   to="/update-password"
                   className={styles.linkCategoryUsers}
                 >
@@ -82,7 +81,6 @@ const UserPage = () => {
                 className={`${styles.login__registrationSection}`}
                 to="/orders"
               >
-                {/*{className={styles.mainLinks} }*/}
                 <div>
                   <h2 className={styles.linkCategoryUsers}>Orders</h2>
                 </div>
@@ -98,10 +96,11 @@ const UserPage = () => {
                 </div>
               </Link>
             </section>
+
             <section className={styles.userInfoContainer}>
               <div className={styles.userInformation}>
                 <div className={styles.sectionTitle}>
-                  <h2 className={styles.dataTitle}>Your profile information</h2>
+                  <h3 className={styles.dataTitle}>Your profile information</h3>
                 </div>
                 <Formik
                   initialValues={{
@@ -115,42 +114,42 @@ const UserPage = () => {
                   onSubmit={(e) => e.preventDefault()}
                 >
                   <Form className={styles.infoDataForm}>
-                    <Input
+                    <CustomInputCheckout
                       disabled
                       className={styles.dataInput}
                       name="firstName"
                       placeholder="First name"
                       label="Your First name:"
                     />
-                    <Input
+                    <CustomInputCheckout
                       disabled
                       className={styles.dataInput}
                       name="lastName"
                       placeholder="Last name"
                       label="Your Last name:"
                     />
-                    <Input
+                    <CustomInputCheckout
                       disabled
                       className={styles.dataInput}
                       name="login"
                       placeholder="Login"
                       label="Your Login:"
                     />
-                    <Input
+                    <CustomInputCheckout
                       disabled
                       className={styles.dataInput}
                       name="email"
                       placeholder="example@gmail.com"
                       label="Your Email:"
                     />
-                    <Input
+                    <CustomInputCheckout
                       disabled
                       className={styles.dataInput}
                       name="phoneNumber"
                       placeholder="+380"
                       label="Your phone number:"
                     />
-                    <Input
+                    <CustomInputCheckout
                       disabled
                       className={styles.dataInput}
                       name="birthday"

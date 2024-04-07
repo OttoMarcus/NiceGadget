@@ -60,7 +60,7 @@ const InputWithStrength = ({
     if (type === "Strong") return "#8BC926";
     if (type === "Medium") return "#FEBD01";
     if (type === "Weak") return "#FF0054";
-    return "#FFFFFF";
+    return "#75767f";
   };
 
   return (
@@ -73,11 +73,11 @@ const InputWithStrength = ({
             type={passShown ? "text" : "password"}
             name={name}
             {...props}
-            value={passwordValue} // Додайте value
+            value={passwordValue}
             className={styles.registration__sectionInput}
             onChange={(e) => {
               const value = e.target.value;
-              setPasswordValue(value); // Оновіть стан значення поля пароля
+              setPasswordValue(value);
               handleChange(e);
               handlePassInput(value);
             }}
@@ -92,6 +92,7 @@ const InputWithStrength = ({
               <ShowPassword />
             </div>
           )}
+          <ErrorMessage className={styles.error} name={name} component={"p"} />
         </label>
       </div>
       <div className={styles.passStrength}>
@@ -112,7 +113,6 @@ const InputWithStrength = ({
           </p>
         ) : null}
       </div>
-      <ErrorMessage className={styles.error} name={name} component={"p"} />
     </>
   );
 };

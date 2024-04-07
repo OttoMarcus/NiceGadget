@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styles from "../UserDataInformation/UserDataInformation.module.scss";
 import { Form, Formik } from "formik";
-import validationSchema from "../../../Components/Forms/RegistrationForm/validationSchema";
+import validationSchema from "./validationSchema";
 import ModalStatusInfo from "../../../Components/Profile/ModalStatusInfo/ModalStatusInfo";
 import CheckMarkIcon from "../../../Components/Icons/CheckMarkIcon";
-import Input from "../../../Components/Profile/CustomInput/Input";
 import ButtonProfile from "../../../Components/Profile/ButtonProfile/ButtonProfile";
 import { sendAuthorizedRequest } from "../../../helpers/sendRequest";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +12,7 @@ import LeftArrowIcon from "../../../Components/Icons/LeftArrowIcon";
 import { useNavigate } from "react-router-dom";
 import { updateUser } from "../../../store/user/userSlice";
 import CrossErrorIcon from "../../../Components/Icons/CrossErrorIcon";
+import CustomInput from "../../../Components/Forms/CustomInput/CustomInput";
 
 const UserDataInformation = () => {
   const { user } = useSelector((state) => state.user);
@@ -36,10 +36,10 @@ const UserDataInformation = () => {
 
   const handleSubmit = async (values) => {
     try {
-      const [firstName, lastName] = values.username.split(" ");
+      // const [firstName, lastName] = values.username.split(" ");
       const requestBody = {
-        firstName: firstName,
-        lastName: lastName,
+        firstName: values.firstName,
+        lastName: values.lastName,
         login: values.login,
         email: values.email,
         telephone: values.phoneNumber,
@@ -87,18 +87,29 @@ const UserDataInformation = () => {
       </div>
       <div className={styles.sectionDataUser}>
         <div className={styles.sectionTitle}>
-          <h2 className={styles.dataTitle}>Editing profile information</h2>
+          <h2 className={styles.dataTitle}>Edit Profile Information</h2>
         </div>
         <Formik
           initialValues={{
             login: user?.login || "",
-            username: `${user?.firstName} ${user?.lastName}` || "",
+            firstName: user?.firstName || "",
+            lastName: user?.lastName || "",
             email: user?.email || "",
             phoneNumber: user?.telephone || "",
             birthday: user?.birthDate || "",
           }}
           validationSchema={validationSchema}
-          onSubmit={handleSubmit}
+          onSubmit={(values, { setSubmitting }) => {
+            handleSubmit(values)
+              .then(() => {
+                setSubmitting(false);
+                setResultMessage(true);
+              })
+              .catch(() => {
+                setSubmitting(false);
+                setResultMessage(false);
+              });
+          }}
           enableReinitialize={true}
         >
           {({ values, errors, touched, handleChange }) => (
@@ -126,45 +137,70 @@ const UserDataInformation = () => {
               ) : (
                 <span></span>
               )}
-              <Input
+              <CustomInput
                 className={styles.dataInput}
-                name="username"
-                placeholder="First and last name"
-                label="Your full name"
-                error={errors.username && touched.username}
-                onChange={handleChange} // Додано onChange
+                name="firstName"
+                placeholder="First name"
+                label="Your first name"
+                error={
+                  errors.firstName && touched.firstName
+                    ? errors.firstName
+                    : undefined
+                }
+                onChange={handleChange}
               />
-              <Input
+              <CustomInput
+                className={styles.dataInput}
+                name="lastName"
+                placeholder="Last name"
+                label="Your last name"
+                error={
+                  errors.lastName && touched.lastName
+                    ? errors.lastName
+                    : undefined
+                }
+                onChange={handleChange}
+              />
+              <CustomInput
                 className={styles.dataInput}
                 name="login"
                 placeholder="Login"
-                label="Your login"
-                error={errors.login && touched.login}
-                onChange={handleChange} // Додано onChange
+                label="Your Login"
+                error={errors.login && touched.login ? errors.login : undefined}
+                onChange={handleChange}
               />
-              <Input
+              <CustomInput
                 className={styles.dataInput}
                 name="email"
                 placeholder="example@gmail.com"
                 label="Your Email"
-                error={errors.email && touched.email}
-                onChange={handleChange} // Додано onChange
+                error={errors.email && touched.email ? errors.email : undefined}
+                onChange={handleChange}
               />
-              <Input
+              <CustomInput
                 className={styles.dataInput}
+                type="tel"
                 name="phoneNumber"
                 placeholder="+380"
                 label="Your phone number"
-                error={errors.phone && touched.phone}
-                onChange={handleChange} // Додано onChange
+                error={
+                  errors.phoneNumber && touched.phoneNumber
+                    ? errors.phoneNumber
+                    : undefined
+                }
+                onChange={handleChange}
               />
-              <Input
-                disabled
+              <CustomInput
                 className={styles.dataInput}
+                type="date"
                 name="birthday"
                 label="Your birthday"
-                error={errors.birthday && touched.birthday}
-                onChange={handleChange} // Додано onChange
+                error={
+                  errors.birthday && touched.birthday
+                    ? errors.birthday
+                    : undefined
+                }
+                onChange={handleChange}
               />
               <div className={styles.updateDataBtnBlock}>
                 <ButtonProfile

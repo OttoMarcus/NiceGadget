@@ -45,8 +45,8 @@ const validationSchema = object({
       /^[a-zA-Z0-9]+$/,
       "Allowed characters for password are a-z, A-Z, 0-9."
     )
-    .min(7, "Password must be between 7 and 30 characters")
-    .max(30)
+    .min(7, "Password must be between 7 and 20 characters")
+    .max(20)
     .required("Password is required"),
   birthDate: date()
     .min("1924-01-01", "Birth Date must be later than 1924-01-01")
