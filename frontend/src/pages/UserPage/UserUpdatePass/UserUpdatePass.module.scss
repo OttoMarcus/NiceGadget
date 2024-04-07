@@ -3,9 +3,9 @@
 @import "../../../styles/global/base";
 @import "../../../styles/global/reset";
 
-//.container {
-//  width: 100%;
-//}
+.container {
+  width: 100%;
+}
 
 .changePassContainer {
   display: flex;
@@ -14,76 +14,61 @@
 }
 
 .updatePassForm {
-  width: 280px;
-
-  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
-    width: 380px;
-  }
-
-  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
-    width: 450px;
-  }
-
-  .dataInput {
-    outline: none;
-    border: none;
-    width: 100%;
-    height: 40px;
-    margin-top: 5px;
-    padding: 15px;
-    background: #323542;
-    color: white;
-    @include body-text;
-
-    &::placeholder {
-      color: #75767f;
-    }
-
-    &:focus {
-      border: 1px solid #905bff;
-    }
-  }
+  width: 400px;
 }
 
 .sectionTitle {
   @include flex-center;
   flex-direction: column;
+}
 
-  .dataTitle {
-    @include small-text;
-    font-size: 16px;
-    color: $ui-color-primary-accent;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 25px;
+.dataTitle {
+  @include h3;
+  color: $ui-color-primary-accent;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 25px;
+}
 
-    @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
-      font-size: 16px;
-    }
+.dataInput {
+  outline: none;
+  width: 100%;
+  margin-top: 5px;
+  margin-right: 50px;
+  border-radius: 25px;
+  border: 1px solid $ui-color-gray-elements;
+  padding: 15px;
+  background: #d1d1dc;
+  @include body-text;
 
-    @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
-      font-size: 18px;
-    }
+  &::placeholder {
+    color: $ui-color-gray-elements;
+  }
+
+  &:focus {
+    background-color: $ui-color-gray-white;
   }
 }
 
 .diffPassError {
   margin: 6px 0 0 20px;
-  color: #eb5757;
+  color: #e36709ff;
 }
 
 .updateDataBtnBlock {
   @include flex-kit(center);
   padding-top: 30px;
+  @media screen and (max-width: $ui-breakpoint-mobile-min) {
+    justify-content: center;
+  }
 }
 
 .updateDataBtn {
   @include flex-center;
   @include button;
-  font-size: 14px;
-  width: 100%;
   height: 40px;
-  padding: 0 10px;
+  width: 200px;
+  border-radius: 10px;
   background-color: $ui-color-primary-accent;
   color: $ui-color-gray-white;
   border: none;

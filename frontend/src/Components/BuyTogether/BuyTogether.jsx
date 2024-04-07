@@ -15,22 +15,20 @@ const BuyTogether = () => {
     const fetchRandomItems = async () => {
       try {
         const [accessoriesResponse, phonesResponse] = await Promise.all([
-          axios.get(`/api/accessories?perPage=7`),
-          axios.get(`/api/phones?discount`),
+          axios.get(`/api/accessories?perPage=5`),
+          axios.get(`/api/brand-news?perPage=4`),
         ]);
-
-        // /api/phones?brandNew=true
 
         const accessoriesData = accessoriesResponse.data.data;
         const phonesData = phonesResponse.data.data;
 
         // Combine accessories and phones into one array
         const allItems = mixAccessoriesAndPhones(accessoriesData, phonesData);
-        console.log(allItems);
+
         // Shuffle the combined array
         const shuffledItems = shuffle(allItems);
         // Select the first 4 accessories and first 4 phones
-        const selectedItems = shuffledItems.slice(0, 13);
+        const selectedItems = shuffledItems.slice(0, 8);
 
         setRandomItems(selectedItems);
       } catch (error) {
@@ -81,8 +79,6 @@ const BuyTogether = () => {
     window.location.reload();
   };
 
-  console.log(randomItems);
-
   return (
     <>
       <div className={styles.header}>
@@ -100,7 +96,7 @@ const BuyTogether = () => {
         <div className={styles.cardsContainer} ref={containerRef}>
           {randomItems.map((item) => (
             <div key={item.id} onClick={handlePhoneClick}>
-              {item && item.category === "accessories" ? (
+              {item.category === "accessories" ? (
                 <CardAccessories {...item} />
               ) : (
                 <Card {...item} />

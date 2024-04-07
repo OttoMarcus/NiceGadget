@@ -73,11 +73,11 @@ const InputWithStrength = ({
             type={passShown ? "text" : "password"}
             name={name}
             {...props}
-            value={passwordValue}
+            value={passwordValue} // Додайте value
             className={styles.registration__sectionInput}
             onChange={(e) => {
               const value = e.target.value;
-              setPasswordValue(value);
+              setPasswordValue(value); // Оновіть стан значення поля пароля
               handleChange(e);
               handlePassInput(value);
             }}

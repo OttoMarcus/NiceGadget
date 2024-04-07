@@ -1,14 +1,13 @@
 @import "../../../styles/abstracts/mixins";
 
 .error {
-  color: #eb5757;
+  color: #e36709ff;
   margin-top: 6px;
   margin-left: 20px;
 }
 
 .registration__sectionField {
-  font-size: 14px;
+  margin-left: 15px;
   padding-top: 20px;
-  color: #75767f;
   font-family: $ui-font-family-regular;
 }

@@ -9,16 +9,15 @@
 }
 
 .inputLabel {
-  padding-top: 20px;
   margin-bottom: 3px;
   @include body-text;
-  color: #75767f;
+  color: $ui-color-gray-white;
 }
 
 .inputField {
-  height: 40px;
+  height: 30px;
   width: 100%;
-  padding: 3px 14px;
+  padding: 3px 10px;
   @include body-text;
   color: $ui-color-gray-white;
   background-color: $ui-color-gray-selected-surface-2;
@@ -27,15 +26,10 @@
   &:focus {
     outline: 1px solid $ui-color-primary-accent;
   }
-
-  &:disabled {
-    color: #c0c0c0;
-  }
 }
 
 .inputError {
-  padding-top: 7px;
-  padding-left: 14px;
+  padding-top: 3px;
   @include error-text;
   color: $ui-color-red-badge-favorite;
 }

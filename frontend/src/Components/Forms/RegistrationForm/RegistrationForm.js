@@ -227,7 +227,6 @@ const RegistrationForm = () => {
               type="password"
               name="password"
               label="Password"
-              maxlength="20"
               placeholder="Password"
             />
             <Input type="date" name="birthDate" label="Birth Date" />

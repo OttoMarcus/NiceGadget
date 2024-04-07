@@ -37,25 +37,25 @@ const validationSchema = object({
       /^[a-zA-Z0-9]+$/,
       "Allowed characters for password are a-z, A-Z, 0-9."
     )
-    .min(7, "Password must be between 7 and 20 characters")
-    .max(20)
+    .min(7, "Password must be between 7 and 30 characters")
+    .max(30)
     .required("Password is required"),
   newPassword: string()
     .matches(
       /^[a-zA-Z0-9]+$/,
       "Allowed characters for password are a-z, A-Z, 0-9."
     )
-    .min(7, "Password must be between 7 and 20 characters")
-    .max(20)
-    .required("New password is required"),
+    .min(7, "Password must be between 7 and 30 characters")
+    .max(30)
+    .required("New password is required"), // Додали .required()
   newPasswordConfirm: string()
     .matches(
       /^[a-zA-Z0-9]+$/,
       "Allowed characters for password are a-z, A-Z, 0-9."
     )
-    .min(7, "Password must be between 7 and 20 characters")
-    .max(20)
-    .required("Confirm new password is required"),
+    .min(7, "Password must be between 7 and 30 characters")
+    .max(30)
+    .required("Confirm new password is required"), // Додали .required()
   birthDate: date()
     .min("1924-01-01", "Birth date must be later than 1924-01-01")
     .max("2008-01-01", "Birth date must be earlier than 2008-01-01"),

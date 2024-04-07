@@ -5,15 +5,10 @@ import HomeIcon from "../../Components/Icons/HomeIcon";
 import RightArrowIcon from "../../Components/Icons/RightArrowIcon";
 import { eachWordFirstLetterToUpperCase } from "../../helpers/capitalizeFirstLettersOfEachWordInSentence";
 import { capitalizeFirstLetterOfWord } from "../../helpers/capitalizeFirstLetterOfWord";
-import { useSelector } from "react-redux";
-import AdminIcon from "../../Components/Icons/AdminIcon";
 
 const Breadcrumbs = () => {
-  const { user } = useSelector((state) => state.user);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
-  const isProfilePage = location.pathname === "/user";
-  const isAdmin = user?.isAdmin || false;
 
   const queryParams = new URLSearchParams(location.search);
 
@@ -86,21 +81,8 @@ const Breadcrumbs = () => {
               <HomeIcon />
             </Link>
             <RightArrowIcon />
-            <div className={styles.crumbText}>{crumbs}</div>
           </div>
-
-          {isProfilePage && (
-            <section className={styles.adminSection}>
-              {isAdmin && (
-                <div className={styles.adminWrapper}>
-                  <Link to="/admin" className={styles.linkAdmin}>
-                    Admin Panel
-                  </Link>
-                  <AdminIcon className={styles.iconForListAdmin} />
-                </div>
-              )}
-            </section>
-          )}
+          {crumbs}
         </div>
       )}
     </>

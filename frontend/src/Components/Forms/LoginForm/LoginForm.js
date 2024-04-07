@@ -142,7 +142,6 @@ const LoginForm = () => {
               type="password"
               name="password"
               label="Password"
-              maxlength="20"
               placeholder="Password"
             />
             <div className={styles.submitContainer}>

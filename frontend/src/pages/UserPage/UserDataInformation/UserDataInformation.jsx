@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "../UserDataInformation/UserDataInformation.module.scss";
 import { Form, Formik } from "formik";
-import validationSchema from "./validationSchema";
+import validationSchema from "../../../Components/Forms/RegistrationForm/validationSchema";
 import ModalStatusInfo from "../../../Components/Profile/ModalStatusInfo/ModalStatusInfo";
 import CheckMarkIcon from "../../../Components/Icons/CheckMarkIcon";
+import Input from "../../../Components/Profile/CustomInput/Input";
 import ButtonProfile from "../../../Components/Profile/ButtonProfile/ButtonProfile";
 import { sendAuthorizedRequest } from "../../../helpers/sendRequest";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +13,6 @@ import LeftArrowIcon from "../../../Components/Icons/LeftArrowIcon";
 import { useNavigate } from "react-router-dom";
 import { updateUser } from "../../../store/user/userSlice";
 import CrossErrorIcon from "../../../Components/Icons/CrossErrorIcon";
-import CustomInputCheckout from "../../../Components/Forms/CustomInputCheckout/CustomInputCheckout";
 
 const UserDataInformation = () => {
   const { user } = useSelector((state) => state.user);
@@ -36,10 +36,10 @@ const UserDataInformation = () => {
 
   const handleSubmit = async (values) => {
     try {
-      // const [firstName, lastName] = values.username.split(" ");
+      const [firstName, lastName] = values.username.split(" ");
       const requestBody = {
-        firstName: values.firstName,
-        lastName: values.lastName,
+        firstName: firstName,
+        lastName: lastName,
         login: values.login,
         email: values.email,
         telephone: values.phoneNumber,
@@ -87,29 +87,18 @@ const UserDataInformation = () => {
       </div>
       <div className={styles.sectionDataUser}>
         <div className={styles.sectionTitle}>
-          <h2 className={styles.dataTitle}>Edit profile information</h2>
+          <h2 className={styles.dataTitle}>Editing profile information</h2>
         </div>
         <Formik
           initialValues={{
             login: user?.login || "",
-            firstName: user?.firstName || "",
-            lastName: user?.lastName || "",
+            username: `${user?.firstName} ${user?.lastName}` || "",
             email: user?.email || "",
             phoneNumber: user?.telephone || "",
             birthday: user?.birthDate || "",
           }}
           validationSchema={validationSchema}
-          onSubmit={(values, { setSubmitting }) => {
-            handleSubmit(values)
-              .then(() => {
-                setSubmitting(false);
-                setResultMessage(true);
-              })
-              .catch(() => {
-                setSubmitting(false);
-                setResultMessage(false);
-              });
-          }}
+          onSubmit={handleSubmit}
           enableReinitialize={true}
         >
           {({ values, errors, touched, handleChange }) => (
@@ -137,71 +126,45 @@ const UserDataInformation = () => {
               ) : (
                 <span></span>
               )}
-              <CustomInputCheckout
+              <Input
                 className={styles.dataInput}
-                name="firstName"
-                placeholder="First name"
-                label="Your first name"
-                error={
-                  errors.firstName && touched.firstName
-                    ? errors.firstName
-                    : undefined
-                }
-                onChange={handleChange}
+                name="username"
+                placeholder="First and last name"
+                label="Your full name"
+                error={errors.username && touched.username}
+                onChange={handleChange} // Додано onChange
               />
-              <CustomInputCheckout
-                className={styles.dataInput}
-                name="lastName"
-                placeholder="Last name"
-                label="Your last name"
-                error={
-                  errors.lastName && touched.lastName
-                    ? errors.lastName
-                    : undefined
-                }
-                onChange={handleChange}
-              />
-              <CustomInputCheckout
+              <Input
                 className={styles.dataInput}
                 name="login"
                 placeholder="Login"
-                label="Your Login"
-                maxlength="12"
-                error={errors.login && touched.login ? errors.login : undefined}
-                onChange={handleChange}
+                label="Your login"
+                error={errors.login && touched.login}
+                onChange={handleChange} // Додано onChange
               />
-              <CustomInputCheckout
+              <Input
                 className={styles.dataInput}
                 name="email"
                 placeholder="example@gmail.com"
                 label="Your Email"
-                error={errors.email && touched.email ? errors.email : undefined}
-                onChange={handleChange}
+                error={errors.email && touched.email}
+                onChange={handleChange} // Додано onChange
               />
-              <CustomInputCheckout
+              <Input
                 className={styles.dataInput}
-                type="tel"
                 name="phoneNumber"
                 placeholder="+380"
                 label="Your phone number"
-                error={
-                  errors.phoneNumber && touched.phoneNumber
-                    ? errors.phoneNumber
-                    : undefined
-                }
-                onChange={handleChange}
+                error={errors.phone && touched.phone}
+                onChange={handleChange} // Додано onChange
               />
-              <CustomInputCheckout
+              <Input
+                disabled
                 className={styles.dataInput}
-                type="date"
                 name="birthday"
                 label="Your birthday"
-                error={
-                  errors.birthday && touched.birthday
-                    ? errors.birthday
-                    : undefined
-                }
-                onChange={handleChange}
+                error={errors.birthday && touched.birthday}
+                onChange={handleChange} // Додано onChange
               />
               <div className={styles.updateDataBtnBlock}>
                 <ButtonProfile
