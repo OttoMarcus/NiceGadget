@@ -44,7 +44,7 @@ const RootRouters = () => {
       <Route path="/admin" element={<AdminPage />} />
       <Route path="/update-information" element={<UserDataInformation />} />
       <Route path="/update-password" element={<UserUpdatePass />} />
-      <Route path="/right" element={<RightsPage />} />
+      <Route path="/rights" element={<RightsPage />} />
       <Route path="/search" element={<SearchPage />} />
       <Route path="/contacts" element={<ContactsPage />} />
       <Route path="/orders" element={<Orders />} />

@@ -23,6 +23,7 @@
   position: relative;
   overflow: hidden;
   user-select: none;
+  margin-bottom: 8px;
 
   & > img {
     max-width: 100%;
@@ -43,7 +44,8 @@
 }
 
 .nameWrapper {
-  @include flex-start;
+  @include flex-center;
+  align-items: flex-start;
   height: 60px;
   width: 100%;
   box-sizing: border-box;

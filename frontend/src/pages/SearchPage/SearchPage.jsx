@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Card from "../../Components/Cards/Card";
@@ -10,50 +10,42 @@ import styles from "./SearchPage.module.scss";
 const SearchPage = () => {
   const [searchList, setSearchList] = useState({ data: [] });
   const searchField = useSelector((state) => state.search.search);
-  const [delayedSearchResult, setDelayedSearchResult] = useState(null);
   const total = searchList.data.length;
 
-  useEffect(() => {
-    const fetchSearchResult = async () => {
-      try {
-        const [phonesResponse, tabletsResponse, accessoriesResponse] =
-          await Promise.all([
-            axios.get(`/api/phones?q=${searchField}`),
-            axios.get(`/api/tablets?q=${searchField}`),
-            axios.get(`/api/accessories?q=${searchField}`),
-          ]);
+  const fetchSearchResult = useCallback(async () => {
+    try {
+      const [phonesResponse, tabletsResponse, accessoriesResponse] =
+        await Promise.all([
+          axios.get(`/api/phones?q=${searchField}`),
+          axios.get(`/api/tablets?q=${searchField}`),
+          axios.get(`/api/accessories?q=${searchField}`),
+        ]);
 
-        const phonesData = phonesResponse.data.data;
-        const tabletsData = tabletsResponse.data.data;
-        const accessoriesData = accessoriesResponse.data.data;
+      const phonesData = phonesResponse.data.data;
+      const tabletsData = tabletsResponse.data.data;
+      const accessoriesData = accessoriesResponse.data.data;
 
-        const combinedData = [
-          ...phonesData,
-          ...tabletsData,
-          ...accessoriesData,
-        ];
+      const combinedData = [...phonesData, ...tabletsData, ...accessoriesData];
 
-        setSearchList({ data: combinedData });
-      } catch (error) {
-        console.error("Fetching error:", error);
-      }
-    };
-
-    if (searchField.trim() !== "") {
-      const delayedSearch = debounce(() => {
-        fetchSearchResult();
-      }, 1000);
-      setDelayedSearchResult(delayedSearch);
+      setSearchList({ data: combinedData });
+    } catch (error) {
+      console.error("Fetching error:", error);
     }
   }, [searchField]);
 
   useEffect(() => {
-    if (delayedSearchResult) {
+    if (searchField.trim() !== "") {
+      const delayedSearch = debounce(() => {
+        fetchSearchResult();
+      }, 1000);
+      delayedSearch();
       return () => {
-        delayedSearchResult.cancel();
+        delayedSearch.cancel();
       };
     }
-  }, [delayedSearchResult]);
+  }, [searchField, fetchSearchResult]);
+
+  const memoizedSearchList = useMemo(() => searchList, [searchList]);
 
   return (
     <article className={styles.container}>
@@ -63,8 +55,8 @@ const SearchPage = () => {
       </h3>
       <h3 className={styles.searchCategory}>total: {total}</h3>
       <div className={styles.resultWrapper}>
-        {Array.isArray(searchList.data) &&
-          searchList.data.map((item) => {
+        {Array.isArray(memoizedSearchList.data) &&
+          memoizedSearchList.data.map((item) => {
             if (item.category === "accessories") {
               return <CardAccessories key={item.id} {...item} />;
             }
