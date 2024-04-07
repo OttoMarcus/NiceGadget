@@ -69,9 +69,14 @@ const CheckoutForm = () => {
 
   useEffect(() => {
     if (isAuthorized && userData) {
-      const formattedPhoneNumber = userData.telephone
-        ? userData.telephone.replace("+380", "")
-        : "";
+      let formattedPhoneNumber = "";
+      if (userData.telephone) {
+        const rawNumber = userData.telephone.replace("+380", "");
+        formattedPhoneNumber = rawNumber.replace(
+          /(\d{2})(\d{3})(\d{2})(\d{2})/,
+          "+380 ($1) $2-$3-$4"
+        );
+      }
 
       setInitialValues((currentValues) => ({
         ...currentValues,
@@ -87,7 +92,19 @@ const CheckoutForm = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
 
   const onSubmit = async (values, actions) => {
-    validateAndNavigate(values);
+    const submissionValues = { ...values };
+
+    if (submissionValues.phoneNumber.startsWith("+")) {
+      submissionValues.phoneNumber =
+        "+" + submissionValues.phoneNumber.slice(1).replace(/\D/g, "");
+    } else {
+      submissionValues.phoneNumber = submissionValues.phoneNumber.replace(
+        /\D/g,
+        ""
+      );
+    }
+
+    await validateAndNavigate(submissionValues);
   };
 
   return (

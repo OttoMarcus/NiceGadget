@@ -144,12 +144,24 @@ const RegistrationForm = () => {
     setRegStatus("");
     setRegError("");
 
+    const submissionValues = { ...values };
+
+    if (submissionValues.telephone.startsWith("+")) {
+      submissionValues.telephone =
+        "+" + submissionValues.telephone.slice(1).replace(/\D/g, "");
+    } else {
+      submissionValues.telephone = submissionValues.telephone.replace(
+        /\D/g,
+        ""
+      );
+    }
+
     const userCredentials = {
       loginOrEmail: values.login,
       password: values.password,
     };
 
-    const result = await createNewUser(values);
+    const result = await createNewUser(submissionValues);
     console.log(result);
 
     const token = await loginUser(userCredentials);
