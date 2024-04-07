@@ -172,13 +172,12 @@ const SingleProductPage = () => {
                 <TechSpecs techSpecs={model?.techSpecs} capacity={capacity} />
               </div>
             </div>
-
-            <div className={styles.buyTogetherSection}>
-              <BuyTogether />
-            </div>
           </div>
         </div>
       )}
+      <section className={`${styles.container} ${styles.buyTogetherSection}`}>
+        <BuyTogether />
+      </section>
     </>
   );
 };

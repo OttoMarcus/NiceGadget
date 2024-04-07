@@ -5,13 +5,21 @@
   z-index: 2;
   bottom: 10px;
   left: 50%;
-  width: 390px;
-  height: 150px;
+  width: 190px;
+  height: 170px;
   padding: 20px;
   border-radius: 8px;
   transform: translate(-50%, 110%);
-  transition: transform 0.3s ease-in-out; /* Плавний перехід */
-  background-color: rgba(14, 14, 14, 0.97); /* Додаємо затемнення */
+  transition: transform 0.3s ease-in-out;
+  background-color: rgba(14, 14, 14, 0.97);
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    width: 290px;
+  }
+
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    width: 390px;
+  }
 }
 
 .modalWrapper.open {
@@ -27,8 +35,17 @@
 
   .modalText {
     @include small-text;
-    font-size: 16px;
+    font-size: 14px;
     letter-spacing: 2px;
+
+    @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+      font-size: 16px;
+      letter-spacing: 3px;
+    }
+
+    @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+      font-size: 18px;
+    }
   }
 }
 
@@ -45,5 +62,6 @@
 }
 
 .containerFigure {
+  margin-top: 15px;
   @include flex-center;
 }

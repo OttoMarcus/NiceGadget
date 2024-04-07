@@ -42,7 +42,7 @@ const RootRouters = () => {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/user" element={<UserPage />} />
       <Route path="/admin" element={<AdminPage />} />
-      <Route path="/data-information" element={<UserDataInformation />} />
+      <Route path="/update-information" element={<UserDataInformation />} />
       <Route path="/update-password" element={<UserUpdatePass />} />
       <Route path="/right" element={<RightsPage />} />
       <Route path="/search" element={<SearchPage />} />

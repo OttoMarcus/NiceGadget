@@ -114,7 +114,7 @@ const UserUpdatePass = () => {
               }}
             >
               <div className={styles.sectionTitle}>
-                <h2 className={styles.dataTitle}>Updating your password</h2>
+                <h2 className={styles.dataTitle}>Update your password</h2>
               </div>
               <Input
                 name="password"
@@ -122,7 +122,13 @@ const UserUpdatePass = () => {
                 type="password"
                 placeholder="Your password"
                 label="Enter your old password"
+                maxlength="20"
                 value={values.password}
+                style={
+                  (errors.password && touched.password) || !!err
+                    ? { border: "1px solid #eb5757" }
+                    : {}
+                }
               />
               {err ? (
                 <p className={styles.diffPassError}>
@@ -136,18 +142,30 @@ const UserUpdatePass = () => {
                 className={styles.dataInput}
                 placeholder="New password"
                 label="Enter your new password"
+                maxlength="20"
                 value={values.newPassword}
                 handleChange={handleChange}
                 error={errors.newPassword && touched.newPassword}
+                style={
+                  errors.newPassword && touched.newPassword
+                    ? { border: "1px solid #eb5757" }
+                    : {}
+                }
               />
               <InputWithStrength
                 name="newPasswordConfirm"
                 className={styles.dataInput}
                 placeholder="Confirm new password"
                 label="Confirm your new password"
+                maxlength="20"
                 value={values.newPasswordConfirm}
                 handleChange={handleChange}
                 error={errors.newPasswordConfirm && touched.newPasswordConfirm}
+                style={
+                  errors.newPasswordConfirm && touched.newPasswordConfirm
+                    ? { border: "1px solid #eb5757" }
+                    : {}
+                }
               />
               {err && <p className={styles.diffPassError}>{err}</p>}
               {successfulMessage ? (

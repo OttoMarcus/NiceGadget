@@ -4,8 +4,8 @@ const UpdatePassIcon = () => {
   return (
     <svg
       fill="#905BFFFF"
-      width="30px"
-      height="30px"
+      width="25px"
+      height="25px"
       viewBox="0 0 512 512"
       xmlns="http://www.w3.org/2000/svg"
     >
