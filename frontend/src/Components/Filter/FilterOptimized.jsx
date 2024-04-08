@@ -163,138 +163,158 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
         {isFilterVisible ? <CloseFilterIcon /> : <FilterButtonIcon />} Filters
       </h2>
       {isFilterVisible && (
-        <div
-          className={`${styles.filterContainer} `}
-          // ${isFilterVisible ? styles.visible : styles.hidden}
-        >
-          <div className={styles.checkboxGroup}>
-            <label className={styles.checkboxLabel} htmlFor="hotPrices">
-              <input
-                id="hotPrices"
-                type="checkbox"
-                name="discount"
-                checked={filters.discount}
-                onChange={handleCheckboxChange}
-              />
-              <span className={styles.checkmark}></span>
-              <span className={styles.labelText}>Hot prices only</span>
-            </label>
-            <label className={styles.checkboxLabel} htmlFor="inStock">
-              <input
-                id="inStock"
-                type="checkbox"
-                name="available"
-                checked={filters.available}
-                onChange={handleCheckboxChange}
-              />
-              <span className={styles.checkmark}></span>
-              <span className={styles.labelText}>In stock only</span>
-            </label>
-          </div>
-          {serverFilters &&
-            Object.keys(serverFilters).map((key) => (
-              <div key={key} className={styles.filterGroupContainer}>
-                <h3
-                  className={styles.filterGroupHeader}
-                  onClick={() => toggleSection(key)}
-                >
-                  {key}
-                  {activeSection === key ? <UpArrowIcon /> : <DownArrowIcon />}
-                </h3>
-                {activeSection === key && (
-                  <div className={styles.filterContent}>
-                    {Array.isArray(serverFilters[key]) ? (
-                      <ul className={styles.checkboxGroup}>
-                        {serverFilters[key].map((item) => (
-                          <li key={item}>
-                            <label className={styles.checkboxLabel}>
-                              <input
-                                type="checkbox"
-                                name={key}
-                                value={item}
-                                checked={filters[key].includes(item)}
-                                onChange={handleGroupCheckboxChange}
-                              />
-                              <span className={styles.checkmark}></span>
-                              <span className={styles.labelText}>
-                                {key === "capacity" || key === "ram"
-                                  ? `${item} GB`
-                                  : `${item}`}
-                              </span>
-                            </label>
-                          </li>
-                        ))}
-                      </ul>
+        <div className={styles.filterOuterContainer}>
+          <div
+            className={`${styles.filterContainer} `}
+            // ${isFilterVisible ? styles.visible : styles.hidden}
+          >
+            <div className={`${styles.checkboxGroup} ${styles.sticky}`}>
+              <label className={styles.checkboxLabel} htmlFor="hotPrices">
+                <input
+                  id="hotPrices"
+                  type="checkbox"
+                  name="discount"
+                  checked={filters.discount}
+                  onChange={handleCheckboxChange}
+                />
+                <span className={styles.checkmark}></span>
+                <span className={styles.labelText}>Hot prices only</span>
+              </label>
+              <label className={styles.checkboxLabel} htmlFor="inStock">
+                <input
+                  id="inStock"
+                  type="checkbox"
+                  name="available"
+                  checked={filters.available}
+                  onChange={handleCheckboxChange}
+                />
+                <span className={styles.checkmark}></span>
+                <span className={styles.labelText}>In stock only</span>
+              </label>
+            </div>
+            {serverFilters &&
+              Object.keys(serverFilters).map((key) => (
+                <div key={key} className={styles.filterGroupContainer}>
+                  <h3
+                    className={styles.filterGroupHeader}
+                    onClick={() => toggleSection(key)}
+                  >
+                    {key}
+                    {activeSection === key ? (
+                      <UpArrowIcon />
                     ) : (
-                      <div className={styles.priceFilter}>
-                        <div className={styles.minMaxInputs}>
-                          {/* { console.log('key in price block: ' ,key)} */}
-                          <input
-                            type="number"
-                            name="minPrice"
-                            min={serverFilters[key].minPrice}
-                            max={serverFilters[key].maxPrice}
-                            // value={filters?.minPrice || serverFilters[key].minPrice}
-                            value={filters?.minPrice}
-                            onChange={handleInputChange}
-                            // onBlur={handleInputChange}
-                            className={styles.priceInput}
-                          />
-                          <span>-</span>
-                          <input
-                            type="number"
-                            name="maxPrice"
-                            min={serverFilters[key].minPrice}
-                            max={serverFilters[key].maxPrice}
-                            // value={filters?.maxPrice || serverFilters[key].maxPrice}
-                            value={filters?.maxPrice}
-                            onChange={handleInputChange}
-                            // onBlur={handleInputChange}
-                            className={styles.priceInput}
-                          />
-                        </div>
-                        <div className={styles.sliderContainer}>
-                          <Slider
-                            range
-                            min={serverFilters[key].minPrice}
-                            max={serverFilters[key].maxPrice}
-                            step={10}
-                            allowCross={false}
-                            pushable={true}
-                            // draggableTrack={true}
-                            minDistance={10}
-                            value={[filters.minPrice, filters.maxPrice]}
-                            onChange={handleSliderChange}
-                            styles={{
-                              track: {
-                                backgroundColor: "#905bff",
-                                height: 5,
-                              },
-                              rail: {
-                                backgroundColor: "#f1f2f9",
-                                borderRadius: 10,
-                                height: 5,
-                              },
-                              handle: {
-                                // borderColor: 'red',
-                                opacity: 1,
-                                height: 15,
-                                width: 15,
-                                marginLeft: 0,
-                                marginTop: -5,
-                                backgroundColor: "#3b3e4a",
-                              },
-                            }}
-                            // dotStyle={{ background: styles.dot }} // Передача стиля точек
-                            // activeDotStyle={{ background: styles.activeDot }} // Передача стиля активных точек
-                          />
-                        </div>
-                      </div>
+                      <DownArrowIcon />
                     )}
-                  </div>
-                )}
-              </div>
-            ))}
+                  </h3>
+                  {activeSection === key && (
+                    <div className={styles.filterContent}>
+                      {Array.isArray(serverFilters[key]) ? (
+                        <ul className={styles.checkboxGroup}>
+                          {serverFilters[key].map((item) => (
+                            <li key={item}>
+                              <label className={styles.checkboxLabel}>
+                                <input
+                                  type="checkbox"
+                                  name={key}
+                                  value={item}
+                                  checked={filters[key].includes(item)}
+                                  onChange={handleGroupCheckboxChange}
+                                />
+                                <span className={styles.checkmark}></span>
+                                <span className={styles.labelText}>
+                                  {key === "capacity" || key === "ram"
+                                    ? `${item} GB`
+                                    : `${item}`}
+                                </span>
+                              </label>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <div className={styles.priceFilter}>
+                          <div className={styles.minMaxInputs}>
+                            {/* { console.log('key in price block: ' ,key)} */}
+                            <input
+                              type="number"
+                              name="minPrice"
+                              min={serverFilters[key].minPrice}
+                              max={serverFilters[key].maxPrice}
+                              // value={filters?.minPrice || serverFilters[key].minPrice}
+                              value={filters?.minPrice}
+                              onChange={handleInputChange}
+                              // onBlur={handleInputChange}
+                              className={styles.priceInput}
+                            />
+                            <span>-</span>
+                            <input
+                              type="number"
+                              name="maxPrice"
+                              min={serverFilters[key].minPrice}
+                              max={serverFilters[key].maxPrice}
+                              // value={filters?.maxPrice || serverFilters[key].maxPrice}
+                              value={filters?.maxPrice}
+                              onChange={handleInputChange}
+                              // onBlur={handleInputChange}
+                              className={styles.priceInput}
+                            />
+                          </div>
+                          <div className={styles.sliderContainer}>
+                            <Slider
+                              range
+                              min={serverFilters[key].minPrice}
+                              max={serverFilters[key].maxPrice}
+                              step={10}
+                              allowCross={false}
+                              pushable={true}
+                              // draggableTrack={true}
+                              minDistance={10}
+                              value={[filters.minPrice, filters.maxPrice]}
+                              onChange={handleSliderChange}
+                              styles={{
+                                track: {
+                                  backgroundColor: "#905bff",
+                                  height: 5,
+                                },
+                                rail: {
+                                  backgroundColor: "#f1f2f9",
+                                  borderRadius: 10,
+                                  height: 5,
+                                },
+                                handle: {
+                                  // borderColor: 'red',
+                                  opacity: 1,
+                                  height: 15,
+                                  width: 15,
+                                  marginLeft: 0,
+                                  marginTop: -5,
+                                  backgroundColor: "#3b3e4a",
+                                },
+                              }}
+                              // dotStyle={{ background: styles.dot }} // Передача стиля точек
+                              // activeDotStyle={{ background: styles.activeDot }} // Передача стиля активных точек
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ))}
+            {/* <div className={styles.filterButtonsContainer}>
+            <button
+              onClick={applyFilters}
+              className={styles.filterActionButton}
+            >
+              Apply
+            </button>
+            <button
+              onClick={clearFilters}
+              className={styles.filterActionButton}
+            >
+              <ClearFiltersIcon /> Clear
+            </button>
+          </div> */}
+          </div>
           <div className={styles.filterButtonsContainer}>
             <button
               onClick={applyFilters}

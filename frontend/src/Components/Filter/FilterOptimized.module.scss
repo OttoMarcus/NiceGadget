@@ -7,7 +7,7 @@
 }
 
 .filterWrapper {
-  position: relative;
+  // position: relative;
   margin-top: 15px;
   // align-self: flex-end;
 }
@@ -45,25 +45,57 @@
   }
 }
 
-.filterContainer {
+.filterOuterContainer {
   position: fixed;
   z-index: 50;
   left: 0;
-  top: 0;
-  display: flex;
-  flex-direction: column;
+  top: 49px;
+  // display: flex;
+  // flex-direction: column;
   width: 75vw;
-  height: 100vh;
+  height: calc(100vh - var(--header-height));
   // max-width: 320px;
   animation: slideIn 0.5s forwards;
   background-color: $ui-color-gray-surface-1;
-  padding: 10px 10px 0px 10px;
+  padding-top: 10px;
+  // padding: 10px 10px 0px 10px;
   z-index: 30;
   transition: all 0.3s ease-in-out 0s;
   border: 1px solid $ui-color-primary-accent;
   box-shadow: 2px 0 6px #33333342;
-  // overflow-y: scroll;
+  overflow-y: scroll;
 }
+
+.filterContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: $ui-color-gray-surface-1;
+  overflow-y: scroll;
+}
+
+// .filterContainer {
+//   position: fixed;
+//   z-index: 50;
+//   left: 0;
+//   top: 49px;
+//   display: flex;
+//   flex-direction: column;
+//   width: 75vw;
+//   height: calc(100vh - var(--header-height));
+//   // max-width: 320px;
+//   animation: slideIn 0.5s forwards;
+//   background-color: $ui-color-gray-surface-1;
+//   padding-top: 10px;
+//   // padding: 10px 10px 0px 10px;
+//   z-index: 30;
+//   transition: all 0.3s ease-in-out 0s;
+//   border: 1px solid $ui-color-primary-accent;
+//   box-shadow: 2px 0 6px #33333342;
+//   overflow-y: scroll;
+// }
 
 // .filterContainer {
 //   top: 120%;
@@ -81,13 +113,16 @@
 // }
 
 // .filterGroupContainer{
+//   // overflow-y: scroll;
 //   // margin: 5px 0px;
 //   // padding: 10px 0px;
 // }
 
 .filterGroupHeader {
   @include uppercase;
-  position: relative;
+  // position: relative;
+  position: sticky;
+  z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -122,6 +157,10 @@
     background-color: transparent;
     transition: background-color 0.3s;
   }
+}
+
+.filterContent {
+  overflow-y: scroll;
 }
 
 .priceFilter {
@@ -166,6 +205,11 @@
   gap: 10px;
   // margin-bottom: 10px;
 
+  // &.sticky{
+  //   position: sticky;
+  //   z-index: 5;
+  // }
+
   & li {
     width: 100%;
     padding: 0px 5px;
@@ -179,6 +223,14 @@
       }
     }
   }
+}
+
+.checkboxGroup.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background-color: #161827;
+  border-bottom: 1px solid $ui-color-primary-accent;
 }
 
 .checkboxLabel {
@@ -231,13 +283,18 @@
 
 .filterButtonsContainer {
   position: fixed;
+  z-index: 5;
+  // position: sticky;
   width: 100%;
   padding: 15px 5px;
   bottom: 0;
+  left: 0;
   display: flex;
+  justify-content: center;
   // flex-direction: column;
   gap: 10px;
   background-color: $ui-color-gray-surface-1;
+  border-top: 1px solid $ui-color-primary-accent;
 }
 
 .filterActionButton {
