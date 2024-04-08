@@ -2,6 +2,10 @@
 @import "../../styles/abstracts/mixins";
 @import "../../styles/global/base";
 
+:root {
+  --header-height: 48px;
+}
+
 .filterWrapper {
   position: relative;
   margin-top: 15px;
@@ -42,9 +46,10 @@
 }
 
 .filterContainer {
+  position: fixed;
+  z-index: 50;
   left: 0;
   top: 0;
-  position: fixed;
   display: flex;
   flex-direction: column;
   width: 75vw;
@@ -57,7 +62,7 @@
   transition: all 0.3s ease-in-out 0s;
   border: 1px solid $ui-color-primary-accent;
   box-shadow: 2px 0 6px #33333342;
-  overflow-y: scroll;
+  // overflow-y: scroll;
 }
 
 // .filterContainer {
