@@ -4,78 +4,80 @@
 
 .form {
   margin-bottom: 50px;
-  @include flex-start;
+  @include flex-center;
   flex-direction: column;
   text-align: center;
-  gap: 10px;
-  width: 800px;
+  gap: 5px;
+  width: 260px;
   min-height: 700px;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    width: 400px;
+  }
 }
 
 .buyTittle {
-  @include h2;
+  @include mobile-h2;
   padding: 10px;
   color: $ui-color-gray-white;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    @include h2;
+  }
 }
 
-.labelWrapper {
+.paymentWrapper {
+  width: 100%;
+  height: 170px;
+  @include flex-center;
+}
+
+.inputWrapper {
   @include flex-start;
   flex-direction: column;
-  min-height: 90px;
+  min-height: 60px;
+  margin-bottom: 20px;
+
+  & label {
+    @include body-text;
+    color: $ui-color-gray-white;
+  }
+
+  & div {
+    @include flex-start;
+    flex-direction: column;
+    width: 100%;
+  }
 }
 
 .labelTitle {
+  width: 100%;
+  margin-bottom: 5px;
   @include body-text;
-  margin-bottom: 8px;
+  text-align: center;
   color: $ui-color-gray-white;
-}
-
-.inputField {
-  height: 40px;
-  width: 400px;
-  padding: 10px;
-  @include body-text;
-  color: $ui-color-gray-white;
-  background-color: $ui-color-gray-selected-surface-2;
-  border: 1px solid $ui-color-gray-selected-surface-2;
-
-  &:focus {
-    border: 3px solid $ui-color-primary-accent;
-  }
 }
 
 .options {
   @include flex-start;
   @include body-text;
-}
-
-.errorMsg {
-  display: block;
-  padding-top: 5px;
-  @include small-text;
-  color: $ui-color-red-badge-favorite;
+  color: $ui-color-gray-white;
 }
 
 .radioLabel {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex-center;
   text-align: center;
-  width: 50px;
-  height: 30px;
+  height: 25px;
   gap: 10px;
+  cursor: pointer;
 }
 
-.buttonSubmit {
-  margin: 20px;
-  width: 180px;
-  padding: 10px 20px;
-  border-radius: 10px;
-  border: 1px solid white;
-  color: white !important;
+.radioInput {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
 }
 
-.buttonSubmit:hover {
-  background-color: white;
-  color: black !important;
+.btnWrapper {
+  width: 200px;
 }

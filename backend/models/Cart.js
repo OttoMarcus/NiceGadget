@@ -14,6 +14,10 @@ const CartSchema = new Schema(
           type: Schema.Types.ObjectId,
           required: true
         },
+        customId: {
+          type: String,
+          required: true
+        },
         name: {
           type: String,
           required: true

@@ -9,6 +9,7 @@ import { addUser, removeUser } from "./store/user/userSlice";
 import { useLocation } from "react-router-dom";
 import { fetchCartItems } from "./API/cartAPI";
 import { fetchTodos, fetchChange } from "./store/favorites/favoriteSlice";
+import { orderGetNew } from "./store/orders/OrderNew";
 
 function App() {
   const dispatch = useDispatch();
@@ -54,6 +55,7 @@ function App() {
   }, [location.pathname, location.search]);
 
   const user = useSelector((state) => state.user.user);
+  const order = useSelector((state) => state.OrderNew.orders);
 
   const isAuthorized = useSelector((state) => state.user.isAuthorized);
   const token = localStorage?.getItem("token");
@@ -73,6 +75,13 @@ function App() {
     effect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [favor, dispatch]);
+  useEffect(() => {
+    !token && localStorage.setItem("orders", JSON.stringify(order));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, order]);
+  useEffect(() => {
+    token && dispatch(orderGetNew());
+  }, [dispatch, token]);
   return (
     <div className="app-wrapper">
       <Header />

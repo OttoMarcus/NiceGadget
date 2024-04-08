@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../../store/user/userSlice";
-
+import { fetchCartItems } from "../../API/cartAPI";
+import { SetFavor } from "../../store/favorites/favoriteSlice";
+import { SetOrder } from "../../store/orders/OrderNew";
 import LogoutIcon from "../../Components/Icons/LogoutIcon";
 import UserIcon from "../../Components/Icons/UserIcon";
 import FavoriteIcon from "../../Components/Icons/HeartIcon";
@@ -13,34 +15,24 @@ import OkIcon from "../../Components/Icons/OkIcon";
 import scrollUp from "../../helpers/scrollUp";
 import LoginIcon from "../../Components/Icons/LoginIcon";
 import SearchForm from "../../Components/SearchForm/SearchForm";
-import { fetchCartItems } from "../../API/cartAPI";
 
 import styles from "./Header.module.scss";
-import { SetFavor } from "../../store/favorites/favoriteSlice";
 
 const Header = () => {
+  const [activeTab, setActiveTab] = useState();
   const [isBurgerActive, setIsBurgerActive] = useState(false);
-  // const [isAuthorized, setIsAuthorized] = useState(false);
-
-  const active = null;
-
-  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-  // const loggedInUser = useSelector((state) => state.user.user);
   const isAuthorized = useSelector((state) => state.user.isAuthorized);
-
-  // const isUserLoggedIn = Object?.keys(loggedInUser).length === 0 ? false : true;
-  // console.log(isUserLoggedIn);
 
   const logOutUser = () => {
     dispatch(removeUser());
     dispatch(SetFavor([]));
+    dispatch(SetOrder([]));
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-
+    localStorage.removeItem("orders");
     dispatch(fetchCartItems());
-    // navigate("/login");
   };
 
   const handleAuthUser = (event) => {
@@ -63,11 +55,14 @@ const Header = () => {
   const hideMenuOnLogoClick = () => {
     if (isBurgerActive) {
       toggleBurgerActive();
+      setActiveTab("/");
       scrollUp();
     } else {
       scrollUp();
+      setActiveTab("/");
     }
   };
+
   const favor = useSelector((state) => state.favorite?.favorites);
 
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -75,6 +70,11 @@ const Header = () => {
     (total, item) => total + item.cartQuantity,
     0
   );
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+    toggleBurgerActive();
+  };
 
   return (
     <header>
@@ -109,48 +109,48 @@ const Header = () => {
         >
           <div className={styles.headerList}>
             <Link
-              onClick={toggleBurgerActive}
-              className={`${styles.linksHeader} ${active ? styles.linkActive : ""}`}
+              onClick={() => handleTabClick("/")}
+              className={`${styles.linksHeader} ${activeTab === "/" && styles.linkActive}`}
               to="/"
             >
               Home
             </Link>
 
             <Link
-              onClick={toggleBurgerActive}
-              className={`${styles.linksHeader} ${active ? styles.linkActive : ""}`}
+              onClick={() => handleTabClick("/phones")}
+              className={`${styles.linksHeader} ${activeTab === "/phones" && styles.linkActive}`}
               to="/phones"
             >
               Phones
             </Link>
 
             <Link
-              onClick={toggleBurgerActive}
-              className={`${styles.linksHeader} ${active ? styles.linkActive : ""}`}
+              onClick={() => handleTabClick("/tablets")}
+              className={`${styles.linksHeader} ${activeTab === "/tablets" && styles.linkActive}`}
               to="/tablets"
             >
               Tablets
             </Link>
 
             <Link
-              onClick={toggleBurgerActive}
-              className={`${styles.linksHeader} ${active ? styles.linkActive : ""}`}
+              onClick={() => handleTabClick("/accessories")}
+              className={`${styles.linksHeader} ${activeTab === "/accessories" && styles.linkActive}`}
               to="/accessories"
             >
               Accessories
             </Link>
 
             <Link
-              onClick={toggleBurgerActive}
-              className={`${styles.linksHeader} ${styles.additionalMobileMenu}`}
+              onClick={() => handleTabClick("/favorites")}
+              className={`${styles.linksHeader} ${styles.additionalMobileMenu} ${activeTab === "/favorites" && styles.linkActive}`}
               to="/favorites"
             >
               Favorites
             </Link>
 
             <Link
-              onClick={toggleBurgerActive}
-              className={`${styles.linksHeader} ${styles.additionalMobileMenu}`}
+              onClick={() => handleTabClick("/cart")}
+              className={`${styles.linksHeader} ${styles.additionalMobileMenu} ${activeTab === "/cart" && styles.linkActive}`}
               to="/cart"
             >
               Cart
@@ -170,7 +170,6 @@ const Header = () => {
             {isAuthorized ? (
               <Link
                 onClick={() => {
-                  // handleAuthorized();
                   toggleBurgerActive();
                   logOutUser();
                 }}

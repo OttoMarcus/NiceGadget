@@ -3,11 +3,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Audiowide&display=swap");
 @font-face {
   font-family: "WildWest";
-  src: url("./TexasCrustPersonalUseReg-w1nrw.ttf") format("truetype");
+  src: url("../../styles/fonts/Texas.ttf") format("truetype");
 }
 @font-face {
   font-family: "Nuku";
-  src: url("./nuku1.ttf") format("truetype");
+  src: url("../../styles/fonts/Nuku.ttf") format("truetype");
 }
 
 * {
@@ -618,4 +618,95 @@
   box-shadow: 0 0 21px 8px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: 0 0 21px 8px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 0 0 21px 8px rgba(0, 0, 0, 0.75);
+}
+
+.headStar {
+  position: relative;
+  height: 100%;
+}
+
+.stars,
+.stars2,
+.stars3 {
+  position: absolute;
+}
+
+@function multiple-box-shadow($n) {
+  $value: "#{random(2000)}px #{random(2000)}px #FFF";
+  @for $i from 2 through $n {
+    $value: "#{$value} , #{random(2000)}px #{random(2000)}px #FFF";
+  }
+  @return unquote($value);
+}
+
+$shadows-small: multiple-box-shadow(700);
+$shadows-medium: multiple-box-shadow(200);
+$shadows-big: multiple-box-shadow(100);
+
+.stars {
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  box-shadow: $shadows-small;
+  animation: animStar 50s linear infinite;
+}
+
+.stars:after {
+  content: " ";
+  position: absolute;
+  top: 400px;
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  box-shadow: $shadows-small;
+}
+
+.stars2 {
+  width: 2px;
+  height: 2px;
+  background: transparent;
+  box-shadow: $shadows-medium;
+  animation: animStar 100s linear infinite;
+}
+
+.stars2:after {
+  content: " ";
+  position: absolute;
+  top: 400px;
+  width: 2px;
+  height: 2px;
+  background: transparent;
+  box-shadow: $shadows-medium;
+}
+
+.stars3 {
+  width: 3px;
+  height: 3px;
+  background: transparent;
+  box-shadow: $shadows-big;
+  animation: animStar 150s linear infinite;
+}
+
+.stars3:after {
+  content: " ";
+  position: absolute;
+  top: 400px;
+  width: 3px;
+  height: 3px;
+  background: transparent;
+  box-shadow: $shadows-big;
+}
+
+@keyframes animStar {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-2000px);
+  }
+}
+
+.sakura {
+  position: absolute;
+  z-index: 1;
 }

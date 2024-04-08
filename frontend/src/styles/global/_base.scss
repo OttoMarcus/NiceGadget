@@ -29,16 +29,16 @@ body {
 }
 
 .container {
-  padding: 16px;
+  padding: 0 16px;
   width: 100%;
   max-width: $ui-max-container-width;
 
   /*-----------------  Tablet ---------------------*/
   @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
-    padding: 24px;
+    padding: 0 24px;
   }
   /*----------------- Desktop ---------------------*/
   @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
-    padding: 32px;
+    padding: 0 32px;
   }
 }

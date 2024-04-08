@@ -32,7 +32,7 @@ Options:
     const customStyles = {
       control: (provided, state) => ({
         ...provided,
-        width: "176px",
+        width: "160px",
         height: "40px",
         color: "#F1F2F9",
         backgroundColor: "#323542",
@@ -85,7 +85,7 @@ Options:
       }),
       menu: (provided) => ({
         ...provided,
-        width: "176px",
+        width: "160px",
         backgroundColor: "#0F1121",
         border: "1px solid",
         borderColor: "#905BFF",

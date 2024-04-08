@@ -5,35 +5,33 @@ import Slider from "../../Components/AdvertisingSlider/Slider";
 import BrandNews from "../../Components/BrandNews/BrandNews";
 import NeedHelp from "../../Components/FAQchat/Needhelp";
 import HotPrices from "../../Components/HotPrices/HotPrices";
+import styles from "./HomePage.module.scss";
 
-import style from "./HomePage.module.scss";
 const HomePage = () => {
   return (
-    <>
-      <h1 className={`${style.container} ${style.homePageTitle}`}>
-        Welcome to Nice Gadgets store!
-      </h1>
+    <div className={styles.container}>
+      <h1 className={styles.homePageTitle}>Welcome to Nice Gadgets store!</h1>
 
-      <section className={`${style.container}`}>
+      <section>
         <NeedHelp />
       </section>
 
-      <section className={`${style.container} ${style.homePageSection}`}>
+      <section className={styles.homePageSection}>
         <Slider />
       </section>
 
-      <section className={`${style.container} ${style.homePageSection}`}>
+      <section className={styles.homePageSection}>
         <BrandNews />
       </section>
 
-      <section className={`${style.container} ${style.homePageSection}`}>
+      <section className={styles.homePageSection}>
         <ShopByCategory />
       </section>
 
-      <section className={`${style.container} ${style.homePageSection}`}>
+      <section className={styles.homePageSection}>
         <HotPrices />
       </section>
-    </>
+    </div>
   );
 };
 

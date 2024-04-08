@@ -9,7 +9,6 @@
 
   @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
     @include h1;
-    margin-bottom: 24px;
   }
 }
 
@@ -17,13 +16,66 @@
   @include uppercase;
   color: $ui-color-gray-icons-placeholders;
   text-align: left;
-  margin-bottom: 16px;
+  margin-bottom: 32px;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    margin-bottom: 40px;
+  }
+}
+
+.btnWrapper {
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+
+  /*-----------------  Tablet ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    flex-direction: row;
+    display: flex;
+    gap: 20px;
+  }
+  /*----------------- Desktop ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+}
+
+.overlay.active {
+  display: block;
 }
 
 .selectsContainer {
   display: flex;
-  margin-bottom: 20px;
-  gap: 16px;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+  margin-bottom: 24px;
+
+  /*-----------------  Tablet ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    flex-direction: row;
+    margin-bottom: 20px;
+    justify-content: flex-start;
+    max-width: $ui-max-container-width;
+    gap: 20px;
+  }
+
+  /*----------------- Desktop ---------------------*/
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    flex-direction: row;
+    margin-bottom: 20px;
+    max-width: $ui-max-container-width;
+  }
 }
 
 .resultWrapper {
@@ -31,10 +83,16 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
   align-items: center;
-  gap: 16px;
+  gap: 40px;
+  margin-bottom: 24px;
 
   a {
     @include flex-center;
+  }
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    gap: 40px 16px;
+    margin-bottom: 40px;
   }
 }
 
@@ -71,25 +129,30 @@
   align-items: center;
   height: 32px;
   list-style: none;
-  margin: 0 auto;
-  margin-top: 40px;
+  margin: 0 auto 64px;
   padding: 0;
+
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    margin-bottom: 80px;
+  }
 
   .paginationItem {
     @include flex-center;
-    // display: flex;
-    // align-items: center;
     width: 32px;
     height: 32px;
     margin: 0px 4px;
     cursor: pointer;
     border: 1px solid transparent;
-    padding: 9px 12px;
     background-color: $ui-color-gray-surface-1;
 
     .paginationItemLink {
       @include body-text;
       color: $ui-color-gray-white;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      align-content: center;
+      cursor: pointer;
     }
 
     transition:
@@ -119,8 +182,8 @@
       padding: 9px 12px;
       margin: 0px 4px;
       background-color: $ui-color-gray-surface-1;
-      color: $ui-color-gray-white; /* Цвет текста */
-      font-size: 14px; /* Размер шрифта */
+      color: $ui-color-gray-white;
+      font-size: 14px;
 
       &:hover {
         background-color: $ui-color-gray-elements;
