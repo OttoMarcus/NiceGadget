@@ -31,6 +31,7 @@ const Phones = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalNumber, setTotalNumber] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
+  // const [isScrolled, setIsScrolled] = useState(false)
 
   // http://localhost:3000/phones?modelName=iPhone+13&sort=price&perPage=16&startPage=2
 
@@ -75,16 +76,6 @@ const Phones = () => {
     const startPage = urlParams.get("startPage");
     console.log("startPage: ", startPage);
 
-    // setFilters(prevFilters => {
-    //   const updatedFilters = { ...prevFilters };
-    //   Object.keys(filterParams).forEach(key => {
-    //     if (filterParams[key] !== undefined) {
-    //       updatedFilters[key] = filterParams[key];
-    //     }
-    //   });
-    //   return updatedFilters;
-    // });
-
     setFilters({ ...filters, ...filterParams });
     setFilterQueryString(new URLSearchParams(filterParams).toString());
     setSortValue(sort ? sort : "-brandNew");
@@ -93,6 +84,30 @@ const Phones = () => {
     // eslint-disable-next-line
   }, []);
   // filters
+
+  // useEffect(() => {
+
+  //   // console.log(window.scrollY);
+  //   const handleScroll = () => {
+  //     const scrollPosition = window.scrollY;
+  //     if (window.scrollY > 0) {console.log('window.scrollY > 0: ' ,window.scrollY) }
+  //     console.log(scrollPosition);
+  //     // 191
+  //     if ((window.innerWidth < 640 && scrollPosition > 0) ||
+  //         (window.innerWidth >= 640 && scrollPosition > 191)
+  //     ) {
+  //       console.log('window.innerWidth: ', window.innerWidth);
+  //       console.log('scrollPosition: ', scrollPosition);
+  //       setIsScrolled(true);
+  //     } else {
+  //       setIsScrolled(false);
+  //     }
+  //   };
+  //   window.addEventListener('scroll', handleScroll);
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, []);
 
   // http://localhost:3000/phones?modelName=iPhone+13&sort=price&perPage=16&startPage=2
 

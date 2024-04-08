@@ -4,7 +4,8 @@
 
 .filterWrapper {
   position: relative;
-  align-self: flex-end;
+  margin-top: 15px;
+  // align-self: flex-end;
 }
 
 .filterButton {
@@ -14,7 +15,8 @@
   @include flex-center;
   @include button;
   height: 40px;
-  width: 200px;
+  width: 176px;
+  // width: 200px;
   color: $ui-color-gray-white;
   background-color: $ui-color-primary-accent;
   border: none;
@@ -30,24 +32,48 @@
   }
 }
 
-.filterContainer {
-  top: 120%;
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  width: 200px;
-  // height: 600px;
-  border: 1px solid $ui-color-primary-accent;
-  // overflow-y: scroll;
-  // background-color: $ui-color-gray-selected-surface-2;
-  background-color: $ui-color-gray-surface-1;
-  padding: 10px 0px;
-  z-index: 3;
-
-  &.hidden {
-    display: none;
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
   }
 }
+
+.filterContainer {
+  left: 0;
+  top: 0;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: 75vw;
+  height: 100vh;
+  // max-width: 320px;
+  animation: slideIn 0.5s forwards;
+  background-color: $ui-color-gray-surface-1;
+  padding: 10px 10px 0px 10px;
+  z-index: 30;
+  transition: all 0.3s ease-in-out 0s;
+  border: 1px solid $ui-color-primary-accent;
+  box-shadow: 2px 0 6px #33333342;
+  overflow-y: scroll;
+}
+
+// .filterContainer {
+//   top: 120%;
+//   position: absolute;
+//   display: flex;
+//   flex-direction: column;
+//   width: 200px;
+//   // height: 600px;
+//   border: 1px solid $ui-color-primary-accent;
+//   // overflow-y: scroll;
+//   // background-color: $ui-color-gray-selected-surface-2;
+//   background-color: $ui-color-gray-surface-1;
+//   padding: 10px 0px;
+//   z-index: 3;
+// }
 
 // .filterGroupContainer{
 //   // margin: 5px 0px;
@@ -56,17 +82,10 @@
 
 .filterGroupHeader {
   @include uppercase;
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  // font-size: 16px;
-  // font-style: normal;
-  // font-weight: 600;
-  // line-height: 21px;
-
-  // background-color: $ui-color-gray-surface-1;
-
   background-color: $ui-color-primary-accent;
   border-bottom: 1px solid $ui-color-gray-white;
   // $ui-color-gray-selected-surface-2
@@ -75,9 +94,28 @@
   // margin-bottom: 5px;
   padding: 8px 8px;
   cursor: pointer;
+  transition: $ui-transition-longer;
 
   &:hover {
+    padding-left: 12px;
     background-color: $ui-color-primary-accent-hover;
+    transition: $ui-transition-longer;
+
+    &::before {
+      background-color: $ui-color-gray-white;
+      // background-color: $ui-color-gray-icons-placeholders;
+    }
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 7px;
+    height: 100%;
+    background-color: transparent;
+    transition: background-color 0.3s;
   }
 }
 
@@ -88,7 +126,7 @@
   // justify-content: space-between;
   gap: 20px;
   padding: 20px;
-  // overflow: hidden;
+  overflow: hidden;
 }
 
 .minMaxInputs {
@@ -125,40 +163,33 @@
 
   & li {
     width: 100%;
+    padding: 0px 5px;
 
     &:hover {
-      background: var(--Gray-Surface-2, #323542);
+      background-color: $ui-color-gray-selected-surface-2;
       color: $ui-color-gray-white;
+
+      & .checkboxLabel {
+        background-color: $ui-color-gray-selected-surface-2;
+      }
     }
   }
 }
 
 .checkboxLabel {
+  @include body-text;
   position: relative;
   display: inline-block;
-
-  font-family: Mont;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 21px;
-  background-color: $ui-color-gray-surface-1;
-  color: #75767f;
-  font-size: 14px;
-  cursor: pointer;
+  width: 100%;
   padding: 0px 28px;
-
-  &:hover {
-    background: var(--Gray-Surface-2, #323542);
-    color: $ui-color-gray-white;
-  }
+  font-weight: 600;
+  // background-color: $ui-color-gray-surface-1;
+  color: $ui-color-gray-white;
+  cursor: pointer;
 
   // & input:checked{
   //   color: white;
   // }
-}
-
-.checkboxLabel input:checked + .checkmark + .labelText {
-  color: $ui-color-gray-white; /* Цвет текста при выбранном чекбоксе */
 }
 
 .checkboxLabel input {
@@ -168,7 +199,7 @@
 
 .checkmark {
   position: absolute;
-  top: 2px;
+  top: 3px;
   left: 5px;
   height: 14px;
   width: 14px;
@@ -193,43 +224,27 @@
   transform: rotate(45deg);
 }
 
-.checkboxLabel {
-  @include body-text;
-  // font-size: 14px;
-  // font-family: Mont;
-  // font-style: normal;
-  // font-weight: 600;
-  line-height: 21px;
-  // background: var(--Gray-Black, #0f1121);
-  background-color: $ui-color-gray-surface-1;
-  // color: #75767f;
-  color: $ui-color-gray-white;
-  font-size: 14px;
-  cursor: pointer;
-
-  &:hover {
-    background: var(--Gray-Surface-2, #323542);
-    color: #f1f2f9;
-  }
-}
-
 .filterButtonsContainer {
-  // position: fixed;
+  position: fixed;
+  width: 100%;
+  padding: 15px 5px;
   bottom: 0;
   display: flex;
-  flex-direction: column;
-  gap: 5px;
+  // flex-direction: column;
+  gap: 10px;
+  background-color: $ui-color-gray-surface-1;
 }
 
 .filterActionButton {
   @include flex-center;
   @include button;
   height: 30px;
-  width: 100%;
+  width: 45%;
+  // width: 100%;
   color: $ui-color-gray-white;
   background-color: $ui-color-primary-accent;
   border: none;
-  margin-right: 8px;
+  // margin-right: 8px;
 
   &:hover {
     background-color: $ui-color-primary-accent-hover;
@@ -244,34 +259,34 @@
   padding: 10px 13px;
   overflow: hidden;
 
-  .track {
-    background-color: $ui-color-primary-accent;
-  }
+  // .track {
+  //   background-color: $ui-color-primary-accent;
+  // }
 
-  /* Стили для рельсов слайдера */
-  .rail {
-    background-color: $ui-color-gray-white;
-  }
+  // /* Стили для рельсов слайдера */
+  // .rail {
+  //   background-color: $ui-color-gray-white;
+  // }
 
-  /* Стили для ползунков слайдера */
-  .handle {
-    width: 20px;
-    height: 20px;
-    margin-top: -8px;
-    background-color: #007bff;
-    border: none;
-    box-shadow: none;
-  }
+  // /* Стили для ползунков слайдера */
+  // .handle {
+  //   width: 20px;
+  //   height: 20px;
+  //   margin-top: -8px;
+  //   background-color: #007bff;
+  //   border: none;
+  //   box-shadow: none;
+  // }
 
-  /* Стили для точек на слайдере */
-  .dot {
-    background-color: #007bff;
-  }
+  // /* Стили для точек на слайдере */
+  // .dot {
+  //   background-color: #007bff;
+  // }
 
-  /* Стили для активных точек на слайдере */
-  .active-dot {
-    background-color: #007bff;
-  }
+  // /* Стили для активных точек на слайдере */
+  // .active-dot {
+  //   background-color: #007bff;
+  // }
 }
 
 // .sliderContainer {

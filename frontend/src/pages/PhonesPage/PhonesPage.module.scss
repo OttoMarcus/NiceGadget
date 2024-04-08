@@ -2,6 +2,10 @@
 @import "../../styles/abstracts/mixins";
 @import "../../styles/global/base";
 
+//208px висота всіх блоків у моб (375) - 48px висота хедера. 160px скрол
+//Від 640vw марджин заголовка +16px, шрифт з 32px і 1,28 на 48px і 1,17. 239px висота всіх блоків - 191px скрол
+//Від 1200vw висота хедера 64px. 255px висота всіх блоків -
+
 .phonesTitle {
   @include mobile-h1;
   color: $ui-color-gray-white;
@@ -21,10 +25,65 @@
 }
 
 .selectsContainer {
+  position: sticky;
+  z-index: 3;
+  top: 48px;
+  width: 100%;
+  height: 150px;
   display: flex;
-  margin-bottom: 20px;
-  gap: 16px;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  // row-gap: 10px;
+  gap: 10px;
+  padding: 10px 5%;
+  background-color: #0f1121;
+
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    top: 64px;
+  }
 }
+
+// .selectsContainer {
+//   position: relative;
+//   top: 208px;
+//   width: 100%;
+//   // z-index: 3;
+//   display: flex;
+//   gap: 16px;
+//   padding: 10px 0px;
+//   // margin-bottom: 20px;
+//   background-color: #0f1121;
+
+//   &.scrolled{
+//     position: fixed;
+//     top: 48px;
+//     z-index: 3;
+//     display: flex;
+//     gap: 16px;
+//     // width: 100%;
+//     // background-color: #0f1121;
+
+//     // @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+//     //   @include h1;
+//     //   margin-bottom: 24px;
+//     // }
+
+//   }
+// }
+
+// .scrolled{
+//   position: fixed;
+//   top: 64px;
+//   z-index: 3;
+//   display: flex;
+//   gap: 16px;
+//   width: 100%;
+//   padding-top: 10px;
+//   margin-bottom: 20px;
+//   /* overflow: hidden; */
+//   background-color: #0f1121;
+// }
 
 .resultWrapper {
   width: 100%;
@@ -65,6 +124,7 @@
 //   background-color: $ui-color-primary-accent;
 // }
 
+/*----------------- Pagination styles ---------------------*/
 .pagination {
   display: flex;
   justify-content: center;
@@ -109,7 +169,6 @@
       font-weight: bold;
     }
 
-    /* Стили для неактивных страниц */
     &.inactive {
       opacity: 0.5;
       cursor: not-allowed;
