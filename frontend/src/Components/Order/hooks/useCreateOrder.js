@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { unwrapResult } from "@reduxjs/toolkit";
 import { orderAddNew, orderAddNewUnAvt } from "../../../store/orders/OrderNew";
 
 export const useCreateOrder = () => {
@@ -23,7 +24,8 @@ export const useCreateOrder = () => {
       userFirstName: values.firstName,
       userLastName: values.lastName,
       deliveryAddress: values.deliveryAddress,
-      shipping: { method: values.paymentMethod },
+      deliveryMethod: values.deliveryMethod,
+      paymentMethod: values.paymentMethod,
       totalSum: totalCartPrice,
       email: values.email,
       canceled: false,
@@ -33,10 +35,17 @@ export const useCreateOrder = () => {
       data: currentDate,
     };
 
-    if (token && resultSlice) {
-      dispatch(orderAddNew({ ...orderData, customerId: userId }));
-    } else if (!token) {
-      dispatch(orderAddNewUnAvt(orderData));
+    try {
+      const resultAction = await dispatch(
+        token && resultSlice
+          ? orderAddNew({ ...orderData, customerId: userId })
+          : orderAddNewUnAvt(orderData)
+      );
+      const order = unwrapResult(resultAction);
+
+      return { success: true, order };
+    } catch (err) {
+      return { success: false, error: err };
     }
   };
 

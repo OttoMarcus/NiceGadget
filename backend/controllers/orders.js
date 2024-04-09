@@ -15,18 +15,25 @@ exports.placeOrder = async (req, res, next) => {
   try {
     const order = _.cloneDeep(req.body);
     order.orderNo = String(rand());
+    
+    const { errors, isValid } = validateOrderForm(req.body);
+
+    if (!isValid) {
+      return res.status(400).json({ validationErrors: errors });
+    }
+    
     let cartProducts = [];
 
     if (req.body.deliveryAddress) {
       order.deliveryAddress = req.body.deliveryAddress;
     }
 
-    if (req.body.shipping) {
-      order.shipping = req.body.shipping;
+    if (req.body.deliveryMethod) {
+      order.deliveryMethod = req.body.deliveryMethod;
     }
 
-    if (req.body.paymentInfo) {
-      order.paymentInfo = req.body.paymentInfo;
+    if (req.body.paymentMethod) {
+      order.paymentMethod = req.body.paymentMethod;
     }
     if (req.body.userFirstName) {
       order.userFirstName = req.body.userFirstName;
@@ -43,7 +50,7 @@ exports.placeOrder = async (req, res, next) => {
     if (!req.body.products && cartProducts.length < 1) {
       res
           .status(400)
-          .json({ message: "The list of products is required, but absent!" });
+          .json({ availabilityError: "The list of products is required, but absent!" });
     }
 
     if (cartProducts.length > 0) {
@@ -122,13 +129,13 @@ exports.placeOrder = async (req, res, next) => {
         })
         .catch(err =>
             res.status(400).json({
-              message: `Error happened on server: "${err}" `
+              serverError: `Error happened on server: "${err}" `
             })
         );
     // }
   } catch (err) {
     res.status(400).json({
-      message: `Error happened on server: "${err}" `
+      serverError: `Error happened on server: "${err}" `
     });
   }
 };

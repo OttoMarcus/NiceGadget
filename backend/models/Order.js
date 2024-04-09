@@ -18,13 +18,16 @@ const OrderSchema = new Schema(
       }
     ],
     deliveryAddress: {
-      type: Schema.Types.Mixed
+      type: String,
+      required: true
     },
-    shipping: {
-      type: Schema.Types.Mixed
+    deliveryMethod: {
+      type: String,
+      required: true
     },
-    paymentInfo: {
-      type: Schema.Types.Mixed
+    paymentMethod: {
+      type: String,
+      required: true
     },
     totalSum: {
       type: Number,

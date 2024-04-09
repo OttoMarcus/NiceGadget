@@ -7,7 +7,8 @@ export const useValidateCartAndNavigate = (
   toggleModal,
   setValidationResults,
   successRedirectPath = "/checkout",
-  onSuccess
+  onSuccess = null,
+  shouldCreateOrder = false
 ) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -27,12 +28,17 @@ export const useValidateCartAndNavigate = (
         ).unwrap();
 
         if (validationResults.allProductsAvailable) {
-          if (onSuccess) {
-            onSuccess(values);
-            navigate(successRedirectPath);
-          } else {
-            navigate(successRedirectPath);
+          if (shouldCreateOrder && onSuccess) {
+            try {
+              await onSuccess(values);
+              return;
+            } catch (err) {
+              console.error("response error:", err);
+              return;
+            }
           }
+
+          navigate(successRedirectPath);
         } else {
           toggleModal(true);
           setValidationResults(validationResults.errors || []);
@@ -49,6 +55,7 @@ export const useValidateCartAndNavigate = (
       setValidationResults,
       successRedirectPath,
       onSuccess,
+      shouldCreateOrder,
     ]
   );
 

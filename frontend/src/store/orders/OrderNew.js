@@ -37,7 +37,7 @@ export const synchronizeOrder = createAsyncThunk(
 
       return responseData;
     } catch (error) {
-      console.warn("Error updating wishlist:", error);
+      console.warn("Error orders synchronization:", error);
       return rejectWithValue(error);
     }
   }
@@ -45,36 +45,44 @@ export const synchronizeOrder = createAsyncThunk(
 
 export const orderAddNewUnAvt = createAsyncThunk(
   "todos/orderAddNewUnAvt",
-  async function (order) {
+  async (orderData, { rejectWithValue }) => {
     try {
       const response = await fetch(`/api/orders`, {
         method: `POST`,
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(order),
+        body: JSON.stringify(orderData),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        // throw new Error("Network response was not ok");
+        return rejectWithValue(
+          data.validationErrors
+            ? data.validationErrors
+            : { serverError: "Network response was not ok." }
+        );
       }
 
-      const data = await response.json();
       // console.log(`post unAvt , `, data);
       return data;
     } catch (error) {
-      console.warn("Error fetching wishlist:", error);
-      throw error;
+      return rejectWithValue({ serverError: error.toString() });
+      // console.warn("Error creating order:", error);
+      // throw error;
     }
   }
 );
 export const orderAddNew = createAsyncThunk(
   "todos/orderAddNew",
-  async function (order) {
+  async (orderData, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("user");
       const resultSlice = userId.slice(1, -1);
+
       if (token && resultSlice) {
         const response = await fetch(`/api/orders`, {
           method: `POST`,
@@ -82,20 +90,26 @@ export const orderAddNew = createAsyncThunk(
             "Content-Type": "application/json",
             Authorization: token,
           },
-          body: JSON.stringify(order),
+          body: JSON.stringify(orderData),
         });
 
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
         const data = await response.json();
+
+        if (!response.ok) {
+          return rejectWithValue(
+            data.validationErrors
+              ? data.validationErrors
+              : { serverError: "Network response was not ok." }
+          );
+          // throw new Error("Network response was not ok");
+        }
 
         return data;
       }
     } catch (error) {
-      console.warn("Error fetching wishlist:", error);
-      throw error;
+      return rejectWithValue({ serverError: error.toString() });
+      // console.warn("Error creating order:", error);
+      // throw error;
     }
   }
 );
@@ -128,7 +142,7 @@ export const orderGetNew = createAsyncThunk(
 
       return data;
     } catch (error) {
-      console.warn("Error fetching wishlist:", error);
+      console.warn("Error fetching order:", error);
       throw error;
     }
   }
@@ -168,6 +182,12 @@ const OrderNew = createSlice({
       } else {
         state.orders.push(action.payload);
       }
+    });
+    builder.addCase(orderAddNew.rejected, (state, action) => {
+      state.orderValidationErrors = action.payload;
+    });
+    builder.addCase(orderAddNewUnAvt.rejected, (state, action) => {
+      state.orderValidationErrors = action.payload;
     });
   },
 });
