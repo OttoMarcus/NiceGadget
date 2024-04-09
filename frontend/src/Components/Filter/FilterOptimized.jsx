@@ -13,7 +13,6 @@ import PropTypes from "prop-types";
 
 /*
 TO DO:
-9. Fix position of buttons, add scroll for filters.
 10. Add MEMO
 12. Preloader?
 
@@ -43,9 +42,7 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
     // Fetch data from server
     async function fetchData() {
       try {
-        const response = await fetch(
-          "http://localhost:4000/api/phones-filters"
-        );
+        const response = await fetch("/api/phones-filters");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
