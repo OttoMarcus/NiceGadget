@@ -134,9 +134,7 @@ exports.placeOrder = async (req, res, next) => {
 };
 
 exports.updateOrder = (req, res, next) => {
-  console.log( `req.params.id`,req.params.id);
   Order.findOne({ orderNo: req.params.id }).then(async currentOrder => {
-    console.log(  `currentOrder`, currentOrder);
     if (!currentOrder) {
       return res
           .status(400)
@@ -315,12 +313,9 @@ exports.deleteOrder = (req, res, next) => {
 
 
 exports.getOrders = (req, res, next) => {
-  console.log(req.headers.customerid)
-  //req.headers.customerId
   Order.find({ customerId: req.headers.customerid })
       .populate("customerId")
       .then(orders =>{
-        console.log(`orders` , orders)
         res.json(orders)})
       .catch(err =>
           res.status(400).json({

@@ -10,6 +10,7 @@ import { useLocation } from "react-router-dom";
 import { fetchCartItems } from "./API/cartAPI";
 import { fetchTodos, fetchChange } from "./store/favorites/favoriteSlice";
 import { orderGetNew } from "./store/orders/OrderNew";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const dispatch = useDispatch();
@@ -85,6 +86,7 @@ function App() {
   return (
     <div className="app-wrapper">
       <Header />
+      <Toaster position={`bottom-right`} />
       <Breadcrumbs />
       <main className="content-wrapper">
         <RootRouters />

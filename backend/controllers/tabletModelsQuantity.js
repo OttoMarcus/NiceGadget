@@ -8,23 +8,13 @@ const queryCreator = require("../commonHelpers/queryCreator");
 const filterParser = require("../commonHelpers/filterParser");
 const _ = require("lodash");
 const { login } = require("passport/lib/http/request");
+const sendNotificationToSubscribers = require("../commonHelpers/sendNotificationToSubscribers");
+const sendNotificationToNotRegisteredSubscribers = require("../commonHelpers/sendNotificationToNotRegisteredSubscribers");
 
 exports.addTabletModelQuantity = (req, res, next) => {
   const tabletModelQuantityFields = _.cloneDeep(req.body);
 
   tabletModelQuantityFields.itemNo = rand();
-
-  // try {
-  //   tabletModelQuantityFields.name = tabletModelQuantityFields.name
-  //     .toLowerCase()
-  //     .trim()
-  //     .replace(/\s\s+/g, " ");
-  //
-  // } catch (err) {
-  //   res.status(400).json({
-  //     message: `Error happened on server: "${err}" `
-  //   });
-  // }
 
   const updatedTabletModelQuantity = queryCreator(tabletModelQuantityFields);
 
@@ -44,84 +34,84 @@ const updateTabletModelQuantity = async (req, res, next) => {
   const { productId } = req.params;
   const { quantity } = req.body;
 
-  tabletModelsQuantity.findOne({ productId })
-    .then(tabletModelQuantity => {
-      if (!tabletModelQuantity) {
-        return res.status(400).json({
-          message: `tabletModelQuantity with id "${productId}" is not found.`,
-        });
-      } else {
-        let newQuantity = tabletModelQuantity.quantity + quantity;
+  let notificationMessageSubscribers = "Tablet is available";
+  let notificationMessageUnauthorized = "Tablet is available";
 
-        if (newQuantity < 0) {
-          return res.status(400).json({
-            message: "Insufficient  quantity.",
-          });
-        }
+  try {
+    const tabletModelQuantity = await tabletModelsQuantity.findOne({ productId });
 
-        if (newQuantity === 0) {
-          TabletModel.findOneAndUpdate(
-            { id: tabletModelQuantity.refModel },
-            { $set: { "colors.$[color].capacities.$[capacity].available": false } },
-            {
-              arrayFilters: [{ "color.capacities.productId": productId }, { "capacity.productId": productId }],
-              new: true,
-            },
-          ).then(tabModel => {
-            console.log(tabModel);
-          });
+    if (!tabletModelQuantity) {
+      return res.status(400).json({
+        message: `tabletModelQuantity with id "${productId}" is not found.`,
+      });
+    }
 
-          TabletProduct.findOneAndUpdate(
-            { id: productId },
-            { $set: { available: false } },
-            { new: true },
-          ).then(product => {
-            console.log(product);
-          })
-        }
+    let newQuantity = tabletModelQuantity.quantity + quantity;
 
-        if ((tabletModelQuantity.quantity === 0) && (newQuantity > 0)) {
-          // notify product subscribers
-          TabletModel.findOneAndUpdate(
-            { id: tabletModelQuantity.refModel },
-            { $set: { "colors.$[color].capacities.$[capacity].available": true } },
-            {
-              arrayFilters: [{ "color.capacities.productId": productId }, { "capacity.productId": productId }],
-              new: true,
-            },
-          ).then(tabModel => {
-            console.log(tabModel);
-          });
+    if (newQuantity < 0) {
+      return res.status(400).json({
+        message: "Insufficient quantity.",
+      });
+    }
 
-          TabletProduct.findOneAndUpdate(
-            { id: productId },
-            { $set: { available: true } },
-            { new: true },
-          ).then(product => {
-            console.log(product);
-          })
-        }
-
-
-        tabletModelsQuantity.findOneAndUpdate(
-          { productId: productId },
-          { $set: { quantity: newQuantity } },
-          { new: true },
+    if (newQuantity === 0) {
+      await Promise.all([
+        TabletModel.findOneAndUpdate(
+          { id: tabletModelQuantity.refModel },
+          { $set: { "colors.$[color].capacities.$[capacity].available": false } },
+          {
+            arrayFilters: [{ "color.capacities.productId": productId }, { "capacity.productId": productId }],
+            new: true,
+          }
+        ),
+        TabletProduct.findOneAndUpdate(
+          { id: productId },
+          { $set: { available: false } },
+          { new: true }
         )
-          .then(tabletModelQuantity => res.json(tabletModelQuantity))
-          .catch(err =>
-            res.status(400).json({
-              message: `Error happened on server: "${err}" `,
-            }),
-          );
-      }
-    })
-    .catch(err =>
-      res.status(400).json({
-        message: `Error happened on server: "${err}" `,
-      }),
+      ]);
+    }
+
+    if (tabletModelQuantity.quantity === 0 && newQuantity > 0) {
+      notificationMessageSubscribers = await sendNotificationToSubscribers({ id: productId, category: 'tablets' });
+      notificationMessageUnauthorized = await sendNotificationToNotRegisteredSubscribers({ id: productId, category: 'tablets' });
+
+      await Promise.all([
+        TabletModel.findOneAndUpdate(
+          { id: tabletModelQuantity.refModel },
+          { $set: { "colors.$[color].capacities.$[capacity].available": true } },
+          {
+            arrayFilters: [{ "color.capacities.productId": productId }, { "capacity.productId": productId }],
+            new: true
+          }
+        ),
+        TabletProduct.findOneAndUpdate(
+          { id: productId },
+          { $set: { available: true } },
+          { new: true }
+        )
+      ]);
+    }
+
+    const updatedModelQuantity = await tabletModelsQuantity.findOneAndUpdate(
+      { productId: productId },
+      { $set: { quantity: newQuantity } },
+      { new: true }
     );
+
+    const responseData = {
+      updatedModelQuantity,
+      notificationMessageSubscribers,
+      notificationMessageUnauthorized,
+    };
+
+    res.json(responseData);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: `Error happened on server: "${err}"` });
+  }
 };
+
 
 exports.updateTabletModelQuantityAsAdmin = (req, res, next) => {
   updateTabletModelQuantity(req, res, next);

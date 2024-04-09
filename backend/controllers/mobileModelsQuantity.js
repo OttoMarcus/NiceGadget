@@ -1,44 +1,19 @@
 const mobileModelsQuantity = require("../models/MobileModelQuantity");
-const isValidMongoId = require("../validation/isValidMongoId");
-
 const uniqueRandom = require("unique-random");
 const rand = uniqueRandom(0, 999999);
-
 const queryCreator = require("../commonHelpers/queryCreator");
 const filterParser = require("../commonHelpers/filterParser");
-const _ = require("lodash");
 const MobileModel = require("../models/MobileModel");
 const MobileProduct = require("../models/MobileProduct");
 
-// exports.addImages = (req, res, next) => {
-//   if (req.files.length > 0) {
-//     res.json({
-//       message: "Photos are received"
-//     });
-//   } else {
-//     res.json({
-//       message:
-//         "Something wrong with receiving photos at server. Please, check the path folder"
-//     });
-//   }
-// };
+const sendNotificationToSubscribers = require("../commonHelpers/sendNotificationToSubscribers");
+const sendNotificationToNotRegisteredSubscribers = require("../commonHelpers/sendNotificationToNotRegisteredSubscribers");
+
 
 exports.addMobileModelQuantity = (req, res, next) => {
   const mobileModelQuantityFields = _.cloneDeep(req.body);
 
   mobileModelQuantityFields.itemNo = rand();
-
-  // try {
-  //   mobileModelQuantityFields.name = mobileModelQuantityFields.name
-  //     .toLowerCase()
-  //     .trim()
-  //     .replace(/\s\s+/g, " ");
-  //
-  // } catch (err) {
-  //   res.status(400).json({
-  //     message: `Error happened on server: "${err}" `
-  //   });
-  // }
 
   const updatedMobileModelQuantity = queryCreator(mobileModelQuantityFields);
 
@@ -54,88 +29,87 @@ exports.addMobileModelQuantity = (req, res, next) => {
     );
 };
 
-const updateMobileModelQuantity = (req, res, next) => {
+const updateMobileModelQuantity = async (req, res, next) => {
   const { productId } = req.params;
   const { quantity } = req.body;
 
-  mobileModelsQuantity.findOne({ productId })
-    .then(mobileModelQuantity => {
-      if (!mobileModelQuantity) {
-        return res.status(400).json({
-          message: `mobileModelQuantity with id "${productId}" is not found.`
-        });
-      } else {
-        let newQuantity = mobileModelQuantity.quantity + quantity;
+  let notificationMessageSubscribers = 'Phone is available';
+  let notificationMessageUnauthorized = "Phone is available";
 
-        if (newQuantity < 0) {
-          return res.status(400).json({
-            message: "Insufficient  quantity.",
-          });
-        }
+  try {
+    const mobileModelQuantity = await mobileModelsQuantity.findOne({ productId });
 
+    if (!mobileModelQuantity) {
+      return res.status(400).json({
+        message: `mobileModelQuantity with id "${productId}" is not found.`
+      });
+    }
 
-        if (newQuantity === 0) {
-          MobileModel.findOneAndUpdate(
-            { id: mobileModelQuantity.refModel },
-            { $set: { "colors.$[color].capacities.$[capacity].available": false } },
-            {
-              arrayFilters: [{ "color.capacities.productId": productId }, { "capacity.productId": productId }],
-              new: true,
-            },
-          ).then(mobModel => {
-            console.log('here');
-            console.log(mobModel);
-          });
+    let newQuantity = mobileModelQuantity.quantity + quantity;
 
-          MobileProduct.findOneAndUpdate(
-            { id: productId },
-            { $set: { available: false } },
-            { new: true },
-          ).then(product => {
-            console.log(product);
-          })
-        }
+    if (newQuantity < 0) {
+      return res.status(400).json({
+        message: "Insufficient quantity.",
+      });
+    }
 
-        if ((mobileModelQuantity.quantity === 0) && (newQuantity > 0)) {
-          // notify product subscribers
-          MobileModel.findOneAndUpdate(
-            { id: mobileModelQuantity.refModel },
-            { $set: { "colors.$[color].capacities.$[capacity].available": true } },
-            {
-              arrayFilters: [{ "color.capacities.productId": productId }, { "capacity.productId": productId }],
-              new: true,
-            },
-          ).then(mobModel => {
-            console.log(mobModel);
-          });
-
-          MobileProduct.findOneAndUpdate(
-            { id: productId },
-            { $set: { available: true } },
-            { new: true },
-          ).then(product => {
-            console.log(product);
-          })
-        }
-
-        mobileModelsQuantity.findOneAndUpdate(
-          { productId: productId },
-          { $set: { quantity: newQuantity } },
-          { new: true },
+    if (newQuantity === 0) {
+      await Promise.all([
+        MobileModel.findOneAndUpdate(
+          { id: mobileModelQuantity.refModel },
+          { $set: { "colors.$[color].capacities.$[capacity].available": false } },
+          {
+            arrayFilters: [{ "color.capacities.productId": productId }, { "capacity.productId": productId }],
+            new: true,
+          }
+        ),
+        MobileProduct.findOneAndUpdate(
+          { id: productId },
+          { $set: { available: false } },
+          { new: true }
         )
-          .then(mobileModelQuantity => res.json(mobileModelQuantity))
-          .catch(err =>
-            res.status(400).json({
-              message: `Error happened on server: "${err}" `,
-            }),
-          );
-      }
-    })
-    .catch(err =>
-      res.status(400).json({
-        message: `Error happened on server: "${err}" `
-      })
+      ]);
+    }
+
+    if (mobileModelQuantity.quantity === 0 && newQuantity > 0) {
+      notificationMessageSubscribers = await sendNotificationToSubscribers({ id: productId, category: 'phones' });
+      notificationMessageUnauthorized = await sendNotificationToNotRegisteredSubscribers({ id: productId, category: 'phones' });
+
+
+      await Promise.all([
+        MobileModel.findOneAndUpdate(
+          { id: mobileModelQuantity.refModel },
+          { $set: { "colors.$[color].capacities.$[capacity].available": true } },
+          {
+            arrayFilters: [{ "color.capacities.productId": productId }, { "capacity.productId": productId }],
+            new: true
+          }
+        ),
+        MobileProduct.findOneAndUpdate(
+          { id: productId },
+          { $set: { available: true } },
+          { new: true }
+        )
+      ]);
+    }
+
+    const updatedModelQuantity = await mobileModelsQuantity.findOneAndUpdate(
+      { productId: productId },
+      { $set: { quantity: newQuantity } },
+      { new: true }
     );
+
+    const responseData = {
+      updatedModelQuantity,
+      notificationMessageSubscribers,
+      notificationMessageUnauthorized
+    }
+
+    res.json(responseData);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: `Error happened on server: "${err}"` });
+  }
 };
 
 exports.updateMobileModelQuantityAsAdmin = (req, res, next) => {
