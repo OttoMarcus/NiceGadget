@@ -15,11 +15,12 @@ const Order = ({
   mobile,
   orderNo,
   products,
-  shipping,
+  deliveryMethod,
+  paymentMethod,
   status,
   totalSum,
 }) => {
-  const [toogleOpen, settoogleOpen] = useState(null);
+  const [toggleOpen, setToggleOpen] = useState(null);
   const dateObject = new Date(data);
   const day = dateObject.getDate();
   const month = dateObject.getMonth() + 1;
@@ -27,8 +28,8 @@ const Order = ({
   const hours = dateObject.getHours();
   const minutes = dateObject.getMinutes();
   // const seconds = dateObject.getSeconds();
-  const handelToogle = () => {
-    settoogleOpen(!toogleOpen);
+  const handelToggle = () => {
+    setToggleOpen(!toggleOpen);
   };
   return (
     <div className={style.container}>
@@ -44,7 +45,8 @@ const Order = ({
             <p className={style.info}>Delivery address:</p>
             <p className={style.subInfo}> {deliveryAddress}</p>
             {/*<p className={style.info}>Total sum: {totalSum}$</p>*/}
-            <p className={style.info}>Shipping: {shipping?.method}</p>
+            <p className={style.info}>Delivery Method: {deliveryMethod}</p>
+            <p className={style.info}>Payment Method: {paymentMethod}</p>
             <p className={style.info}>Status: {status}</p>
             <p className={style.info}>Email: {email}</p>
             <p className={style.info}>Mobile: {mobile}</p>
@@ -60,13 +62,13 @@ const Order = ({
             <p>{totalSum} $</p>
           </div>
           <p
-            className={style.toogleProducts}
-            onClick={() => handelToogle(orderNo)}
+            className={style.toggleProducts}
+            onClick={() => handelToggle(orderNo)}
           >
-            {toogleOpen ? `close all products` : `open all products`}
+            {toggleOpen ? `close all products` : `open all products`}
           </p>
         </div>
-        {toogleOpen && (
+        {toggleOpen && (
           <div className={style.pictureSection}>
             {products.map((product) => {
               const discountedPrice = product.discount
@@ -123,7 +125,8 @@ Order.propTypes = {
   mobile: PropTypes.string.isRequired,
   orderNo: PropTypes.string.isRequired,
   products: PropTypes.array.isRequired,
-  shipping: PropTypes.object.isRequired,
+  deliveryMethod: PropTypes.string.isRequired,
+  paymentMethod: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
   totalSum: PropTypes.number.isRequired,
 };

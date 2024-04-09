@@ -2,6 +2,7 @@ import { object, string } from "yup";
 
 const validationSchema = object({
   firstName: string("First Name must be a string")
+    .trim()
     .min(2, "First Name is too short")
     .max(25, "First Name is too long")
     .matches(
@@ -10,6 +11,7 @@ const validationSchema = object({
     )
     .required("First name is required"),
   lastName: string("Last Name must be a string")
+    .trim()
     .min(2, "Last Name is too short")
     .max(25, "Last Name is too long")
     .matches(
@@ -25,8 +27,20 @@ const validationSchema = object({
     .required("Phone number is required"),
   email: string()
     .email("Email format is invalid")
+    .test("is-valid-domain", "Email must contain a valid domain", (value) => {
+      if (!value) return false;
+      const parts = value.split("@");
+      if (parts.length !== 2) return false; // Переконуємось, що є лише один символ '@'
+      const domain = parts[1];
+      return (
+        domain.includes(".") &&
+        domain.lastIndexOf(".") > 0 &&
+        domain.indexOf(".") === domain.lastIndexOf(".") &&
+        domain.slice(-1) !== "."
+      );
+    })
     .required("Email is required"),
-  deliveryAddress: string().required("Delivery Address is required"),
+  deliveryAddress: string().trim().required("Delivery Address is required"),
   deliveryMethod: string().required("Delivery Method is required"),
   paymentMethod: string().required("Payment Method is required"),
 });

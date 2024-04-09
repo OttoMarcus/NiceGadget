@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import styles from "./CheckoutForm.module.scss";
 import Cash from "./icons/cash.png";
@@ -33,6 +34,8 @@ const paymentOptions = [
 ];
 
 const CheckoutForm = () => {
+  const [orderValidationErrors, setOrderValidationErrors] = useState({});
+  const navigate = useNavigate();
   const userData = useSelector((state) => state.user.user);
   const isAuthorized = useSelector((state) => state.user.isAuthorized);
   const { isModalOpen, setValidationResults, validationResults, toggleModal } =
@@ -40,21 +43,28 @@ const CheckoutForm = () => {
 
   const createOrder = useCreateOrder();
 
-  const validateAndNavigate = useValidateCartAndNavigate(
+  const handleCheckout = useValidateCartAndNavigate(
     toggleModal,
     setValidationResults,
     "/orders",
-    (values) => {
-      createOrder(values);
+    async (values) => {
+      const { success, error } = await createOrder(values);
 
-      if (isAuthorized) {
-        dispatch(updateProductQuantities(cartItems));
-        dispatch(deleteCartServer());
+      if (!success) {
+        setOrderValidationErrors(error);
       } else {
-        dispatch(updateProductQuantities(cartItems));
-        dispatch(deleteCartLocal());
+        if (isAuthorized) {
+          dispatch(updateProductQuantities(cartItems));
+          dispatch(deleteCartServer());
+        } else {
+          dispatch(updateProductQuantities(cartItems));
+          dispatch(deleteCartLocal());
+        }
+
+        navigate("/orders");
       }
-    }
+    },
+    true
   );
 
   const [initialValues, setInitialValues] = useState({
@@ -104,7 +114,7 @@ const CheckoutForm = () => {
       );
     }
 
-    await validateAndNavigate(submissionValues);
+    await handleCheckout(submissionValues);
   };
 
   return (
@@ -142,7 +152,7 @@ const CheckoutForm = () => {
 
             <CustomInputCheckout
               label="Email *"
-              type="text"
+              type="email"
               name="email"
               placeholder="Email"
             />
@@ -199,6 +209,13 @@ const CheckoutForm = () => {
                 Place Order
               </Button>
             </div>
+            {Object.keys(orderValidationErrors).length > 0 && (
+              <div className={styles.serverValidationErrors}>
+                {Object.values(orderValidationErrors).map((error, index) => (
+                  <p key={index}>{error}</p>
+                ))}
+              </div>
+            )}
           </Form>
           {isModalOpen && (
             <CheckoutModal

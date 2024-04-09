@@ -8,6 +8,9 @@ const queryCreator = require("../commonHelpers/queryCreator");
 const filterParser = require("../commonHelpers/filterParser");
 const _ = require("lodash");
 const { login } = require("passport/lib/http/request");
+const sendNotificationToSubscribers = require("../commonHelpers/sendNotificationToSubscribers");
+const sendNotificationToNotRegisteredSubscribers = require("../commonHelpers/sendNotificationToNotRegisteredSubscribers");
+
 
 exports.addAccessoriesModelQuantity = (req, res, next) => {
   const accessoriesModelQuantityFields = _.cloneDeep(req.body);
@@ -39,83 +42,82 @@ exports.addAccessoriesModelQuantity = (req, res, next) => {
       }),
     );
 };
-
 const updateAccessoriesModelQuantity = async (req, res, next) => {
   const { productName } = req.params;
   const { quantity } = req.body;
 
-  accessoriesModelsQuantity.findOne({ productName })
-    .then(accessoriesModelQuantity => {
-      if (!accessoriesModelQuantity) {
-        return res.status(400).json({
-          message: `accessoriesModelQuantity with productName "${productName}" is not found.`,
-        });
-      } else {
-        let newQuantity = accessoriesModelQuantity.quantity + quantity;
+  let notificationMessageSubscribers = "Accessory is available";
+  let notificationMessageUnauthorized = "Accessory is available";
 
-        if (newQuantity < 0) {
-          return res.status(400).json({
-            message: "Insufficient  quantity.",
-          });
-        }
+  try {
+    const accessoriesModelQuantity = await accessoriesModelsQuantity.findOne({ productName });
 
-        if (newQuantity === 0) {
-          AccessoriesModel.findOneAndUpdate(
-            { name: productName },
-            { $set: { available: false } },
-            { new: true },
-          ).then(accModel => {
-            console.log(accModel);
-          });
+    if (!accessoriesModelQuantity) {
+      return res.status(400).json({
+        message: `accessoriesModelQuantity with productName "${productName}" is not found.`,
+      });
+    }
 
-          AccessoriesProduct.findOneAndUpdate(
-            { name: productName },
-            { $set: { available: false } },
-            { new: true },
-          ).then(product => {
-            console.log(product);
-          })
-        }
+    let newQuantity = accessoriesModelQuantity.quantity + quantity;
 
-        if ((accessoriesModelQuantity.quantity === 0) && (newQuantity > 0)) {
-          // notify product subscribers
-          AccessoriesModel.findOneAndUpdate(
-            { name: productName },
-            { $set: { available: true } },
-            { new: true },
-          ).then(accModel => {
-            console.log(accModel);
-          });
+    if (newQuantity < 0) {
+      return res.status(400).json({
+        message: "Insufficient quantity.",
+      });
+    }
 
-          AccessoriesProduct.findOneAndUpdate(
-            { name: productName },
-            { $set: { available: true } },
-            { new: true },
-          ).then(product => {
-            console.log(product);
-          })
-        }
-
-
-        accessoriesModelsQuantity.findOneAndUpdate(
-          { productName: productName },
-          { $set: { quantity: newQuantity } },
-          { new: true },
+    if (newQuantity === 0) {
+      await Promise.all([
+        AccessoriesModel.findOneAndUpdate(
+          { name: productName },
+          { $set: { available: false } },
+          { new: true }
+        ),
+        AccessoriesProduct.findOneAndUpdate(
+          { name: productName },
+          { $set: { available: false } },
+          { new: true }
         )
-          .then(accessoriesModelQuantity => res.json(accessoriesModelQuantity))
-          .catch(err =>
-            res.status(400).json({
-              message: `Error happened on server: "${err}" `,
-            }),
-          );
-      }
-    })
-    .catch(err =>
-      res.status(400).json({
-        message: `Error happened on server: "${err}" `,
-      }),
+      ]);
+    }
+
+    if (accessoriesModelQuantity.quantity === 0 && newQuantity > 0) {
+      notificationMessageSubscribers = await sendNotificationToSubscribers({ id: productName, category: 'accessories' });
+      notificationMessageUnauthorized = await sendNotificationToNotRegisteredSubscribers({ id: productName, category: 'accessories' });
+
+      await Promise.all([
+        AccessoriesModel.findOneAndUpdate(
+          { name: productName },
+          { $set: { available: true } },
+          { new: true }
+        ),
+        AccessoriesProduct.findOneAndUpdate(
+          { name: productName },
+          { $set: { available: true } },
+          { new: true }
+        )
+      ]);
+    }
+
+    const updatedModelQuantity = await accessoriesModelsQuantity.findOneAndUpdate(
+      { productName: productName },
+      { $set: { quantity: newQuantity } },
+      { new: true }
     );
+
+    const responseData = {
+      updatedModelQuantity,
+      notificationMessageSubscribers,
+      notificationMessageUnauthorized,
+    };
+
+    res.json(responseData);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: `Error happened on server: "${err}"` });
+  }
 };
+
 
 exports.updateAccessoriesModelQuantityAsAdmin = (req, res, next) => {
   updateAccessoriesModelQuantity(req, res, next);

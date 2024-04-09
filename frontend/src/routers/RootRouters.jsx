@@ -20,7 +20,8 @@ import UserUpdatePass from "../pages/UserPage/UserUpdatePass/UserUpdatePass";
 import CheckoutPage from "../pages/CheckoutPage/CheckoutPage";
 import UserDataInformation from "../pages/UserPage/UserDataInformation/UserDataInformation";
 import AdminPage from "../pages/AdminPage/AdminPage";
-import Orders from "../pages/OrdersPage/Orders";
+import OrdersPage from "../pages/OrdersPage/OrdersPage";
+
 const RootRouters = () => {
   return (
     <Routes>
@@ -47,7 +48,7 @@ const RootRouters = () => {
       <Route path="/rights" element={<RightsPage />} />
       <Route path="/search" element={<SearchPage />} />
       <Route path="/contacts" element={<ContactsPage />} />
-      <Route path="/orders" element={<Orders />} />
+      <Route path="/orders" element={<OrdersPage />} />
       <Route path="*" element={<WrongRoute />} />
     </Routes>
   );
