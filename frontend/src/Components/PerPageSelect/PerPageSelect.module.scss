@@ -5,6 +5,8 @@
 .perPageContainer {
   display: flex;
   flex-direction: column;
+  width: 45%;
+  max-width: 128px;
 
   .perPageTitle {
     @include small-text;

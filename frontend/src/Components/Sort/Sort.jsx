@@ -10,29 +10,12 @@ const Sort =
   ({ handleSortChange, sortValue }) => {
     // const [sortMenuIsOpen, setSortMenuIsOpen] = useState(false);
 
-    // console.log(sortValue);
-
-    /*
-
-FILTER
-
-Simple Options: New, In Stock, HotPrice(?)
-
-Options: 
-- Price (Input Min - Input Max)
-- Model line (14, 14Pro, 15, 15Pro, ... )
-- Capacity (64Gb, 128Gb, 256Gb, 512Gb)
-- RAM (2, 4, 8)
-- Color
-- Screen width (input range OR list of values)
-
-==================================================
-
-*/
     const customStyles = {
       control: (provided, state) => ({
         ...provided,
-        width: "176px",
+        width: "100%",
+        maxWidth: "176px",
+        // width: "128px",
         height: "40px",
         color: "#F1F2F9",
         backgroundColor: "#323542",
@@ -51,6 +34,7 @@ Options:
         ...provided,
         backgroundColor: state.isSelected ? "#323542" : "#0F1121",
         color: state.isSelected ? "#F1F2F9" : "#75767F",
+        fontFamily: "Mont",
         fontSize: "14px",
         fontWeight: "600",
         lineHeight: "21px",
@@ -85,12 +69,19 @@ Options:
       }),
       menu: (provided) => ({
         ...provided,
-        width: "176px",
+        width: "100%",
+        maxWidth: "176px",
+        // width: "128px",
         backgroundColor: "#0F1121",
         border: "1px solid",
         borderColor: "#905BFF",
       }),
     };
+
+    // if (window.matchMedia("(max-width: 768px)").matches) {
+    //   customStyles.control.width = "176px";
+    //   customStyles.menu.width = "176px";
+    // }
 
     const options = [
       { value: "-brandNew", label: "Newest first" },
@@ -108,7 +99,7 @@ Options:
           id="sortSelect"
           options={options}
           value={options.find((option) => option.value === sortValue)}
-          // defaultValue={sortValue}
+          defaultValue={sortValue}
           onChange={(selectedOption) => handleSortChange(selectedOption.value)}
           // onMenuOpen={() => setSortMenuIsOpen(true)}
           // onMenuClose={() => setSortMenuIsOpen(false)}

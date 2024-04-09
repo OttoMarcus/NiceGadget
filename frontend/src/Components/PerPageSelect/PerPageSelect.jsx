@@ -84,11 +84,16 @@ const PerPageSelect =
       }),
     };
 
+    if (window.matchMedia("(max-width: 768px)").matches) {
+      customStyles.control.width = "128px";
+      customStyles.menu.width = "128px";
+    }
+
     const options = [
-      { value: "8", label: "8" },
-      { value: "16", label: "16" },
-      { value: "24", label: "24" },
-      { value: "48", label: "48" },
+      { value: 8, label: "8" },
+      { value: 16, label: "16" },
+      { value: 24, label: "24" },
+      { value: 48, label: "48" },
     ];
 
     return (

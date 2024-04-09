@@ -18,48 +18,19 @@ TO DO:
 12. Preloader?
 
 STYLE:
-1. Забрати з label виділення при ховері (накладення виділення)
-2. Посунути кнопки Застовувати та Очистити фільтр.
-3. Додати вертикальну мітку біля заголовка при наведенні та в актив стані.
 4. Збільшити висоту інпутів для ціни.
 5. Прибрати стрілочки +- в іпнутах.
 6. Вирівняти цифри в інпутах по горизонталі.
 7. Додати "$" та "від - до".
 8. Виділити іншим кольором іконку та/або текст для очистки фільтра
-9. ЗАКРІПИТИ КНОПКИ ФІЛЬТРА ВНИЗУ БЛОКА
-10. Мобільні стилі!!!
+
 
 НЕ ФІЛЬТРИ:
-1. Іконки "стрілок" на селекти
+1. Іконки "стрілок" на селекти додати
 2. Іконки "ока" на логін-реєстрацію
 3. Автокомпліт на формах авториз та реєстрації
-4. Пофіксити відсутність дефолтного значення в perPage
 5. Пофіксити стилі стрілки пагінації!
 */
-
-// const OutsideClickHandler = ({ children, onOutsideClick }) => {
-//   const wrapperRef = useRef(null);
-
-//   useEffect(() => {
-//     const handleClickOutside = (event) => {
-//       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-//         onOutsideClick();
-//       }
-//     };
-//     document.addEventListener("mousedown", handleClickOutside);
-
-//     return () => {
-//       document.removeEventListener("mousedown", handleClickOutside);
-//     };
-//   }, [onOutsideClick]);
-
-//   return <div ref={wrapperRef}>{children}</div>;
-// };
-
-// OutsideClickHandler.propTypes = {
-//   children: PropTypes.any,
-//   onOutsideClick: PropTypes.func,
-// };
 
 const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
@@ -90,6 +61,9 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
   }, []);
 
   useEffect(() => {
+    isFilterVisible
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "auto");
     const handleClickOutside = (event) => {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
         setIsFilterVisible(false);
@@ -103,7 +77,6 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
   }, [isFilterVisible]);
 
   const toggleFilterVisibility = () => {
-    // console.log('toggleFilterVisibility action!');
     setIsFilterVisible((prevState) => !prevState);
     // setIsFilterVisible(!isFilterVisible);
   };
@@ -164,10 +137,7 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
       </h2>
       {isFilterVisible && (
         <div className={styles.filterOuterContainer}>
-          <div
-            className={`${styles.filterContainer} `}
-            // ${isFilterVisible ? styles.visible : styles.hidden}
-          >
+          <div className={styles.filterContainer}>
             <div className={`${styles.checkboxGroup} ${styles.sticky}`}>
               <label className={styles.checkboxLabel} htmlFor="hotPrices">
                 <input
@@ -233,16 +203,13 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
                       ) : (
                         <div className={styles.priceFilter}>
                           <div className={styles.minMaxInputs}>
-                            {/* { console.log('key in price block: ' ,key)} */}
                             <input
                               type="number"
                               name="minPrice"
                               min={serverFilters[key].minPrice}
                               max={serverFilters[key].maxPrice}
-                              // value={filters?.minPrice || serverFilters[key].minPrice}
                               value={filters?.minPrice}
                               onChange={handleInputChange}
-                              // onBlur={handleInputChange}
                               className={styles.priceInput}
                             />
                             <span>-</span>
@@ -251,10 +218,8 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
                               name="maxPrice"
                               min={serverFilters[key].minPrice}
                               max={serverFilters[key].maxPrice}
-                              // value={filters?.maxPrice || serverFilters[key].maxPrice}
                               value={filters?.maxPrice}
                               onChange={handleInputChange}
-                              // onBlur={handleInputChange}
                               className={styles.priceInput}
                             />
                           </div>
@@ -300,20 +265,6 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
                   )}
                 </div>
               ))}
-            {/* <div className={styles.filterButtonsContainer}>
-            <button
-              onClick={applyFilters}
-              className={styles.filterActionButton}
-            >
-              Apply
-            </button>
-            <button
-              onClick={clearFilters}
-              className={styles.filterActionButton}
-            >
-              <ClearFiltersIcon /> Clear
-            </button>
-          </div> */}
           </div>
           <div className={styles.filterButtonsContainer}>
             <button
@@ -323,23 +274,22 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
               Apply
             </button>
             <button
-              onClick={clearFilters}
+              onClick={() => {
+                clearFilters();
+                setIsFilterVisible(false);
+              }}
               className={styles.filterActionButton}
             >
               <ClearFiltersIcon /> Clear
             </button>
           </div>
         </div>
-        // </OutsideClickHandler>
       )}
-      {/* </OutsideClickHandler> */}
     </div>
   );
 };
 
 Filter.propTypes = {
-  // children: PropTypes.any,
-  // onOutsideClick: PropTypes.func,
   handleFilter: PropTypes.func.isRequired,
   filters: PropTypes.shape({
     discount: PropTypes.bool.isRequired,

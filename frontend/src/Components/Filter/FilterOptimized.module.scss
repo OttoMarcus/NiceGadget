@@ -4,11 +4,29 @@
 
 :root {
   --header-height: 48px;
+  // @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+  //   --header-height: 64px;
+  // }
 }
+
+// .test{
+//   scrollbar-width: thin; /* thin, auto, none */
+//   .scroll-container::-webkit-scrollbar {
+//     background-color: #f1f1f1;
+//   }
+//   .scroll-container::-webkit-scrollbar-thumb {
+//     background-color: #888;
+//   }
+//   -webkit-overflow-scrolling: touch;//плав прокрутка Safari
+//   scroll-behavior: smooth; /* Делает прокрутку плавной */
+//   overscroll-behavior: contain; /* Предотвращает прокрутку за пределы контейнера */
+// }
 
 .filterWrapper {
   // position: relative;
   margin-top: 15px;
+  width: 45%;
+  max-width: 176px;
   // align-self: flex-end;
 }
 
@@ -19,7 +37,8 @@
   @include flex-center;
   @include button;
   height: 40px;
-  width: 176px;
+  width: 100%;
+  // width: 150px;
   // width: 200px;
   color: $ui-color-gray-white;
   background-color: $ui-color-primary-accent;
@@ -49,21 +68,25 @@
   position: fixed;
   z-index: 50;
   left: 0;
-  top: 49px;
+  top: 48px;
   // display: flex;
   // flex-direction: column;
   width: 75vw;
+  max-width: 320px;
   height: calc(100vh - var(--header-height));
   // max-width: 320px;
   animation: slideIn 0.5s forwards;
   background-color: $ui-color-gray-surface-1;
-  padding-top: 10px;
   // padding: 10px 10px 0px 10px;
   z-index: 30;
   transition: all 0.3s ease-in-out 0s;
   border: 1px solid $ui-color-primary-accent;
   box-shadow: 2px 0 6px #33333342;
-  overflow-y: scroll;
+  // overflow-y: scroll;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    width: 50vw;
+  }
 }
 
 .filterContainer {
@@ -72,9 +95,19 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  padding: 10px 0px 61px;
   background-color: $ui-color-gray-surface-1;
+  overflow-y: auto;
+}
+
+.filterContent {
+  border-bottom: 1px solid white;
+  background-color: #75767f;
   overflow-y: scroll;
 }
+// .filterContent {
+//   overflow-y: scroll;
+// }
 
 // .filterContainer {
 //   position: fixed;
@@ -144,6 +177,7 @@
     &::before {
       background-color: $ui-color-gray-white;
       // background-color: $ui-color-gray-icons-placeholders;
+      transition: $ui-transition-longer;
     }
   }
 
@@ -157,10 +191,6 @@
     background-color: transparent;
     transition: background-color 0.3s;
   }
-}
-
-.filterContent {
-  overflow-y: scroll;
 }
 
 .priceFilter {
@@ -203,6 +233,7 @@
   flex-direction: column;
   padding: 10px 5px;
   gap: 10px;
+  background-color: #323542;
   // margin-bottom: 10px;
 
   // &.sticky{
@@ -215,11 +246,13 @@
     padding: 0px 5px;
 
     &:hover {
-      background-color: $ui-color-gray-selected-surface-2;
+      // background-color: $ui-color-gray-selected-surface-2;
+      background-color: #75767f;
       color: $ui-color-gray-white;
 
       & .checkboxLabel {
-        background-color: $ui-color-gray-selected-surface-2;
+        // background-color: $ui-color-gray-selected-surface-2;
+        background-color: #75767f;
       }
     }
   }
@@ -320,35 +353,6 @@
 .sliderContainer {
   padding: 10px 13px;
   overflow: hidden;
-
-  // .track {
-  //   background-color: $ui-color-primary-accent;
-  // }
-
-  // /* Стили для рельсов слайдера */
-  // .rail {
-  //   background-color: $ui-color-gray-white;
-  // }
-
-  // /* Стили для ползунков слайдера */
-  // .handle {
-  //   width: 20px;
-  //   height: 20px;
-  //   margin-top: -8px;
-  //   background-color: #007bff;
-  //   border: none;
-  //   box-shadow: none;
-  // }
-
-  // /* Стили для точек на слайдере */
-  // .dot {
-  //   background-color: #007bff;
-  // }
-
-  // /* Стили для активных точек на слайдере */
-  // .active-dot {
-  //   background-color: #007bff;
-  // }
 }
 
 // .sliderContainer {

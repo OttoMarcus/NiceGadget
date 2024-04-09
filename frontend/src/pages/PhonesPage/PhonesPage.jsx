@@ -31,7 +31,6 @@ const Phones = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalNumber, setTotalNumber] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
-  // const [isScrolled, setIsScrolled] = useState(false)
 
   // http://localhost:3000/phones?modelName=iPhone+13&sort=price&perPage=16&startPage=2
 
@@ -67,17 +66,19 @@ const Phones = () => {
       return acc;
     }, {});
 
-    console.log(filterParams);
+    // console.log(filterParams);
 
-    const sort = urlParams.get("sort");
-    console.log("sort: ", sort);
-    const perPage = urlParams.get("perPage");
-    console.log("perPage: ", perPage);
-    const startPage = urlParams.get("startPage");
-    console.log("startPage: ", startPage);
+    const sort = urlParams?.get("sort");
+    // console.log("sort: ", sort);
+    const perPage = urlParams?.get("perPage");
+    // console.log("perPage: ", perPage);
+    const startPage = urlParams?.get("startPage");
+    // console.log("startPage: ", startPage);
 
-    setFilters({ ...filters, ...filterParams });
-    setFilterQueryString(new URLSearchParams(filterParams).toString());
+    if (Object.keys(filterParams).length !== 0) {
+      setFilters({ ...filters, ...filterParams });
+      setFilterQueryString(new URLSearchParams(filterParams).toString());
+    }
     setSortValue(sort ? sort : "-brandNew");
     setCardsPerPageValue(perPage ? Number(perPage) : 8);
     setCurrentPage(startPage ? Number(startPage) : 1);
@@ -109,8 +110,6 @@ const Phones = () => {
   //   };
   // }, []);
 
-  // http://localhost:3000/phones?modelName=iPhone+13&sort=price&perPage=16&startPage=2
-
   // Base request
   const fetchData = async (
     filterQueryString,
@@ -118,20 +117,9 @@ const Phones = () => {
     cardsPerPageValue,
     currentPage
   ) => {
-    // console.log("filterQuery state in fetchData: ", Boolean(filterQueryString));
-    // console.log("filterQueryString in fetchData: ", filterQueryString);
-    // console.log('sortValue: ', sortValue);
-    // console.log('cardsPerPageValue: ', cardsPerPageValue);
-    // console.log('currentPage: ', currentPage);
-
     let fetchURL = filterQueryString
       ? `/api/phones?${filterQueryString}&sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
       : `/api/phones?sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`;
-
-    // const newPath = `${window.location.pathname}?${filterQueryString ? filterQueryString + '&': ""}sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`;
-    // console.log(newPath);
-    // window.history.pushState({}, "", newPath)
-
     try {
       const res = await fetch(fetchURL);
       if (!res.ok) {
@@ -149,19 +137,15 @@ const Phones = () => {
 
   // Sending requests on query params changing
   useEffect(() => {
+    // console.log(filterQueryString, sortValue, cardsPerPageValue, currentPage);
     fetchData(filterQueryString, sortValue, cardsPerPageValue, currentPage);
   }, [filterQueryString, sortValue, cardsPerPageValue, currentPage]);
-
-  // useEffect(() => {
-  //   fetchData(filterQueryString, sortValue, cardsPerPageValue, currentPage);
-  // }, [window.location.search]);
 
   const handleSortChange = async (newSortValue) => {
     setCurrentPage(1);
     setSortValue(newSortValue);
 
     const newPath = `${window.location.pathname}?${filterQueryString ? filterQueryString + "&" : ""}sort=${newSortValue}&perPage=${cardsPerPageValue}&startPage=1`;
-    console.log(newPath);
     window.history.pushState({}, "", newPath);
   };
 
@@ -170,7 +154,6 @@ const Phones = () => {
     setCardsPerPageValue(Number(newPerPageValue));
 
     const newPath = `${window.location.pathname}?${filterQueryString ? filterQueryString + "&" : ""}sort=${sortValue}&perPage=${newPerPageValue}&startPage=1`;
-    console.log(newPath);
     window.history.pushState({}, "", newPath);
   };
 
@@ -179,13 +162,12 @@ const Phones = () => {
     setCurrentPage(Number(newPage));
 
     const newPath = `${window.location.pathname}?${filterQueryString ? filterQueryString + "&" : ""}sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${newPage}`;
-    console.log(newPath);
     window.history.pushState({}, "", newPath);
   };
 
   const handleFilter = async () => {
     //define a variable to get filters with values, not to send to server empty values
-    console.log(filters);
+    // console.log(filters);
 
     const nonEmptyFilters = Object.entries(filters).reduce(
       (acc, [key, value]) => {
@@ -201,27 +183,21 @@ const Phones = () => {
       {}
     );
 
-    console.log("nonEmptyFilters after reduce: ", nonEmptyFilters);
+    // console.log("nonEmptyFilters after reduce: ", nonEmptyFilters);
 
     let queryString;
-
     if (Object.keys(nonEmptyFilters).length === 0) {
       queryString = null;
-      // setFilterQueryString(queryString);
     } else {
       queryString = new URLSearchParams(nonEmptyFilters).toString();
-      console.log("queryString before set state", queryString);
-      // setFilterQueryString(queryString);
+      // console.log("queryString before set state", queryString);
     }
 
     setFilterQueryString(queryString);
     setCurrentPage(1);
 
     const newPath = `${window.location.pathname}?${queryString ? queryString + "&" : ""}sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=1`;
-    // const newPath = `${window.location.pathname}?${filterQueryString? filterQueryString + "&" : ""}sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=1`;
-    console.log(newPath);
     window.history.pushState({}, "", newPath);
-    // await fetchData(queryString, sortValue, cardsPerPageValue, firstPage);
   };
 
   const clearFilters = async () => {
@@ -242,9 +218,7 @@ const Phones = () => {
     setCurrentPage(1);
 
     const newPath = `${window.location.pathname}?sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=1`;
-    console.log(newPath);
     window.history.pushState({}, "", newPath);
-    // await fetchData(null, sortValue, cardsPerPageValue, firstPage);
   };
 
   return (
