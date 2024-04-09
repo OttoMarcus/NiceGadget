@@ -5,6 +5,8 @@
 .sortContainer {
   display: flex;
   flex-direction: column;
+  width: 45%;
+  max-width: 176px;
 
   .sortTitle {
     @include small-text;
@@ -13,6 +15,7 @@
 
   .sortSelect {
     width: 176px;
+    // width: 150px;
     height: 40px;
     flex-shrink: 0;
     border: 1px solid var(--gray-icons-placeholders, #4a4d58);
@@ -58,7 +61,8 @@
     .sortSelect {
       display: flex;
       flex-direction: column;
-      width: 176px;
+      // width: 176px;
+      width: 150px;
       height: 144px;
       flex-shrink: 0;
       border: 1px solid var(--Gray-Elements, #3b3e4a);

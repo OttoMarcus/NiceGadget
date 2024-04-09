@@ -2,6 +2,8 @@ const excludedParams = ["perPage", "startPage", "minPrice", "maxPrice", "sort", 
 
 module.exports = function filterParser(filtersQueryString) {
   const mongooseQuery = {};
+    console.log('filtersQueryString in filterParser is');
+  console.log(filtersQueryString);
 
   if (filtersQueryString.minPrice || filtersQueryString.maxPrice) {
     mongooseQuery.price = {
@@ -19,25 +21,26 @@ module.exports = function filterParser(filtersQueryString) {
               .split(",")
               .map(item => decodeURI(item))
           }
-        } else {
+        } else { 
           mongooseQuery[filterParam] = {
             $in: filtersQueryString[filterParam]
               .split(",")
               .map(item => decodeURI(item))
           };
         }
-
+        
       } else if (!excludedParams.includes(filterParam)) {
         if (filterParam === "modelName") {
           mongooseQuery["refModel.modelName"] = decodeURI(filtersQueryString[filterParam])
-        } else if (filterParam === "discount") {
+        } else if (filterParam === "discount") { 
           mongooseQuery.discount = {$gte: 0.05}
         }
-        else {
+        else { 
           mongooseQuery[filterParam] = decodeURI(filtersQueryString[filterParam]);
         }
-
+          
       }
+      console.log('mongooseQuery in filterParser is: ', mongooseQuery);
       return mongooseQuery;
     },
     mongooseQuery
