@@ -10,16 +10,6 @@
 
   .perPageTitle {
     @include small-text;
-    position: absolute;
     color: $ui-color-gray-secondary;
-    top: -15px;
-    /*-----------------  Tablet ---------------------*/
-    @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
-      position: static;
-    }
-
-    /*----------------- Desktop ---------------------*/
-    @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
-    }
   }
 }

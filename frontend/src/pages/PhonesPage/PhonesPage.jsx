@@ -26,7 +26,7 @@ const Phones = () => {
   });
   const [filterQueryString, setFilterQueryString] = useState(null);
   const [sortValue, setSortValue] = useState("-brandNew");
-  const [cardsPerPageValue, setCardsPerPageValue] = useState("8");
+  const [cardsPerPageValue, setCardsPerPageValue] = useState(8);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalNumber, setTotalNumber] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
