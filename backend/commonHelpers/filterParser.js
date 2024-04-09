@@ -9,8 +9,6 @@ module.exports = function filterParser(filtersQueryString) {
     mongooseQuery.price = {
       $gte: Number(filtersQueryString.minPrice) || 0,
       $lte: Number(filtersQueryString.maxPrice) || 2500
-      $gte: Number(filtersQueryString.minPrice) || 0,
-      $lte: Number(filtersQueryString.maxPrice) || 2500
     };
   }
 
