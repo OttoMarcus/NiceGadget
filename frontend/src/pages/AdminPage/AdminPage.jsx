@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import styles from "./AdminPage.module.scss";
 import adminOptions from "./adminOptions";
 import { useSelector } from "react-redux";
 import AdminOption from "./AdminOption/AdminOption";
 import { findComponentByTitleAndLabel } from "./findComponentByTitleAndLabel";
+
+import styles from "./AdminPage.module.scss";
+
 const AdminPage = () => {
   const selectedOption = useSelector((state) => state.admin.selectedOption);
   const [optionContent, setOptionContent] = useState(null);
