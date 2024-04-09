@@ -30,8 +30,6 @@ const TabletsPage = () => {
       <h1 className={styles.tabletsTitle}>Tablets</h1>
       <h3 className={styles.subtitle}>models</h3>
 
-      <div>Filtering block</div>
-
       <div className={styles.resultWrapper}>
         {Array.isArray(tabletsArr.data) &&
           tabletsArr.data.map((item) => (

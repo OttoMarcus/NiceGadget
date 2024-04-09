@@ -236,4 +236,14 @@ a {
 
 .buyTogetherSection {
   width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 32px;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    margin-bottom: 26px;
+  }
+
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    margin-bottom: 16px;
+  }
 }

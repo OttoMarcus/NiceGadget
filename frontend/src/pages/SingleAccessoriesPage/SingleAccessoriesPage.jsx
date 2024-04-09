@@ -63,11 +63,12 @@ const SingleAccessoriesPage = () => {
                   </div>
                   <div className={styles.buttonsWrapper}>
                     <CartButton
-                      productToAdd={null}
                       isAvailable={accessoryAvailable}
                       inCart={inCart}
                       fetchDetailsUrl={`/api/accessories/byProductId/${activeAccessoryId}`}
                       heightBtn="48px"
+                      notifyCategory="accessories"
+                      notifyProductId={accessories?.name}
                     />
 
                     <Favorite

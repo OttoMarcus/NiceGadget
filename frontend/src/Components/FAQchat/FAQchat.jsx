@@ -51,7 +51,11 @@ const FAQchat = () => {
       ))}
       <div className={styles.conctactbtn}>
         <div>
-          <a href="https://t.me/nicegadgetstore">
+          <a
+            href="https://t.me/nicegadgetstore"
+            target="_blank"
+            rel="noreferrer"
+          >
             <img
               className={styles.linkSocial}
               src="https://res.cloudinary.com/de71eui6p/image/upload/v1711375286/Slider/zwpnzpy4gdrardowloam.webp"
@@ -60,7 +64,11 @@ const FAQchat = () => {
           </a>
         </div>
         <div>
-          <a href="https://www.instagram.com/n1cegadgetstore">
+          <a
+            href="https://www.instagram.com/n1cegadgetstore"
+            target="_blank"
+            rel="noreferrer"
+          >
             <img
               className={styles.linkSocial}
               src="https://res.cloudinary.com/de71eui6p/image/upload/v1711375285/Slider/iypblt7wvhyl9vjywwdr.webp"
@@ -69,7 +77,11 @@ const FAQchat = () => {
           </a>
         </div>
         <div>
-          <a href="https://www.facebook.com/groups/258628787334330">
+          <a
+            href="https://www.facebook.com/groups/258628787334330"
+            target="_blank"
+            rel="noreferrer"
+          >
             <img
               className={styles.linkSocial}
               src="https://res.cloudinary.com/de71eui6p/image/upload/v1711375284/Slider/ba2xqvptwh9cpu5ekzij.webp"
@@ -78,7 +90,11 @@ const FAQchat = () => {
           </a>
         </div>
         <div>
-          <a href="mailto:testfrontendmail@gmail.com">
+          <a
+            href="mailto:testfrontendmail@gmail.com"
+            target="_blank"
+            rel="noreferrer"
+          >
             <img
               className={styles.linkSocial}
               src="https://res.cloudinary.com/de71eui6p/image/upload/v1711375285/Slider/xqxh0u9umai1oa91dgg8.webp"

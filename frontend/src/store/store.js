@@ -4,7 +4,7 @@ import favoriteSlice from "./favorites/favoriteSlice";
 import userSlice from "./user/userSlice";
 import searchSlice from "./search/searchSlice";
 import adminSlice from "./admin/adminSlice";
-
+import OrderNew from "./orders/OrderNew";
 export const store = configureStore({
   reducer: {
     favorite: favoriteSlice,
@@ -12,5 +12,6 @@ export const store = configureStore({
     user: userSlice,
     search: searchSlice,
     admin: adminSlice,
+    OrderNew: OrderNew,
   },
 });

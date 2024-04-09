@@ -17,18 +17,43 @@
   width: 100%;
   box-sizing: border-box;
   align-items: center;
+  justify-content: space-between;
   @include small-text;
   color: $ui-color-gray-white;
-  margin: 46px auto 0;
+  margin: 68px auto 24px;
 
   /*-----------------  Tablet ---------------------*/
   @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
-    margin-top: 40px;
+    margin-bottom: 40px;
   }
 
   /*----------------- Desktop ---------------------*/
   @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
-    margin-top: 60px;
+    margin-top: 84px;
+  }
+}
+
+.adminSection {
+  border: 1px solid #3b3e4a;
+
+  .adminWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    padding: 0 5px;
+
+    .linkAdmin {
+      @include small-text;
+      font-size: 12px;
+      color: #75767f;
+      margin-right: 5px;
+    }
+
+    .iconForListAdmin {
+      cursor: pointer;
+      fill: $ui-color-primary-accent;
+    }
   }
 }
 
@@ -39,6 +64,10 @@
 
   .crumbGap {
     margin-right: 8px;
+  }
+
+  .crumbText {
+    margin-left: 8px;
   }
 }
 

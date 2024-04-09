@@ -31,9 +31,6 @@ const Card = (props) => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const inCart = cartItems.some((item) => item.productId === productToAdd._id);
 
-  // discountPrice - ціна товару зі знижкою!!!
-  //   price - початкова ціна без знижки!
-
   const discountedPrice = discount
     ? Math.round(price - price * discount)
     : price;

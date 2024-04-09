@@ -9,7 +9,6 @@
 
   @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
     @include h1;
-    margin-bottom: 24px;
   }
 }
 
@@ -17,7 +16,11 @@
   @include uppercase;
   color: $ui-color-gray-icons-placeholders;
   text-align: left;
-  margin-bottom: 16px;
+  margin-bottom: 32px;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    margin-bottom: 40px;
+  }
 }
 
 .resultWrapper {
@@ -25,9 +28,18 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
   align-items: center;
-  gap: 16px;
+  gap: 40px;
+  margin-bottom: 64px;
 
   a {
     @include flex-center;
+  }
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    gap: 40px 16px;
+  }
+
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    margin-bottom: 80px;
   }
 }

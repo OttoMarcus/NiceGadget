@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import DeleteIcon from "../../Icons/CloseIcon";
 import MinusIcon from "../../Icons/MinusIcon";
 import PlusIcon from "../../Icons/PlusIcon";
+import TrashIcon from "../../Icons/TrashIcon";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import {
@@ -87,10 +88,9 @@ const CartItem = ({ item }) => {
         <div className={styles.counter}>
           <button
             className={styles.counterMinus}
-            onClick={handleDecrement}
-            disabled={item.cartQuantity <= 1}
+            onClick={item.cartQuantity <= 1 ? handleRemove : handleDecrement}
           >
-            <MinusIcon />
+            {item.cartQuantity <= 1 ? <TrashIcon /> : <MinusIcon />}
           </button>
           <span className={styles.quantity}>{item.cartQuantity}</span>
           <button className={styles.counterPlus} onClick={handleIncrement}>

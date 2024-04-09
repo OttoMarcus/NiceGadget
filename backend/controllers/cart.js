@@ -243,10 +243,8 @@ exports.synchronizeCart = async (req, res, next) => {
       
       const productIndex = cart.products.findIndex(item => item.productId.equals(productId));
       if (productIndex !== -1) {
-        // Update product quantity if product already exists in cart
         cart.products[productIndex].cartQuantity = Math.max(cart.products[productIndex].cartQuantity, localProduct.cartQuantity);
       } else {
-        // Add new product to cart
         cart.products.push({
           productId,
           category,
@@ -271,7 +269,6 @@ exports.synchronizeCart = async (req, res, next) => {
 exports.validateCartItems = async (req, res) => {
   try {
     const cartItems = req.body;
-
     let validationResult = [];
 
     for (const item of cartItems) {
@@ -319,8 +316,6 @@ exports.validateCartItems = async (req, res) => {
 exports.updateProductQuantities = async (req, res) => {
 
   const { cartItems } = req.body;
-
-  console.log(cartItems);
   
   if (!Array.isArray(cartItems)) {
     return res.status(400).send('cartItems має бути масивом');

@@ -59,7 +59,17 @@
     a {
       @include uppercase;
       color: $ui-color-gray-white;
+      transition: $ui-transition;
+
+      &:hover {
+        color: $ui-color-gray-secondary;
+      }
     }
+  }
+
+  .activeLink {
+    color: $ui-color-gray-secondary;
+    border-bottom: 1px solid $ui-color-gray-white;
   }
 
   .backTop {

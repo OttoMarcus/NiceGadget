@@ -34,7 +34,7 @@ const QuantityChange = ({
     if (category === "phones" || category === "tablets") {
       axios
         .put(
-          `http://localhost:4000/api/${category}-models-quantity/admin/${id}`,
+          `/api/${category}-models-quantity/admin/${id}`,
           { quantity: newQuantity },
           {
             headers: {
@@ -54,7 +54,7 @@ const QuantityChange = ({
     if (category === "accessories") {
       axios
         .put(
-          `http://localhost:4000/api/${category}-models-quantity/admin/${name}`,
+          `/api/${category}-models-quantity/admin/${name}`,
           { quantity: newQuantity },
           {
             headers: {
