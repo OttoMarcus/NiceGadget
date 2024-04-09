@@ -1,22 +1,6 @@
 @import "../../styles/abstracts/variables";
 @import "../../styles/abstracts/mixins";
-
-.container {
-  padding: 16px;
-  max-width: $ui-max-container-width;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-
-  /*-----------------  Tablet ---------------------*/
-  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
-    padding: 24px;
-  }
-  /*----------------- Desktop ---------------------*/
-  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
-    padding: 32px;
-  }
-}
+@import "../../styles/global/base";
 
 .adminContent {
   display: flex;
