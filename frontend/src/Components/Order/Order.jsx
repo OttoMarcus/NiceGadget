@@ -34,78 +34,85 @@ const Order = ({
   return (
     <div className={style.container}>
       <div className={style.containerOrder}>
-        <div className={style.infoSection}>
-          <div className={style.infoWrapper}>
-            <p className={style.info}>User:</p>
-            <p className={style.subInfo}>
-              {userFirstName} {userLastName}
-            </p>
+        <div className={style.infoSectionTitle}>
+          <div className={style.orderNumm}>
             <p className={style.info}>Order number:</p>
             <p className={style.subInfo}>{orderNo}</p>
-            <p className={style.info}>Delivery address:</p>
-            <p className={style.subInfo}> {deliveryAddress}</p>
-            {/*<p className={style.info}>Total sum: {totalSum}$</p>*/}
-            <p className={style.info}>Delivery Method: {deliveryMethod}</p>
-            <p className={style.info}>Payment Method: {paymentMethod}</p>
-            <p className={style.info}>Status: {status}</p>
-            <p className={style.info}>Email: {email}</p>
-            <p className={style.info}>Mobile: {mobile}</p>
-            <p className={style.info}>
-              Date: {day}.{month}.{year}
-            </p>
-            <p className={style.info}>
-              Time: {hours}:{minutes}{" "}
-            </p>
           </div>
-          <div className={style.price}>
-            <h2>Total price: </h2>
-            <p>{totalSum} $</p>
-          </div>
+
           <p
             className={style.toggleProducts}
             onClick={() => handelToggle(orderNo)}
           >
-            {toggleOpen ? `close all products` : `open all products`}
+            {toggleOpen ? `Close All` : `Open All`}
           </p>
         </div>
         {toggleOpen && (
-          <div className={style.pictureSection}>
-            {products.map((product) => {
-              const discountedPrice = product.discount
-                ? Math.round(product.price - product.price * product.discount)
-                : product.price;
-              const percentDiscount = product.discount
-                ? product.discount * 100
-                : 0;
+          <>
+            <div className={style.infoSection}>
+              <div className={style.infoWrapper}>
+                <p className={style.info}>User:</p>
+                <p className={style.subInfo}>
+                  {userFirstName} {userLastName}
+                </p>
+                <p className={style.info}>Delivery address:</p>
+                <p className={style.subInfo}> {deliveryAddress}</p>
+                {/*<p className={style.info}>Total sum: {totalSum}$</p>*/}
+                <p className={style.info}>Delivery Method: {deliveryMethod}</p>
+                <p className={style.info}>Payment Method: {paymentMethod}</p>
+                <p className={style.info}>Status: {status}</p>
+                <p className={style.info}>Email: {email}</p>
+                <p className={style.info}>Mobile: {mobile}</p>
+                <p className={style.info}>
+                  Date: {day}.{month}.{year}
+                </p>
+                <p className={style.info}>
+                  Time: {hours}:{minutes}{" "}
+                </p>
+              </div>
+              <div className={style.price}>
+                <h2>Total price: </h2>
+                <p>{totalSum}$</p>
+              </div>
+            </div>
+            <div className={style.pictureSection}>
+              {products.map((product) => {
+                const discountedPrice = product.discount
+                  ? Math.round(product.price - product.price * product.discount)
+                  : product.price;
+                const percentDiscount = product.discount
+                  ? product.discount * 100
+                  : 0;
 
-              return (
-                <div key={product.productId} className={style.product}>
-                  <img
-                    className={style.img}
-                    src={product.picture}
-                    alt={product.name}
-                  />
-                  <div className={style.subInfoWrapper}>
-                    <p className={style.info}>Name:</p>
-                    <p className={`${style.subInfo}`}>{product.name}</p>
+                return (
+                  <div key={product.productId} className={style.product}>
+                    <img
+                      className={style.img}
+                      src={product.picture}
+                      alt={product.name}
+                    />
+                    <div className={style.subInfoWrapper}>
+                      <p className={style.info}>Name:</p>
+                      <p className={`${style.subInfo}`}>{product.name}</p>
 
-                    <p className={style.info}>Price:</p>
-                    <p className={style.subInfo}>
-                      {discountedPrice}${" "}
-                      {product.discount > 0 && (
-                        <span className={style.discount}>
-                          {" "}
-                          (-{percentDiscount}%)
-                        </span>
-                      )}
-                    </p>
-                    <p className={style.info}>Amount:</p>
-                    <p className={style.subInfo}>1</p>
+                      <p className={style.info}>Price:</p>
+                      <p className={style.subInfo}>
+                        {discountedPrice}${" "}
+                        {product.discount > 0 && (
+                          <span className={style.discount}>
+                            {" "}
+                            (-{percentDiscount}%)
+                          </span>
+                        )}
+                      </p>
+                      <p className={style.info}>Amount:</p>
+                      <p className={style.subInfo}>1</p>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          </>
         )}
       </div>
     </div>
