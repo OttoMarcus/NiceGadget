@@ -152,7 +152,7 @@ const CheckoutForm = () => {
 
             <CustomInputCheckout
               label="Email *"
-              type="text"
+              type="email"
               name="email"
               placeholder="Email"
             />

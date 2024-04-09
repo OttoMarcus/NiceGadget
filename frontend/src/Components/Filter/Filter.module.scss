@@ -7,21 +7,27 @@
   align-self: flex-end;
 }
 
-.columnWrapper {
-  display: flex;
-  flex-direction: column;
-}
+// .backdrop{
+//   position: absolute;
+//   min-width: 100vw;
+//   min-height: 100vh;
+//   background-color: #323542;
+//   opacity: 0.5;
+// }
 
 .filterButton {
+  // align-self: flex-end;
+  // width: 200px;
+  // height: 40px;
   @include flex-center;
   @include button;
   height: 40px;
-  width: 160px;
+  width: 200px;
   color: $ui-color-gray-white;
   background-color: $ui-color-primary-accent;
   border: none;
   cursor: pointer;
-  margin-bottom: 8px;
+  // margin-right: 8px;
 
   &:hover {
     background-color: $ui-color-primary-accent-hover;
@@ -30,47 +36,85 @@
   &:active {
     background-color: $ui-color-gray-selected-surface-2;
   }
-  /*-----------------  Tablet ---------------------*/
-  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
-    width: 200px;
-    margin-bottom: 0;
-  }
-
-  /*----------------- Desktop ---------------------*/
-  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
-  }
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateX(
-      -100%
-    ); /* Начальное положение окна за пределами контейнера слева */
-  }
-  to {
-    transform: translateX(0); /* Конечное положение окна внутри контейнера */
-  }
 }
 
 .filterContainer {
-  left: 0;
-  top: 0;
-  position: fixed;
+  top: 120%;
+  position: absolute;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 320px;
-  animation: slideIn 0.5s forwards; /* Применяем анимацию slideIn с продолжительностью 1 секунда */
+  width: 200px;
+  // height: 600px;
+  border: 1px solid $ui-color-primary-accent;
+  // overflow-y: scroll;
+  // background-color: $ui-color-gray-selected-surface-2;
   background-color: $ui-color-gray-surface-1;
-  padding: 10px;
-  z-index: 30;
-  transition: all 0.3s ease-in-out 0s;
-
-  box-shadow: 2px 0 6px #33333342;
+  padding: 10px 0px;
+  z-index: 3;
 
   &.hidden {
     display: none;
   }
+}
+
+// .filterGroupContainer{
+//   // margin: 5px 0px;
+//   // padding: 10px 0px;
+// }
+
+.filterGroupHeader {
+  @include uppercase;
+  width: 100%;
+  // font-size: 16px;
+  // font-style: normal;
+  // font-weight: 600;
+  // line-height: 21px;
+
+  // background-color: $ui-color-gray-surface-1;
+
+  background-color: $ui-color-primary-accent;
+  border-bottom: 1px solid $ui-color-gray-white;
+  // $ui-color-gray-selected-surface-2
+  border-top: 1px solid $ui-color-gray-white;
+  color: $ui-color-gray-white;
+  // margin-bottom: 5px;
+  padding: 8px 8px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $ui-color-primary-accent-hover;
+  }
+}
+
+.priceFilter {
+  // width: 100%;
+  display: flex;
+  // justify-content: space-between;
+  gap: 5px;
+  padding: 8px 10px;
+  // overflow: hidden;
+}
+
+.priceInput {
+  width: 48%;
+  height: 30px;
+  padding: 0px 7px;
+  background-color: $ui-color-gray-selected-surface-2;
+  color: $ui-color-gray-white;
+  outline: none;
+  box-shadow: none;
+  border: 1px solid transparent;
+
+  &:focus {
+    border-color: $ui-color-primary-accent;
+  }
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 5px;
+  // margin-bottom: 10px;
 }
 
 .checkboxLabel {
@@ -82,10 +126,10 @@
   font-weight: 600;
   line-height: 21px;
   background-color: $ui-color-gray-surface-1;
-  color: white;
+  color: #75767f;
   font-size: 14px;
   cursor: pointer;
-  padding: 0px 18px;
+  padding: 0px 28px;
 
   &:hover {
     background: var(--Gray-Surface-2, #323542);
@@ -109,7 +153,7 @@
 .checkmark {
   position: absolute;
   top: 2px;
-  left: 0;
+  left: 5px;
   height: 14px;
   width: 14px;
   background-color: #eee;
@@ -133,63 +177,24 @@
   transform: rotate(45deg);
 }
 
-.filterGroupHeader {
-  font-size: 16px;
-  border-left: 5px solid #905bff;
-  font-style: normal;
-  padding-left: 15px;
-  font-weight: 600;
-  line-height: 21px;
-  background-color: $ui-color-gray-surface-1;
-  color: $ui-color-gray-white;
-  font-family: Mont;
-  cursor: pointer;
-}
-
-.priceFilter {
-  // width: 100%;
-  display: flex;
-  // justify-content: space-between;
-  gap: 5px;
-  // overflow: hidden;
-}
-
-.priceInput {
-  width: 48%;
-  // height: 30px;
-  background-color: $ui-color-gray-selected-surface-2;
-  color: $ui-color-gray-white;
-  outline: none;
-  box-shadow: none;
-  border: 1px solid transparent;
-
-  &:focus {
-    border-color: $ui-color-primary-accent;
-  }
-}
-
 .checkboxLabel {
-  font-size: 14px;
-  font-family: Mont;
-  font-style: normal;
-  font-weight: 400;
+  @include body-text;
+  // font-size: 14px;
+  // font-family: Mont;
+  // font-style: normal;
+  // font-weight: 600;
   line-height: 21px;
-  text-transform: capitalize;
-
+  // background: var(--Gray-Black, #0f1121);
   background-color: $ui-color-gray-surface-1;
-  color: white;
-
+  // color: #75767f;
+  color: $ui-color-gray-white;
+  font-size: 14px;
   cursor: pointer;
 
   &:hover {
     background: var(--Gray-Surface-2, #323542);
     color: #f1f2f9;
   }
-}
-
-.checkboxGroup {
-  display: flex;
-  flex-direction: column;
 }
 
 .filterButtonsContainer {
