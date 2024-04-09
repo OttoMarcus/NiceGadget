@@ -23,7 +23,7 @@ export const fetchTodos = createAsyncThunk(
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        let ret = data.products || [];
+        let ret = data?.products || [];
 
         return ret;
       }

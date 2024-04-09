@@ -1,26 +1,13 @@
 import LeftArrowIcon from "../Icons/LeftArrowIcon";
 import RightArrowIcon from "../Icons/RightArrowIcon";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import styles from "./BrandNews.module.scss";
 import Card from "../Cards/Card";
+import useFetchData from "./useFetchBrandNew";
 
 const BrandNew = () => {
   const containerRef = useRef(null);
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/phones?brandNew=true");
-        const data = await response.json();
-        setProducts(data.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const products = useFetchData();
 
   const scrollLeft = () => {
     if (containerRef.current) {
@@ -54,12 +41,19 @@ const BrandNew = () => {
         </div>
       </div>
       <div className={styles.cardsContainer} ref={containerRef}>
-        {products.map((product) => (
-          <Card key={product.id} cartBtnFontSize="12px" {...product} />
-        ))}
+        {products.map((product) => {
+          return (
+            <Card
+              key={product.id}
+              category={product.category}
+              cartBtnFontSize="12px"
+              {...product}
+            />
+          );
+        })}
       </div>
     </>
   );
 };
 
-export default BrandNew;
+export default React.memo(BrandNew);

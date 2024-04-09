@@ -12,14 +12,15 @@
   }
 }
 
-.header {
-  width: 100%;
-  height: 62px;
-  margin-bottom: 24px;
-}
+// .header {
+//   width: 100%;
+//   height: 62px;
+//   margin-bottom: 24px;
+// }
 
 .categoryTitle {
   @include mobile-h2;
+  margin-bottom: 24px;
 
   @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
     @include h2;
@@ -30,6 +31,11 @@
   @include flex-start;
   flex-direction: column;
   width: 100%;
+  margin-bottom: 32px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 
   & > div {
     width: 100%;
@@ -37,22 +43,22 @@
     background-repeat: no-repeat;
     background-size: 130%;
     background-position: top 1.5rem left 2rem;
+    margin-bottom: 24px;
+  }
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    margin-bottom: 0;
   }
 
   .subTitle {
     @include h4;
-    margin: 24px 0 0;
+    margin-bottom: 5px;
   }
 
   & > p {
     @include body-text;
     color: $ui-color-gray-secondary;
     font-weight: 600;
-    margin: 5px 0 32px;
-
-    @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
-      margin-bottom: 0;
-    }
   }
 }
 

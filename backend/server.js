@@ -27,17 +27,19 @@ const partners = require('./routes/partners');
 const mobileFilters = require('./routes/mobileFilters');
 const mobileModels = require('./routes/mobileModels');
 const mobileProducts = require('./routes/mobileProducts');
-const mobileModelsQuantity = require('./routes/mobileModelsQuantity')
-const accessoriesProduct = require('./routes/accessoriesProduct')
-const accessoriesModel = require('./routes/accessoriesModel')
-const accessoriesModelQuantity = require('./routes/accessoriesModelQuantity')
+const mobileModelsQuantity = require('./routes/mobileModelsQuantity');
+const accessoriesProduct = require('./routes/accessoriesProduct');
+const accessoriesModel = require('./routes/accessoriesModel');
+const accessoriesModelQuantity = require('./routes/accessoriesModelQuantity');
 const tabletModels = require('./routes/tabletModels');
 const tabletProducts = require('./routes/tabletProducts');
-const tabletModelQuantity = require('./routes/tabletModelsQuantity')
-const advertisingSlider = require('./routes/advertisingSlider')
-const faqchat = require('./routes/faqchat')
-const brandnew = require ('./routes/brandNews')
-const salePoints = require ('./routes/salePoints')
+const tabletModelQuantity = require('./routes/tabletModelsQuantity');
+const advertisingSlider = require('./routes/advertisingSlider');
+const faqchat = require('./routes/faqchat');
+const brandnew = require ('./routes/brandNews');
+const salePoints = require ('./routes/salePoints');
+const notifyMeAuthorized = require('./routes/notifyMeAuthorized');
+const notifyMeUnauthorized = require('./routes/notifyMeUnauthorized');
 
 const app = express();
 
@@ -92,6 +94,8 @@ app.use('/api/advertising-sliders', advertisingSlider);
 app.use('/api/faq', faqchat);
 app.use('/api/brand-news', brandnew);
 app.use('/api/sale-points', salePoints);
+app.use('/api/notify-me-authorized', notifyMeAuthorized);
+app.use('/api/notify-me-unauthorized', notifyMeUnauthorized);
 
 
 

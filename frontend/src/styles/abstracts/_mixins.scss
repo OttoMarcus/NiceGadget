@@ -68,6 +68,14 @@
   letter-spacing: 0;
 }
 
+@mixin error-text {
+  font-family: $ui-font-family-semibold;
+  font-size: $ui-font-size-error-text;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
 // ------ Mobile text ------
 
 @mixin mobile-h1 {

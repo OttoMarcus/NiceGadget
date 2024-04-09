@@ -124,7 +124,7 @@ const formValidationRules = [
   {
     field: "telephone",
     method: "matches",
-    args: [/^\+380\d{3}\d{2}\d{2}\d{2}$/],
+    args: [/^\+380\s?\(?\d{2,3}\)?\s?\d{3}-?\d{2}-?\d{2}$/],
     validWhen: true,
     message: "That is not a valid phone number."
   },
@@ -153,7 +153,53 @@ const formValidationRules = [
     validWhen: false,
     message:
       "This operation involves sending a letter to the client. Please provide field 'letterHtml' for the letter."
-  }
+  },
+  {
+    field: "mobile",
+    method: "matches",
+    args: [/^\+380\s?\(?\d{2,3}\)?\s?\d{3}-?\d{2}-?\d{2}$/],
+    validWhen: true,
+    message: "That is not a valid phone number."
+  },
+  {
+    field: "deliveryAddress",
+    method: FormValidator.isEmpty,
+    validWhen: false,
+    message: "Delivery Address is required."
+  },
+  {
+    field: "deliveryAddress",
+    method: "matches",
+    validWhen: true,
+    args: [/^[a-zA-Z0-9,\/\s]+$/],
+    message: "Allowed characters for Delivery Address is a-z, A-Z, , 0-9, comma, slash, and space"
+  },
+  {
+    field: "deliveryMethod",
+    method: FormValidator.isEmpty,
+    validWhen: false,
+    message: "Delivery Method is required."
+  },
+  {
+    field: "deliveryMethod",
+    method: "matches",
+    validWhen: true,
+    args: [/^(OnePost|FedEx|Amazon)$/],
+    message: "Delivery Method must be one of: OnePost, FedEx, Amazon."
+  },
+  {
+    field: "paymentMethod",
+    method: FormValidator.isEmpty,
+    validWhen: false,
+    message: "Payment Method is required."
+  },
+  {
+    field: "paymentMethod",
+    method: "matches",
+    validWhen: true,
+    args: [/^(Visa|Mastercard|PayPal|Cash)$/],
+    message: "Payment Method must be one of: Visa, Mastercard, PayPal, Cash."
+  },
 ];
 
 module.exports = formValidationRules;

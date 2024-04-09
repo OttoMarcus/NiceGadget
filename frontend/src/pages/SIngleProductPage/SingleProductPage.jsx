@@ -123,11 +123,12 @@ const SingleProductPage = () => {
                   </div>
                   <div className={styles.buttonsWrapper}>
                     <CartButton
-                      productToAdd={null}
                       isAvailable={chosenCapacityObject?.available}
                       inCart={inCart}
                       fetchDetailsUrl={`/api/${typeModel}/byProductId/${chosenCapacityObject?.productId}`}
                       heightBtn="48px"
+                      notifyCategory={typeModel}
+                      notifyProductId={chosenCapacityObject?.productId}
                     />
                     <Favorite
                       click={() => {
@@ -172,13 +173,12 @@ const SingleProductPage = () => {
                 <TechSpecs techSpecs={model?.techSpecs} capacity={capacity} />
               </div>
             </div>
-
-            <div className={styles.buyTogetherSection}>
-              <BuyTogether />
-            </div>
           </div>
         </div>
       )}
+      <section className={`${styles.container} ${styles.buyTogetherSection}`}>
+        <BuyTogether />
+      </section>
     </>
   );
 };

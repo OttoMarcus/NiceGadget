@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Footer.module.scss";
 import UpArrowIcon from "../../Components/Icons/UpArrowIcon";
 import Logo from "../../Components/Icons/Logo";
 import OkIcon from "../../Components/Icons/OkIcon";
 import scrollUp from "../../helpers/scrollUp";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Footer = () => {
+  const [activeTab, setActiveTab] = useState("/");
+  const location = useLocation();
+
+  const handleTab = (tab) => {
+    setActiveTab(tab);
+  };
+
+  useEffect(() => {
+    setActiveTab(location.pathname);
+  }, [location]);
+
   return (
     <footer className={styles.footer}>
       <div className={`${styles.rectangleFooter} ${styles.container}`}>
@@ -23,10 +34,22 @@ const Footer = () => {
             </a>
           </li>
           <li>
-            <Link to="/contacts">Contacts</Link>
+            <Link
+              onClick={() => handleTab("/contacts")}
+              className={activeTab === "/contacts" ? styles.activeLink : ""}
+              to="/contacts"
+            >
+              Contacts
+            </Link>
           </li>
           <li>
-            <Link to="/right">rights</Link>
+            <Link
+              onClick={() => handleTab("/rights")}
+              className={activeTab === "/rights" ? styles.activeLink : ""}
+              to="/rights"
+            >
+              Rights
+            </Link>
           </li>
         </ul>
         <div className={styles.backTop}>

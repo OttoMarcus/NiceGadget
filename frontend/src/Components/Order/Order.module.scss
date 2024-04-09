@@ -1,0 +1,213 @@
+@import "../../styles/abstracts/variables";
+@import "../../styles/abstracts/mixins";
+@import "../../styles/global/base";
+
+.containerOrder {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  //gap: 20px;
+  padding: 10px;
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+  }
+
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+  }
+}
+
+.infoSection {
+  padding: 20px;
+  border: 1px solid #75767f;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  overflow: hidden;
+
+  //@media only screen and (min-width: $ui-breakpoint-tablet-min) {
+
+  //  width: 47% ;
+  //}
+}
+.infoSectionTitle {
+  padding: 20px 80px 20px 20px;
+  border: 1px solid #75767f;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-bottom: 5px;
+  width: 100%;
+}
+.orderNumm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: start;
+  flex-direction: column;
+}
+.pictureSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.product {
+  //position: relative;
+  padding: 20px;
+  background: #161827;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 300px;
+  height: 500px;
+  margin: 10px;
+  //margin-bottom: 20px;
+
+  //@media only screen and (min-width: $ui-breakpoint-tablet-min) {
+  //
+  //  //width: 80% ;
+  //}
+}
+
+.img {
+  max-width: 100%;
+  height: 150px;
+  object-fit: cover;
+  @media only screen and (max-width: 400px) {
+    object-fit: contain;
+  }
+}
+
+.subInfoWrapper {
+  display: flex;
+  flex-direction: column;
+
+  flex-wrap: wrap;
+}
+
+.subInfoSecond {
+  font-family: $ui-font-family-semibold;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0;
+  color: #75767f;
+}
+
+.infoWrapper {
+  width: 200px;
+
+  display: block;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media only screen and (min-width: 378px) {
+    width: 260px;
+  }
+  @media only screen and (min-width: $ui-breakpoint-tablet-min) {
+    width: 420px;
+  }
+  @media only screen and (min-width: $ui-breakpoint-desktop-min) {
+    //width: 620px;
+    width: 100px;
+  }
+}
+
+.subInfoFirst {
+  font-family: $ui-font-family-semibold;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.subInfo {
+  @include h4;
+  color: #75767f;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.subName {
+  max-width: 60%;
+  overflow: hidden;
+}
+.info {
+  font-family: $ui-font-family-semibold;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media only screen and (max-width: $ui-breakpoint-tablet-min) {
+    font-size: 14px;
+  }
+}
+
+.price {
+  display: flex;
+  font-family: $ui-font-family-semibold;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0;
+  @media only screen and (min-width: $ui-breakpoint-tablet-min) {
+    font-size: 20px;
+  }
+  p {
+    font-family: $ui-font-family-bold;
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.4;
+    letter-spacing: 0;
+    color: #75767f;
+    padding-left: 5px;
+    @media only screen and (min-width: $ui-breakpoint-tablet-min) {
+      font-size: 20px;
+    }
+    //text-decoration: underline;
+  }
+}
+@media only screen and (max-width: $ui-breakpoint-tablet-min) {
+  .containerOrder {
+    flex-direction: column;
+  }
+
+  .product {
+    width: 70%;
+  }
+}
+.toggleProducts {
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  display: inline-block;
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  width: 80px;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  color: #333;
+  font-size: 16px;
+  transition:
+    background-color 0.3s,
+    color 0.3s,
+    border-color 0.3s;
+  &:hover {
+    text-decoration: underline;
+  }
+}

@@ -13,7 +13,6 @@
 
   @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
     @include h1;
-    margin-bottom: 24px;
   }
 }
 
@@ -65,10 +64,16 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
   align-items: center;
-  gap: 16px;
+  gap: 40px;
+  margin-bottom: 24px;
 
   a {
     @include flex-center;
+  }
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    gap: 40px 16px;
+    margin-bottom: 40px;
   }
 }
 
@@ -106,9 +111,12 @@
   align-items: center;
   height: 32px;
   list-style: none;
-  margin: 0 auto;
-  margin-top: 40px;
+  margin: 0 auto 64px;
   padding: 0;
+
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    margin-bottom: 80px;
+  }
 
   .paginationItem {
     @include flex-center;
@@ -122,6 +130,11 @@
     .paginationItemLink {
       @include body-text;
       color: $ui-color-gray-white;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      align-content: center;
+      cursor: pointer;
       width: 100%;
       height: 100%;
       text-align: center;
@@ -155,6 +168,8 @@
       padding: 9px 12px;
       margin: 0px 4px;
       background-color: $ui-color-gray-surface-1;
+      color: $ui-color-gray-white;
+      font-size: 14px;
       color: $ui-color-gray-white;
       font-size: 14px;
 

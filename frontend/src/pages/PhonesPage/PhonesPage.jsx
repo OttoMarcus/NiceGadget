@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 // import axios from "axios";
 import Card from "../../Components/Cards/Card";
 import Sort from "../../Components/Sort/Sort";
-// import Filter from "../../Components/Filter/Filter";
 import Filter from "../../Components/Filter/FilterOptimized";
 import LeftArrowIcon from "../../Components/Icons/LeftArrowIcon";
 import RightArrowIcon from "../../Components/Icons/RightArrowIcon";
@@ -27,7 +26,7 @@ const Phones = () => {
   });
   const [filterQueryString, setFilterQueryString] = useState(null);
   const [sortValue, setSortValue] = useState("-brandNew");
-  const [cardsPerPageValue, setCardsPerPageValue] = useState(8);
+  const [cardsPerPageValue, setCardsPerPageValue] = useState("8");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalNumber, setTotalNumber] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
@@ -36,6 +35,8 @@ const Phones = () => {
 
   const location = useLocation();
   const typeModel = location.pathname.slice(1);
+
+  //Parse values FROM url query params TO states on page first load
 
   //Parse values FROM url query params TO states 'filters', 'perPageValue', 'currentPage' and 'filterQueryString', on page first load
   useEffect(() => {
@@ -236,7 +237,7 @@ const Phones = () => {
         <Sort handleSortChange={handleSortChange} sortValue={sortValue} />
         <PerPageSelect
           handlePerPageChange={handlePerPageChange}
-          cardsPerPageValue={cardsPerPageValue}
+          cardsPerPageValue={Number(cardsPerPageValue)}
         />
       </div>
 
