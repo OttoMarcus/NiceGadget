@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import styles from "./QuantityChange.module.scss";
+import toast from "react-hot-toast";
 
 const QuantityChange = ({
   category,
@@ -43,11 +44,11 @@ const QuantityChange = ({
           }
         )
         .then((response) => {
-          console.log("Quantity updated successfully:", response.data);
+          toast.success("Quantity updated successfully");
           onClick(newQuantity);
         })
         .catch((err) => {
-          console.error("Error updating quantity:", err);
+          toast.error("Error updating quantity");
         });
     }
 
@@ -63,11 +64,11 @@ const QuantityChange = ({
           }
         )
         .then((response) => {
-          console.log("Quantity updated successfully:", response.data);
+          toast.success("Quantity updated successfully");
           onClick(newQuantity);
         })
         .catch((err) => {
-          console.error("Error updating quantity:", err);
+          toast.error("Error updating quantity");
         });
     }
     setNewQuantity(0);
