@@ -83,35 +83,8 @@ const Phones = () => {
     setSortValue(sort ? sort : "-brandNew");
     setCardsPerPageValue(perPage ? Number(perPage) : 8);
     setCurrentPage(startPage ? Number(startPage) : 1);
-    // eslint-disable-next-line
   }, []);
-  // filters
 
-  // useEffect(() => {
-
-  //   // console.log(window.scrollY);
-  //   const handleScroll = () => {
-  //     const scrollPosition = window.scrollY;
-  //     if (window.scrollY > 0) {console.log('window.scrollY > 0: ' ,window.scrollY) }
-  //     console.log(scrollPosition);
-  //     // 191
-  //     if ((window.innerWidth < 640 && scrollPosition > 0) ||
-  //         (window.innerWidth >= 640 && scrollPosition > 191)
-  //     ) {
-  //       console.log('window.innerWidth: ', window.innerWidth);
-  //       console.log('scrollPosition: ', scrollPosition);
-  //       setIsScrolled(true);
-  //     } else {
-  //       setIsScrolled(false);
-  //     }
-  //   };
-  //   window.addEventListener('scroll', handleScroll);
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-  //   };
-  // }, []);
-
-  // Base request
   const fetchData = async (
     filterQueryString,
     sortValue,
@@ -130,13 +103,11 @@ const Phones = () => {
       setPhonesArr(data);
       setTotalNumber(Number(total));
       setTotalPages(Number(totalPages));
-      // setTotalMatching(totalMatching);
     } catch (error) {
       console.error("There was a problem with your fetch operation:", error);
     }
   };
 
-  // Sending requests on query params changing
   useEffect(() => {
     // console.log(filterQueryString, sortValue, cardsPerPageValue, currentPage);
     fetchData(filterQueryString, sortValue, cardsPerPageValue, currentPage);

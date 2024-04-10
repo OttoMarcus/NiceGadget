@@ -6,6 +6,7 @@ import styles from "./AccessoriesPage.module.scss";
 
 const Accessories = () => {
   const [accessoriesArr, setAccessoriesArr] = useState({ data: [] });
+  const [totalNumber, setTotalNumber] = useState(0);
 
   useEffect(() => {
     fetchAccessories();
@@ -16,6 +17,7 @@ const Accessories = () => {
       .get("/api/accessories")
       .then((response) => {
         setAccessoriesArr({ data: response.data.data });
+        setTotalNumber(response.data.data.length);
       })
       .catch((error) => {
         console.error("Fetching error:", error);
@@ -26,7 +28,7 @@ const Accessories = () => {
     <div className={styles.container}>
       <>
         <h1 className={styles.accessoriesTitle}>Accessories</h1>
-        <h3 className={styles.subtitle}>models</h3>
+        <h3 className={styles.subtitle}>{totalNumber} models</h3>
 
         <div className={styles.resultWrapper}>
           {Array.isArray(accessoriesArr.data) &&
