@@ -15,7 +15,6 @@
 
   .sortSelect {
     width: 176px;
-    // width: 150px;
     height: 40px;
     flex-shrink: 0;
     border: 1px solid var(--gray-icons-placeholders, #4a4d58);
@@ -37,31 +36,9 @@
       background: var(--Gray-Surface-2, #323542);
     }
 
-    // .sortSelect::after {
-    //     content: '\25BC'; /* Unicode-символ стрелки вниз */
-    //     position: absolute;
-    //     top: 50%;
-    //     right: 10px;
-    //     transform: translateY(-50%);
-    //     pointer-events: none;
-    //   }
-
-    // .optionsContainer{
-    //     display: flex;
-    //     flex-direction: column;
-    //     width: 176px;
-    //     height: 144px;
-    //     flex-shrink: 0;
-    //     border: 1px solid var(--Gray-Elements, #3B3E4A);
-    //     background: var(--Gray-Black, #0F1121);
-    //     box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.05);
-
-    // }
-
     .sortSelect {
       display: flex;
       flex-direction: column;
-      // width: 176px;
       width: 150px;
       height: 144px;
       flex-shrink: 0;
@@ -89,9 +66,3 @@
     }
   }
 }
-
-// Select - options shown:
-
-// border: 1px solid var(--Gray-Elements, #3B3E4A);
-// background: var(--Gray-Black, #0F1121);
-// box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.05);
