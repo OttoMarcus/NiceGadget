@@ -6,11 +6,16 @@ export const useCreateOrder = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
   const user = useSelector((state) => state.user.user);
-  const totalCartPrice = useSelector((state) =>
-    state.cart.cartItems.reduce(
-      (total, item) => total + item.price * item.cartQuantity,
-      0
-    )
+
+  const calculateTotalItemPrice = (price, discount = 0, quantity) => {
+    return Math.round(price * (1 - discount) * quantity);
+  };
+
+  const totalCartPrice = cartItems.reduce(
+    (total, item) =>
+      total +
+      calculateTotalItemPrice(item.price, item.discount, item.cartQuantity),
+    0
   );
 
   const createOrder = async (values) => {

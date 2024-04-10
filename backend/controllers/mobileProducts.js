@@ -148,7 +148,7 @@ exports.getMobileProducts = async (req, res, next) => {
       .skip(startPage * perPage - perPage)
       .limit(perPage)
 
-
+    console.log('foundMobileProducts after filter: ' ,foundMobileProducts);
     const totalMatching = foundMobileProducts.length;
 
     const total = await mobileProducts.countDocuments(mongooseQuery);

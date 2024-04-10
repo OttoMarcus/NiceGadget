@@ -14,17 +14,6 @@ const PerPageSelect =
 
     /*
 
-FILTER
-
-Simple Options: New, In Stock, HotPrice(?)
-
-Options: 
-- Price (Input Min - Input Max)
-- Model line (14, 14Pro, 15, 15Pro, ... )
-- Capacity (64Gb, 128Gb, 256Gb, 512Gb)
-- RAM (2, 4, 8)
-- Color
-- Screen width (input range OR list of values)
 
 ==================================================
 
@@ -95,11 +84,16 @@ Options:
       }),
     };
 
+    if (window.matchMedia("(max-width: 768px)").matches) {
+      customStyles.control.width = "128px";
+      customStyles.menu.width = "128px";
+    }
+
     const options = [
-      { value: "8", label: "8" },
-      { value: "16", label: "16" },
-      { value: "24", label: "24" },
-      { value: "48", label: "48" },
+      { value: 8, label: "8" },
+      { value: 16, label: "16" },
+      { value: 24, label: "24" },
+      { value: 48, label: "48" },
     ];
 
     return (
