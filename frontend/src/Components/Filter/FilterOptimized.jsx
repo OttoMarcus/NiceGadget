@@ -19,7 +19,6 @@ TO DO:
 STYLE:
 4. Збільшити висоту інпутів для ціни.
 5. Прибрати стрілочки +- в іпнутах.
-6. Вирівняти цифри в інпутах по горизонталі.
 7. Додати "$" та "від - до".
 8. Виділити іншим кольором іконку та/або текст для очистки фільтра
 
@@ -58,7 +57,7 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
   }, []);
 
   useEffect(() => {
-    isFilterVisible
+    isFilterVisible && window.innerWidth < 768
       ? (document.body.style.overflow = "hidden")
       : (document.body.style.overflow = "auto");
     const handleClickOutside = (event) => {
@@ -166,7 +165,7 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
                     className={styles.filterGroupHeader}
                     onClick={() => toggleSection(key)}
                   >
-                    {key}
+                    {key === "modelName" ? "model" : `${key}`}
                     {activeSection === key ? (
                       <UpArrowIcon />
                     ) : (
@@ -188,7 +187,9 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
                                   onChange={handleGroupCheckboxChange}
                                 />
                                 <span className={styles.checkmark}></span>
-                                <span className={styles.labelText}>
+                                <span
+                                  className={`${styles.labelText}${item.includes("iPhone") ? "_iPhone" : ""}`}
+                                >
                                   {key === "capacity" || key === "ram"
                                     ? `${item} GB`
                                     : `${item}`}
@@ -252,8 +253,6 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
                                   backgroundColor: "#3b3e4a",
                                 },
                               }}
-                              // dotStyle={{ background: styles.dot }} // Передача стиля точек
-                              // activeDotStyle={{ background: styles.activeDot }} // Передача стиля активных точек
                             />
                           </div>
                         </div>

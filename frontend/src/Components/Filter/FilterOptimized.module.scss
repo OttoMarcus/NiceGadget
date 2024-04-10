@@ -4,9 +4,21 @@
 
 :root {
   --header-height: 48px;
-  // @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
-  //   --header-height: 64px;
-  // }
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    --header-height: 64px;
+  }
+}
+
+*::-webkit-scrollbar {
+  width: 3px;
+}
+
+*::-webkit-scrollbar-track {
+  background: $ui-color-gray-selected-surface-2;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: $ui-color-gray-surface-1;
 }
 
 // .test{
@@ -84,8 +96,11 @@
   box-shadow: 2px 0 6px #33333342;
   // overflow-y: scroll;
 
-  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
-    width: 50vw;
+  // @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+  //   width: 50vw;
+  // }
+  @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+    top: 64px;
   }
 }
 
@@ -95,15 +110,21 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 10px 0px 61px;
+  // padding: 10px 0px 61px;
+  padding-bottom: 61px;
   background-color: $ui-color-gray-surface-1;
   overflow-y: auto;
+  scrollbar-width: none;
+  scrollbar-color: $ui-color-gray-selected-surface-2 $ui-color-gray-surface-1;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
 .filterContent {
   border-bottom: 1px solid white;
-  background-color: #75767f;
-  overflow-y: scroll;
+  background-color: $ui-color-gray-surface-1;
+  // background-color: #75767f;
+  overflow-y: auto;
 }
 // .filterContent {
 //   overflow-y: scroll;
@@ -159,7 +180,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: $ui-color-primary-accent;
+  // background-color: $ui-color-primary-accent;
+  // background-color: $ui-color-gray-surface-1;
+  background-color: $ui-color-gray-elements;
   border-bottom: 1px solid $ui-color-gray-white;
   // $ui-color-gray-selected-surface-2
   border-top: 1px solid $ui-color-gray-white;
@@ -171,12 +194,13 @@
 
   &:hover {
     padding-left: 12px;
-    background-color: $ui-color-primary-accent-hover;
+    // background-color: $ui-color-primary-accent-hover;
+    background-color: $ui-color-gray-black-background;
     transition: $ui-transition-longer;
 
     &::before {
-      background-color: $ui-color-gray-white;
-      // background-color: $ui-color-gray-icons-placeholders;
+      // background-color: $ui-color-gray-white;
+      background-color: $ui-color-primary-accent-hover;
       transition: $ui-transition-longer;
     }
   }
@@ -200,6 +224,7 @@
   // justify-content: space-between;
   gap: 20px;
   padding: 20px;
+  background-color: $ui-color-gray-surface-1;
   overflow: hidden;
 }
 
@@ -213,6 +238,7 @@
   width: 48%;
   height: 30px;
   padding: 0px 7px;
+  text-align: center;
   background-color: $ui-color-gray-selected-surface-2;
   color: $ui-color-gray-white;
   outline: none;
@@ -231,19 +257,23 @@
 .checkboxGroup {
   display: flex;
   flex-direction: column;
-  padding: 10px 5px;
+  padding: 10px 0px;
   gap: 10px;
-  background-color: #323542;
+  background-color: $ui-color-gray-surface-1;
   // margin-bottom: 10px;
 
-  // &.sticky{
-  //   position: sticky;
-  //   z-index: 5;
-  // }
+  &.sticky {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    padding: 20px 10px 20px;
+    background-color: $ui-color-gray-surface-1;
+    border-bottom: 1px solid $ui-color-primary-accent;
+  }
 
   & li {
     width: 100%;
-    padding: 0px 5px;
+    padding: 5px 10px;
 
     &:hover {
       // background-color: $ui-color-gray-selected-surface-2;
@@ -258,13 +288,13 @@
   }
 }
 
-.checkboxGroup.sticky {
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  background-color: #161827;
-  border-bottom: 1px solid $ui-color-primary-accent;
-}
+// .checkboxGroup.sticky {
+//   position: sticky;
+//   top: 0;
+//   z-index: 5;
+//   background-color: #161827;
+//   border-bottom: 1px solid $ui-color-primary-accent;
+// }
 
 .checkboxLabel {
   @include body-text;
@@ -276,10 +306,10 @@
   // background-color: $ui-color-gray-surface-1;
   color: $ui-color-gray-white;
   cursor: pointer;
+}
 
-  // & input:checked{
-  //   color: white;
-  // }
+.labelText {
+  text-transform: capitalize;
 }
 
 .checkboxLabel input {
@@ -317,14 +347,12 @@
 .filterButtonsContainer {
   position: fixed;
   z-index: 5;
-  // position: sticky;
   width: 100%;
   padding: 15px 5px;
   bottom: 0;
   left: 0;
   display: flex;
   justify-content: center;
-  // flex-direction: column;
   gap: 10px;
   background-color: $ui-color-gray-surface-1;
   border-top: 1px solid $ui-color-primary-accent;

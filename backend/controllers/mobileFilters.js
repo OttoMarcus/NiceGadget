@@ -108,7 +108,7 @@ exports.getMobileFilters = async (req, res, next) => {
     ]);
 
     const modelNames = await MobileProduct.distinct("refModel.modelName");
-    console.log('modelNames in filters: ' ,modelNames);
+    // console.log('modelNames in filters: ' ,modelNames);
     const colors = await MobileProduct.distinct("color");
     const capacities = await MobileProduct.distinct("capacity");
     const RAMs = await MobileProduct.distinct("ram");

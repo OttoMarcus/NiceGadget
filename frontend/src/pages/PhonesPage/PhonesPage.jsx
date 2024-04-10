@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import axios from "axios";
 import Card from "../../Components/Cards/Card";
 import Sort from "../../Components/Sort/Sort";
 import Filter from "../../Components/Filter/FilterOptimized";
@@ -31,114 +30,159 @@ const Phones = () => {
   const [totalNumber, setTotalNumber] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
 
-  // http://localhost:3000/phones?modelName=iPhone+13&sort=price&perPage=16&startPage=2
-
   const location = useLocation();
   const typeModel = location.pathname.slice(1);
 
-  //Parse values FROM url query params TO states on page first load
+  // useEffect(() => {
+  //   const urlParams = new URLSearchParams(window.location.search); //take search params from URL
+
+  //   const queryParams = Object.fromEntries(urlParams.entries()); // make an object from keys and values of search params
+
+  //   const filterParams = Object.keys(filters).reduce((acc, key) => {
+  //     // compare current 'filter' state and object from search params
+  //     if (queryParams[key]) {
+  //       const decodedValue = decodeURIComponent(queryParams[key]); //decode value of every search params to compare them
+  //       if (Array.isArray(filters[key])) {
+  //         //  in case 'filter' state key is array (any key/filter type with multiple selection)
+  //         if (decodedValue.includes(",")) {
+  //           // check if query params has more than 1 value
+  //           acc[key] = decodedValue.split(","); // write the splitted (converted to array) value into appropriate filter state
+  //         } else {
+  //           acc[key] = [decodedValue]; // in case 'filter' state [key] is array but query param has only 1 value for it
+  //         }
+  //       } else if (decodedValue === "true" || decodedValue === "false") {
+  //         // case for writing down the value into the 'filter' state as a Boolean, not as a String
+  //         // console.log('boolean key is: ' ,key);
+  //         acc[key] = JSON.parse(decodedValue);
+  //       } else {
+  //         acc[key] = Number(decodedValue); // case for any other key which value is not an array or boolean
+  //       }
+  //     }
+  //     return acc;
+  //   }, {});
+
+  //   // console.log(filterParams);
+
+  //   const sort = urlParams?.get("sort");
+  //   // console.log("sort: ", sort);
+  //   const perPage = urlParams?.get("perPage");
+  //   // console.log("perPage: ", perPage);
+  //   const startPage = urlParams?.get("startPage");
+  //   // console.log("startPage: ", startPage);
+
+  //   if (Object.keys(filterParams).length !== 0) {
+  //     setFilters({ ...filters, ...filterParams });
+  //     setFilterQueryString(new URLSearchParams(filterParams).toString());
+  //   }
+  //   setSortValue(sort ? sort : "-brandNew");
+  //   setCardsPerPageValue(perPage ? Number(perPage) : 8);
+  //   setCurrentPage(startPage ? Number(startPage) : 1);
+  //   // eslint-disable-next-line
+  // }, []);
 
   //Parse values FROM url query params TO states 'filters', 'perPageValue', 'currentPage' and 'filterQueryString', on page first load
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search); //take search params from URL
+    const urlParams = new URLSearchParams(window.location?.search); //take search params from URL
+    if (urlParams.size !== 0) {
+      console.log(urlParams);
 
-    const queryParams = Object.fromEntries(urlParams.entries()); // make an object from keys and values of search params
+      const queryParams = Object.fromEntries(urlParams.entries()); // make an object from keys and values of search params
 
-    const filterParams = Object.keys(filters).reduce((acc, key) => {
-      // compare current 'filter' state and object from search params
-      if (queryParams[key]) {
-        const decodedValue = decodeURIComponent(queryParams[key]); //decode value of every search params to compare them
-        if (Array.isArray(filters[key])) {
-          //  in case 'filter' state key is array (any key/filter type with multiple selection)
-          if (decodedValue.includes(",")) {
-            // check if query params has more than 1 value
-            acc[key] = decodedValue.split(","); // write the splitted (converted to array) value into appropriate filter state
+      const filterParams = Object.keys(filters).reduce((acc, key) => {
+        // compare current 'filter' state and object from search params
+        if (queryParams[key]) {
+          const decodedValue = decodeURIComponent(queryParams[key]); //decode value of every search params to compare them
+          if (Array.isArray(filters[key])) {
+            //  in case 'filter' state key is array (any key/filter type with multiple selection)
+            if (decodedValue.includes(",")) {
+              // check if query params has more than 1 value
+              acc[key] = decodedValue.split(","); // write the splitted (converted to array) value into appropriate filter state
+            } else {
+              acc[key] = [decodedValue]; // in case 'filter' state [key] is array but query param has only 1 value for it
+            }
+          } else if (decodedValue === "true" || decodedValue === "false") {
+            // case for writing down the value into the 'filter' state as a Boolean, not as a String
+            acc[key] = JSON.parse(decodedValue);
           } else {
-            acc[key] = [decodedValue]; // in case 'filter' state [key] is array but query param has only 1 value for it
+            acc[key] = Number(decodedValue); // case for any other key which value is not an array or boolean
           }
-        } else if (decodedValue === "true" || decodedValue === "false") {
-          // case for writing down the value into the 'filter' state as a Boolean, not as a String
-          // console.log('boolean key is: ' ,key);
-          acc[key] = JSON.parse(decodedValue);
-        } else {
-          acc[key] = Number(decodedValue); // case for any other key which value is not an array or boolean
         }
+        return acc;
+      }, {});
+
+      const sort = urlParams?.get("sort");
+      const perPage = urlParams?.get("perPage");
+      const startPage = urlParams?.get("startPage");
+
+      if (Object.keys(filterParams).length !== 0) {
+        setFilters({ ...filters, ...filterParams });
+        setFilterQueryString(new URLSearchParams(filterParams).toString());
       }
-      return acc;
-    }, {});
-
-    // console.log(filterParams);
-
-    const sort = urlParams?.get("sort");
-    // console.log("sort: ", sort);
-    const perPage = urlParams?.get("perPage");
-    // console.log("perPage: ", perPage);
-    const startPage = urlParams?.get("startPage");
-    // console.log("startPage: ", startPage);
-
-    if (Object.keys(filterParams).length !== 0) {
-      setFilters({ ...filters, ...filterParams });
-      setFilterQueryString(new URLSearchParams(filterParams).toString());
+      if (sort && sort !== sortValue) {
+        console.log(sort);
+        setSortValue(sort);
+      }
+      if (perPage && Number(perPage) !== cardsPerPageValue) {
+        console.log(perPage);
+        setCardsPerPageValue(Number(perPage));
+      }
+      if (startPage && Number(startPage) !== currentPage) {
+        console.log(startPage);
+        setCurrentPage(Number(startPage));
+      }
     }
-    setSortValue(sort ? sort : "-brandNew");
-    setCardsPerPageValue(perPage ? Number(perPage) : 8);
-    setCurrentPage(startPage ? Number(startPage) : 1);
     // eslint-disable-next-line
   }, []);
-  // filters
 
   // useEffect(() => {
-
-  //   // console.log(window.scrollY);
-  //   const handleScroll = () => {
-  //     const scrollPosition = window.scrollY;
-  //     if (window.scrollY > 0) {console.log('window.scrollY > 0: ' ,window.scrollY) }
-  //     console.log(scrollPosition);
-  //     // 191
-  //     if ((window.innerWidth < 640 && scrollPosition > 0) ||
-  //         (window.innerWidth >= 640 && scrollPosition > 191)
-  //     ) {
-  //       console.log('window.innerWidth: ', window.innerWidth);
-  //       console.log('scrollPosition: ', scrollPosition);
-  //       setIsScrolled(true);
-  //     } else {
-  //       setIsScrolled(false);
-  //     }
+  //   const handlePopstate = () => {
+  //     // Отправка запроса на сервер при нажатии кнопки "назад"
+  //     fetch('ваш_условный_запрос')
+  //       .then(response => {
+  //         // Обработка ответа от сервера
+  //         console.log('Запрос отправлен');
+  //       })
+  //       .catch(error => {
+  //         // Обработка ошибки
+  //         console.error('Ошибка при отправке запроса:', error);
+  //       });
   //   };
-  //   window.addEventListener('scroll', handleScroll);
+
+  //   // Добавление слушателя события для кнопки "назад"
+  //   window.addEventListener('popstate', handlePopstate);
+
+  //   // Удаление слушателя события при размонтировании компонента
   //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
+  //     window.removeEventListener('popstate', handlePopstate);
   //   };
   // }, []);
 
   // Base request
-  const fetchData = async (
-    filterQueryString,
-    sortValue,
-    cardsPerPageValue,
-    currentPage
-  ) => {
-    let fetchURL = filterQueryString
-      ? `/api/phones?${filterQueryString}&sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
-      : `/api/phones?sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`;
-    try {
-      const res = await fetch(fetchURL);
-      if (!res.ok) {
-        throw new Error("Network response was not ok");
+  const fetchData = async () =>
+    // filterQueryString,
+    // sortValue,
+    // cardsPerPageValue,
+    // currentPage
+    {
+      let fetchURL = filterQueryString
+        ? `/api/phones?${filterQueryString}&sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`
+        : `/api/phones?sort=${sortValue}&perPage=${cardsPerPageValue}&startPage=${currentPage}`;
+      try {
+        const res = await fetch(fetchURL);
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const { data, totalPages, total } = await res.json();
+        setPhonesArr(data);
+        setTotalNumber(Number(total));
+        setTotalPages(Number(totalPages));
+      } catch (error) {
+        console.error("There was a problem with your fetch operation:", error);
       }
-      const { data, totalPages, total } = await res.json();
-      setPhonesArr(data);
-      setTotalNumber(Number(total));
-      setTotalPages(Number(totalPages));
-      // setTotalMatching(totalMatching);
-    } catch (error) {
-      console.error("There was a problem with your fetch operation:", error);
-    }
-  };
+    };
 
   // Sending requests on query params changing
   useEffect(() => {
-    // console.log(filterQueryString, sortValue, cardsPerPageValue, currentPage);
     fetchData(filterQueryString, sortValue, cardsPerPageValue, currentPage);
   }, [filterQueryString, sortValue, cardsPerPageValue, currentPage]);
 
@@ -168,8 +212,6 @@ const Phones = () => {
 
   const handleFilter = async () => {
     //define a variable to get filters with values, not to send to server empty values
-    // console.log(filters);
-
     const nonEmptyFilters = Object.entries(filters).reduce(
       (acc, [key, value]) => {
         if (
@@ -184,14 +226,11 @@ const Phones = () => {
       {}
     );
 
-    // console.log("nonEmptyFilters after reduce: ", nonEmptyFilters);
-
     let queryString;
     if (Object.keys(nonEmptyFilters).length === 0) {
       queryString = null;
     } else {
       queryString = new URLSearchParams(nonEmptyFilters).toString();
-      // console.log("queryString before set state", queryString);
     }
 
     setFilterQueryString(queryString);
