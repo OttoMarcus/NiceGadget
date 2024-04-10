@@ -15,13 +15,15 @@ const SingleAccessoriesPage = () => {
   const [accessories, setAccessories] = useState();
 
   const favor = useSelector((state) => state.favorite.favorites);
-  let some = favor.some((el) => accessories?.id === el?.id);
+  let some = favor?.some((el) => accessories?.id === el?.id);
   // let some = 1
   const [activeAccessoryId, setActiveAccessoryId] = useState(null);
   const [accessoryAvailable, setAccessoryAvailable] = useState(true);
 
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const inCart = cartItems.some((item) => item.customId === activeAccessoryId);
+  const inCart = cartItems?.some(
+    (item) => item?.customId === activeAccessoryId
+  );
 
   useEffect(() => {
     fetch(`/api/accessories-models/${accessoryId}`)
@@ -33,8 +35,8 @@ const SingleAccessoriesPage = () => {
         return response.json();
       })
       .then((data) => {
-        setAccessoryAvailable(data.available);
-        setActiveAccessoryId(data.id);
+        setAccessoryAvailable(data?.available);
+        setActiveAccessoryId(data?.id);
         setAccessories(data);
       })
       .catch((error) => {
@@ -46,19 +48,19 @@ const SingleAccessoriesPage = () => {
     <>
       {accessories && (
         <div className={styles.container}>
-          <h2 className={styles.productTitle}>{accessories.name}</h2>
+          <h2 className={styles.productTitle}>{accessories?.name}</h2>
           <div className={styles.content}>
             <div className={styles.imagesAndCustomizationWrapper}>
               <div className={styles.outerImagesWrapper}>
                 <SelectableImageGallery
-                  images={accessories.colors[0].pictures}
+                  images={accessories?.colors[0]?.pictures}
                 />
               </div>
               <div className={styles.outerCustomizationWrapper}>
                 <div className={styles.productCustomizationWrapper}>
                   <div className={styles.priceWrapper}>
                     <div className={styles.actualPrice}>
-                      ${accessories.price}
+                      ${accessories?.price}
                     </div>
                   </div>
                   <div className={styles.buttonsWrapper}>
@@ -98,19 +100,19 @@ const SingleAccessoriesPage = () => {
             <div className={styles.aboutAndTechSpecsWrapper}>
               <div className={styles.aboutSection}>
                 <h3 className={styles.aboutHeader}>About</h3>
-                {accessories.about.map((item, index) => {
+                {accessories?.about?.map((item, index) => {
                   return (
                     <ProductAbout
                       key={index}
-                      title={item.title}
-                      text={item.text}
+                      title={item?.title}
+                      text={item?.text}
                     />
                   );
                 })}
               </div>
               <div className={styles.techSpecsSection}>
                 <h3 className={styles.techSpecsHeader}>Tech specs</h3>
-                <TechSpecs techSpecs={accessories.techSpecs} />
+                <TechSpecs techSpecs={accessories?.techSpecs} />
               </div>
             </div>
           </div>

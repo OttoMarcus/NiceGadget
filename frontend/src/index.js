@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { store } from "./store/store";
+import FallbackPage from "./pages/FallbackPage/FallbackPage";
 
 if (process.env.NODE_ENV === "production") {
   Sentry.init({
@@ -29,7 +30,7 @@ if (process.env.NODE_ENV === "production") {
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Sentry.ErrorBoundary fallback={<p>An error has occurred</p>}>
+  <Sentry.ErrorBoundary fallback={<FallbackPage />}>
     <React.StrictMode>
       <Provider store={store}>
         <BrowserRouter>
