@@ -1,5 +1,4 @@
 import React from "react";
-// import CardList from "../../Components/CardList/CardList";
 import ShopByCategory from "../../Components/ShopByCategory/ShopByCategory";
 import Slider from "../../Components/AdvertisingSlider/Slider";
 import BrandNews from "../../Components/BrandNews/BrandNews";
@@ -11,7 +10,6 @@ const HomePage = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.homePageTitle}>Welcome to Nice Gadgets store!</h1>
-
       <section>
         <NeedHelp />
       </section>

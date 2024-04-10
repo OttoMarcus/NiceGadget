@@ -277,9 +277,16 @@
           font-size: 18px;
         }
       }
+    }
+    .infoDataForm {
+      width: 250px;
 
-      .infoDataForm {
-        width: 100%;
+      @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+        width: 250px;
+      }
+
+      @media only screen and (min-device-width: $ui-breakpoint-desktop-min) {
+        width: 350px;
       }
     }
   }

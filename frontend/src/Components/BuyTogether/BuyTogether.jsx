@@ -23,7 +23,6 @@ const BuyTogether = () => {
         const phonesData = phonesResponse.data.data;
 
         const allItems = mixAccessoriesAndPhones(accessoriesData, phonesData);
-        console.log(allItems);
         const shuffledItems = shuffle(allItems);
         const selectedItems = shuffledItems.slice(0, 13);
 
@@ -72,8 +71,6 @@ const BuyTogether = () => {
   const handlePhoneClick = () => {
     window.location.reload();
   };
-
-  console.log(randomItems);
 
   return (
     <>

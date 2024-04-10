@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Form, Formik } from "formik";
 import validationSchema from "../UserUpdatePass/validationSchema";
 import { sendAuthorizedRequest } from "../../../helpers/sendRequest";
@@ -9,16 +9,15 @@ import styles from "./UserUpdatePass.module.scss";
 import Input from "../../../Components/Profile/CustomInput/Input";
 import { useNavigate } from "react-router-dom";
 import { removeUser } from "../../../store/user/userSlice";
-import ModalStatusInfo from "../../../Components/Profile/ModalStatusInfo/ModalStatusInfo";
-import CheckMarkIcon from "../../../Components/Icons/CheckMarkIcon";
-import CrossErrorIcon from "../../../Components/Icons/CrossErrorIcon";
 import stylesBack from "../../CartPage/CartPage.module.scss";
 import LeftArrowIcon from "../../../Components/Icons/LeftArrowIcon";
+import toast from "react-hot-toast";
+import { deleteCartLocal } from "../../../store/cart/cartSlice";
+import { SetFavor } from "../../../store/favorites/favoriteSlice";
+import { SetOrder } from "../../../store/orders/OrderNew";
 
 const UserUpdatePass = () => {
   const [err, setErr] = useState(false);
-  const [successfulMessage, setSuccessfulMessage] = useState(false);
-  const [valuesToSubmit, setValuesToSubmit] = useState(null);
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -36,58 +35,62 @@ const UserUpdatePass = () => {
     }
   };
 
-  const handleSubmit = async (values) => {
-    if (values.newPassword !== values.newPasswordConfirm) {
-      setErr("New password and confirmation do not match");
-      return;
-    }
-    setValuesToSubmit(values);
+  const handleLogoutAndRedirect = () => {
+    dispatch(removeUser());
+    dispatch(deleteCartLocal());
+    dispatch(SetFavor([]));
+    dispatch(SetOrder([]));
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("orders");
+    sessionStorage.removeItem("prevPath");
+    navigate("/login");
   };
 
-  useEffect(() => {
-    if (valuesToSubmit) {
+  const handleSubmit = async (values) => {
+    if (values.newPassword !== values.newPasswordConfirm) {
+      setErr("New password or confirmation does not match", true);
+      return;
+    }
+
+    try {
       const requestBody = {
         userId: user._id,
-        password: valuesToSubmit.password,
-        newPassword: valuesToSubmit.newPassword,
+        password: values.password,
+        newPassword: values.newPassword,
       };
-      sendAuthorizedRequest(`/api/customers/password`, "PUT", {
+      await sendAuthorizedRequest(`/api/customers/password`, "PUT", {
         body: JSON.stringify(requestBody),
-      })
-        .then((r) => {
-          setSuccessfulMessage(true);
-          setErr(false);
-        })
-        .catch((err) => {
-          return (
-            <>
-              <ModalStatusInfo
-                text="Oops, Internal error!"
-                colorText="#FF0000"
-                svgIcon={<CrossErrorIcon />}
-              />
-              {setErr(true)};{setSuccessfulMessage(false)};
-            </>
-          );
-        });
+      });
+      toast.success("Password successfully changed");
+      setErr(false);
+      handleLogoutAndRedirect();
+    } catch (errors) {
+      setErr(true);
+      toast.error("Oops, Server Error!");
     }
-  }, [valuesToSubmit, user]);
+  };
 
-  useEffect(() => {
-    const handleLogoutAndRedirect = () => {
-      dispatch(removeUser());
-      localStorage.removeItem("token");
-      sessionStorage.removeItem("prevPath");
-      navigate("/login");
-    };
-
-    if (successfulMessage) {
-      const timer = setTimeout(() => {
-        handleLogoutAndRedirect();
-      }, 4000);
-      return () => clearTimeout(timer);
-    }
-  }, [successfulMessage, dispatch, navigate]);
+  // useEffect(() => {
+  //   if (valuesToSubmit) {
+  //     const requestBody = {
+  //       userId: user._id,
+  //       password: valuesToSubmit.password,
+  //       newPassword: valuesToSubmit.newPassword,
+  //     };
+  //     sendAuthorizedRequest(`/api/customers/password`, "PUT", {
+  //       body: JSON.stringify(requestBody),
+  //     })
+  //       .then((r) => {
+  //         setErr(false);
+  //         setSuccessfulMessage(true); // Встановлюємо флаг успішного відправлення пароля
+  //         handleLogoutAndRedirect()
+  //       })
+  //       .catch((error) => {
+  //         toast.error("Oops, Server Error!");
+  //       });
+  //   }
+  // }, [valuesToSubmit, user]);
 
   return (
     <section className={styles.container}>
@@ -124,19 +127,8 @@ const UserUpdatePass = () => {
                 label="Your old password"
                 maxLength={20}
                 value={values.password}
-                style={
-                  (errors.password && touched.password) || !!err
-                    ? { border: "1px solid #eb5757" }
-                    : {}
-                }
+                // style={errors.password && touched.password}
               />
-              {err ? (
-                <p className={styles.diffPassError}>
-                  Your old password is different
-                </p>
-              ) : (
-                <span></span>
-              )}
               <InputWithStrength
                 name="newPassword"
                 className={styles.dataInput}
@@ -167,18 +159,15 @@ const UserUpdatePass = () => {
                     : {}
                 }
               />
-              {err && <p className={styles.diffPassError}>{err}</p>}
-              {successfulMessage ? (
-                <ModalStatusInfo
-                  text="Your password successfully changed"
-                  colorText="#2FC72FF2"
-                  circleShowHide="2px"
-                  svgIcon={<CheckMarkIcon />}
-                />
-              ) : (
-                <span></span>
+              {err && values.newPasswordConfirm && (
+                <p className={styles.diffPassError}>{err}</p>
               )}
               <div className={styles.updateDataBtnBlock}>
+                {err && (
+                  <p className={styles.diffPassError2}>
+                    Update password failed! Check your old password
+                  </p>
+                )}
                 <ButtonProfile
                   type="submit"
                   text="Update password"

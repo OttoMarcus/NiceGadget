@@ -56,8 +56,10 @@ const SingleProductPage = () => {
           <div className={styles.content}>
             <div className={styles.imagesAndCustomizationWrapper}>
               <div className={styles.outerImagesWrapper}>
-                {selectedColorData && selectedColorData.pictures && (
-                  <SelectableImageGallery images={selectedColorData.pictures} />
+                {selectedColorData && selectedColorData?.pictures && (
+                  <SelectableImageGallery
+                    images={selectedColorData?.pictures}
+                  />
                 )}
               </div>
               <div className={styles.outerCustomizationWrapper}>
@@ -69,14 +71,14 @@ const SingleProductPage = () => {
                     {model?.colors.map((el) => {
                       return (
                         <ColorCircle
-                          key={el.colorName}
+                          key={el?.colorName}
                           hexColor={el.hexColor}
-                          color={el.colorName}
-                          isActive={el.colorName === color}
+                          color={el?.colorName}
+                          isActive={el?.colorName === color}
                           pathname={pathname}
                           capacity={capacity}
                           changeColor={handleColorClick}
-                          availabilityArr={el.capacities}
+                          availabilityArr={el?.capacities}
                         />
                       );
                     })}
@@ -86,7 +88,7 @@ const SingleProductPage = () => {
                       Select capacity
                     </h4>
                     <div className={styles.capacities}>
-                      {selectedColorData.capacities.map((el, index) => {
+                      {selectedColorData?.capacities?.map((el, index) => {
                         return (
                           <Capacities
                             key={index}
@@ -102,22 +104,22 @@ const SingleProductPage = () => {
                     </div>
                   </div>
                   <div className={styles.priceWrapper}>
-                    {chosenCapacityObject.discount ? (
+                    {chosenCapacityObject?.discount ? (
                       <>
                         <div className={styles.actualPrice}>
                           $
                           {Math.round(
-                            chosenCapacityObject.price *
-                              (1 - chosenCapacityObject.discount)
+                            chosenCapacityObject?.price *
+                              (1 - chosenCapacityObject?.discount)
                           )}
                         </div>
                         <div className={styles.priceCheck}>
-                          ${chosenCapacityObject.price}
+                          ${chosenCapacityObject?.price}
                         </div>
                       </>
                     ) : (
                       <div className={styles.actualPrice}>
-                        ${chosenCapacityObject.price}
+                        ${chosenCapacityObject?.price}
                       </div>
                     )}
                   </div>
@@ -145,8 +147,8 @@ const SingleProductPage = () => {
                   <div>
                     <TechSpecs
                       techSpecs={
-                        model?.techSpecs.length > 4
-                          ? model?.techSpecs.slice(0, 4)
+                        model?.techSpecs?.length > 4
+                          ? model?.techSpecs?.slice(0, 4)
                           : model?.techSpecs
                       }
                       capacity={capacity}
@@ -158,12 +160,12 @@ const SingleProductPage = () => {
             <div className={styles.aboutAndTechSpecsWrapper}>
               <div className={styles.aboutSection}>
                 <h3 className={styles.aboutHeader}>About</h3>
-                {model?.about.map((item, index) => {
+                {model?.about?.map((item, index) => {
                   return (
                     <ProductAbout
                       key={index}
-                      text={item.text}
-                      title={item.title}
+                      text={item?.text}
+                      title={item?.title}
                     />
                   );
                 })}
