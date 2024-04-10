@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import adminOptions from "./adminOptions";
-import { useSelector } from "react-redux";
 import AdminOption from "./AdminOption/AdminOption";
-import { findComponentByTitleAndLabel } from "./findComponentByTitleAndLabel";
 
 import styles from "./AdminPage.module.scss";
 
