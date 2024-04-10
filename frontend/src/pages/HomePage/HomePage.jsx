@@ -11,7 +11,13 @@ const HomePage = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.homePageTitle}>Welcome to Nice Gadgets store!</h1>
-
+      <button
+        onClick={() => {
+          throw new Error("Break");
+        }}
+      >
+        BREAK
+      </button>
       <section>
         <NeedHelp />
       </section>
