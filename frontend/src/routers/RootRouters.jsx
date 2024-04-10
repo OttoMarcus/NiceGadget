@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Order from "../Components/RouteComp/Order/Order";
 import AccessoriesPage from "../pages/AccessoriesPage/AccessoriesPage";
 import PhonesPage from "../pages/PhonesPage/PhonesPage";
 import FavoritesPage from "../pages/FavoritesPage/FavoritesPage";
@@ -21,12 +20,12 @@ import CheckoutPage from "../pages/CheckoutPage/CheckoutPage";
 import UserDataInformation from "../pages/UserPage/UserDataInformation/UserDataInformation";
 import AdminPage from "../pages/AdminPage/AdminPage";
 import OrdersPage from "../pages/OrdersPage/OrdersPage";
+import { ProtectedRoute } from "../helpers/protectedRoute.js";
 
 const RootRouters = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/order" element={<Order />} />
       <Route path="/accessories" element={<AccessoriesPage />} />
       <Route
         path="/accessories/:accessoryId"
@@ -42,7 +41,14 @@ const RootRouters = () => {
       <Route path="/registration" element={<RegistrationPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/user" element={<UserPage />} />
-      <Route path="/admin" element={<AdminPage />} />
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute>
+            <AdminPage />
+          </ProtectedRoute>
+        }
+      />
       <Route path="/update-information" element={<UserDataInformation />} />
       <Route path="/update-password" element={<UserUpdatePass />} />
       <Route path="/rights" element={<RightsPage />} />

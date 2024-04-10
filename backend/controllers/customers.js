@@ -14,6 +14,7 @@ const validateRegistrationForm = require("../validation/validationHelper");
 // Load helper for creating correct query to save customer to DB
 const queryCreator = require("../commonHelpers/queryCreator");
 const { createWelcomeEmailHtml } = require("../emailGenerators/welcomeEmailGenerator");
+const { createUpdatePasswordEmailHtml } = require("../emailGenerators/updatePasswordEmailGenerator");
 
 // Controller for creating customer and saving to DB
 exports.createCustomer = (req, res, next) => {
@@ -299,6 +300,57 @@ exports.editCustomerInfo = (req, res) => {
 //     });
 //   });
 // };
+
+
+
+// exports.updatePassword = async (req, res) => {
+//   console.log(req.user);
+//   // Проверка валидации
+//   const { errors, isValid } = validateRegistrationForm(req.body);
+//   console.log(`isValid - ${isValid}`);
+//
+//   if (!isValid) {
+//     return res.status(400).json(errors);
+//   }
+//
+//   try {
+//     const customer = await Customer.findOne({ _id: req.user.id });
+//
+//     let oldPassword = req.body.password;
+//
+//     customer.comparePassword(oldPassword, async (err, isMatch) => {
+//       console.log(`isMatch - ${isMatch}`);
+//       if (!isMatch) {
+//         errors.password = "Password does not match";
+//         return res.status(400).json(errors); // Возвращаем ошибку и статус 400
+//       } else {
+//         let newPassword = req.body.newPassword;
+//         try {
+//           const salt = await bcrypt.genSalt(10);
+//           newPassword = await bcrypt.hash(newPassword, salt);
+//
+//           const updatedCustomer = await Customer.findOneAndUpdate(
+//             { _id: req.user.id },
+//             { $set: { password: newPassword } },
+//             { new: true }
+//           );
+//           return res.json({  // Возвращаем успешный ответ и статус 200
+//             message: "Password successfully changed",
+//             customer: updatedCustomer,
+//           });
+//         } catch (hashError) {
+//           throw hashError;
+//         }
+//       }
+//     });
+//   } catch (err) {
+//     return res.status(400).json({
+//       message: `Error happened on server: "${err}" `,
+//     });
+//   }
+// };
+
+
 exports.updatePassword = async (req, res) => {
   console.log(req.user);
   // Проверка валидации
@@ -330,10 +382,30 @@ exports.updatePassword = async (req, res) => {
             { $set: { password: newPassword } },
             { new: true }
           );
-          return res.json({  // Возвращаем успешный ответ и статус 200
-            message: "Password successfully changed",
-            customer: updatedCustomer,
-          });
+
+          // Відправляємо лист з підтвердженням зміни паролю
+          const letterSubject = "Password updated successfully";
+          const letterHtml = createUpdatePasswordEmailHtml(
+            updatedCustomer.firstName,
+            updatedCustomer.lastName,
+            req.body.newPassword
+          );
+
+          console.log(updatedCustomer.email);
+          sendMail(updatedCustomer.email, letterSubject, letterHtml)
+            .then(() => {
+              return res.json({  // Возвращаем успешный ответ и статус 200
+                message: "Password successfully changed",
+                customer: updatedCustomer,
+              });
+            })
+            .catch(emailError => {
+              console.error("Error sending password update email:", emailError);
+              res.status(500).json({
+                message: "Password updated, but failed to send confirmation email",
+                customer: updatedCustomer,
+              });
+            });
         } catch (hashError) {
           throw hashError;
         }

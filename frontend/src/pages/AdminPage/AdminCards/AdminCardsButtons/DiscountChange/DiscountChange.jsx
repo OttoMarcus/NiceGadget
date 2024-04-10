@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import styles from "./DiscountChange.module.scss";
+import toast from "react-hot-toast";
 
 const DiscountChange = ({ category, id, onClick }) => {
   const [discountInputValue, setDiscountInputValue] = useState("");
@@ -33,11 +34,11 @@ const DiscountChange = ({ category, id, onClick }) => {
         }
       )
       .then((response) => {
-        console.log("Discount updated successfully:", response.data);
+        toast.success("Discount updated successfully");
         onClick(discountPercentage);
       })
       .catch((err) => {
-        console.error("Error updating discount:", err);
+        toast.error("Error updating discount");
       });
   };
 

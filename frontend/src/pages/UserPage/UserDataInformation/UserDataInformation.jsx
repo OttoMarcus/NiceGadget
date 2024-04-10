@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import styles from "../UserDataInformation/UserDataInformation.module.scss";
 import { Form, Formik } from "formik";
 import validationSchema from "./validationSchema";
-import ModalStatusInfo from "../../../Components/Profile/ModalStatusInfo/ModalStatusInfo";
-import CheckMarkIcon from "../../../Components/Icons/CheckMarkIcon";
 import ButtonProfile from "../../../Components/Profile/ButtonProfile/ButtonProfile";
 import { sendAuthorizedRequest } from "../../../helpers/sendRequest";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,15 +9,13 @@ import stylesBack from "../../CartPage/CartPage.module.scss";
 import LeftArrowIcon from "../../../Components/Icons/LeftArrowIcon";
 import { useNavigate } from "react-router-dom";
 import { updateUser } from "../../../store/user/userSlice";
-import CrossErrorIcon from "../../../Components/Icons/CrossErrorIcon";
 import CustomInput from "../../../Components/Forms/CustomInput/CustomInput";
+import toast from "react-hot-toast";
 
 const UserDataInformation = () => {
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const [resultMessage, setResultMessage] = useState(false);
 
   const handleBack = () => {
     const prevPath = sessionStorage.getItem("prevPath") || "/";
@@ -34,50 +30,68 @@ const UserDataInformation = () => {
     }
   };
 
+  const [initialValues, setInitialValues] = useState({
+    firstName: "",
+    lastName: "",
+    telephone: "",
+    email: "",
+    birthday: "",
+    login: "",
+    isAdmin: true,
+  });
+
+  useEffect(() => {
+    if (user) {
+      let formattedPhoneNumber = "";
+      if (user.telephone) {
+        const rawNumber = user.telephone.replace("+380", "");
+        formattedPhoneNumber = rawNumber.replace(
+          /(\d{2})(\d{3})(\d{2})(\d{2})/,
+          "+380 ($1) $2-$3-$4"
+        );
+      }
+
+      setInitialValues((currentValues) => ({
+        login: user?.login || "",
+        firstName: user?.firstName || "",
+        lastName: user?.lastName || "",
+        email: user?.email || "",
+        telephone: formattedPhoneNumber,
+        birthday: user?.birthDate || "",
+        isAdmin: user?.isAdmin,
+      }));
+    }
+  }, [user]);
+
   const handleSubmit = async (values) => {
     try {
-      // const [firstName, lastName] = values.username.split(" ");
       const requestBody = {
         firstName: values.firstName,
         lastName: values.lastName,
         login: values.login,
         email: values.email,
-        telephone: values.phoneNumber,
+        telephone: values.telephone,
         birthDate: values.birthday,
+        isAdmin: values.isAdmin,
       };
+
+      if (requestBody.telephone.startsWith("+")) {
+        requestBody.telephone =
+          "+" + requestBody.telephone.slice(1).replace(/\D/g, "");
+      } else {
+        requestBody.telephone = requestBody.telephone.replace(/\D/g, "");
+      }
 
       await sendAuthorizedRequest(`/api/customers`, "PUT", {
         body: JSON.stringify(requestBody),
       });
-
       dispatch(updateUser(requestBody));
-      setResultMessage(true);
+      toast.success("Information successfully updated");
+      navigate("/user");
     } catch (error) {
-      setResultMessage(false);
-      return (
-        <>
-          <ModalStatusInfo
-            text="Oops, Internal error!"
-            colorText="#FF0000"
-            svgIcon={<CrossErrorIcon />}
-          />
-        </>
-      );
+      toast.error("Oops, Server Error!");
     }
   };
-
-  useEffect(() => {
-    const handleRedirect = () => {
-      navigate("/user");
-    };
-
-    if (resultMessage) {
-      const timer = setTimeout(() => {
-        handleRedirect();
-      }, 4000);
-      return () => clearTimeout(timer);
-    }
-  }, [resultMessage, navigate]);
 
   return (
     <section className={styles.container}>
@@ -90,53 +104,31 @@ const UserDataInformation = () => {
           <h2 className={styles.dataTitle}>Edit Profile Information</h2>
         </div>
         <Formik
-          initialValues={{
-            login: user?.login || "",
-            firstName: user?.firstName || "",
-            lastName: user?.lastName || "",
-            email: user?.email || "",
-            phoneNumber: user?.telephone || "",
-            birthday: user?.birthDate || "",
-          }}
+          initialValues={initialValues}
+          enableReinitialize
           validationSchema={validationSchema}
-          onSubmit={(values, { setSubmitting }) => {
-            handleSubmit(values)
-              .then(() => {
-                setSubmitting(false);
-                setResultMessage(true);
-              })
-              .catch(() => {
-                setSubmitting(false);
-                setResultMessage(false);
-              });
-          }}
-          enableReinitialize={true}
+          onSubmit={
+            handleSubmit
+            // .then(() => {
+            //   setSubmitting(false);
+            // })
+            // .catch(() => {
+            //   setSubmitting(false);
+            // });
+          }
         >
           {({ values, errors, touched, handleChange }) => (
             <Form
               className={styles.infoDataForm}
               onSubmit={(e) => {
                 e.preventDefault();
-                handleSubmit(values).then((r) => (
-                  <ModalStatusInfo
-                    text="Information successfully updated"
-                    colorText="#2FC72FF2"
-                    circleShowHide="2px"
-                    svgIcon={<CheckMarkIcon />}
-                  />
-                ));
+                if (Object.keys(errors).length === 2 && !errors.birthday) {
+                  handleSubmit(values);
+                }
+                console.log(Object.keys(errors).length);
+                console.log(Object.keys(errors));
               }}
             >
-              {resultMessage ? (
-                <ModalStatusInfo
-                  text="Information successfully updated"
-                  colorText="#2FC72FF2"
-                  circleShowHide="2px"
-                  svgIcon={<CheckMarkIcon />}
-                />
-              ) : (
-                <span></span>
-              )}
               <CustomInput
                 className={styles.dataInput}
                 name="firstName"
@@ -180,12 +172,12 @@ const UserDataInformation = () => {
               <CustomInput
                 className={styles.dataInput}
                 type="tel"
-                name="phoneNumber"
+                name="telephone"
                 placeholder="+380"
                 label="Your phone number"
                 error={
-                  errors.phoneNumber && touched.phoneNumber
-                    ? errors.phoneNumber
+                  errors.telephone && touched.telephone
+                    ? errors.telephone
                     : undefined
                 }
                 onChange={handleChange}
