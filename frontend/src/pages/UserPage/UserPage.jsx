@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./UserPage.module.scss";
 import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
@@ -8,11 +8,42 @@ import UserProfileIcon from "../../Components/Icons/UserProfileIcon";
 import { Form, Formik } from "formik";
 import OrderIcon from "../../Components/Icons/OrderIcon";
 import CounterIcon from "../../Components/Icons/CounterIcon";
-import CustomInputCheckout from "../../Components/Forms/CustomInputCheckout/CustomInputCheckout";
+import CustomInput from "../../Components/Forms/CustomInput/CustomInput";
 
 const UserPage = () => {
   const { user } = useSelector((state) => state.user);
   const order = useSelector((state) => state.OrderNew.orders);
+
+  const [initialValues, setInitialValues] = useState({
+    firstName: "",
+    lastName: "",
+    telephone: "",
+    email: "",
+    birthday: "",
+    login: "",
+  });
+
+  useEffect(() => {
+    if (user) {
+      let formattedPhoneNumber = "";
+      if (user.telephone) {
+        const rawNumber = user.telephone.replace("+380", "");
+        formattedPhoneNumber = rawNumber.replace(
+          /(\d{2})(\d{3})(\d{2})(\d{2})/,
+          "+380 ($1) $2-$3-$4"
+        );
+      }
+
+      setInitialValues((currentValues) => ({
+        login: user?.login || "",
+        firstName: user?.firstName || "",
+        lastName: user?.lastName || "",
+        email: user?.email || "",
+        telephone: formattedPhoneNumber,
+        birthday: user?.birthDate || "",
+      }));
+    }
+  }, [user]);
 
   if (!Object.keys(user).length) {
     return (
@@ -103,53 +134,47 @@ const UserPage = () => {
                   <h3 className={styles.dataTitle}>Your profile information</h3>
                 </div>
                 <Formik
-                  initialValues={{
-                    login: user?.login || "",
-                    firstName: user?.firstName || "",
-                    lastName: user?.lastName || "",
-                    email: user?.email || "",
-                    phoneNumber: user?.telephone || "",
-                    birthday: user?.birthDate || "",
-                  }}
+                  initialValues={initialValues}
+                  enableReinitialize
                   onSubmit={(e) => e.preventDefault()}
                 >
                   <Form className={styles.infoDataForm}>
-                    <CustomInputCheckout
+                    <CustomInput
                       disabled
                       className={styles.dataInput}
                       name="firstName"
                       placeholder="First name"
                       label="Your First name:"
                     />
-                    <CustomInputCheckout
+                    <CustomInput
                       disabled
                       className={styles.dataInput}
                       name="lastName"
                       placeholder="Last name"
                       label="Your Last name:"
                     />
-                    <CustomInputCheckout
+                    <CustomInput
                       disabled
                       className={styles.dataInput}
                       name="login"
                       placeholder="Login"
                       label="Your Login:"
                     />
-                    <CustomInputCheckout
+                    <CustomInput
                       disabled
                       className={styles.dataInput}
                       name="email"
                       placeholder="example@gmail.com"
                       label="Your Email:"
                     />
-                    <CustomInputCheckout
+                    <CustomInput
                       disabled
                       className={styles.dataInput}
-                      name="phoneNumber"
+                      name="telephone"
                       placeholder="+380"
                       label="Your phone number:"
                     />
-                    <CustomInputCheckout
+                    <CustomInput
                       disabled
                       className={styles.dataInput}
                       name="birthday"

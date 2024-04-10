@@ -89,16 +89,14 @@ const Breadcrumbs = () => {
             <div className={styles.crumbText}>{crumbs}</div>
           </div>
 
-          {isProfilePage && (
+          {isProfilePage && isAdmin && (
             <section className={styles.adminSection}>
-              {isAdmin && (
-                <div className={styles.adminWrapper}>
-                  <Link to="/admin" className={styles.linkAdmin}>
-                    Admin Panel
-                  </Link>
-                  <AdminIcon className={styles.iconForListAdmin} />
-                </div>
-              )}
+              <div className={styles.adminWrapper}>
+                <Link to="/admin" className={styles.linkAdmin}>
+                  Admin Panel
+                </Link>
+                <AdminIcon className={styles.iconForListAdmin} />
+              </div>
             </section>
           )}
         </div>
