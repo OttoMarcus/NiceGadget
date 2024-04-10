@@ -7,13 +7,15 @@ import NeedHelp from "../../Components/FAQchat/Needhelp";
 import HotPrices from "../../Components/HotPrices/HotPrices";
 import styles from "./HomePage.module.scss";
 
+const pirogi = { qwe: "qaz" };
+
 const HomePage = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.homePageTitle}>Welcome to Nice Gadgets store!</h1>
       <button
         onClick={() => {
-          throw new Error("Break");
+          console.log(pirogi.name);
         }}
       >
         BREAK
