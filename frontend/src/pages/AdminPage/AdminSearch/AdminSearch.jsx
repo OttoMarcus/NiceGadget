@@ -8,7 +8,7 @@ const AdminSearch = ({ onChange }) => {
       <SearchLogo className={styles.searchIcon} />
       <input
         type="text"
-        placeholder={`Type to search`}
+        placeholder={`search`}
         className={styles.searchInput}
         onChange={(e) => onChange(e.target.value)}
       />

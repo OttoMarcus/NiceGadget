@@ -7,14 +7,6 @@ import { findComponentByTitleAndLabel } from "./findComponentByTitleAndLabel";
 import styles from "./AdminPage.module.scss";
 
 const AdminPage = () => {
-  const selectedOption = useSelector((state) => state.admin.selectedOption);
-  const [optionContent, setOptionContent] = useState(null);
-
-  useEffect(() => {
-    setOptionContent(
-      findComponentByTitleAndLabel(selectedOption.title, selectedOption.label)
-    );
-  }, [selectedOption]);
   return (
     <div className={styles.container}>
       <div className={styles.adminContent}>
@@ -29,7 +21,6 @@ const AdminPage = () => {
             );
           })}
         </div>
-        <div className={styles.optionContent}>{optionContent}</div>
       </div>
     </div>
   );

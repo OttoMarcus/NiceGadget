@@ -10,7 +10,7 @@ import ItemsPerPage from "../../ItemsPerPage/ItemsPerPage";
 
 const IncreaseOrDecreaseProductQuantity = ({ category }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(6);
+  const [pageSize, setPageSize] = useState(4);
   const [totalCount, setTotalCount] = useState(0);
 
   const [search, setSearch] = useState("");

@@ -2,12 +2,11 @@ const selectCustomStyles = {
   control: (provided, state) => ({
     ...provided,
     width: "128px",
-    height: "40px",
+    height: "32px",
     color: "#F1F2F9",
-    backgroundColor: "#323542",
-    border: "1px solid transparent",
-    borderRadius: "0px",
-    boxShadow: "none",
+    background:
+      "linear-gradient(335deg, rgba(71,74,84,0.7091211484593838) 0%, rgba(15,17,33,0.9976365546218487) 56%)",
+    border: "none",
     outline: "none",
     "&:focus-within": {
       borderColor: "#905BFF",
@@ -36,6 +35,7 @@ const selectCustomStyles = {
     fontSize: "14px",
     fontWeight: "700",
     lineHeight: "21px",
+    textAlign: "center",
   }),
   indicatorsContainer: (provided) => ({
     ...provided,

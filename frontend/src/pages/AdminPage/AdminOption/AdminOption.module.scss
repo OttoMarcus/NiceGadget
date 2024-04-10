@@ -3,23 +3,20 @@
 @import "../../../styles/global/base";
 
 .adminOptionWrapper {
-  padding: 8px;
   border-radius: 8px;
 }
 
 .titleWrapper {
-  position: relative;
-  svg {
-    position: absolute;
-    top: 4px;
-    right: 0;
-  }
+  @include flex-start;
 }
 
 .optionTitle {
-  @include h4;
-  padding: 8px 16px 8px 8px;
-  color: $ui-color-gray-white;
+  @include mobile-h3;
+  margin-left: 24px;
+
+  @media only screen and (min-device-width: $ui-breakpoint-tablet-min) {
+    @include h3;
+  }
 }
 
 .subOption {
@@ -27,6 +24,12 @@
   padding: 8px;
   color: $ui-color-gray-white;
   cursor: pointer;
+  background: rgb(71, 74, 84);
+  background: linear-gradient(
+    164deg,
+    rgba(71, 74, 84, 0.7091211484593838) 0%,
+    rgba(15, 17, 33, 0.9976365546218487) 56%
+  );
 }
 
 .selectedOption {
@@ -39,6 +42,7 @@
 }
 
 .supOptionsWrapper {
+  margin: 16px;
 }
 
 .supOptionsWrapperHidden {
@@ -53,4 +57,14 @@
 .optionToggled {
   transform: rotate(-180deg);
   transition: all 0.3s linear;
+}
+
+.optionContent {
+  display: flex;
+  height: auto;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  border-left: 2px solid $ui-color-primary-accent;
+  margin-bottom: 16px;
 }

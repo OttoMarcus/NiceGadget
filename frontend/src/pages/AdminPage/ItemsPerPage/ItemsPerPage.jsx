@@ -4,9 +4,9 @@ import Select from "react-select";
 import selectCustomStyles from "./selectCustomStyles";
 
 const options = [
-  { value: 6, label: "6" },
+  { value: 4, label: "4" },
+  { value: 8, label: "8" },
   { value: 12, label: "12" },
-  { value: 24, label: "24" },
 ];
 
 const ItemsPerPage = ({ onChange, value }) => {
