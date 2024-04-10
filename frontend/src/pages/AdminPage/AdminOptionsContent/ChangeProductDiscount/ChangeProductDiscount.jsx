@@ -91,4 +91,4 @@ ChangeProductDiscount.propTypes = {
   category: PropTypes.string.isRequired,
 };
 
-export default ChangeProductDiscount;
+export default React.memo(ChangeProductDiscount);

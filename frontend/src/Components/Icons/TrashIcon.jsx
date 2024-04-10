@@ -21,4 +21,4 @@ const TrashIcon = () => {
   );
 };
 
-export default TrashIcon;
+export default React.memo(TrashIcon);

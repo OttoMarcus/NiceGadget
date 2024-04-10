@@ -38,4 +38,4 @@ ColorCircle.propTypes = {
   availabilityArr: PropTypes.array,
 };
 
-export default ColorCircle;
+export default React.memo(ColorCircle);

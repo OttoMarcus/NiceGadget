@@ -59,7 +59,6 @@ const FavoritesPage = () => {
                   </div>
                 );
               } else {
-                //(el.category === `accessories`)
                 return (
                   <div key={el.id}>
                     <CardAccessories key={el.id} {...el} />

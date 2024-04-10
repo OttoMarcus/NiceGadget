@@ -19,4 +19,4 @@ const PlusIcon = () => {
   );
 };
 
-export default PlusIcon;
+export default React.memo(PlusIcon);

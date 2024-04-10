@@ -19,4 +19,4 @@ const MinusIcon = () => {
   );
 };
 
-export default MinusIcon;
+export default React.memo(MinusIcon);

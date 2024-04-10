@@ -16,4 +16,4 @@ const LogOutIcon = () => {
   );
 };
 
-export default LogOutIcon;
+export default React.memo(LogOutIcon);

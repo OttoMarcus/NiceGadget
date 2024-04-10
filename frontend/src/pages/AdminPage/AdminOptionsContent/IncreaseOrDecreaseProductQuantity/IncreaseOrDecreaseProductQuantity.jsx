@@ -91,4 +91,4 @@ IncreaseOrDecreaseProductQuantity.propTypes = {
   category: PropTypes.string.isRequired,
 };
 
-export default IncreaseOrDecreaseProductQuantity;
+export default React.memo(IncreaseOrDecreaseProductQuantity);

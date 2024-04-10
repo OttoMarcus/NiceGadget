@@ -13,4 +13,4 @@ const FacebookIcon = () => {
   );
 };
 
-export default FacebookIcon;
+export default React.memo(FacebookIcon);

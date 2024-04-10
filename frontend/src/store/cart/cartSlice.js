@@ -75,7 +75,6 @@ const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch cart items
       .addCase(fetchCartItems.pending, (state) => {
         state.status = "loading";
       })
@@ -88,7 +87,6 @@ const cartSlice = createSlice({
         state.status = "failed";
         state.error = action.payload;
       })
-      // Add to cart server
       .addCase(addToCartServer.fulfilled, (state, action) => {
         const products = action.payload.products;
         if (Array.isArray(products)) {
@@ -96,7 +94,6 @@ const cartSlice = createSlice({
         }
         state.status = "succeeded";
       })
-      // Increment item quantity server
       .addCase(incrementQuantityServer.fulfilled, (state, action) => {
         const products = action.payload.products;
         if (Array.isArray(products)) {
@@ -104,7 +101,6 @@ const cartSlice = createSlice({
         }
         state.status = "succeeded";
       })
-      // Decrement item quantity server
       .addCase(decrementQuantityServer.fulfilled, (state, action) => {
         const products = action.payload.products;
         if (Array.isArray(products)) {
@@ -112,7 +108,6 @@ const cartSlice = createSlice({
         }
         state.status = "succeeded";
       })
-      // Remove from cart server
       .addCase(removeFromCartServer.fulfilled, (state, action) => {
         const products = action.payload.products;
         if (Array.isArray(products)) {

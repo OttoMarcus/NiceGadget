@@ -16,4 +16,4 @@ const ClearFiltersIcon = () => {
   );
 };
 
-export default ClearFiltersIcon;
+export default React.memo(ClearFiltersIcon);

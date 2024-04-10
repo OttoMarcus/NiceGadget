@@ -65,4 +65,4 @@ CustomEmailInput.propTypes = {
   category: PropTypes.string.isRequired,
 };
 
-export default CustomEmailInput;
+export default React.memo(CustomEmailInput);

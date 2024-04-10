@@ -64,4 +64,4 @@ const MapContent = ({ activeTab }) => {
 MapContent.propTypes = {
   activeTab: PropTypes.string,
 };
-export default MapContent;
+export default React.memo(MapContent);

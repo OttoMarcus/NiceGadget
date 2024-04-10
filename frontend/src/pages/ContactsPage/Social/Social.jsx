@@ -24,4 +24,4 @@ Social.propTypes = {
   children: PropTypes.node,
 };
 
-export default Social;
+export default React.memo(Social);

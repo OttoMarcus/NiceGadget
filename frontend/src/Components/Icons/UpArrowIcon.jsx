@@ -22,4 +22,4 @@ const UpArrowIcon = () => {
   );
 };
 
-export default UpArrowIcon;
+export default React.memo(UpArrowIcon);

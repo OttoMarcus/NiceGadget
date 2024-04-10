@@ -4,4 +4,4 @@ const RemoveBrandNew = (props) => {
   return <div>RemoveBrandNew</div>;
 };
 
-export default RemoveBrandNew;
+export default React.memo(RemoveBrandNew);

@@ -19,7 +19,6 @@ const notifyAuthorizedAPI = async (id, category, customerNo) => {
       }
     )
     .then((response) => {
-      console.log("Notification request sent successfully:", response.data);
       toast.success("You have subscribed on product successfully");
     })
     .catch((error) => {

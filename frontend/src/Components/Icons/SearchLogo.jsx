@@ -24,4 +24,4 @@ SearchLogo.propTypes = {
   isActive: PropTypes.bool,
 };
 
-export default SearchLogo;
+export default React.memo(SearchLogo);

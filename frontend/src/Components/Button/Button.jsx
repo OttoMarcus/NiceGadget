@@ -58,4 +58,4 @@ Button.defaultProps = {
   fontSize: "14px",
 };
 
-export default Button;
+export default React.memo(Button);

@@ -19,4 +19,4 @@ const DownArrowIcon = () => {
   );
 };
 
-export default DownArrowIcon;
+export default React.memo(DownArrowIcon);

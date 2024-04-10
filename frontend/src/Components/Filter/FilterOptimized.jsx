@@ -1,34 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-// import debounce from 'lodash/debounce';
-
 import FilterButtonIcon from "../Icons/FilterButtonIcon";
 import CloseFilterIcon from "../Icons/CloseFilterIcon";
 import ClearFiltersIcon from "../Icons/ClearFiltersIcon";
 import DownArrowIcon from "../Icons/DownArrowIcon";
 import UpArrowIcon from "../Icons/UpArrowIcon";
-import styles from "./Filter.module.scss";
+import styles from "./FilterOptimized.module.scss";
 import PropTypes from "prop-types";
-
-/*
-TO DO:
-10. Add MEMO
-12. Preloader?
-
-STYLE:
-4. Збільшити висоту інпутів для ціни.
-5. Прибрати стрілочки +- в іпнутах.
-7. Додати "$" та "від - до".
-8. Виділити іншим кольором іконку та/або текст для очистки фільтра
-
-
-НЕ ФІЛЬТРИ:
-1. Іконки "стрілок" на селекти додати
-2. Іконки "ока" на логін-реєстрацію
-3. Автокомпліт на формах авториз та реєстрації
-5. Пофіксити стилі стрілки пагінації!
-*/
 
 const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
@@ -38,7 +17,6 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
   const wrapperRef = useRef(null);
 
   useEffect(() => {
-    // Fetch data from server
     async function fetchData() {
       try {
         const response = await fetch("/api/phones-filters");
@@ -46,18 +24,16 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        // console.log(data);
         setServerFilters(data);
       } catch (error) {
         console.error("There was a problem with your fetch operation:", error);
       }
     }
     fetchData();
-    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    isFilterVisible && window.innerWidth < 768
+    isFilterVisible
       ? (document.body.style.overflow = "hidden")
       : (document.body.style.overflow = "auto");
     const handleClickOutside = (event) => {
@@ -74,7 +50,6 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
 
   const toggleFilterVisibility = () => {
     setIsFilterVisible((prevState) => !prevState);
-    // setIsFilterVisible(!isFilterVisible);
   };
 
   const toggleSection = (section) => {
@@ -92,11 +67,8 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
   };
 
   const handleInputChange = (e) => {
-    // const debouncedHandleInputChange = debounce((name, value) => {
-    //   setFilters(prevFilters => ({ ...prevFilters, [name]: parseInt(value) }));
-    // }, 200);
     const { name, value } = e.target;
-    // debouncedHandleInputChange(name, value)
+
     setFilters({ ...filters, [name]: parseInt(value) });
   };
 
@@ -165,7 +137,7 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
                     className={styles.filterGroupHeader}
                     onClick={() => toggleSection(key)}
                   >
-                    {key === "modelName" ? "model" : `${key}`}
+                    {key}
                     {activeSection === key ? (
                       <UpArrowIcon />
                     ) : (
@@ -187,9 +159,7 @@ const Filter = ({ handleFilter, filters, setFilters, clearFilters }) => {
                                   onChange={handleGroupCheckboxChange}
                                 />
                                 <span className={styles.checkmark}></span>
-                                <span
-                                  className={`${styles.labelText}${item.includes("iPhone") ? "_iPhone" : ""}`}
-                                >
+                                <span className={styles.labelText}>
                                   {key === "capacity" || key === "ram"
                                     ? `${item} GB`
                                     : `${item}`}

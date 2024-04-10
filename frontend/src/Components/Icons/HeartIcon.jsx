@@ -24,4 +24,4 @@ HeartIcon.propTypes = {
   some: PropTypes.bool.isRequired,
 };
 
-export default HeartIcon;
+export default React.memo(HeartIcon);

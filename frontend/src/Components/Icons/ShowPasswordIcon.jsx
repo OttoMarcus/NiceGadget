@@ -16,4 +16,4 @@ const ShowPasswordIcon = () => {
   );
 };
 
-export default ShowPasswordIcon;
+export default React.memo(ShowPasswordIcon);

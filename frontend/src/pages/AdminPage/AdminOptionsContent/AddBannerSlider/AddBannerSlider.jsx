@@ -4,4 +4,4 @@ const AddBannerSlider = (props) => {
   return <div>AddBannerSlider</div>;
 };
 
-export default AddBannerSlider;
+export default React.memo(AddBannerSlider);

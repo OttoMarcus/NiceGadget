@@ -4,4 +4,4 @@ const BanUser = (props) => {
   return <div>BanUser</div>;
 };
 
-export default BanUser;
+export default React.memo(BanUser);

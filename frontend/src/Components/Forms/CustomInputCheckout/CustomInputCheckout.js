@@ -60,4 +60,4 @@ CustomInputCheckout.defaultProps = {
   placeholder: "",
 };
 
-export default CustomInputCheckout;
+export default React.memo(CustomInputCheckout);

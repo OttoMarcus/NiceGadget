@@ -100,4 +100,4 @@ AdminCard.defaultProps = {
   discount: 0,
 };
 
-export default AdminCard;
+export default React.memo(AdminCard);

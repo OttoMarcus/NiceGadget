@@ -14,4 +14,4 @@ const CounterIcon = () => {
   );
 };
 
-export default CounterIcon;
+export default React.memo(CounterIcon);

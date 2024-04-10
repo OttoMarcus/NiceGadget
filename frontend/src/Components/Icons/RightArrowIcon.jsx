@@ -19,4 +19,4 @@ const RightArrowIcon = () => {
   );
 };
 
-export default RightArrowIcon;
+export default React.memo(RightArrowIcon);

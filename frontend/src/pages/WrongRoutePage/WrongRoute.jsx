@@ -1,6 +1,7 @@
 import React from "react";
 import Style from "./WrongRoutePage.module.scss";
 import { Link } from "react-router-dom";
+
 const WrongRoute = () => {
   return (
     <div className={Style.wrapper}>

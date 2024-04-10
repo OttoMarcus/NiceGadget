@@ -20,4 +20,4 @@ const FlexBox = () => {
   );
 };
 
-export default FlexBox;
+export default React.memo(FlexBox);

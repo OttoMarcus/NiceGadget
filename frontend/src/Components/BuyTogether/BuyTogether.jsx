@@ -23,6 +23,7 @@ const BuyTogether = () => {
         const phonesData = phonesResponse.data.data;
 
         const allItems = mixAccessoriesAndPhones(accessoriesData, phonesData);
+
         const shuffledItems = shuffle(allItems);
         const selectedItems = shuffledItems.slice(0, 13);
 
@@ -102,4 +103,4 @@ const BuyTogether = () => {
   );
 };
 
-export default BuyTogether;
+export default React.memo(BuyTogether);

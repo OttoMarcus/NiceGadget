@@ -16,4 +16,4 @@ const OrderIcon = () => {
   );
 };
 
-export default OrderIcon;
+export default React.memo(OrderIcon);

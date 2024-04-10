@@ -156,17 +156,14 @@ export const synchronizeCartWithServer = createAsyncThunk(
         throw new Error("Network response was not ok");
       }
 
-      // Відповідь сервера містить оновлений кошик, який буде автоматично оброблено у extraReducers
       const synchronizedCart = await response.json();
 
-      // Очистка локального кошика після успішної синхронізації
       localStorage.removeItem("cart");
 
-      // Повертаємо результат для подальшої обробки в extraReducers
       return synchronizedCart;
     } catch (error) {
       console.error("Failed to synchronize cart:", error);
-      throw error; // Виключення помилки забезпечить її обробку в rejected частині extraReducers
+      throw error;
     }
   }
 );

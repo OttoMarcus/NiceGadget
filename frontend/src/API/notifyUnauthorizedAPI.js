@@ -19,7 +19,6 @@ const notifyUnauthorizedAPI = async (id, category, email) => {
       }
     )
     .then((response) => {
-      console.log("Notification request sent successfully:", response.data);
       toast.success("You have subscribed on product successfully");
     })
     .catch((error) => {

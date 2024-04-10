@@ -114,4 +114,4 @@ QuantityChange.defaultProps = {
   name: "",
 };
 
-export default QuantityChange;
+export default React.memo(QuantityChange);

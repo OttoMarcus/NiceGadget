@@ -16,4 +16,4 @@ ProductAbout.propTypes = {
   text: PropTypes.string.isRequired,
 };
 
-export default ProductAbout;
+export default React.memo(ProductAbout);

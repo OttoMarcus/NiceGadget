@@ -14,4 +14,4 @@ const HidePasswordIcon = () => {
   );
 };
 
-export default HidePasswordIcon;
+export default React.memo(HidePasswordIcon);

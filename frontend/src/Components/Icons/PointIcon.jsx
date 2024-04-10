@@ -24,4 +24,4 @@ const PointIcon = () => {
   );
 };
 
-export default PointIcon;
+export default React.memo(PointIcon);

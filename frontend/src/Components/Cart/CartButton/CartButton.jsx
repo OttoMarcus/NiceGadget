@@ -95,4 +95,4 @@ CartButton.defaultProps = {
   notifyCategory: null,
 };
 
-export default CartButton;
+export default React.memo(CartButton);

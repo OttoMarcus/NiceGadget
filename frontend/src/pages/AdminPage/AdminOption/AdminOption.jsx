@@ -67,4 +67,4 @@ AdminOption.propTypes = {
   ).isRequired,
 };
 
-export default AdminOption;
+export default React.memo(AdminOption);

@@ -229,4 +229,4 @@ const CheckoutForm = () => {
   );
 };
 
-export default CheckoutForm;
+export default React.memo(CheckoutForm);

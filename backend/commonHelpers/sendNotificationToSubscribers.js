@@ -7,6 +7,7 @@ const Customer = require("../models/Customer");
 const phonesOrTabletsAvailableEmailGenerator = require("../emailGenerators/phonesOrTabletsAvailableEmailGenerator");
 const accessoriesAvailableEmailGenerator = require("../emailGenerators/accessoriesAvailableEmailGenerator");
 const sendMail = require("../commonHelpers/mailSender");
+
 const sendNotificationToSubscribers = async ({ id, category }) => {
   let productModel;
   switch (category) {

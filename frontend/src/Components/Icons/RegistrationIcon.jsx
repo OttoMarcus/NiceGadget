@@ -17,4 +17,4 @@ const RegistrationIcon = () => {
   );
 };
 
-export default RegistrationIcon;
+export default React.memo(RegistrationIcon);

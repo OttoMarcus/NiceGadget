@@ -58,7 +58,6 @@ export const orderAddNewUnAvt = createAsyncThunk(
       const data = await response.json();
 
       if (!response.ok) {
-        // throw new Error("Network response was not ok");
         return rejectWithValue(
           data.validationErrors
             ? data.validationErrors
@@ -66,12 +65,9 @@ export const orderAddNewUnAvt = createAsyncThunk(
         );
       }
 
-      // console.log(`post unAvt , `, data);
       return data;
     } catch (error) {
       return rejectWithValue({ serverError: error.toString() });
-      // console.warn("Error creating order:", error);
-      // throw error;
     }
   }
 );
@@ -101,15 +97,12 @@ export const orderAddNew = createAsyncThunk(
               ? data.validationErrors
               : { serverError: "Network response was not ok." }
           );
-          // throw new Error("Network response was not ok");
         }
 
         return data;
       }
     } catch (error) {
       return rejectWithValue({ serverError: error.toString() });
-      // console.warn("Error creating order:", error);
-      // throw error;
     }
   }
 );
@@ -164,15 +157,12 @@ const OrderNew = createSlice({
   extraReducers: (builder) => {
     builder.addCase(orderGetNew.fulfilled, (state, action) => {
       state.orders = action.payload;
-      // console.log(`state order`  , action.payload)
     });
     builder.addCase(orderAddNew.fulfilled, (state, action) => {
       state.orders.push(action.payload);
-      // console.log(`state order`  , action.payload)
     });
     builder.addCase(orderAddNewUnAvt.fulfilled, (state, action) => {
       state.orders.push(action.payload);
-      // console.log(`state order`  , action.payload)
     });
     builder.addCase(synchronizeOrder.fulfilled, (state, action) => {
       if (Array.isArray(action.payload)) {

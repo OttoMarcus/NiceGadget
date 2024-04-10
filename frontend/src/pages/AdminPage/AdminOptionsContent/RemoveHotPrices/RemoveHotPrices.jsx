@@ -4,4 +4,4 @@ const RemoveHotPrices = (props) => {
   return <div>RemoveHotPrices</div>;
 };
 
-export default RemoveHotPrices;
+export default React.memo(RemoveHotPrices);

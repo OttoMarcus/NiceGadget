@@ -21,4 +21,4 @@ const UserIcon = ({ fill = "white" }) => {
 UserIcon.propTypes = {
   fill: PropTypes.string,
 };
-export default UserIcon;
+export default React.memo(UserIcon);

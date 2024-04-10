@@ -53,4 +53,4 @@ Input.propTypes = {
   label: PropTypes.string.isRequired,
 };
 
-export default Input;
+export default React.memo(Input);

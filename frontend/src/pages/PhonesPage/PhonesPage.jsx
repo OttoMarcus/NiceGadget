@@ -9,7 +9,7 @@ import ReactPaginate from "react-paginate";
 import { useLocation } from "react-router-dom";
 import styles from "./PhonesPage.module.scss";
 
-const Phones = () => {
+const PhonesPage = () => {
   const [phonesArr, setPhonesArr] = useState();
 
   const [filters, setFilters] = useState({
@@ -33,7 +33,6 @@ const Phones = () => {
   const location = useLocation();
   const typeModel = location.pathname.slice(1);
 
-  //Parse values FROM url query params TO states 'filters', 'perPageValue', 'currentPage' and 'filterQueryString', on page first load
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location?.search); //take search params from URL
 
@@ -145,7 +144,6 @@ const Phones = () => {
   };
 
   const handleFilter = async () => {
-    //define a variable to get filters with values, not to send to server empty values
     const nonEmptyFilters = Object.entries(filters).reduce(
       (acc, [key, value]) => {
         if (
@@ -229,14 +227,11 @@ const Phones = () => {
           onPageChange={handlePageChange}
           breakLabel="..."
           breakLinkClassName={styles.break}
-          // breakLinkClassName={styles.paginationBreak}
           nextLabel={<RightArrowIcon />}
           nextLinkClassName={styles.nextPageLink}
           previousLabel={<LeftArrowIcon />}
           previousLinkClassName={styles.prevPageLink}
-          // renderOnZeroPageCount={null}
           containerClassName={styles.pagination}
-          // disabledClassName={styles.pageNumber}
           pageClassName={styles.paginationItem}
           activeClassName={styles.active}
           pageLinkClassName={styles.paginationItemLink}
@@ -247,4 +242,4 @@ const Phones = () => {
   );
 };
 
-export default Phones;
+export default PhonesPage;

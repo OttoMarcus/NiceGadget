@@ -19,4 +19,4 @@ const UpdatePassIcon = () => {
   );
 };
 
-export default UpdatePassIcon;
+export default React.memo(UpdatePassIcon);

@@ -2,8 +2,6 @@ import React from "react";
 import HeartIcon from "../Icons/HeartIcon";
 import styles from "./Favorite.module.scss";
 import PropTypes from "prop-types";
-// import { useDispatch } from "react-redux";
-// import { toggleFavorite } from "../../store/favorites/favoriteSlice";
 
 const Favorite = ({ click, some, size }) => {
   const buttonStyle = {
@@ -28,4 +26,4 @@ Favorite.defaultProps = {
   size: "40px",
 };
 
-export default Favorite;
+export default React.memo(Favorite);

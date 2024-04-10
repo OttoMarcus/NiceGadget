@@ -16,7 +16,7 @@ const InputWithStrength = ({
 }) => {
   const [passShown, setPassShown] = useState(false);
   const passwordRef = useRef(null);
-  const [passwordValue, setPasswordValue] = useState(""); // Додайте стан для значення поля пароля
+  const [passwordValue, setPasswordValue] = useState("");
 
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -53,7 +53,6 @@ const InputWithStrength = ({
     setPassword(passwordValue);
     setProgress(`${(verifiedList.length / 5) * 100}%`);
     setMessage(strength);
-    // console.log("verifiedList: ", `${(verifiedList.length / 5) * 100}%`);
   };
 
   const getActiveColor = (type) => {
@@ -127,7 +126,7 @@ InputWithStrength.propTypes = {
 };
 
 InputWithStrength.defaultProps = {
-  handleChange: () => {}, // Додано значення за замовчуванням
+  handleChange: () => {},
 };
 
-export default InputWithStrength;
+export default React.memo(InputWithStrength);

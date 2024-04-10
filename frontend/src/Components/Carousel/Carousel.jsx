@@ -5,4 +5,4 @@ const Carousel = () => {
   return <div className={styles.rectangleCarousel}></div>;
 };
 
-export default Carousel;
+export default React.memo(Carousel);

@@ -24,4 +24,4 @@ CityTab.propTypes = {
   handleTabClick: PropTypes.func.isRequired,
 };
 
-export default CityTab;
+export default React.memo(CityTab);

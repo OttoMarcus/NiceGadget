@@ -25,4 +25,4 @@ const UserProfileIcon = () => {
   );
 };
 
-export default UserProfileIcon;
+export default React.memo(UserProfileIcon);

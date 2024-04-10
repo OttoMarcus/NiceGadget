@@ -36,4 +36,4 @@ NotifyModal.propTypes = {
   category: PropTypes.string.isRequired,
 };
 
-export default NotifyModal;
+export default React.memo(NotifyModal);

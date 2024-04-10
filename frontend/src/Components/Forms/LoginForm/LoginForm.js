@@ -61,13 +61,10 @@ const LoginForm = () => {
         }
       });
 
-      // const result = await response.json();
       localStorage.setItem("token", response.token);
 
       return response.token;
     } catch (error) {
-      // setRegStatus("failed")
-      // setRegError(error)
       console.error(error.message);
     }
   };
@@ -109,9 +106,7 @@ const LoginForm = () => {
       dispatch(synchronizeCartWithServer());
       dispatch(fetchCartItems());
       dispatch(synchronizeFavor());
-      // dispatch(synchronizeOrder());
       dispatch(orderGetNew());
-      // dispatch(fetchTodos());
       localStorage.removeItem("orders");
       SetOrder([]);
     } else {
@@ -136,8 +131,6 @@ const LoginForm = () => {
               label="Login or Email"
               placeholder="Enter you login or email"
             />
-            {/* <Input type="email" name="email" label="Email" placeholder="Email" />
-            <Input type="text" name="login" label="Login" placeholder="Login" /> */}
             <Input
               type="password"
               name="password"
@@ -145,9 +138,6 @@ const LoginForm = () => {
               placeholder="Password"
             />
             <div className={styles.submitContainer}>
-              {/* <button type="submit" disabled={!isValid} className={styles.submitBtn}>
-                Log In
-              </button> */}
               <div className={styles.btnWrapper}>
                 <Button type="submit" disabled={!isValid}>
                   Log In
@@ -160,10 +150,6 @@ const LoginForm = () => {
                 </Link>
               </p>
             </div>
-            {/* <button type="submit" disabled={!isValid}>
-              Log In
-            </button>
-            <Link to="/registration">Register</Link> */}
             {regStatus === "failed" && (
               <p className={styles.submitStatus}>Login {regStatus}!</p>
             )}
@@ -175,4 +161,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default React.memo(LoginForm);

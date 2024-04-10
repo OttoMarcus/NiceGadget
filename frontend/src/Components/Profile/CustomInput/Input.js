@@ -58,4 +58,4 @@ Input.propTypes = {
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
-export default Input;
+export default React.memo(Input);

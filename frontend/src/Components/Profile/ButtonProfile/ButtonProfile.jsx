@@ -24,4 +24,4 @@ ButtonProfile.defaultProps = {
   type: "button",
 };
 
-export default ButtonProfile;
+export default React.memo(ButtonProfile);

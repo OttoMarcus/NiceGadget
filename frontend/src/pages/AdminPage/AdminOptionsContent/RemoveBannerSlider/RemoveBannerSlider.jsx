@@ -4,4 +4,4 @@ const RemoveBannerSlider = () => {
   return <div>RemoveBannerSlider</div>;
 };
 
-export default RemoveBannerSlider;
+export default React.memo(RemoveBannerSlider);

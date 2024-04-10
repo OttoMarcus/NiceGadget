@@ -112,4 +112,4 @@ CardAccessories.defaultProps = {
   cartBtnFontSize: "14px",
 };
 
-export default CardAccessories;
+export default React.memo(CardAccessories);

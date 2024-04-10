@@ -38,4 +38,4 @@ const OkIcon = () => {
   );
 };
 
-export default OkIcon;
+export default React.memo(OkIcon);

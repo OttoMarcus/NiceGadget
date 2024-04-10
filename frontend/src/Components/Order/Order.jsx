@@ -145,4 +145,4 @@ Order.propTypes = {
   totalSum: PropTypes.number.isRequired,
 };
 
-export default Order;
+export default React.memo(Order);

@@ -6,6 +6,7 @@ const Customer = require("../models/Customer");
 const phonesOrTabletsAvailableEmailGenerator = require("../emailGenerators/phonesOrTabletsAvailableEmailGenerator");
 const accessoriesAvailableEmailGenerator = require("../emailGenerators/accessoriesAvailableEmailGenerator");
 const sendMail = require("../commonHelpers/mailSender");
+
 const sendNotificationToSubscribers = async ({ id, category }) => {
   let productModel;
   switch (category) {
@@ -97,7 +98,6 @@ const sendNotificationToSubscribers = async ({ id, category }) => {
   const sendEmailPromises = notifyMeUnauthorized.listOfActualEmails.map(async (user) => {
     try {
       await sendMail(user?.email, letterSubject, letterHtml);
-      console.log(`Notification email sent to ${user?.email}`);
       return true;
     } catch (emailError) {
       console.error(`Error sending notification email to ${user?.email}:`, emailError);

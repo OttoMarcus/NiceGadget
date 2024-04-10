@@ -6,7 +6,7 @@ import styles from "./TabletsPage.module.scss";
 
 const TabletsPage = () => {
   const [tabletsArr, setTabletsArr] = useState({ data: [] });
-
+  const [totalNumber, setTotalNumber] = useState(0);
   const location = useLocation();
   const typeModel = location.pathname.slice(1);
 
@@ -19,6 +19,7 @@ const TabletsPage = () => {
       .get(`/api/tablets`)
       .then((response) => {
         setTabletsArr({ data: response.data.data });
+        setTotalNumber(response.data.data.length);
       })
       .catch((error) => {
         console.error("Fetching error:", error);
@@ -28,7 +29,7 @@ const TabletsPage = () => {
   return (
     <article className={styles.container}>
       <h1 className={styles.tabletsTitle}>Tablets</h1>
-      <h3 className={styles.subtitle}>models</h3>
+      <h3 className={styles.subtitle}>{totalNumber} models</h3>
 
       <div className={styles.resultWrapper}>
         {Array.isArray(tabletsArr.data) &&

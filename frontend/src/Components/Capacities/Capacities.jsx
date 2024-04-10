@@ -37,4 +37,4 @@ Capacities.propTypes = {
   availability: PropTypes.bool.isRequired,
 };
 
-export default Capacities;
+export default React.memo(Capacities);

@@ -35,4 +35,4 @@ const CrossErrorIcon = () => {
   );
 };
 
-export default CrossErrorIcon;
+export default React.memo(CrossErrorIcon);

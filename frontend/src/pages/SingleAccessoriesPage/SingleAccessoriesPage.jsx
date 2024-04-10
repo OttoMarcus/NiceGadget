@@ -16,7 +16,6 @@ const SingleAccessoriesPage = () => {
 
   const favor = useSelector((state) => state.favorite.favorites);
   let some = favor?.some((el) => accessories?.id === el?.id);
-  // let some = 1
   const [activeAccessoryId, setActiveAccessoryId] = useState(null);
   const [accessoryAvailable, setAccessoryAvailable] = useState(true);
 

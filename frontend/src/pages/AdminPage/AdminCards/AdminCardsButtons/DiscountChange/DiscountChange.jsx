@@ -71,4 +71,4 @@ DiscountChange.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export default DiscountChange;
+export default React.memo(DiscountChange);

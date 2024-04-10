@@ -22,4 +22,4 @@ const UserInfoIcon = () => {
   );
 };
 
-export default UserInfoIcon;
+export default React.memo(UserInfoIcon);

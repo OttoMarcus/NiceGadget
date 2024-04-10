@@ -19,4 +19,4 @@ const FavoriteIcon = () => {
   );
 };
 
-export default FavoriteIcon;
+export default React.memo(FavoriteIcon);

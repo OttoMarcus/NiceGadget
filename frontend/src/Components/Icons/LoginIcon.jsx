@@ -22,4 +22,4 @@ const LoginIcon = () => {
   );
 };
 
-export default LoginIcon;
+export default React.memo(LoginIcon);

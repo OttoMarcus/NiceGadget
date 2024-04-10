@@ -48,4 +48,4 @@ ModalStatusInfo.propTypes = {
   circleShowHide: PropTypes.string,
 };
 
-export default ModalStatusInfo;
+export default React.memo(ModalStatusInfo);

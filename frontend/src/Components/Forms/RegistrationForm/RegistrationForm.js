@@ -17,7 +17,6 @@ import { orderGetNew, SetOrder } from "../../../store/orders/OrderNew";
 const RegistrationForm = () => {
   const [regStatus, setRegStatus] = useState("");
   const [regError, setRegError] = useState("");
-  // const [credentials, setCredentials] = useState({})
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -25,12 +24,10 @@ const RegistrationForm = () => {
   useEffect(() => {
     setRegStatus("");
     setRegError("");
-    // setCredentials({})
   }, []);
-  // const user = useSelector((state) => state.user.user);
+
   const createNewUser = async (userData) => {
     try {
-      // setCredentials({loginOrEmail: userData.login, password: userData.password})
       const response = await fetch(`/api/customers`, {
         method: "POST",
         headers: {
@@ -40,9 +37,7 @@ const RegistrationForm = () => {
       });
       if (response.ok) {
         setRegStatus("successful");
-        //setTimeout(() => {
-        //console.log(`user`, user);
-        //}, 1000);
+
         return await response.json();
       } else {
         setRegStatus("failed");
@@ -56,28 +51,6 @@ const RegistrationForm = () => {
       console.error(err.message);
     }
   };
-
-  // const loginUser = async (userCredentials) => {
-  //   try {
-  //     const response = await fetch(
-  //       `/api/customers/login`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify(userCredentials),
-  //       }
-  //     );
-  //     const result = await response.json();
-  //     localStorage.setItem("token", result.token);
-  //     console.log(result.token);
-
-  //     return result.token;
-  //   } catch (error) {
-  //     console.error(error.message);
-  //   }
-  // };
 
   const loginUser = async (userCredentials) => {
     try {
@@ -97,7 +70,6 @@ const RegistrationForm = () => {
         }
       });
 
-      // const result = await response.json();
       localStorage.setItem("token", response.token);
 
       return response.token;
@@ -117,16 +89,6 @@ const RegistrationForm = () => {
     dispatch(addUser(user));
     return user;
   };
-
-  // const onAuthRedirect = () => {
-  //   const prevPath = sessionStorage.getItem("prevPath");
-
-  //   if (prevPath) {
-  //     navigate(prevPath);
-  //   } else {
-  //     navigate("/");
-  //   }
-  // };
 
   const onAuthRedirect = () => {
     if (localStorage.getItem("token")) {
@@ -169,12 +131,10 @@ const RegistrationForm = () => {
     dispatch(synchronizeCartWithServer());
     dispatch(fetchCartItems());
     dispatch(synchronizeFavor());
-    // dispatch(synchronizeOrder());
     dispatch(orderGetNew());
     localStorage.removeItem("orders");
     dispatch(SetOrder([]));
     onAuthRedirect();
-    // return user
   };
 
   const initialValues = {
@@ -277,4 +237,4 @@ const RegistrationForm = () => {
   );
 };
 
-export default RegistrationForm;
+export default React.memo(RegistrationForm);

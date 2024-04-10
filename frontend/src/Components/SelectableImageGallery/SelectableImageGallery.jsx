@@ -45,4 +45,4 @@ SelectableImageGallery.propTypes = {
   ).isRequired,
 };
 
-export default SelectableImageGallery;
+export default React.memo(SelectableImageGallery);

@@ -36,7 +36,6 @@ function App() {
       dispatch(removeUser());
     }
   }, [prevPathRef, dispatch]);
-  //location.pathname, dispatch
 
   useEffect(() => {
     const handleRouteChange = () => {

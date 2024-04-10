@@ -4,17 +4,6 @@ import PropTypes from "prop-types";
 import styles from "./City.module.scss";
 
 const AddressInfo = ({ cityName, address, activeTab }) => {
-  // const currentDay = (cityName, activeTab) => {
-  //   if (cityName === activeTab) {
-  //     const currentDate = new Date();
-  //     const options = { weekday: 'long' };
-  //     const currentDayName = currentDate.toLocaleDateString('en-US', options);
-  //     console.log(currentDayName);
-  //   }
-  // }
-
-  // currentDay();
-
   return (
     <div
       id={cityName}
@@ -44,4 +33,4 @@ AddressInfo.propTypes = {
   activeTab: PropTypes.string,
 };
 
-export default AddressInfo;
+export default React.memo(AddressInfo);

@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getSearchList } from "../../store/search/searchSlice";
 import SearchLogo from "../Icons/SearchLogo";
-
 import styles from "./SearchForm.module.scss";
 import PropTypes from "prop-types";
 
@@ -61,4 +60,5 @@ const SearchForm = ({ toggleBurger }) => {
 SearchForm.propTypes = {
   toggleBurger: PropTypes.func,
 };
-export default SearchForm;
+
+export default React.memo(SearchForm);

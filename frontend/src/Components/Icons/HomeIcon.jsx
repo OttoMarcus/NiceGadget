@@ -25,4 +25,4 @@ const HomeIcon = () => {
   );
 };
 
-export default HomeIcon;
+export default React.memo(HomeIcon);

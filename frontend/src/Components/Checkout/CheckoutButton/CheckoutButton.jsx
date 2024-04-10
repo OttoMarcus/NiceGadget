@@ -26,4 +26,4 @@ CheckoutButton.defaultProps = {
   setValidationResults: () => {},
 };
 
-export default CheckoutButton;
+export default React.memo(CheckoutButton);

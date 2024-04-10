@@ -42,4 +42,4 @@ const ShopByCategory = () => {
   );
 };
 
-export default ShopByCategory;
+export default React.memo(ShopByCategory);

@@ -110,7 +110,7 @@ const Header = () => {
           <div className={styles.headerList}>
             <Link
               onClick={() => handleTabClick("/")}
-              className={`${styles.linksHeader} ${activeTab === "/" && styles.linkActive}`}
+              className={`${styles.linksHeader} ${activeTab === "/" ? styles.linkActive : ""}`}
               to="/"
             >
               Home
@@ -118,7 +118,7 @@ const Header = () => {
 
             <Link
               onClick={() => handleTabClick("/phones")}
-              className={`${styles.linksHeader} ${activeTab === "/phones" && styles.linkActive}`}
+              className={`${styles.linksHeader} ${activeTab === "/phones" ? styles.linkActive : ""}`}
               to="/phones"
             >
               Phones
@@ -126,7 +126,7 @@ const Header = () => {
 
             <Link
               onClick={() => handleTabClick("/tablets")}
-              className={`${styles.linksHeader} ${activeTab === "/tablets" && styles.linkActive}`}
+              className={`${styles.linksHeader} ${activeTab === "/tablets" ? styles.linkActive : ""}`}
               to="/tablets"
             >
               Tablets
@@ -134,7 +134,7 @@ const Header = () => {
 
             <Link
               onClick={() => handleTabClick("/accessories")}
-              className={`${styles.linksHeader} ${activeTab === "/accessories" && styles.linkActive}`}
+              className={`${styles.linksHeader} ${activeTab === "/accessories" ? styles.linkActive : ""}`}
               to="/accessories"
             >
               Accessories
@@ -142,7 +142,7 @@ const Header = () => {
 
             <Link
               onClick={() => handleTabClick("/favorites")}
-              className={`${styles.linksHeader} ${styles.additionalMobileMenu} ${activeTab === "/favorites" && styles.linkActive}`}
+              className={`${styles.linksHeader} ${styles.additionalMobileMenu} ${activeTab === "/favorites" ? styles.linkActive : ""}`}
               to="/favorites"
             >
               Favorites
@@ -150,7 +150,7 @@ const Header = () => {
 
             <Link
               onClick={() => handleTabClick("/cart")}
-              className={`${styles.linksHeader} ${styles.additionalMobileMenu} ${activeTab === "/cart" && styles.linkActive}`}
+              className={`${styles.linksHeader} ${styles.additionalMobileMenu} ${activeTab === "/cart" ? styles.linkActive : ""}`}
               to="/cart"
             >
               Cart
@@ -182,6 +182,7 @@ const Header = () => {
               <Link
                 onClick={() => {
                   sessionStorage.setItem("prevPath", location.pathname);
+                  toggleBurgerActive();
                 }}
                 className={styles.authChild}
                 to="/login"

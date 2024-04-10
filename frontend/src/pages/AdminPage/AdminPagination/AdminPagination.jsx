@@ -89,4 +89,4 @@ AdminPagination.defaultProps = {
   siblingCount: 1,
 };
 
-export default AdminPagination;
+export default React.memo(AdminPagination);

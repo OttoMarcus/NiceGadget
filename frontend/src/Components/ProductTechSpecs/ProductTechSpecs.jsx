@@ -32,4 +32,4 @@ TechSpecs.propTypes = {
 TechSpecs.defaultProps = {
   capacity: "",
 };
-export default TechSpecs;
+export default React.memo(TechSpecs);

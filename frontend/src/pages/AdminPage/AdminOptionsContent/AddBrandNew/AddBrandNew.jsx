@@ -4,4 +4,4 @@ const AddBrandNew = () => {
   return <div>this is BranNew</div>;
 };
 
-export default AddBrandNew;
+export default React.memo(AddBrandNew);

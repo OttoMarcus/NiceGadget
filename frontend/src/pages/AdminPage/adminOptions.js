@@ -1,7 +1,5 @@
 import React from "react";
 import PurchaseTracker from "./AdminOptionsContent/PurchaseTracker/PurchaseTracker";
-// import RemoveHotPrices from "./AdminOptionsContent/RemoveHotPrices/RemoveHotPrices";
-// import AddHotPrices from "./AdminOptionsContent/AddHotPrices/AddHotPrices";
 import RemoveBrandNew from "./AdminOptionsContent/RemoveBrandNew/RemoveBrandNew";
 import ChangeProductDiscount from "./AdminOptionsContent/ChangeProductDiscount/ChangeProductDiscount";
 import IncreaseOrDecreaseProductQuantity from "./AdminOptionsContent/IncreaseOrDecreaseProductQuantity/IncreaseOrDecreaseProductQuantity";
@@ -40,10 +38,6 @@ const options = [
         label: "Tablet",
         component: <ChangeProductDiscount category="tablets" />,
       },
-      // {
-      //   label: "Accessories",
-      //   component: <ChangeProductDiscount category="accessories" />,
-      // },
     ],
   },
   {
@@ -68,19 +62,6 @@ const options = [
       },
     ],
   },
-  // {
-  //   title: "Hot Prices",
-  //   subOptions: [
-  //     {
-  //       label: "Remove",
-  //       component: <RemoveHotPrices />,
-  //     },
-  //     {
-  //       label: "Add",
-  //       component: <AddHotPrices />,
-  //     },
-  //   ],
-  // },
   {
     title: "Brand New",
     component: <RemoveBrandNew />,

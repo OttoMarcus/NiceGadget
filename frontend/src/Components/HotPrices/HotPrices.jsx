@@ -82,4 +82,4 @@ const HotPrices = () => {
   );
 };
 
-export default HotPrices;
+export default React.memo(HotPrices);

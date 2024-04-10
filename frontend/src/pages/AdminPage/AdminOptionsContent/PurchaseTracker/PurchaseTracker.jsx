@@ -4,4 +4,4 @@ const PurchaseTracker = (props) => {
   return <div>PurchaseTracker</div>;
 };
 
-export default PurchaseTracker;
+export default React.memo(PurchaseTracker);

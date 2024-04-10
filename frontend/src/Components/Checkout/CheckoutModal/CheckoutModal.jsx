@@ -104,4 +104,4 @@ CheckoutModal.propTypes = {
   validationResults: PropTypes.array.isRequired,
 };
 
-export default CheckoutModal;
+export default React.memo(CheckoutModal);

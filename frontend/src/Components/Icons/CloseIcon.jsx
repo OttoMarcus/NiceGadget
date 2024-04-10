@@ -19,4 +19,4 @@ const CloseIcon = () => {
   );
 };
 
-export default CloseIcon;
+export default React.memo(CloseIcon);

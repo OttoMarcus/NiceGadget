@@ -66,4 +66,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default React.memo(Cart);

@@ -20,4 +20,4 @@ const AdminIcon = () => {
   );
 };
 
-export default AdminIcon;
+export default React.memo(AdminIcon);

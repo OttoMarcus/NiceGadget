@@ -22,4 +22,4 @@ function CustomCursor() {
   );
 }
 
-export default CustomCursor;
+export default React.memo(CustomCursor);
