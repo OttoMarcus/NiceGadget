@@ -114,16 +114,12 @@ exports.updateMobileProduct = (req, res, next) => {
 
 exports.getMobileProducts = async (req, res, next) => {
 
-    // console.log('req.query in mobileProducts is');
-    // console.log(req.query);
-
     const mongooseQuery = filterParser(req.query);
     const perPage = Number(req.query.perPage);
     const startPage = Number(req.query.startPage);
 
     const sort = req.query.sort;
-    // console.log('sort is:');
-    // console.log(sort);
+    
     const q = typeof req.query.q === "string" ? req.query.q.trim() : null;
 
     if (q) {

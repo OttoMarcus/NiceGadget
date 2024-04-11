@@ -8,7 +8,6 @@ const AccessoriesModelQuantity = require("../models/AccessoriesModelQuantity");
 const MobileModel = require('../models/MobileModel'); 
 const TabletModel = require('../models/TabletModel');
 const AccessoriesModel = require('../models/AccessoriesModels');
-// const queryCreator = require('../commonHelpers/queryCreator');
 const _ = require('lodash');
 
 exports.createCart = async (req, res, next) => {
@@ -135,6 +134,7 @@ exports.increaseCartProductQuantity = async (req, res, next) => {
 exports.decreaseCartProductQuantity = async (req, res, next) => {
   try {
     const cart = await Cart.findOne({ customerId: req.user._id });
+    
     if (!cart) {
       return res.status(404).json({ message: 'Cart does not exist.' });
     }
@@ -161,10 +161,13 @@ exports.decreaseCartProductQuantity = async (req, res, next) => {
 
 exports.deleteCart = async (req, res, next) => {
   try {
+    
     const result = await Cart.deleteOne({ customerId: req.user._id });
+    
     if (result.deletedCount === 0) {
       return res.status(404).json({ message: 'Cart not found or already deleted.' });
     }
+
     res.status(200).json({ message: 'Cart successfully deleted.' });
   } catch (error) {
     res.status(500).json({ message: `Error happened on server: "${error}"` });
@@ -174,6 +177,7 @@ exports.deleteCart = async (req, res, next) => {
 exports.deleteProductFromCart = async (req, res, next) => {
   try {
     const cart = await Cart.findOne({ customerId: req.user._id });
+    
     if (!cart) {
       return res.status(404).json({ message: `Cart does not exist.` });
     }
@@ -182,11 +186,13 @@ exports.deleteProductFromCart = async (req, res, next) => {
 
     if (productsAfterRemoval.length === 0) {
       await Cart.deleteOne({ customerId: req.user._id });
+      
       return res.status(200).json({ message: 'Cart has been deleted.' });
     } else if (productsAfterRemoval.length === cart.products.length) {
       return res.status(404).json({ message: `Product with ID ${req.params.productId} not found in cart.` });
     } else {
       cart.products = productsAfterRemoval;
+      
       await cart.save();
       res.json(cart);
     }
@@ -199,6 +205,7 @@ exports.deleteProductFromCart = async (req, res, next) => {
 exports.getCart = async (req, res, next) => {
   try {
     const cart = await Cart.findOne({ customerId: req.user._id });
+    
     if (!cart) {
       return res.json({customerId: req.user._id, products: []});
     }

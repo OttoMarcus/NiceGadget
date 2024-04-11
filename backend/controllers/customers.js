@@ -352,10 +352,8 @@ exports.editCustomerInfo = (req, res) => {
 
 
 exports.updatePassword = async (req, res) => {
-  console.log(req.user);
   // Проверка валидации
   const { errors, isValid } = validateRegistrationForm(req.body);
-  console.log(`isValid - ${isValid}`);
 
   if (!isValid) {
     return res.status(400).json(errors);
@@ -367,7 +365,7 @@ exports.updatePassword = async (req, res) => {
     let oldPassword = req.body.password;
 
     customer.comparePassword(oldPassword, async (err, isMatch) => {
-      console.log(`isMatch - ${isMatch}`);
+      
       if (!isMatch) {
         errors.password = "Password does not match";
         return res.status(400).json(errors); // Возвращаем ошибку и статус 400
@@ -391,7 +389,6 @@ exports.updatePassword = async (req, res) => {
             req.body.newPassword
           );
 
-          console.log(updatedCustomer.email);
           sendMail(updatedCustomer.email, letterSubject, letterHtml)
             .then(() => {
               return res.json({  // Возвращаем успешный ответ и статус 200

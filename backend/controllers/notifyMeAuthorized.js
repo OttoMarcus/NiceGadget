@@ -5,7 +5,7 @@ const AccessoriesProducts = require("../models/AccessoriesProducts");
 
 exports.addProductToNotifyMeAuthorized = async (req, res, next) => {
   const { id, category, customerNo } = req.body;
-  console.log(id, category, customerNo);
+
   const productModel = {
     "phones": MobileProducts,
     "tablets": TabletProducts,

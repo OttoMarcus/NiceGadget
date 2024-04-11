@@ -131,7 +131,6 @@ exports.getAccessoryModelById = (req, res, next) => {
             }
             res.json(accessoryModel);
 
-            console.log("accessoryModel ", accessoryModel);
         })
         .catch(err =>
             res.status(400).json({

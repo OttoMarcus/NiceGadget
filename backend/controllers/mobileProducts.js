@@ -122,7 +122,7 @@ exports.getMobileProducts = async (req, res, next) => {
   // const mongooseQuery = { refModel: { modelName: 'iPhone 15 Pro Max' } };
   // const string = "?discount=0&available=false&minPrice=&maxPrice=&modelName=iPhone%2013&capacity=&color=&ram=&screen=&perPage=100&startPage=1"
   // const mongooseQuery = filterParser(string)
-  console.log('mongooseQuery is: ', mongooseQuery);
+ 
   
   const perPage = Number(req.query.perPage);
   const startPage = Number(req.query.startPage);
@@ -148,7 +148,7 @@ exports.getMobileProducts = async (req, res, next) => {
       .skip(startPage * perPage - perPage)
       .limit(perPage)
 
-    console.log('foundMobileProducts after filter: ' ,foundMobileProducts);
+
     const totalMatching = foundMobileProducts.length;
 
     const total = await mobileProducts.countDocuments(mongooseQuery);

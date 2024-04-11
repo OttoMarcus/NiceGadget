@@ -17,6 +17,7 @@ const ItemsPerPage = ({ onChange, value }) => {
         styles={selectCustomStyles}
         value={options.find((opt) => opt.value === value)}
         onChange={(selectedOption) => onChange(selectedOption.value)}
+        isSearchable={false}
       />
     </div>
   );

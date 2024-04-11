@@ -63,43 +63,56 @@ exports.placeOrder = async (req, res, next) => {
     let subscriberMail = req.body.email
         
     let letterHtml = `
-      <!DOCTYPE html><html lang="en">
-      <head>    <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Welcome to Nice Gadgets!</title>
-      </head><body style="font-family: Arial, sans-serif; line-height: 1.6; margin: 0 auto; padding: 40px; background-color: #161827;">
-          <img style="display: block; margin: 0 auto; width: 240px; height: 200px;" src="https://res.cloudinary.com/de71eui6p/image/upload/v1712393815/sxhtepbcyn1msl7vptct.webp" alt="logo">
-          <h1 style="color: white; font-size: 34px; font-weight: 600; line-height: 1.6;">Welcome to Nice Gadgets!</h1>    <p style="color: white; font-size: 18px;">Hello ${req.body.userFirstName} ${req.body.userLastName},</p>
-          <p style="color: white; font-size: 18px;">Your account has been successfully created with the following details:</p>    <div style="color: #905bff; font-size: 18px;"><p>Order number: ${order.orderNo}</p>  <p>Total order cost: ${order.totalSum}$</p> 
-              <h2 style="color: white" ;font-family: Arial, sans-serif; line-height: 1.6;>You have successfully placed an order, which consists of:</h2>
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>    
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+        <title>Welcome to Nice Gadgets!</title>
+      </head>
+      <body style="font-family: Arial, sans-serif; line-height: 1.6; margin: 0 auto; padding: 40px; background-color: #161827;">
+        <img style="display: block; margin: 0 auto; width: 240px; height: 200px;" src="https://res.cloudinary.com/de71eui6p/image/upload/v1712393815/sxhtepbcyn1msl7vptct.webp" alt="logo">
+        <h1 style="color: white; font-size: 34px; font-weight: 600; line-height: 1.6;">Welcome to Nice Gadgets!</h1>    
+        <p style="color: white; font-size: 18px;">Hello ${req.body.userFirstName} ${req.body.userLastName},</p>
+        <p style="color: white; font-size: 18px;">Your account has been successfully created with the following details:</p>    <div style="color: #905bff; font-size: 18px;"><p>Order number: ${order.orderNo}</p>  <p>Total order cost: ${order.totalSum}$</p> 
+        <h2 style="color: white" ;font-family: Arial, sans-serif; line-height: 1.6;>You have successfully placed an order, which consists of:</h2>
       `;
-        let wrapperForProd = `
-  <div style="display: block; margin: 0 auto; padding: 10px ">`;
-        req.body.products.forEach(item => {
-            wrapperForProd += `<div  style="display :flex; gap: 15px; justify-content: space-between"> 
-    <p style="color: white; border: 1px solid #905bff; width: 100%; text-align: start; font-size: 34px; font-weight: 600; line-height: 1.6; margin: 0; padding: 0">${item.name} </p>    
-</div>  `;
-        });
-        wrapperForProd += `
-  </div>
-`;        letterHtml += wrapperForProd;
-        letterHtml += `
-  
-    <p style="color: white; font-size: 18px; font-style: normal; font-weight: 400; line-height: 21px;">Best regards,<br>Nice Gadgets Team</p>    <p style="color: white; font-size: 18px; font-style: normal; font-weight: 400; line-height: 21px;">Social media:</p>
-    <div class="social" style="display: flex; justify-content: space-between; width: 180px;">        <div>
-            <a href="https://t.me/nicegadgetstore" target="_blank" rel="noreferrer">                <img src="https://res.cloudinary.com/de71eui6p/image/upload/v1711375286/Slider/zwpnzpy4gdrardowloam.webp" alt="Telegram">
-            </a>        </div>
-        <div>            <a href="https://www.instagram.com/n1cegadgetstore" target="_blank" rel="noreferrer">
-                <img src="https://res.cloudinary.com/de71eui6p/image/upload/v1711375285/Slider/iypblt7wvhyl9vjywwdr.webp" alt="Instagram">            </a>
-        </div>        <div>
-            <a href="https://www.facebook.com/groups/258628787334330" target="_blank" rel="noreferrer">                <img src="https://res.cloudinary.com/de71eui6p/image/upload/v1711375284/Slider/ba2xqvptwh9cpu5ekzij.webp" alt="Facebook">
-            </a>        </div>
-        <div>            <a href="mailto:testfrontendmail@gmail.com" target="_blank" rel="noreferrer">
-                <img src="https://res.cloudinary.com/de71eui6p/image/upload/v1711375285/Slider/xqxh0u9umai1oa91dgg8.webp" alt="Gmail">            </a>
-        </div>    </div>
-`;
+    let wrapperForProd = `
+      <div style="display: block; margin: 0 auto; padding: 10px ">`;
+    
+      req.body.products.forEach(item => {
+        wrapperForProd += `<div  style="display :flex; gap: 15px; justify-content: space-between"> 
+          <p style="color: white; border: 1px solid #905bff; width: 100%; text-align: start; font-size: 34px; font-weight: 600; line-height: 1.6; margin: 0; padding: 0">${item.name} </p>    
+        </div>  `;
+      });
+        wrapperForProd += `</div>`;        
+        letterHtml += wrapperForProd;
+        letterHtml += `<p style="color: white; font-size: 18px; font-style: normal; font-weight: 400; line-height: 21px;">Best regards,<br>Nice Gadgets Team</p>    
+          <p style="color: white; font-size: 18px; font-style: normal; font-weight: 400; line-height: 21px;">Social media:</p>
+          <div class="social" style="display: flex; justify-content: space-between; width: 180px;">        
+          <div>
+            <a href="https://t.me/nicegadgetstore" target="_blank" rel="noreferrer">                
+              <img src="https://res.cloudinary.com/de71eui6p/image/upload/v1711375286/Slider/zwpnzpy4gdrardowloam.webp" alt="Telegram">
+            </a>        
+          </div>
+          <div>            
+            <a href="https://www.instagram.com/n1cegadgetstore" target="_blank" rel="noreferrer">
+              <img src="https://res.cloudinary.com/de71eui6p/image/upload/v1711375285/Slider/iypblt7wvhyl9vjywwdr.webp" alt="Instagram">            
+            </a>
+          </div>        
+          <div>
+            <a href="https://www.facebook.com/groups/258628787334330" target="_blank" rel="noreferrer">                
+              <img src="https://res.cloudinary.com/de71eui6p/image/upload/v1711375284/Slider/ba2xqvptwh9cpu5ekzij.webp" alt="Facebook">
+            </a>        
+          </div>
+          <div>            
+            <a href="mailto:testfrontendmail@gmail.com" target="_blank" rel="noreferrer">
+              <img src="https://res.cloudinary.com/de71eui6p/image/upload/v1711375285/Slider/xqxh0u9umai1oa91dgg8.webp" alt="Gmail">            
+            </a>
+          </div>    
+        </div>`;
         letterHtml += `  </div>
-</body></html>
-`;
+          </body></html>`;
 
     const newOrder = new Order(order);
 
@@ -133,7 +146,6 @@ exports.updateOrder = (req, res, next) => {
           .status(400)
           .json({ message: `Order with id ${req.params.id} is not found` });
     } else {
-      console.log(currentOrder);
       const order = _.cloneDeep(req.body);
 
       if (req.body.customerId) {

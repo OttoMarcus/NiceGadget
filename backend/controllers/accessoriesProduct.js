@@ -113,9 +113,9 @@ exports.getAdminAccessoryProducts = async (req, res, next) => {
           .limit(perPage);
 
         const productNames = foundAccessoryProducts.map(product => product.name);
-        console.log(productNames);
+       
         const quantities = await AccessoriesModelQuantity.find({ productName: { $in: productNames } });
-        console.log(quantities);
+        
 
         const productsWithQuantity = foundAccessoryProducts.map(product => {
         const quantityData = quantities.find(qty => qty.productName === product.name);

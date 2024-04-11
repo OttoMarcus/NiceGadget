@@ -91,6 +91,7 @@ const PerPageSelect = ({ handlePerPageChange, cardsPerPageValue }) => {
         value={options.find((option) => option.value === cardsPerPageValue)}
         onChange={(selectedOption) => handlePerPageChange(selectedOption.value)}
         styles={customStyles}
+        isSearchable={false}
       />
     </div>
   );

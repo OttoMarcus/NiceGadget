@@ -89,6 +89,7 @@ const Sort = ({ handleSortChange, sortValue }) => {
         defaultValue={sortValue}
         onChange={(selectedOption) => handleSortChange(selectedOption.value)}
         styles={customStyles}
+        isSearchable={false}
       />
     </div>
   );

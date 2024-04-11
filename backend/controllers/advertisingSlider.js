@@ -12,8 +12,6 @@ exports.addAdvertisingSlider = (req, res, next) => {
 
     mobileModelFields.itemNo = rand();
 
-
-
     const updatedMobileModel = queryCreator(mobileModelFields);
 
     const newMobileModel = new advertisingSlider(updatedMobileModel);
@@ -45,8 +43,6 @@ exports.updateAdvertisingSlider = (req, res, next) => {
                 });
             } else {
                 const mobileModelFields = _.cloneDeep(req.body);
-
-
 
                 const updatedMobileModel = queryCreator(mobileModelFields);
 

@@ -41,8 +41,6 @@ const PhonesPage = () => {
     let perPage = 8;
     let startPage = 1;
     if (urlParams.size !== 0) {
-      console.log(urlParams);
-
       const queryParams = Object.fromEntries(urlParams.entries()); // make an object from keys and values of search params
 
       const filterParams = Object.keys(filters).reduce((acc, key) => {
@@ -77,19 +75,15 @@ const PhonesPage = () => {
         setFilterQueryString(new URLSearchParams(filterParams).toString());
       }
       if (sort) {
-        console.log(sort);
         setSortValue(sort);
       }
       if (perPage) {
-        console.log(perPage);
         setCardsPerPageValue(Number(perPage));
       }
       if (startPage) {
-        console.log(startPage);
         setCurrentPage(Number(startPage));
       }
     }
-    console.log(sort);
 
     fetchData(filterQuery, sort, perPage, startPage);
     // eslint-disable-next-line

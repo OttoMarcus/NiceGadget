@@ -107,7 +107,6 @@ const updateMobileModelQuantity = async (req, res, next) => {
 
     res.json(responseData);
   } catch (err) {
-    console.log(err);
     res.status(500).json({ message: `Error happened on server: "${err}"` });
   }
 };
